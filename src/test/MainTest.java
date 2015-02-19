@@ -26,6 +26,7 @@ public class MainTest extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
+		
 		g.drawString("Hello, Slick world!", System.nanoTime()%0x191, System.nanoTime()%0x1c1);
 	}
 
