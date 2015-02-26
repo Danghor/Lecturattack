@@ -12,6 +12,7 @@ public class MainTest extends BasicGame {
 	private float gravity = 1.0f;
 	private float currentYVelocity = 0;
 	private long count = 0;
+	private float e = -0.5f;
 
 	public MainTest() {
 		super("SimpleTest");
@@ -22,31 +23,37 @@ public class MainTest extends BasicGame {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta)
-			throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException {
 		count++;
 		if (count % 35 == 0) { // nur zum Test, später würde ich über Ticks
 								// gehen (oder TargetFPS)
-			myRect.setY((int) (myRect.getY() - currentYVelocity));
-			currentYVelocity -= gravity;
-		}
 
-		if (count % 1500 == 0) {
-			currentYVelocity = 0;
-			myRect = new Rectangle(80, 30, 50, 50);
+			if (myRect.getY() + myRect.getHeight() == container.getHeight()) { // berührt
+				if (currentYVelocity < -2.667) {
+					System.out.println(currentYVelocity);
+					currentYVelocity *= e;
+				}
+			} else { // berührt nicht
+				currentYVelocity -= gravity;
+			}
+
+			myRect.setY((int) (myRect.getY() - currentYVelocity));
+
+			if (myRect.getY() + myRect.getHeight() > container.getHeight()) {
+				myRect.setY((int) (container.getHeight() - myRect.getHeight()));
+			}
 		}
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g)
-			throws SlickException {
+	public void render(GameContainer container, Graphics g) throws SlickException {
 		g.fill(myRect);
 	}
 
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new MainTest());
-			app.setDisplayMode(500, 700, false);
+			app.setDisplayMode(800, 800, false);
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
