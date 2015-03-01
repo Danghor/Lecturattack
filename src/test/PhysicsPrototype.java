@@ -1,17 +1,16 @@
 package test;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 
 public class PhysicsPrototype extends BasicGame {
-	private Rectangle myRect = new Rectangle(80, 30, 50, 50);
-	private float gravity = 1.0f;
-	private float currentYVelocity = 0;
-	private long count = 0;
-	private float e = -0.5f;
+	private ArrayList<RigidRectangle> rects;
+	private float deltaScale = 0.01f;
 
 	public PhysicsPrototype() {
 		super("SimpleTest");
@@ -19,33 +18,42 @@ public class PhysicsPrototype extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		rects = new ArrayList<RigidRectangle>();
+		rects.add(new RigidRectangle(50, 50, 80, 30, 1));
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		count++;
-		if (count % 35 == 0) { // nur zum Test, später würde ich über Ticks
-								// gehen (oder TargetFPS)
+		Input input = container.getInput();
+		if (input.isKeyDown(Input.KEY_LEFT)) {
+			rects.get(0).applyForce(-1, 0);
+		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
+			rects.get(0).applyForce(1, 0);
+		}
 
-			if (myRect.getY() + myRect.getHeight() == container.getHeight()) { // berührt
-				if (currentYVelocity < -2.667) {
-					System.out.println(currentYVelocity);
-					currentYVelocity *= e;
-				}
-			} else { // berührt nicht
-				currentYVelocity -= gravity;
-			}
+		if (input.isKeyDown(Input.KEY_UP)) {
+			rects.get(0).applyForce(0, -1);
+		} else if (input.isKeyDown(Input.KEY_DOWN)) {
+			rects.get(0).applyForce(0, 1);
+		}
 
-			myRect.setY((int) (myRect.getY() - currentYVelocity));
+		if (input.isKeyDown(Input.KEY_1)) {
+			rects.get(0).applyTorque(-1);
+		} else if (input.isKeyDown(Input.KEY_2)) {
+			rects.get(0).applyTorque(1);
+		}
 
-			if (myRect.getY() + myRect.getHeight() > container.getHeight()) {
-				myRect.setY((int) (container.getHeight() - myRect.getHeight()));
-			}
+		for (RigidRectangle rect : rects) {
+			rect.update(delta * deltaScale);
 		}
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		g.fill(myRect);
+		g.drawString("Use 1, 2 and Arrow-Keys", 10, 25);
+		
+		for (RigidRectangle rect : rects) {
+			rect.draw(g);
+		}
 	}
 }
