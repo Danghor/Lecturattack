@@ -30,6 +30,13 @@
       <SubType>Content</SubType>
       <DependentUpon>AGeneral.activitydiagram</DependentUpon>
     </Content>
+    <Content Include="CGameEntity.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="CGameEntity.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>CGameEntity.classdiagram</DependentUpon>
+    </Content>
     <Content Include="ModelDefinition\Diagrams.uml">
       <SubType>Content</SubType>
     </Content>
