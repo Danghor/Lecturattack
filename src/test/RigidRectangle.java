@@ -34,7 +34,7 @@ public class RigidRectangle {
 		velocity = new EnhancedVector(0, 0);
 		angularVelocity = 0;
 
-		inertia = 8;//(mass * height * height * width * width)/12;
+		inertia = (mass * height * height * width * width)/100000;
 		
 		force = new EnhancedVector(0,0);
 	}
@@ -70,6 +70,8 @@ public class RigidRectangle {
 
 	public void update(float delta) {
 
+		//applyForce(0, 9.81f);
+		
 		EnhancedVector acceleration;
 
 		acceleration = new EnhancedVector(force.x * (1 / mass), force.y * (1 / mass));
@@ -94,5 +96,8 @@ public class RigidRectangle {
 
 		g.draw(polygon);
 		g.drawRect(getCenter().x, getCenter().y, 1, 1);
+		g.drawString(Float.toString(angularVelocity), 10, 50);
+		g.drawString(Float.toString(topLeft.x), 10, 60);
+		g.drawString(Float.toString(topLeft.y), 10, 70);
 	}
 }
