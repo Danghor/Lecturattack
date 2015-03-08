@@ -12,12 +12,15 @@
 hs_err_pid*
 
 # IntelliJ
-.idea
+.idea/
+*.iml
+*.iws
 
-# eclipse
-.settings
+# Eclipse
+.settings/
 .project
 .classpath
+
+# Other
 /bin/
-/LecturattackModeling/LecturattackModeling.v12.suo
-*.iml
+
