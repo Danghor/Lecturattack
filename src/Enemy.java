@@ -5,5 +5,5 @@
 /**
  * Created by Nick Steyer on 08/03/2015
  */
-public class Enemy extends Target {
+public class Enemy {
 }
