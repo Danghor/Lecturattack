@@ -2,16 +2,17 @@
  * Copyright (c) 2015.
  */
 
+import org.newdawn.slick.Image;
+
 /**
  * Created by Nick Steyer on 08/03/2015
  */
-public class GameEntity {
-  public void init() {
-  }
+interface GameEntity {
+  Image image;
 
-  public void update() {
-  }
+  void init();
 
-  public void render() {
-  }
+  void update();
+
+  void render();
 }
