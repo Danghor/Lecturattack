@@ -2,7 +2,6 @@ package test;
 
 import org.newdawn.slick.geom.Vector2f;
 
-@SuppressWarnings("serial")
 public class EnhancedVector extends Vector2f {
 
   public EnhancedVector(float x, float y) {
