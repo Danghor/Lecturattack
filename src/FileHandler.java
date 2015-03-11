@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class FileHandler {
   private final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
-  //todo: save filepath to tiled level files
+  private final String[] PATH_TO_LEVELS = new String[]{""}; //TODO add LevelFiles
 
   public TiledMap getTiledMap(int levelNumber) throws IllegalArgumentException, IOException {
     return null;
