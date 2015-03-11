@@ -10,6 +10,9 @@ import java.io.IOException;
  * Created by Nick Steyer on 09/03/2015
  */
 public class FileHandler {
+  private final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
+  //todo: save filepath to tiled level files
+
   public TiledMap getTiledMap(int levelNumber) throws IllegalArgumentException, IOException {
     return null;
   }
@@ -19,5 +22,6 @@ public class FileHandler {
   }
 
   public void setLastLevelNumber(int level) {
+    //todo: alles in %APPDATA%
   }
 }

@@ -2,6 +2,9 @@
  * Copyright (c) 2015.
  */
 
+import entities.Projectile;
+import entities.Target;
+
 import java.util.ArrayList;
 
 /**

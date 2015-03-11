@@ -10,6 +10,10 @@ import org.newdawn.slick.state.StateBasedGame;
  * Created by Nick Steyer on 09/03/2015
  */
 public class Lecturattack extends StateBasedGame {
+  public Lecturattack(String name) {
+    super(name);
+  }
+
   public static void main(String[] args) {
   }
 
