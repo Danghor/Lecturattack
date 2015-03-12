@@ -19,4 +19,9 @@ public class Stroehtie extends Player {
   public static Stroehtie getInstance() {
     return instance;
   }
+
+  @Override
+  public Projectile throwProjectile(float strength) {
+    return null;
+  }
 }

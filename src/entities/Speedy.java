@@ -19,4 +19,9 @@ public class Speedy extends Player {
   public static Speedy getInstance() {
     return instance;
   }
+
+  @Override
+  public Projectile throwProjectile(float strength) {
+    return null;
+  }
 }

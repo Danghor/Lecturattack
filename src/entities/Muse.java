@@ -19,4 +19,9 @@ public class Muse extends Player {
   public static Muse getInstance() {
     return instance;
   }
+
+  @Override
+  public Projectile throwProjectile(float strength) {
+    return null;
+  }
 }
