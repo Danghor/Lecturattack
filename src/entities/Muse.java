@@ -6,7 +6,11 @@ package entities;/*
  * Created by Nick Steyer on 10/03/2015
  */
 public class Muse extends Player {
-  private static Muse instance = new Muse();
+  private static Muse instance;
+
+  static {
+    instance = new Muse();
+  }
 
   private Muse() {
 

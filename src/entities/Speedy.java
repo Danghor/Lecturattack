@@ -6,7 +6,11 @@ package entities;/*
  * Created by Nick Steyer on 10/03/2015
  */
 public class Speedy extends Player {
-  private static Speedy instance = new Speedy();
+  private static Speedy instance;
+
+  static {
+    instance = new Speedy();
+  }
 
   private Speedy() {
 
