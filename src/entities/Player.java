@@ -35,7 +35,5 @@ public abstract class Player {
 
   protected abstract Projectile throwSpecificProjectile(float strength);
 
-  public void render(Graphics graphics) {
-
-  }
+  public abstract void render(Graphics graphics);
 }

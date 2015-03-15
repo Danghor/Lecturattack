@@ -2,6 +2,8 @@ package entities;/*
  * Copyright (c) 2015.
  */
 
+import org.newdawn.slick.Graphics;
+
 /**
  * Created by Nick Steyer on 10/03/2015
  */
@@ -23,5 +25,10 @@ public class Muse extends Player {
   @Override
   public Projectile throwSpecificProjectile(float strength) {
     return null;
+  }
+
+  @Override
+  public void render(Graphics graphics) {
+
   }
 }
