@@ -21,7 +21,7 @@ public class Speedy extends Player {
   }
 
   @Override
-  public Projectile throwProjectile(float strength) {
+  public Projectile throwSpecificProjectile(float strength) {
     return null;
   }
 }

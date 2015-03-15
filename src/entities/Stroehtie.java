@@ -21,7 +21,7 @@ public class Stroehtie extends Player {
   }
 
   @Override
-  public Projectile throwProjectile(float strength) {
+  public Projectile throwSpecificProjectile(float strength) {
     return null;
   }
 }

@@ -23,7 +23,17 @@ public abstract class Player {
     //todo: check if movement possible, turn arm etc.
   }
 
-  public abstract Projectile throwProjectile(float strength); //isThrowing must be set to true here
+  /**
+   * This method enforces setting isThrowing to true when the player throws a projectile.
+   *
+   * @param strength
+   */
+  public final Projectile throwProjectile(float strength) {
+    isThrowing = true;
+    return throwSpecificProjectile(strength);
+  }
+
+  protected abstract Projectile throwSpecificProjectile(float strength);
 
   public void render(Graphics graphics) {
 
