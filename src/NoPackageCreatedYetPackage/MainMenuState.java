@@ -1,4 +1,4 @@
-/*
+package NoPackageCreatedYetPackage;/*
  * Copyright (c) 2015.
  */
 
@@ -11,10 +11,13 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Created by Nick Steyer on 09/03/2015
  */
-public class PauseState extends BasicGameState {
+public class MainMenuState extends BasicGameState {
+
+  private static int ID;
+
   @Override
   public int getID() {
-    return 0;
+    return ID;
   }
 
   @Override

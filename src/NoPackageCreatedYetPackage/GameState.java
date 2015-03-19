@@ -1,4 +1,4 @@
-/*
+package NoPackageCreatedYetPackage;/*
  * Copyright (c) 2015.
  */
 
@@ -22,9 +22,11 @@ public class GameState extends BasicGameState {
   private ArrayList<Target> targets;
   private Projectile projectile;
   private Flag flag;
-  private PowerSlider slider;
   private InformationField score;
   private InformationField playerName;
+  private static int ID;
+  private LevelGenerator levelGenerator;
+  private FileHandler fileHandler;
 
   public void loadLevel(int level) {
     //load player and targets with LevelLoader
@@ -51,6 +53,6 @@ public class GameState extends BasicGameState {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
+    PhysicsEngine.calculateStep(0,0,null,null);//TODO real values
   }
 }

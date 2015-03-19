@@ -1,4 +1,4 @@
-/*
+package NoPackageCreatedYetPackage;/*
  * Copyright (c) 2015.
  */
 
@@ -15,8 +15,8 @@ public class LevelGenerator {
   private LevelGenerator() {
     //class should not be initialized
   }
-
-  public static void generateLevel(TiledMap map, Player player, ArrayList<Target> targets) {
+//TODO --> real datatype for levelData
+  public static void generateLevel(LevelData level, Player player, ArrayList<Target> targets) {
 //actively modify the objects given in the parameters
   }
 }

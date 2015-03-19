@@ -1,4 +1,4 @@
-/*
+package NoPackageCreatedYetPackage;/*
  * Copyright (c) 2015.
  */
 
@@ -16,6 +16,11 @@ public class Lecturattack extends StateBasedGame {
 
   public static void main(String[] args) {
   }
+
+  private GameState gameState;
+  private MainMenuState mainMenuState;
+  private LevelSelectState levelSelectState;
+  private PauseState pauseState;
 
   @Override
   public void initStatesList(GameContainer gameContainer) throws SlickException {
