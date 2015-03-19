@@ -12,29 +12,29 @@ import org.newdawn.slick.state.StateBasedGame;
  * Created by Nick Steyer on 09/03/2015
  */
 public class LevelSelectState extends BasicGameState {
-	private int iStateID;
+  private int iStateID;
 
-	public LevelSelectState(int iStateID) {
-		this.iStateID = iStateID;
-	}
+  public LevelSelectState(int iStateID) {
+    this.iStateID = iStateID;
+  }
 
-	@Override
-	public int getID() {
-		return iStateID;
-	}
+  @Override
+  public int getID() {
+    return iStateID;
+  }
 
-	@Override
-	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+  @Override
+  public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-	}
+  }
 
-	@Override
-	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 
-	}
+  }
 
-	@Override
-	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+  @Override
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 
-	}
+  }
 }
