@@ -31,6 +31,7 @@ public class GameState extends BasicGameState {
   }
 
   private void resetLevel() {
+    //todo: loadlevel(currentLevel)
   }
 
   @Override

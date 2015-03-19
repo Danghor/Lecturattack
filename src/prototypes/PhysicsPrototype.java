@@ -1,4 +1,4 @@
-package test;
+package prototypes;
 
 import org.newdawn.slick.*;
 
@@ -15,7 +15,7 @@ public class PhysicsPrototype extends BasicGame {
   @Override
   public void init(GameContainer container) throws SlickException {
     rects = new ArrayList<RigidRectangle>();
-    rects.add(new RigidRectangle(50, 50, 80, 30, 1));
+    rects.add(new RigidRectangle(50, 50, 80, 30, 0.05f));
   }
 
   @Override
@@ -46,6 +46,8 @@ public class PhysicsPrototype extends BasicGame {
 
   @Override
   public void render(GameContainer container, Graphics g) throws SlickException {
+
+
     g.drawString("Use 1, 2 and Arrow-Keys", 10, 25);
 
     for (RigidRectangle rect : rects) {
