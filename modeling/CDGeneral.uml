@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="1009.0" y="1084.0">Lecturattack</node>
+    <node x="570.0" y="368.0">entities.Muse</node>
+    <node x="83.5" y="820.0">entities.Projectile</node>
+    <node x="304.0" y="1084.0">PauseState</node>
+    <node x="248.0" y="1292.0">prototypes</node>
+    <node x="392.0" y="954.5">entities.Library</node>
+    <node x="774.0" y="1084.0">MainMenuState</node>
+    <node x="483.0" y="1292.0">entities.InformationField</node>
+    <node x="0.0" y="1084.0">PhysicsEngine</node>
+    <node x="241.5" y="0.0">entities.Player</node>
+    <node x="691.0" y="1292.0">entities.PowerSlider</node>
+    <node x="497.00000000000006" y="908.0">entities.Enemy</node>
+    <node x="196.0" y="954.5">entities.Pointer</node>
+    <node x="0.0" y="1292.0">LevelGenerator</node>
+    <node x="291.0" y="368.0">entities.Speedy</node>
+    <node x="539.0" y="1084.0">LevelSelectState</node>
+    <node x="858.0" y="0.0">GameState</node>
+    <node x="0.0" y="954.5">entities.Exam</node>
+    <node x="0.0" y="368.0">entities.Stroehtie</node>
+    <node x="707.0" y="608.0">FileHandler</node>
+    <node x="94.0" y="954.5">entities.Robot</node>
+    <node x="861.0" y="1292.0">entities.Flag</node>
+    <node x="111.25" y="608.0">entities.RigidBody</node>
+    <node x="393.5" y="820.0">entities.Target</node>
+    <node x="304.0" y="954.5">entities.Ram</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="entities.Projectile" target="entities.RigidBody">
+      <point x="0.0" y="-19.0" />
+      <point x="135.0" y="795.0" />
+      <point x="198.0" y="795.0" />
+      <point x="-86.75" y="81.0" />
+    </edge>
+    <edge source="entities.Exam" target="entities.Projectile">
+      <point x="0.0" y="-19.0" />
+      <point x="37.0" y="883.0" />
+      <point x="100.66666666666666" y="883.0" />
+      <point x="-34.33333333333334" y="19.0" />
+    </edge>
+    <edge source="entities.Ram" target="entities.Target">
+      <point x="0.0" y="-19.0" />
+      <point x="338.0" y="883.0" />
+      <point x="407.1666666666667" y="883.0" />
+      <point x="-27.333333333333314" y="19.0" />
+    </edge>
+    <edge source="entities.Robot" target="entities.Projectile">
+      <point x="0.0" y="-19.0" />
+      <point x="0.0" y="19.0" />
+    </edge>
+    <edge source="entities.Pointer" target="entities.Projectile">
+      <point x="-2.8421709430404007E-14" y="-19.0" />
+      <point x="240.0" y="883.0" />
+      <point x="169.33333333333334" y="883.0" />
+      <point x="34.33333333333334" y="19.0" />
+    </edge>
+    <edge source="entities.Stroehtie" target="entities.Player">
+      <point x="0.0" y="-97.5" />
+      <point x="135.5" y="343.0" />
+      <point x="301.1666666666667" y="343.0" />
+      <point x="-119.33333333333331" y="159.0" />
+    </edge>
+    <edge source="entities.Target" target="entities.RigidBody">
+      <point x="0.0" y="-19.0" />
+      <point x="434.5" y="795.0" />
+      <point x="371.5" y="795.0" />
+      <point x="86.75" y="81.0" />
+    </edge>
+    <edge source="entities.Muse" target="entities.Player">
+      <point x="0.0" y="-97.5" />
+      <point x="691.5" y="343.0" />
+      <point x="539.8333333333333" y="343.0" />
+      <point x="119.33333333333326" y="159.0" />
+    </edge>
+    <edge source="entities.Enemy" target="entities.Target">
+      <point x="0.0" y="-65.5" />
+      <point x="579.5" y="883.0" />
+      <point x="461.83333333333337" y="883.0" />
+      <point x="27.33333333333337" y="19.0" />
+    </edge>
+    <edge source="entities.Speedy" target="entities.Player">
+      <point x="0.0" y="-97.5" />
+      <point x="0.0" y="159.0" />
+    </edge>
+    <edge source="entities.Library" target="entities.Target">
+      <point x="0.0" y="-19.0" />
+      <point x="0.0" y="19.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9" x="892.2222222222222" y="1197.3333333333333" />
+  <SelectedNodes>
+    <node>Lecturattack</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
