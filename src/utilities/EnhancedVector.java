@@ -14,7 +14,6 @@ public class EnhancedVector extends Vector2f {
 
   /**
    * @param partner The EnhancedVector with which the cross product is to be calculated.
-   *
    * @return The scalar value of the cross product.
    */
   public float crossProductScalar(EnhancedVector partner) {

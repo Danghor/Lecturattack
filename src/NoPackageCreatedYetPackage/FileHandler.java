@@ -1,4 +1,4 @@
-/*
+package NoPackageCreatedYetPackage;/*
  * Copyright (c) 2015.
  */
 
@@ -13,7 +13,7 @@ public class FileHandler {
   private final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
   private final String[] PATH_TO_LEVELS = new String[]{""}; //TODO add LevelFiles
 
-  public TiledMap getTiledMap(int levelNumber) throws IllegalArgumentException, IOException {
+  public LevelData getlevelData(int levelNumber) throws IllegalArgumentException, IOException {
     return null;
   }
 
