@@ -16,40 +16,45 @@ import java.util.ArrayList;
  */
 
 public class GameState extends BasicGameState {
-  private int currentLevel;
-  private float wind;
-  private Player player;
-  private ArrayList<Target> targets;
-  private Projectile projectile;
-  private Flag flag;
-  private PowerSlider slider;
-  private InformationField score;
-  private InformationField playerName;
+	private int iStateID;
+	private int currentLevel;
+	private float wind;
+	private Player player;
+	private ArrayList<Target> targets;
+	private Projectile projectile;
+	private Flag flag;
+	private PowerSlider slider;
+	private InformationField score;
+	private InformationField playerName;
 
-  public void loadLevel(int level) {
-    //load player and targets with LevelLoader
-  }
+	public GameState(int iStateID) {
+		this.iStateID = iStateID;
+	}
 
-  private void resetLevel() {
-  }
+	public void loadLevel(int level) {
+		// load player and targets with LevelLoader
+	}
 
-  @Override
-  public int getID() {
-    return 0;
-  }
+	private void resetLevel() {
+	}
 
-  @Override
-  public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+	@Override
+	public int getID() {
+		return iStateID;
+	}
 
-  }
+	@Override
+	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+	}
 
-  }
+	@Override
+	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 
-  @Override
-  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+	}
 
-  }
+	@Override
+	public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
+	}
 }
