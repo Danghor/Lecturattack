@@ -3,10 +3,7 @@ package entities;/*
  */
 
 import NoPackageCreatedYetPackage.Renderable;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.state.StateBasedGame;
 import utilities.EnhancedVector;
 
 /**
@@ -19,7 +16,7 @@ public abstract class RigidBody implements Renderable {
 
   public abstract EnhancedVector getCenter();
 
-  public float getMass(){
+  public float getMass() {
     return mass;//TODO replace with mass loaded from Meta types
   }
 }

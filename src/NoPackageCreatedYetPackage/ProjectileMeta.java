@@ -1,9 +1,7 @@
 package NoPackageCreatedYetPackage;
 
-import entities.Projectile;
 import entities.Target;
 import org.newdawn.slick.Image;
-import utilities.EnhancedVector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,18 +11,15 @@ import java.util.HashMap;
  */
 public class ProjectileMeta {
 
-  private enum ProjectileType {
-    EXAM,
-    ROBOT,
-    POINTER;
-  }
-
   private Image image;
   private float mass;
   private Target.TargetType destroys;
   private ArrayList<float[]> projectileOutline;
   private HashMap<ProjectileType, ProjectileMeta> projectileMetaInstances;
 
+  private ProjectileMeta() {
+
+  }
 
   public Image getImage() {
     return null;
@@ -42,12 +37,14 @@ public class ProjectileMeta {
     return 0;
   }
 
-  private ProjectileMeta() {
-
-  }
-
   public ProjectileMeta getProjectileMeta(ProjectileType projectileType) {
     return projectileMetaInstances.get(projectileType);
+  }
+
+  private enum ProjectileType {
+    EXAM,
+    ROBOT,
+    POINTER
   }
 
 }

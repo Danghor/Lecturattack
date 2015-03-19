@@ -4,7 +4,6 @@ package NoPackageCreatedYetPackage;/*
 
 import entities.Player;
 import entities.Target;
-import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 
@@ -15,7 +14,8 @@ public class LevelGenerator {
   private LevelGenerator() {
     //class should not be initialized
   }
-//TODO --> real datatype for levelData
+
+  //TODO --> real datatype for levelData
   public static void generateLevel(LevelData level, Player player, ArrayList<Target> targets) {
 //actively modify the objects given in the parameters
   }

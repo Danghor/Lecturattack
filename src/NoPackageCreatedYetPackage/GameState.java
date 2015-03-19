@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 
 public class GameState extends BasicGameState {
+  private static int ID;
   private int currentLevel;
   private float wind;
   private Player player;
@@ -24,7 +25,6 @@ public class GameState extends BasicGameState {
   private Flag flag;
   private InformationField score;
   private InformationField playerName;
-  private static int ID;
   private LevelGenerator levelGenerator;
   private FileHandler fileHandler;
 
@@ -53,6 +53,6 @@ public class GameState extends BasicGameState {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-    PhysicsEngine.calculateStep(0,0,null,null);//TODO real values
+    PhysicsEngine.calculateStep(0, 0, null, null);//TODO real values
   }
 }

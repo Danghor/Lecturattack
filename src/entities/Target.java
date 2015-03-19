@@ -14,12 +14,6 @@ import utilities.EnhancedVector;
 
 public class Target extends RigidBody {
 
-  public enum TargetType{
-    LIBRARY,
-    RAM,
-    ENEMY;
-  }
-
   @Override
   public EnhancedVector getCenter() {
     return null;
@@ -28,5 +22,11 @@ public class Target extends RigidBody {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
 
+  }
+
+  public enum TargetType {
+    LIBRARY,
+    RAM,
+    ENEMY
   }
 }

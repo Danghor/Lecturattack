@@ -14,7 +14,7 @@ import utilities.EnhancedVector;
 public class Projectile extends RigidBody {
 
 
-  public Projectile(ProjectileMeta projectileMeta){
+  public Projectile(ProjectileMeta projectileMeta) {
 
   }
 

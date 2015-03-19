@@ -22,7 +22,7 @@ public class Player implements Renderable {
   private Projectile projectile;
   private PowerSlider powerSlider;
 
-  public Player (Image playerImage,Image armImage, ProjectileMeta projectileMeta){
+  public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
     this.bodyImage = playerImage;
     this.armImage = armImage;
     this.projectile = new Projectile(projectileMeta);

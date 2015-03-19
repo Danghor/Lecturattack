@@ -2,8 +2,6 @@ package NoPackageCreatedYetPackage;/*
  * Copyright (c) 2015.
  */
 
-import org.newdawn.slick.tiled.TiledMap;
-
 import java.io.IOException;
 
 /**
