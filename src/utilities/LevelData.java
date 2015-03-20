@@ -2,7 +2,7 @@
  * Copyright (c) 2015.
  */
 
-package NoPackageCreatedYetPackage;
+package utilities;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;

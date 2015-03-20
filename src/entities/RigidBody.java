@@ -2,7 +2,6 @@ package entities;/*
  * Copyright (c) 2015.
  */
 
-import NoPackageCreatedYetPackage.Renderable;
 import org.newdawn.slick.geom.Polygon;
 import utilities.EnhancedVector;
 
