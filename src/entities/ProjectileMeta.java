@@ -1,6 +1,5 @@
-package NoPackageCreatedYetPackage;
+package entities;
 
-import entities.Target;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;

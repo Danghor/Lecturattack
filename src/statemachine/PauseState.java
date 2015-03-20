@@ -1,4 +1,4 @@
-package NoPackageCreatedYetPackage;/*
+package statemachine;/*
  * Copyright (c) 2015.
  */
 
@@ -11,14 +11,14 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Created by Nick Steyer on 09/03/2015
  */
-public class MainMenuState extends BasicGameState {
-
+public class PauseState extends BasicGameState {
   private static int ID;
 
   @Override
   public int getID() {
     return ID;
   }
+
 
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {

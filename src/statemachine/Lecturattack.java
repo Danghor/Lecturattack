@@ -1,4 +1,4 @@
-package NoPackageCreatedYetPackage;/*
+package statemachine;/*
  * Copyright (c) 2015.
  */
 

@@ -1,4 +1,4 @@
-package NoPackageCreatedYetPackage;/*
+package statemachine;/*
  * Copyright (c) 2015.
  */
 
@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Created by Nick Steyer on 09/03/2015
  */
-public class PauseState extends BasicGameState {
+public class LevelSelectState extends BasicGameState {
   private static int ID;
 
   @Override
