@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
 
 public class RigidRectangle {
+
   private EnhancedVector topLeft;
   private EnhancedVector topRight;
   private EnhancedVector bottomLeft;

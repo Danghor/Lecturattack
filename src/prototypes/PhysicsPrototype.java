@@ -5,6 +5,7 @@ import org.newdawn.slick.*;
 import java.util.ArrayList;
 
 public class PhysicsPrototype extends BasicGame {
+
   private ArrayList<RigidRectangle> rects;
   private float deltaScale = 0.01f;
 

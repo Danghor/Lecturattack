@@ -29,28 +29,31 @@ public class GameState extends BasicGameState {
   private InformationField score;
   private InformationField playerName;
 
-  public void loadLevel(int level) {
-    //load player and targets with LevelLoader
-  }
+	public GameState(int iStateID) {
+		this.ID = iStateID;
+	}
 
+	public void loadLevel(int level) {
+		// load player and targets with LevelLoader
+	}
   private void resetLevel() {
     //todo: loadlevel(currentLevel)
   }
 
-  @Override
-  public int getID() {
-    return 0;
-  }
+	@Override
+	public int getID() {
+		return ID;
+	}
 
-  @Override
-  public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+	@Override
+	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-  }
+	}
 
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-
-  }
+	@Override
+	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+	  
+	}
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
