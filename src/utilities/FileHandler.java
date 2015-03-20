@@ -2,6 +2,8 @@ package utilities;/*
  * Copyright (c) 2015.
  */
 
+import utilities.xmlHandling.LevelElement;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -14,10 +16,10 @@ import java.util.List;
  * Created by Nick Steyer on 09/03/2015
  */
 public class FileHandler {
-  private final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
-  private final String[] PATH_TO_LEVELS = new String[]{""}; //TODO add LevelFiles
+  private static final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
+  private static final String[] PATH_TO_LEVELS = new String[]{""}; //TODO add LevelFiles
 
-  public List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
+  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
     File file = new File("resources/TestXML.xml");//TODO mapping levelNumber to file
     JAXBContext jaxbContext = null;
     LevelData level = null;
@@ -32,15 +34,12 @@ public class FileHandler {
     return level.getLevelElements();
   }
 
-  public int getLastLevelNumber() {
+  public static int getLastLevelNumber() {
     return 0;
   }
 
-  public void setLastLevelNumber(int level) {
+  public static void setLastLevelNumber(int level) {
     //todo: alles in %APPDATA%
   }
 
-  public static void main(String[] args) {
-
-  }
 }
