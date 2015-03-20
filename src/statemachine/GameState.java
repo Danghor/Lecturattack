@@ -28,8 +28,6 @@ public class GameState extends BasicGameState {
   private Flag flag;
   private InformationField score;
   private InformationField playerName;
-  private LevelGenerator levelGenerator;
-  private FileHandler fileHandler;
 
   public void loadLevel(int level) {
     //load player and targets with LevelLoader
