@@ -1,4 +1,4 @@
-package test;
+package prototypes;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
@@ -34,7 +34,7 @@ public class RigidRectangle {
     velocity = new EnhancedVector(0, 0);
     angularVelocity = 0;
 
-    inertia = 8;//(mass * height * height * width * width)/12;
+    inertia = (mass * height * height * width * width) / 120000;
 
     force = new EnhancedVector(0, 0);
   }
@@ -62,10 +62,10 @@ public class RigidRectangle {
   }
 
   public void rotate(float angle, EnhancedVector center) {
-    topLeft = topLeft.getRotated(angle, center);
-    topRight = topRight.getRotated(angle, center);
-    bottomLeft = bottomLeft.getRotated(angle, center);
-    bottomRight = bottomRight.getRotated(angle, center);
+    topLeft.rotate(angle, center);
+    topRight.rotate(angle, center);
+    bottomLeft.rotate(angle, center);
+    bottomRight.rotate(angle, center);
   }
 
   public void update(float delta) {

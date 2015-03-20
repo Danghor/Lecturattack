@@ -1,4 +1,4 @@
-/*
+package statemachine;/*
  * Copyright (c) 2015.
  */
 
@@ -10,6 +10,8 @@ import org.newdawn.slick.InputListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import utilities.menu.AnimatedButton;
 
 /**
  * Created by Andreas Geis on 18/03/2015
