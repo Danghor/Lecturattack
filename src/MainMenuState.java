@@ -2,39 +2,25 @@
  * Copyright (c) 2015.
  */
 
-import java.awt.Font;
-
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * Created by Andreas Geis on 18/03/2015
  */
-public class MainMenuState extends BasicGameState {
+public class MainMenuState extends BasicGameState implements InputListener {
 
   private int iStateID;
-
+  private StateBasedGame stateBasedGame;
+  private Image logo;
   private AnimatedButton[] menuButton = new AnimatedButton[3];
-  private Image placeholderImage;
-  private Image placeholderImage2;
-
-  private TextField oTitle;
   private int iMenuSelector = 0;
-
-  private java.awt.Font oAwtFont = new java.awt.Font("Sanserif", java.awt.Font.BOLD, 24);
-  private TrueTypeFont oTrueTypeFont = new TrueTypeFont(oAwtFont, false);
-
-  private boolean bInputPossible;
-
-  private int iIntervall;
 
   public MainMenuState(int iStateID) {
     this.iStateID = iStateID;
@@ -47,65 +33,34 @@ public class MainMenuState extends BasicGameState {
 
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    this.stateBasedGame = stateBasedGame;
+    logo = new Image("resources/images/logo.png");
     // TODO: check if the player is in level 2 or higher and replace the
     // "Spiel Starten" image with "Spiel fortsetzen" for Button 1
-    placeholderImage = new Image("resources/images/placeholder.png");
-    placeholderImage2 = new Image("resources/images/placeholder2.png");
-    for (int i = 0; i < menuButton.length; i++) {
-      menuButton[i] = new AnimatedButton(200, 300 + (i * 60), placeholderImage, placeholderImage2);
-    }
-    TrueTypeFont oTitlefont = new TrueTypeFont(new Font("Sanserif", Font.BOLD, 40), true);
-
-    oTitle = new TextField(gameContainer, oTitlefont, 180, 100, 300, 60);
-
-    oTitle.setBorderColor(Color.black);
-    oTitle.setText("Lecturattack");
+    menuButton[0] = new AnimatedButton(245, 500, new Image("resources/images/startGame_down.png"), new Image("resources/images/startGame.png"));
+    menuButton[1] = new AnimatedButton(495, 500, new Image("resources/images/levelSelect_down.png"), new Image("resources/images/levelSelect.png"));
+    menuButton[2] = new AnimatedButton(745, 500, new Image("resources/images/endGame_down.png"), new Image("resources/images/endGame.png"));
   }
 
   @Override
-  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int dt) throws SlickException {
+  public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 
-    keyboardNavigation(gameContainer);
-    // has to be set other�wise it is possible to change text while in
-    // GameState (playstate)
-    oTitle.setFocus(false);
-    initiateGameStat(gameContainer, stateBasedGame);
   }
 
-  private void keyboardNavigation(GameContainer oContainer) {
-    if (!bInputPossible) {
-      if (iIntervall == 10) {
-        iIntervall = 0;
-        bInputPossible = true;
-      } else {
-        iIntervall++;
+  /*
+   * listen for user input
+   */
+  @Override
+  public void keyPressed(int key, char c) {
+    if (key == Input.KEY_LEFT) {
+      if (iMenuSelector > 0) {
+        iMenuSelector--;
       }
-    } else {
-
-      if (oContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
-        if (iMenuSelector < 2) {
-          iMenuSelector++;
-          bInputPossible = false;
-        } else {
-          iMenuSelector = 0;
-          bInputPossible = false;
-        }
+    } else if (key == Input.KEY_RIGHT) {
+      if (iMenuSelector < 2) {
+        iMenuSelector++;
       }
-      if (oContainer.getInput().isKeyDown(Input.KEY_UP)) {
-        if (iMenuSelector > 0) {
-          iMenuSelector--;
-          bInputPossible = false;
-        } else {
-          iMenuSelector = 2;
-          bInputPossible = false;
-        }
-      }
-    }
-  }
-
-  private void initiateGameStat(GameContainer gameContainer, StateBasedGame stateBasedGame) {
-    // if (gameContainer.getInput().isKeyPressed(Input.KEY_ENTER)) {
-    if (gameContainer.getInput().isKeyPressed(Input.KEY_ENTER)) {
+    } else if (key == Input.KEY_ENTER) {
       if (iMenuSelector == 0) {
         stateBasedGame.enterState(2);
       }
@@ -120,15 +75,10 @@ public class MainMenuState extends BasicGameState {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    oTitle.render(gameContainer, graphics);
-    boolean focus;
+    graphics.drawImage(logo, 270, 70);
     for (int i = 0; i < menuButton.length; i++) {
-      if (iMenuSelector == i) {
-        focus = true;
-      } else {
-        focus = false;
-      }
-      menuButton[i].render(graphics, focus);
+      // check if the button currently has focus
+      menuButton[i].render(graphics, iMenuSelector == i);
     }
   }
 
