@@ -1,4 +1,4 @@
-package NoPackageCreatedYetPackage;
+package utilities.xmlHandling;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
