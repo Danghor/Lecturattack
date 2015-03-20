@@ -53,6 +53,6 @@ public class GameState extends BasicGameState {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-    PhysicsEngine.calculateStep(0, 0, null, null);//TODO real values
+   //PhysicsEngine.calculateStep(0, 0, null, null);//TODO real values
   }
 }
