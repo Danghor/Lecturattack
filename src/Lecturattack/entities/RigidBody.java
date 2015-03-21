@@ -3,19 +3,38 @@ package Lecturattack.entities;/*
  */
 
 import Lecturattack.utilities.EnhancedVector;
-import org.newdawn.slick.geom.Polygon;
+
+import java.util.ArrayList;
 
 /**
- * Created by Nick Steyer on 08/03/2015
+ * @author Nick Steyer
  */
 public abstract class RigidBody implements Renderable {
+  protected ArrayList<EnhancedVector> vertices;
+
   protected EnhancedVector linearVelocity;
-  protected float mass;
-  protected Polygon vertices;
+
+
+  protected EnhancedVector force;
+
+
+  protected RigidBody() {
+    force = new EnhancedVector(0f, 0f);
+  }
 
   public abstract EnhancedVector getCenter();
 
-  public float getMass() {
-    return mass;//TODO replace with mass loaded from Meta types
+  public abstract float getMass();
+
+  public void applyForce(float x, float y) {
+    force.add(new EnhancedVector(x, y));
   }
+
+  public void move(EnhancedVector direction) {
+    for (EnhancedVector vertex : vertices) {
+      vertex.add(direction);
+    }
+  }
+
+
 }

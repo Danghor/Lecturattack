@@ -29,15 +29,15 @@ public class TargetMeta {
     return targetTypeInstances.get(type);
   }
 
-  public Image getImage() {
+  Image getImage() {
     return image;
   }
 
-  public float getMass() {
+  float getMass() {
     return mass;
   }
 
-  public ArrayList<float[]> getTargetOutline() {
+  ArrayList<float[]> getTargetOutline() {
     return targetOutline;
   }
 

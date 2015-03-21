@@ -28,19 +28,19 @@ public class ProjectileMeta {
     return projectileMetaInstances.get(type);
   }
 
-  public Image getImage() {
+  Image getImage() {
     return image;
   }
 
-  public TargetMeta.TargetType getTargetType() {
+  TargetMeta.TargetType getTargetType() {
     return destroys;
   }
 
-  public ArrayList<float[]> getProjectileOutline() {
+  ArrayList<float[]> getProjectileOutline() {
     return projectileOutline;
   }
 
-  public float getMass() {
+  float getMass() {
     return mass;
   }
 
