@@ -6,38 +6,42 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Tim on 19.03.2015.
+ * @author Tim Adamek
+ * @author Nick Steyer
  */
 public class ProjectileMeta {
 
+  private static HashMap<ProjectileType, ProjectileMeta> projectileMetaInstances;
   private Image image;
   private float mass;
-  private Target.TargetType destroys;
+  private TargetMeta.TargetType destroys;
   private ArrayList<float[]> projectileOutline;
-  private HashMap<ProjectileType, ProjectileMeta> projectileMetaInstances;
+
+  static {
+    //todo: initialize instances with data from config file
+  }
 
   private ProjectileMeta() {
+  }
 
+  public static ProjectileMeta getInstance(ProjectileType type) {
+    return projectileMetaInstances.get(type);
   }
 
   public Image getImage() {
-    return null;
+    return image;
   }
 
-  public Target.TargetType getTargetType() {
-    return null;
+  public TargetMeta.TargetType getTargetType() {
+    return destroys;
   }
 
   public ArrayList<float[]> getProjectileOutline() {
-    return null;
+    return projectileOutline;
   }
 
   public float getMass() {
-    return 0;
-  }
-
-  public ProjectileMeta getProjectileMeta(ProjectileType projectileType) {
-    return projectileMetaInstances.get(projectileType);
+    return mass;
   }
 
   private enum ProjectileType {

@@ -23,10 +23,4 @@ public class Target extends RigidBody {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
 
   }
-
-  public enum TargetType {
-    LIBRARY,
-    RAM,
-    ENEMY
-  }
 }
