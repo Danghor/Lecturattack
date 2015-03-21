@@ -11,8 +11,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import utilities.FileHandler;
 import utilities.LevelGenerator;
 import utilities.PhysicsEngine;
+import utilities.xmlHandling.LevelElement;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nick Steyer on 09/03/2015
@@ -47,16 +50,25 @@ public class GameState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    player = new Player();
+    targets = new ArrayList<>();
 
-	}
+    try {//TODO see if exeption can be dealt with somewhere else
+      List<LevelElement> levelElements = FileHandler.getLevelData(1);
+      LevelGenerator.generateLevel(levelElements,player,targets);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
 
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-	  
+	  player.render(gameContainer,stateBasedGame,graphics);
 	}
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-    PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
+    //PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
   }
 }

@@ -10,15 +10,50 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @Author Tim Adamek
- *
  */
 public class Player implements Renderable {
+  public float getPositionY() {
+    return positionY;
+  }
+
+  public void setPositionY(float positionY) {
+    this.positionY = positionY;
+  }
+
+  public float getPositionX() {
+    return positionX;
+  }
+
+  public void setPositionX(float positionX) {
+    this.positionX = positionX;
+  }
+
+  public Image getBodyImage() {
+    return bodyImage;
+  }
+
+  public void setBodyImage(Image bodyImage) {
+    this.bodyImage = bodyImage;
+  }
+
+  public Image getArmImage() {
+    return armImage;
+  }
+
+  public void setArmImage(Image armImage) {
+    this.armImage = armImage;
+  }
+
   private Image bodyImage;
   private Image armImage;
   private float angle; //the current angle of the player's arm
   private boolean isThrowing;
   private Projectile projectile;
   private PowerSlider powerSlider;
+  private float positionX;
+  private float positionY;
+
+  public  Player(){};
 
   public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
     this.bodyImage = playerImage;
@@ -36,8 +71,6 @@ public class Player implements Renderable {
   }
 
   /**
-   *
-   *
    * @param strength
    */
   public final Projectile throwProjectile(float strength) {
@@ -48,6 +81,8 @@ public class Player implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-
+    graphics.drawImage(bodyImage,positionX,positionY);
   }
+
+
 }

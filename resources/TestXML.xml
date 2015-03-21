@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LevelData id="1">
 	<levelElements>
-		<id>1</id>
 		<positionX>100</positionX>
 		<positionY>100</positionY>
-		<type>RAM</type> 
+		<type>PLAYER</type>
 		<positioning>HORIZONTAL</positioning>
-		<image></image>
-	</levelElements>
-	<levelElements>
-		<id>1</id>
-		<positionX>100</positionX>
-		<positionY>100</positionY>
-		<type>RAM</type> 
-		<positioning>HORIZONTAL</positioning>
-		<image></image>
+		<image>resources/images/TestH2.png</image>
 	</levelElements>
 </LevelData>
