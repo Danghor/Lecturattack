@@ -14,6 +14,7 @@ public class EnhancedVector extends Vector2f {
 
   /**
    * @param partner The EnhancedVector with which the cross product is to be calculated.
+   *
    * @return The scalar value of the cross product.
    */
   public float crossProductScalar(EnhancedVector partner) {
@@ -23,18 +24,21 @@ public class EnhancedVector extends Vector2f {
   /**
    * Rotates the vector by a specified angle around a specified center.
    *
-   * @param angle  The angle used to rotate the vector. Positive angle: clockwise rotation; Negative angle: counterclockwise rotation
-   * @param center The center around which the vector is to be rotated.
+   * @param angleInDegrees The angle used to rotate the vector. Positive angle: counter-clockwise rotation; Negative angle: clockwise rotation
+   *                       (Assuming x rising from left to right and y rising from bottom to top)
+   * @param center         The center around which the vector is to be rotated.
    */
-  public void rotate(float angle, EnhancedVector center) {
+  public void rotate(float angleInDegrees, EnhancedVector center) {
+
+    double angleInRadians = Math.toRadians(angleInDegrees);
 
     //move center to origin of coordinate system
     double tmpX = this.x - center.x;
     double tmpY = this.y - center.y;
 
     //rotate x and y using the origin as the center
-    double rotatedTmpX = Math.cos(angle) * tmpX - Math.sin(angle) * tmpY;
-    double rotatedTmpY = Math.sin(angle) * tmpX + Math.cos(angle) * tmpY;
+    double rotatedTmpX = Math.cos(angleInRadians) * tmpX - Math.sin(angleInRadians) * tmpY;
+    double rotatedTmpY = Math.sin(angleInRadians) * tmpX + Math.cos(angleInRadians) * tmpY;
 
     //move center to its original position
     double newX = rotatedTmpX + center.x;
