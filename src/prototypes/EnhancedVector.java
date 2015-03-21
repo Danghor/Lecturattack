@@ -1,31 +1,19 @@
-package utilities;/*
- * Copyright (c) 2015.
- */
+package prototypes;
 
 import org.newdawn.slick.geom.Vector2f;
 
-/**
- * @author Nick Steyer
- */
 public class EnhancedVector extends Vector2f {
+
   public EnhancedVector(float x, float y) {
     super(x, y);
   }
 
-  /**
-   * @param partner The EnhancedVector with which the cross product is to be calculated.
-   * @return The scalar value of the cross product.
-   */
-  public float crossProductScalar(EnhancedVector partner) {
+  //cross multiplication (only returns a scalar)
+  public float crossProductValue(EnhancedVector partner) {
     return (this.x * partner.y - this.y * partner.x);
   }
 
-  /**
-   * Rotates the vector by a specified angle around a specified center.
-   *
-   * @param angle  The angle used to rotate the vector. Positive angle: clockwise rotation; Negative angle: counterclockwise rotation
-   * @param center The center around which the vector is to be rotated.
-   */
+  //rotation
   public void rotate(float angle, EnhancedVector center) {
 
     //move center to origin of coordinate system
@@ -40,12 +28,13 @@ public class EnhancedVector extends Vector2f {
     double newX = rotatedTmpX + center.x;
     double newY = rotatedTmpY + center.y;
 
-    //apply the calculated values, i.e. rotate the vector
+    //rotate the vector
     this.x = (float) newX;
     this.y = (float) newY;
   }
 
-  public EnhancedVector getScaled(float factor) {
-    return (EnhancedVector) super.scale(factor);
+  @Override
+  public EnhancedVector scale(float a) {
+    return (EnhancedVector) super.scale(a);
   }
 }

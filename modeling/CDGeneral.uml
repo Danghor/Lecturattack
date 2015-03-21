@@ -3,98 +3,181 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="1009.0" y="1084.0">Lecturattack</node>
-    <node x="570.0" y="368.0">entities.Muse</node>
-    <node x="83.5" y="820.0">entities.Projectile</node>
-    <node x="304.0" y="1084.0">PauseState</node>
-    <node x="248.0" y="1292.0">prototypes</node>
-    <node x="392.0" y="954.5">entities.Library</node>
-    <node x="774.0" y="1084.0">MainMenuState</node>
-    <node x="483.0" y="1292.0">entities.InformationField</node>
-    <node x="0.0" y="1084.0">PhysicsEngine</node>
-    <node x="241.5" y="0.0">entities.Player</node>
-    <node x="691.0" y="1292.0">entities.PowerSlider</node>
-    <node x="497.00000000000006" y="908.0">entities.Enemy</node>
-    <node x="196.0" y="954.5">entities.Pointer</node>
-    <node x="0.0" y="1292.0">LevelGenerator</node>
-    <node x="291.0" y="368.0">entities.Speedy</node>
-    <node x="539.0" y="1084.0">LevelSelectState</node>
-    <node x="858.0" y="0.0">GameState</node>
-    <node x="0.0" y="954.5">entities.Exam</node>
-    <node x="0.0" y="368.0">entities.Stroehtie</node>
-    <node x="707.0" y="608.0">FileHandler</node>
-    <node x="94.0" y="954.5">entities.Robot</node>
-    <node x="861.0" y="1292.0">entities.Flag</node>
-    <node x="111.25" y="608.0">entities.RigidBody</node>
-    <node x="393.5" y="820.0">entities.Target</node>
-    <node x="304.0" y="954.5">entities.Ram</node>
+    <node x="386.2035714285713" y="363.0">entities.Projectile</node>
+    <node x="994.9535714285713" y="638.5">NoPackageCreatedYetPackage.FileHandler</node>
+    <node x="801.5982142857143" y="0.0">NoPackageCreatedYetPackage.Renderable</node>
+    <node x="1635.4535714285712" y="1172.0">NoPackageCreatedYetPackage.PauseState</node>
+    <node x="1344.9535714285712" y="181.5">entities.InformationField</node>
+    <node x="573.2035714285713" y="1172.0">NoPackageCreatedYetPackage.MainMenuState</node>
+    <node x="1178.9535714285712" y="1602.0">NoPackageCreatedYetPackage.Lecturattack</node>
+    <node x="0.0" y="1078.5">NoPackageCreatedYetPackage.ProjectileMeta</node>
+    <node x="1377.9535714285712" y="685.0">NoPackageCreatedYetPackage.LevelGenerator</node>
+    <node x="576.9535714285713" y="545.0">entities.Player</node>
+    <node x="203.2499999999999" y="15.5">utilities</node>
+    <node x="106.99999999999989" y="1665.0">NoPackageCreatedYetPackage.ProjectileMeta.ProjectileType</node>
+    <node x="579.2035714285713" y="181.5">entities.PowerSlider</node>
+    <node x="931.4535714285713" y="986.0">NoPackageCreatedYetPackage.GameState</node>
+    <node x="0.0" y="1904.0">NoPackageCreatedYetPackage.PhysicsEngine</node>
+    <node x="1441.4535714285712" y="1172.0">NoPackageCreatedYetPackage.LevelSelectState</node>
+    <node x="104.99999999999989" y="670.0">entities.Target.TargetType</node>
+    <node x="1857.9535714285712" y="181.5">entities.Flag</node>
+    <node x="" y="">entities.RigidBody</node>
+    <node x="73.99999999999989" y="379.0">entities.Target</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="entities.Projectile" target="entities.RigidBody">
-      <point x="0.0" y="-19.0" />
-      <point x="135.0" y="795.0" />
-      <point x="198.0" y="795.0" />
-      <point x="-86.75" y="81.0" />
+    <edge source="NoPackageCreatedYetPackage.GameState" target="NoPackageCreatedYetPackage.FileHandler">
+      <point x="0.0" y="-283.0" />
+      <point x="0.0" y="97.0" />
     </edge>
-    <edge source="entities.Exam" target="entities.Projectile">
-      <point x="0.0" y="-19.0" />
-      <point x="37.0" y="883.0" />
-      <point x="100.66666666666666" y="883.0" />
-      <point x="-34.33333333333334" y="19.0" />
+    <edge source="NoPackageCreatedYetPackage.GameState" target="entities.Target">
+      <point x="-210.0" y="-283.0" />
+      <point x="966.4535714285713" y="966.0" />
+      <point x="262.7035714285713" y="966.0" />
+      <point x="262.7035714285713" y="525.0" />
+      <point x="291.4999999999999" y="525.0" />
+      <point x="72.5" y="50.0" />
     </edge>
-    <edge source="entities.Ram" target="entities.Target">
-      <point x="0.0" y="-19.0" />
-      <point x="338.0" y="883.0" />
-      <point x="407.1666666666667" y="883.0" />
-      <point x="-27.333333333333314" y="19.0" />
+    <edge source="entities.PowerSlider" target="NoPackageCreatedYetPackage.Renderable">
+      <point x="0.0" y="-34.5" />
+      <point x="825.7035714285713" y="99.0" />
+      <point x="949.4982142857144" y="99.0" />
+      <point x="-98.59999999999991" y="34.5" />
     </edge>
-    <edge source="entities.Robot" target="entities.Projectile">
-      <point x="0.0" y="-19.0" />
-      <point x="0.0" y="19.0" />
+    <edge source="NoPackageCreatedYetPackage.GameState" target="NoPackageCreatedYetPackage.LevelGenerator">
+      <point x="70.0" y="-283.0" />
+      <point x="1246.4535714285712" y="946.0" />
+      <point x="1479.4535714285712" y="946.0" />
+      <point x="0.0" y="50.5" />
     </edge>
-    <edge source="entities.Pointer" target="entities.Projectile">
-      <point x="-2.8421709430404007E-14" y="-19.0" />
-      <point x="240.0" y="883.0" />
-      <point x="169.33333333333334" y="883.0" />
-      <point x="34.33333333333334" y="19.0" />
-    </edge>
-    <edge source="entities.Stroehtie" target="entities.Player">
-      <point x="0.0" y="-97.5" />
-      <point x="135.5" y="343.0" />
-      <point x="301.1666666666667" y="343.0" />
-      <point x="-119.33333333333331" y="159.0" />
+    <edge source="NoPackageCreatedYetPackage.ProjectileMeta" target="NoPackageCreatedYetPackage.ProjectileMeta.ProjectileType">
+      <point x="88.75" y="190.5" />
+      <point x="266.25" y="1582.0" />
+      <point x="212.7499999999999" y="1582.0" />
+      <point x="35.25" y="-65.5" />
     </edge>
     <edge source="entities.Target" target="entities.RigidBody">
-      <point x="0.0" y="-19.0" />
-      <point x="434.5" y="795.0" />
-      <point x="371.5" y="795.0" />
-      <point x="86.75" y="81.0" />
+      <point x="0.0" y="-50.0" />
+      <point x="218.9999999999999" y="338.0" />
+      <point x="281.7499999999999" y="338.0" />
+      <point x="-91.75" y="97.0" />
     </edge>
-    <edge source="entities.Muse" target="entities.Player">
-      <point x="0.0" y="-97.5" />
-      <point x="691.5" y="343.0" />
-      <point x="539.8333333333333" y="343.0" />
-      <point x="119.33333333333326" y="159.0" />
+    <edge source="NoPackageCreatedYetPackage.GameState" target="entities.Flag">
+      <point x="210.0" y="-283.0" />
+      <point x="1386.4535714285712" y="966.0" />
+      <point x="2104.453571428571" y="966.0" />
+      <point x="0.0" y="34.5" />
     </edge>
-    <edge source="entities.Enemy" target="entities.Target">
+    <edge source="NoPackageCreatedYetPackage.GameState" target="entities.Player">
+      <point x="-70.0" y="-283.0" />
+      <point x="1106.4535714285712" y="946.0" />
+      <point x="775.9535714285713" y="946.0" />
+      <point x="0.0" y="190.5" />
+    </edge>
+    <edge source="entities.Target.TargetType" target="entities.Target">
       <point x="0.0" y="-65.5" />
-      <point x="579.5" y="883.0" />
-      <point x="461.83333333333337" y="883.0" />
-      <point x="27.33333333333337" y="19.0" />
+      <point x="177.4999999999999" y="525.0" />
+      <point x="146.4999999999999" y="525.0" />
+      <point x="-72.5" y="50.0" />
     </edge>
-    <edge source="entities.Speedy" target="entities.Player">
-      <point x="0.0" y="-97.5" />
-      <point x="0.0" y="159.0" />
+    <edge source="NoPackageCreatedYetPackage.Lecturattack" target="NoPackageCreatedYetPackage.PauseState">
+      <point x="130.125" y="-128.5" />
+      <point x="1482.5785714285712" y="1582.0" />
+      <point x="1722.4535714285712" y="1582.0" />
+      <point x="0.0" y="97.0" />
     </edge>
-    <edge source="entities.Library" target="entities.Target">
-      <point x="0.0" y="-19.0" />
+    <edge source="NoPackageCreatedYetPackage.ProjectileMeta.ProjectileType" target="NoPackageCreatedYetPackage.ProjectileMeta">
+      <point x="-35.25" y="-65.5" />
+      <point x="142.2499999999999" y="1582.0" />
+      <point x="88.75" y="1582.0" />
+      <point x="-88.75" y="190.5" />
+    </edge>
+    <edge source="NoPackageCreatedYetPackage.Lecturattack" target="NoPackageCreatedYetPackage.GameState">
+      <point x="-43.375" y="-128.5" />
+      <point x="1309.0785714285712" y="1572.0" />
+      <point x="1176.4535714285712" y="1572.0" />
+      <point x="0.0" y="283.0" />
+    </edge>
+    <edge source="entities.RigidBody" target="NoPackageCreatedYetPackage.Renderable">
+      <point x="91.75" y="-97.0" />
+      <point x="465.2499999999999" y="89.0" />
+      <point x="850.8982142857143" y="89.0" />
+      <point x="-197.20000000000005" y="34.5" />
+    </edge>
+    <edge source="NoPackageCreatedYetPackage.Lecturattack" target="NoPackageCreatedYetPackage.MainMenuState">
+      <point x="-130.125" y="-128.5" />
+      <point x="1222.3285714285712" y="1582.0" />
+      <point x="660.2035714285713" y="1582.0" />
+      <point x="0.0" y="97.0" />
+    </edge>
+    <edge source="entities.InformationField" target="NoPackageCreatedYetPackage.Renderable">
+      <point x="0.0" y="-34.5" />
+      <point x="1591.4535714285712" y="99.0" />
+      <point x="1146.6982142857141" y="99.0" />
+      <point x="98.59999999999991" y="34.5" />
+    </edge>
+    <edge source="NoPackageCreatedYetPackage.Lecturattack" target="NoPackageCreatedYetPackage.LevelSelectState">
+      <point x="43.375" y="-128.5" />
+      <point x="1395.8285714285712" y="1572.0" />
+      <point x="1528.4535714285712" y="1572.0" />
+      <point x="0.0" y="97.0" />
+    </edge>
+    <edge source="entities.Player" target="entities.PowerSlider">
+      <point x="49.75" y="-190.5" />
+      <point x="0.0" y="34.5" />
+    </edge>
+    <edge source="entities.RigidBody" target="utilities">
+      <point x="-91.75" y="-97.0" />
       <point x="0.0" y="19.0" />
     </edge>
+    <edge source="entities.Player" target="entities.Projectile">
+      <point x="-149.25" y="-190.5" />
+      <point x="626.7035714285713" y="525.0" />
+      <point x="530.2035714285713" y="525.0" />
+      <point x="0.0" y="66.0" />
+    </edge>
+    <edge source="NoPackageCreatedYetPackage.GameState" target="entities.InformationField">
+      <point x="140.0" y="-283.0" />
+      <point x="1316.4535714285712" y="956.0" />
+      <point x="1591.4535714285712" y="956.0" />
+      <point x="0.0" y="34.5" />
+    </edge>
+    <edge source="entities.Projectile" target="entities.RigidBody">
+      <point x="0.0" y="-66.0" />
+      <point x="530.2035714285713" y="338.0" />
+      <point x="465.2499999999999" y="338.0" />
+      <point x="91.75" y="97.0" />
+    </edge>
+    <edge source="NoPackageCreatedYetPackage.GameState" target="entities.Projectile">
+      <point x="-140.0" y="-283.0" />
+      <point x="1036.4535714285712" y="956.0" />
+      <point x="522.4767857142858" y="956.0" />
+      <point x="522.4767857142858" y="525.0" />
+      <point x="434.2035714285713" y="525.0" />
+      <point x="-96.0" y="66.0" />
+    </edge>
+    <edge source="entities.Flag" target="NoPackageCreatedYetPackage.Renderable">
+      <point x="0.0" y="-34.5" />
+      <point x="2104.453571428571" y="89.0" />
+      <point x="1245.2982142857145" y="89.0" />
+      <point x="197.20000000000005" y="34.5" />
+    </edge>
+    <edge source="NoPackageCreatedYetPackage.ProjectileMeta" target="entities.Target.TargetType">
+      <point x="0.0" y="-190.5" />
+      <point x="0.0" y="65.5" />
+    </edge>
+    <edge source="entities.Player" target="NoPackageCreatedYetPackage.Renderable">
+      <point x="149.25" y="-190.5" />
+      <point x="925.2035714285713" y="525.0" />
+      <point x="1127.2982142857145" y="525.0" />
+      <point x="1127.2982142857145" y="99.0" />
+      <point x="1048.0982142857142" y="99.0" />
+      <point x="0.0" y="34.5" />
+    </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.9" x="892.2222222222222" y="1197.3333333333333" />
+  <settings layout="Hierarchic Group" zoom="0.9" x="1722.888888888889" y="1345.5555555555557" />
   <SelectedNodes>
-    <node>Lecturattack</node>
+    <node>NoPackageCreatedYetPackage.ProjectileMeta.ProjectileType</node>
   </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
