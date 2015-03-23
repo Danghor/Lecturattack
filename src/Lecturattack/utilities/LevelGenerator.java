@@ -20,6 +20,7 @@ public class LevelGenerator {
 
   //TODO --> real datatype for levelData
   public static void generateLevel(List<LevelElement> levelElements, Player player, ArrayList<Target> targets) {
+    //Test
     for (LevelElement levelElement : levelElements) {
       if (levelElement.getType() == XmlObjectType.PLAYER) {
         player.setPositionX(levelElement.getPositionX());
