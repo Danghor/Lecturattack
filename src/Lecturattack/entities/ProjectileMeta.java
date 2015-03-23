@@ -1,23 +1,16 @@
 package Lecturattack.entities;
 
-import org.newdawn.slick.Image;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * @author Tim Adamek
  * @author Nick Steyer
  */
-public class ProjectileMeta {
-
-  private static HashMap<ProjectileType, ProjectileMeta> projectileMetaInstances;
-  private Image image;
-  private float mass;
+public class ProjectileMeta extends MetaObject {
   private TargetMeta.TargetType destroys;
-  private ArrayList<float[]> projectileOutline;
 
   static {
+    instances = new HashMap<ProjectileType, ProjectileMeta>();
     //todo: initialize instances with data from config file
   }
 
@@ -25,23 +18,11 @@ public class ProjectileMeta {
   }
 
   public static ProjectileMeta getInstance(ProjectileType type) {
-    return projectileMetaInstances.get(type);
-  }
-
-  Image getImage() {
-    return image;
+    return (ProjectileMeta) instances.get(type);
   }
 
   TargetMeta.TargetType getTargetType() {
     return destroys;
-  }
-
-  ArrayList<float[]> getProjectileOutline() {
-    return projectileOutline;
-  }
-
-  float getMass() {
-    return mass;
   }
 
   private enum ProjectileType {
