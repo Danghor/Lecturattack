@@ -17,9 +17,8 @@ public class Target extends RigidBody {
   private int hitCounter;
 
   public Target(TargetMeta targetMeta, float x, float y) {
-    super();//TODO needs some way to set the position, so that it is possible to define where the targets are when creating them in the LevelGenerator
+    super(targetMeta, x, y);//TODO needs some way to set the position, so that it is possible to define where the targets are when creating them in the LevelGenerator
     metaObject = targetMeta;
-    move(new EnhancedVector(x, y));
     hitCounter = 0;
   }
 
