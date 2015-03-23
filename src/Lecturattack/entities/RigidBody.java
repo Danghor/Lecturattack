@@ -13,12 +13,10 @@ public abstract class RigidBody implements Renderable {
   protected ArrayList<EnhancedVector> vertices;
 
   protected EnhancedVector linearVelocity;
-
-
   protected EnhancedVector force;
 
-
   protected RigidBody() {
+    linearVelocity = new EnhancedVector(0f, 0f);
     force = new EnhancedVector(0f, 0f);
   }
 

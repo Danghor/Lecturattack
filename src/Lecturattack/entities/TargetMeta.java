@@ -12,36 +12,31 @@ import java.util.HashMap;
 /**
  * @author Nick Steyer
  */
-public class TargetMeta {
-  private static HashMap<TargetType, TargetMeta> targetTypeInstances;
-  private Image image;
-  private float mass;
-  private ArrayList<float[]> targetOutline;
+public class TargetMeta extends MetaObject {
+
+  final int maxHits;
 
   static {
+    instances = new HashMap<TargetType, TargetMeta>();
     //todo: initialize instances with data from config file
   }
 
-  private TargetMeta() {
+  ArrayList<Image> images;
+
+  private TargetMeta(ArrayList<Image> images, int maxHits) {
+    this.images = images;
+    this.maxHits = maxHits;
   }
 
   public static TargetMeta getInstance(TargetType type) {
-    return targetTypeInstances.get(type);
+    return (TargetMeta) instances.get(type);
   }
 
-  Image getImage() {
-    return image;
+  Image getImage(int index) {
+    return images.get(index); //no need for exception handling, since IndexOutOfBoundsException is already implemented
   }
 
-  float getMass() {
-    return mass;
-  }
-
-  ArrayList<float[]> getTargetOutline() {
-    return targetOutline;
-  }
-
-  public enum TargetType {
+  enum TargetType {
     LIBRARY,
     RAM,
     ENEMY

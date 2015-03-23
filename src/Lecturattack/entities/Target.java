@@ -14,9 +14,23 @@ public class Target extends RigidBody {
 
   private TargetMeta metaObject;
 
-  public Target(TargetMeta targetMeta) {
+  private int hitCounter;
+
+  public Target(TargetMeta targetMeta, float x, float y) {
     super();//TODO needs some way to set the position, so that it is possible to define where the targets are when creating them in the LevelGenerator
     metaObject = targetMeta;
+    move(new EnhancedVector(x, y));
+    hitCounter = 0;
+  }
+
+  void hit() {
+    if (hitCounter < metaObject.maxHits) {
+      hitCounter++;
+    }
+  }
+
+  boolean destroyed() {
+    return hitCounter >= metaObject.maxHits; //>= instead of == just to be sure
   }
 
   @Override

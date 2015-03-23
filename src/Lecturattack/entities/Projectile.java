@@ -16,9 +16,10 @@ public class Projectile extends RigidBody {
   protected float torque;
   private ProjectileMeta metaObject;
 
-  public Projectile(ProjectileMeta projectileMeta) {
+  public Projectile(ProjectileMeta projectileMeta, float x, float y) {
     super();
     metaObject = projectileMeta;
+    move(new EnhancedVector(x, y));
     torque = 0f;
   }
 

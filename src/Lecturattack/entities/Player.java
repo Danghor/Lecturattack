@@ -23,7 +23,7 @@ public class Player implements Renderable {
   public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
     this.bodyImage = playerImage;
     this.armImage = armImage;
-    this.projectile = new Projectile(projectileMeta);
+    this.projectile = new Projectile(projectileMeta, 0f, 0f); //todo: set actual position for the projectile
   }
 
   public void reset() {
