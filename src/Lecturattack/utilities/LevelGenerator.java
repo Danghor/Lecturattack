@@ -2,9 +2,8 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.Player;
-import Lecturattack.entities.Target;
-import Lecturattack.entities.TargetMeta;
+import Lecturattack.entities.*;
+import Lecturattack.utilities.xmlHandling.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
 import org.newdawn.slick.Image;
@@ -31,13 +30,25 @@ public class LevelGenerator {
           e.printStackTrace();
         }
       } else if (levelElement.getType() == XmlObjectType.RAM) {
-        Target ram = new Target(TargetMeta.getInstance(TargetMeta.TargetType.RAM), levelElement.getPositionX(), levelElement.getPositionY());
+        TargetMetaType targetMetaType;
+        if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
+          targetMetaType = TargetMetaType.RAMH;
+        } else {
+          targetMetaType = TargetMetaType.RAMV;
+        }
+        Target ram = new Target(TargetMeta.getInstance(targetMetaType), levelElement.getPositionX(), levelElement.getPositionY());
         targets.add(ram);
       } else if (levelElement.getType() == XmlObjectType.LIBRARY) {
-        Target library = new Target(TargetMeta.getInstance(TargetMeta.TargetType.LIBRARY), levelElement.getPositionX(), levelElement.getPositionY());
+        TargetMetaType targetMetaType;
+        if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
+          targetMetaType = TargetMetaType.LIBRARYH;
+        } else {
+          targetMetaType = TargetMetaType.LIBRARYV;
+        }
+        Target library = new Target(TargetMeta.getInstance(targetMetaType), levelElement.getPositionX(), levelElement.getPositionY());
         targets.add(library);
       } else {
-        Target enemy = new Target(TargetMeta.getInstance(TargetMeta.TargetType.ENEMY), levelElement.getPositionX(), levelElement.getPositionY());
+        Target enemy = new Target(TargetMeta.getInstance(TargetMetaType.ENEMY), levelElement.getPositionX(), levelElement.getPositionY());
         targets.add(enemy);
       }
     }

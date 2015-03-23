@@ -17,10 +17,9 @@ public abstract class RigidBody implements Renderable {
   protected RigidBody(MetaObject meta, float x, float y) {
     this.vertices = new ArrayList<EnhancedVector>();
 
-    //TODO load outline from config --> currenty null pointer exeption
-    //for (float[] vertexPosition : meta.getOutline()) {
-    //  vertices.add(new EnhancedVector(vertexPosition[0], vertexPosition[1]));
-   // }
+    for (float[] vertexPosition : meta.getOutline()) {
+      vertices.add(new EnhancedVector(vertexPosition[0], vertexPosition[1]));
+    }
 
     move(new EnhancedVector(x, y));
 

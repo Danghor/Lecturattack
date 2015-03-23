@@ -5,9 +5,8 @@
 package Lecturattack.entities;
 
 import Lecturattack.utilities.FileHandler;
-import Lecturattack.utilities.xmlHandling.Positioning;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
-import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
+import Lecturattack.utilities.xmlHandling.configLoading.XmlVertice;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -22,11 +21,10 @@ public class TargetMeta extends MetaObject {
   //TODO is the Implementation visibility intended?
   final int maxHits;//TODO isn't this always 3 per definition?
   ArrayList<Image> images;
-  Positioning positioning;
+  TargetType targetType;
 
   static {
-    instances = new HashMap<TargetType, TargetMeta>();
-
+    instances = new HashMap<TargetMetaType, TargetMeta>();
     List<TargetStandard> targetStandards = FileHandler.loadTargetConfig();
     for (TargetStandard targetStandard : targetStandards) {
       ArrayList<Image> images = new ArrayList<>();
@@ -39,34 +37,28 @@ public class TargetMeta extends MetaObject {
         if (!targetStandard.getImageSlightlyBroken().equals("")) {
           images.add(new Image(targetStandard.getImageSlightlyBroken()));
         }
-        if (!targetStandard.getImageAlmostBroken().equals("")) {//TODO find another way than just leaving one field blank
+        if (!targetStandard.getImageAlmostBroken().equals("")) {//TODO find another way than just leaving one field blank --> maybe really list
           images.add(new Image(targetStandard.getImageAlmostBroken()));
         }
       } catch (SlickException e) {
         e.printStackTrace();
       }
-      //TODO see if the "default" TargetType Emum can be reused here
-      TargetType targetType;
-      if (targetStandard.getTargetType() == XmlObjectType.ENEMY) {
-        targetType = TargetType.ENEMY;
-      } else if (targetStandard.getTargetType() == XmlObjectType.RAM) {
-        targetType = TargetType.RAM;
-      } else {//TODO there must be a new/"new" type
-        targetType = TargetType.LIBRARY;
-      }
-
-      instances.put(targetType, new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getPositioning()));
+      instances.put(targetStandard.getTargetMetaType(), new TargetMeta(images, targetStandard.getMaxHits(),targetStandard.getTargetType(),targetStandard.getVertices()));//TODO this is strange --> it would also accept TargetType instead of targetMetaType
     }
   }
 
-
-  public TargetMeta(ArrayList<Image> images, int maxHits, Positioning positioning) {
+  public TargetMeta(ArrayList<Image> images, int maxHits,TargetType targetType,List<XmlVertice> vertices) {
     this.images = images;
     this.maxHits = maxHits;
-    this.positioning = positioning;
+    this.targetType = targetType;
+    for(XmlVertice vertice:vertices){
+      float[] verticePosition = {vertice.getX(),vertice.getY()};
+      this.outline=new ArrayList<>();
+      this.outline.add(verticePosition);
+    }
   }
 
-  public static TargetMeta getInstance(TargetType type) {
+  public static TargetMeta getInstance(TargetMetaType type) {
     return (TargetMeta) instances.get(type);
   }
 
@@ -74,9 +66,7 @@ public class TargetMeta extends MetaObject {
     return images.get(index); //no need for exception handling, since IndexOutOfBoundsException is already implemented
   }
 
-  public enum TargetType {//TODO in external class --> allows use for XML
-    LIBRARY,
-    RAM,
-    ENEMY
-  }
+
+
+
 }

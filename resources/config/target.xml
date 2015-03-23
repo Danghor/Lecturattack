@@ -6,7 +6,26 @@
         <imageAlmostBroken>resources/images/RamZ2.png</imageAlmostBroken>
         <maxHits>3</maxHits>
         <targetType>RAM</targetType>
+        <targetMetaType>RAMV</targetMetaType>
         <positioning>VERTICAL</positioning>
+        <vertices>
+            <vertice>
+                <x>0</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>85</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>85</x>
+                <y>197</y>
+            </vertice>
+            <vertice>
+                <x>0</x>
+                <y>197</y>
+            </vertice>
+        </vertices>
     </target>
     <target>
         <imageIntact>resources/images/RamQ.png</imageIntact>
@@ -14,7 +33,26 @@
         <imageAlmostBroken>resources/images/RamZ2Q.png</imageAlmostBroken>
         <maxHits>3</maxHits>
         <targetType>RAM</targetType>
+        <targetMetaType>RAMH</targetMetaType>
         <positioning>HORIZONTAL</positioning>
+        <vertices>
+            <vertice>
+                <x>0</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>0</x>
+                <y>85</y>
+            </vertice>
+            <vertice>
+                <x>197</x>
+                <y>85</y>
+            </vertice>
+            <vertice>
+                <x>197</x>
+                <y>0</y>
+            </vertice>
+        </vertices>
     </target>
     <target>
         <imageIntact>resources/images/JavaB.png</imageIntact>
@@ -22,15 +60,53 @@
         <imageAlmostBroken>resources/images/JavaBZ2.png</imageAlmostBroken>
         <maxHits>3</maxHits>
         <targetType>LIBRARY</targetType>
+        <targetMetaType>LIBRARYV</targetMetaType>
         <positioning>VERTICAL</positioning>
+        <vertices>
+            <vertice>
+                <x>0</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>85</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>85</x>
+                <y>197</y>
+            </vertice>
+            <vertice>
+                <x>0</x>
+                <y>197</y>
+            </vertice>
+        </vertices>
     </target>
     <target>
         <imageIntact>resources/images/JavaB2.png</imageIntact>
-        <imageSlightlyBroken>resources/images/JavaBZ1.png</imageSlightlyBroken>
-        <imageAlmostBroken>resources/images/JavaBZ2.png</imageAlmostBroken>
+        <imageSlightlyBroken>resources/images/JavaB2Z1.png</imageSlightlyBroken>
+        <imageAlmostBroken>resources/images/JavaB2Z2.png</imageAlmostBroken>
         <maxHits>3</maxHits>
         <targetType>LIBRARY</targetType>
+        <targetMetaType>LIBRARYH</targetMetaType>
         <positioning>HORIZONTAL</positioning>
+        <vertices>
+            <vertice>
+                <x>0</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>0</x>
+                <y>85</y>
+            </vertice>
+            <vertice>
+                <x>197</x>
+                <y>85</y>
+            </vertice>
+            <vertice>
+                <x>197</x>
+                <y>0</y>
+            </vertice>
+        </vertices>
     </target>
     <target>
         <imageIntact>resources/images/studentOk.png</imageIntact>
@@ -38,7 +114,25 @@
         <imageAlmostBroken></imageAlmostBroken>
         <maxHits>3</maxHits>
         <targetType>ENEMY</targetType>
-        <positioning>HORIZONTAL</positioning>
+        <targetMetaType>ENEMY</targetMetaType>
+        <vertices>
+            <vertice>
+                <x>0</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>151</x>
+                <y>0</y>
+            </vertice>
+            <vertice>
+                <x>151</x>
+                <y>191</y>
+            </vertice>
+            <vertice>
+                <x>0</x>
+                <y>191</y>
+            </vertice>
+        </vertices>
     </target>
     <!-- TODO maybe it needs the vertices? -->
 </targets>

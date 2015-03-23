@@ -53,7 +53,7 @@ public class GameState extends BasicGameState {
     targets = new ArrayList<>();
 
     try {//TODO see if exeption can be dealt with somewhere else
-      List<LevelElement> levelElements = FileHandler.getLevelData(1);
+      List<LevelElement> levelElements = FileHandler.getLevelData(1);//LEVEL number specified here
       FileHandler.loadTargetConfig();
       LevelGenerator.generateLevel(levelElements,player,targets);
     } catch (IOException e) {

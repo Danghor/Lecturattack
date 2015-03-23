@@ -23,8 +23,8 @@ public class Target extends RigidBody {
     super(targetMeta, x, y);
     metaObject = targetMeta;
     hitCounter = 0;
-    this.x=x;
-    this.y=y;
+    this.x = x;
+    this.y = y;
   }
 
   void hit() {
@@ -50,6 +50,6 @@ public class Target extends RigidBody {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     //TODO just dummy implementation
-    metaObject.getImage(0).draw(this.x,this.y);
+    metaObject.getImage(0).draw(this.x, this.y);
   }
 }
