@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<targets>
+    <target>
+        <imageIntact>resources/images/Ram.png</imageIntact>
+        <imageSlightlyBroken>resources/images/RamZ1.png</imageSlightlyBroken>
+        <imageAlmostBroken>resources/images/RamZ2.png</imageAlmostBroken>
+        <maxHits>3</maxHits>
+        <targetType>RAM</targetType>
+        <positioning>VERTICAL</positioning>
+    </target>
+    <target>
+        <imageIntact>resources/images/RamQ.png</imageIntact>
+        <imageSlightlyBroken>resources/images/RamZ1Q.png</imageSlightlyBroken>
+        <imageAlmostBroken>resources/images/RamZ2Q.png</imageAlmostBroken>
+        <maxHits>3</maxHits>
+        <targetType>RAM</targetType>
+        <positioning>HORIZONTAL</positioning>
+    </target>
+    <target>
+        <imageIntact>resources/images/JavaB.png</imageIntact>
+        <imageSlightlyBroken>resources/images/JavaBZ1.png</imageSlightlyBroken>
+        <imageAlmostBroken>resources/images/JavaBZ2.png</imageAlmostBroken>
+        <maxHits>3</maxHits>
+        <targetType>LIBRARY</targetType>
+        <positioning>VERTICAL</positioning>
+    </target>
+    <target>
+        <imageIntact>resources/images/JavaB2.png</imageIntact>
+        <imageSlightlyBroken>resources/images/JavaBZ1.png</imageSlightlyBroken>
+        <imageAlmostBroken>resources/images/JavaBZ2.png</imageAlmostBroken>
+        <maxHits>3</maxHits>
+        <targetType>LIBRARY</targetType>
+        <positioning>HORIZONTAL</positioning>
+    </target>
+    <target>
+        <imageIntact>resources/images/studentOk.png</imageIntact>
+        <imageSlightlyBroken>resources/images/studentHit.png</imageSlightlyBroken>
+        <imageAlmostBroken></imageAlmostBroken>
+        <maxHits>3</maxHits>
+        <targetType>ENEMY</targetType>
+        <positioning>HORIZONTAL</positioning>
+    </target>
+    <!-- TODO maybe it needs the vertices? -->
+</targets>

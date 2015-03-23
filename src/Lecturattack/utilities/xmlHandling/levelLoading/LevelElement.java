@@ -1,6 +1,6 @@
-package Lecturattack.utilities.xmlHandling;
+package Lecturattack.utilities.xmlHandling.levelLoading;
 
-import org.newdawn.slick.Image;
+import Lecturattack.utilities.xmlHandling.Positioning;
 
 import javax.xml.bind.annotation.XmlElement;
 

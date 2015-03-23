@@ -3,7 +3,6 @@ package Lecturattack.statemachine;/*
  */
 
 import Lecturattack.entities.*;
-import Lecturattack.utilities.PhysicsEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -11,8 +10,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.LevelGenerator;
-import Lecturattack.utilities.PhysicsEngine;
-import Lecturattack.utilities.xmlHandling.LevelElement;
+import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +54,7 @@ public class GameState extends BasicGameState {
 
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(1);
+      FileHandler.loadTargetConfig();
       LevelGenerator.generateLevel(levelElements,player,targets);
     } catch (IOException e) {
       e.printStackTrace();
@@ -66,6 +65,9 @@ public class GameState extends BasicGameState {
 	@Override
 	public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 	  player.render(gameContainer,stateBasedGame,graphics);
+    for (Target target:targets){
+      target.render(gameContainer,stateBasedGame,graphics);
+    }
 	}
 
   @Override
