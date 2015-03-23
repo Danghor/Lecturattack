@@ -11,16 +11,22 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Nick Steyer
  */
 public class Projectile extends RigidBody {
-
   protected float angularVelocity;
   protected float torque;
   private ProjectileMeta metaObject;
 
   public Projectile(ProjectileMeta projectileMeta, float x, float y) {
-    super();
+    super(projectileMeta, x, y);
     metaObject = projectileMeta;
-    move(new EnhancedVector(x, y));
     torque = 0f;
+  }
+
+  public float getAngularVelocity() {
+    return angularVelocity;
+  }
+
+  public void setAngularVelocity(float angularVelocity) {
+    this.angularVelocity = angularVelocity;
   }
 
   @Override
