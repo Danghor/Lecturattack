@@ -11,15 +11,28 @@ import java.util.ArrayList;
  */
 public abstract class RigidBody implements Renderable {
   protected ArrayList<EnhancedVector> vertices;
-
   protected EnhancedVector linearVelocity;
-
-
   protected EnhancedVector force;
 
+  protected RigidBody(MetaObject meta, float x, float y) {
+    this.vertices = new ArrayList<EnhancedVector>();
 
-  protected RigidBody() {
+    for (float[] vertexPosition : meta.getOutline()) {
+      vertices.add(new EnhancedVector(vertexPosition[0], vertexPosition[1]));
+    }
+
+    move(new EnhancedVector(x, y));
+
+    linearVelocity = new EnhancedVector(0f, 0f);
     force = new EnhancedVector(0f, 0f);
+  }
+
+  public EnhancedVector getLinearVelocity() {
+    return linearVelocity;
+  }
+
+  public void setLinearVelocity(EnhancedVector linearVelocity) {
+    this.linearVelocity = linearVelocity;
   }
 
   public abstract EnhancedVector getCenter();
