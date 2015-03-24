@@ -28,7 +28,7 @@ public class Target extends RigidBody {
     }
   }
 
-  boolean destroyed() {
+  boolean isDestroyed() {
     return hitCounter >= metaObject.getMaxHits(); //>= instead of == just to be sure
   }
 
