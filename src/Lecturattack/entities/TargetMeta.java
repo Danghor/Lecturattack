@@ -14,14 +14,8 @@ import java.util.HashMap;
  */
 public class TargetMeta extends MetaObject {
 
-  final int maxHits;
-
-  static {
-    instances = new HashMap<TargetType, TargetMeta>();
-    //todo: initialize instances with data from config file
-  }
-
-  ArrayList<Image> images;
+  private final int maxHits;
+  private ArrayList<Image> images;
 
   private TargetMeta(ArrayList<Image> images, int maxHits) {
     this.images = images;
@@ -32,8 +26,19 @@ public class TargetMeta extends MetaObject {
     return (TargetMeta) instances.get(type);
   }
 
+  int getMaxHits() {
+    return maxHits;
+  }
+
+  static {
+    instances = new HashMap<TargetType, TargetMeta>();
+    //todo: initialize instances with data from config file
+  }
+
   Image getImage(int index) {
-    return images.get(index); //no need for exception handling, since IndexOutOfBoundsException is already implemented
+    //no need for exception handling, since IndexOutOfBoundsException is already implemented
+    //this exception should never occur in production
+    return images.get(index);
   }
 
   enum TargetType {
