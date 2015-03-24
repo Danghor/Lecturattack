@@ -2,8 +2,6 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.ProjectileMeta;
-import Lecturattack.entities.TargetMeta;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
@@ -14,7 +12,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

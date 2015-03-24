@@ -4,9 +4,6 @@
 
 package Lecturattack.utilities.xmlHandling.configLoading;
 
-import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
-
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;

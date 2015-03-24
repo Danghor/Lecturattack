@@ -9,9 +9,26 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * @Author Tim Adamek
+ * @author Tim Adamek
  */
 public class Player implements Renderable {
+  private Image bodyImage;
+  private Image armImage;
+  private float angle; //the current angle of the player's arm
+  private boolean isThrowing;
+  private Projectile projectile;
+  private PowerSlider powerSlider;
+  private float positionX;
+  private float positionY;
+
+  public Player() {
+  }
+  public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
+    this.bodyImage = playerImage;
+    this.armImage = armImage;
+    this.projectile = new Projectile(projectileMeta, 0f, 0f); //todo: set actual position for the projectile
+  }
+
   public float getPositionY() {
     return positionY;
   }
@@ -42,23 +59,6 @@ public class Player implements Renderable {
 
   public void setArmImage(Image armImage) {
     this.armImage = armImage;
-  }
-
-  private Image bodyImage;
-  private Image armImage;
-  private float angle; //the current angle of the player's arm
-  private boolean isThrowing;
-  private Projectile projectile;
-  private PowerSlider powerSlider;
-  private float positionX;
-  private float positionY;
-
-  public  Player(){};
-
-  public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
-    this.bodyImage = playerImage;
-    this.armImage = armImage;
-    this.projectile = new Projectile(projectileMeta, 0f, 0f); //todo: set actual position for the projectile
   }
 
   public void reset() {
