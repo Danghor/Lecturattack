@@ -30,11 +30,6 @@ public class Projectile extends RigidBody {
   }
 
   @Override
-  public EnhancedVector getCenter() {
-    return null;
-  }
-
-  @Override
   public float getMass() {
     return metaObject.getMass();
   }
