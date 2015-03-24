@@ -11,11 +11,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Target extends RigidBody {
 
-  private TargetMeta metaObject;
-
-  private int hitCounter;
   float x;
   float y;
+  private TargetMeta metaObject;
+  private int hitCounter;
 
 
   public Target(TargetMeta targetMeta, float x, float y) {

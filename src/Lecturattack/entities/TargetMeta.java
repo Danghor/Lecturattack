@@ -7,7 +7,6 @@ package Lecturattack.entities;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import Lecturattack.utilities.xmlHandling.configLoading.XmlVertice;
-import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -16,16 +15,18 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Nick Steyer
+ * @author Nick Steyer, Tim Adamek
  */
 public class TargetMeta extends MetaObject {
-    private final int maxHits;
+  private final int maxHits;
   ArrayList<Image> images;
   TargetType targetType;
 
   static {
-    instances = new HashMap<TargetMetaType, TargetMeta>();
+    instances = new HashMap<>();
+
     List<TargetStandard> targetStandards = FileHandler.loadTargetConfig();
+
     for (TargetStandard targetStandard : targetStandards) {
       ArrayList<Image> images = new ArrayList<>();
       try {
@@ -43,6 +44,7 @@ public class TargetMeta extends MetaObject {
       } catch (SlickException e) {
         e.printStackTrace();
       }
+
       instances.put(targetStandard.getTargetMetaType(), new TargetMeta(images, targetStandard.getMaxHits(),targetStandard.getTargetType(),targetStandard.getVertices()));//TODO this is strange --> it would also accept TargetType instead of targetMetaType
     }
   }
@@ -72,7 +74,7 @@ public class TargetMeta extends MetaObject {
     return images.get(index);
   }
 
-  enum TargetType {
+  public enum TargetType {
     LIBRARY,
     RAM,
     ENEMY

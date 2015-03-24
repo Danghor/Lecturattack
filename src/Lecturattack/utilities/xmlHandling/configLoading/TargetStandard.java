@@ -1,7 +1,7 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
+import Lecturattack.entities.TargetMeta;
 import Lecturattack.entities.TargetMetaType;
-import Lecturattack.entities.TargetType;
 import Lecturattack.utilities.xmlHandling.Positioning;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -18,7 +18,7 @@ public class TargetStandard {
   private String imageSlightlyBroken;
   private String imageAlmostBroken;
   private int maxHits;
-  private TargetType targetType;
+  private TargetMeta.TargetType targetType;
   private TargetMetaType targetMetaType;
   private Positioning positioning;
   private List<XmlVertice> vertices;
@@ -60,11 +60,11 @@ public class TargetStandard {
   }
 
   @XmlElement
-     public TargetType getTargetType() {
+  public TargetMeta.TargetType getTargetType() {
     return targetType;
   }
 
-  public void setTargetType(TargetType targetType) {
+  public void setTargetType(TargetMeta.TargetType targetType) {
     this.targetType = targetType;
   }
 

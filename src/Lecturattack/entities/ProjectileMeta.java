@@ -10,14 +10,14 @@ import java.util.HashMap;
  */
 public class ProjectileMeta extends MetaObject {
   private Image image;
-  private TargetType destroys;
+  private TargetMeta.TargetType destroys;
 
   static {
     instances = new HashMap<ProjectileType, ProjectileMeta>();
     //todo: initialize instances with data from config file
   }
 
-  private ProjectileMeta(Image image, TargetType destroys) {
+  private ProjectileMeta(Image image, TargetMeta.TargetType destroys) {
     this.image = image;
     this.destroys = destroys;
   }
@@ -26,7 +26,7 @@ public class ProjectileMeta extends MetaObject {
     return (ProjectileMeta) instances.get(type);
   }
 
-  TargetType getTargetType() {
+  TargetMeta.TargetType getTargetType() {
     return destroys;
   }
 
