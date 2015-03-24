@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * Created by Andreas Geis on 18/03/2015
+ * @author Andreas Geis
  */
 public class Lecturattack extends StateBasedGame {
   public static final int MAINMENUSTATE = 0;
