@@ -53,10 +53,10 @@ public class TargetMeta extends MetaObject {
     this.images = images;
     this.maxHits = maxHits;
     this.targetType = targetType;
-    for(XmlVertice vertice:vertices){
-      float[] verticePosition = {vertice.getX(),vertice.getY()};
+    for(XmlVertice vertex:vertices){
+      float[] vertexPosition = {vertex.getX(),vertex.getY()};
       this.outline=new ArrayList<>();
-      this.outline.add(verticePosition);
+      this.outline.add(vertexPosition);
     }
   }
 
