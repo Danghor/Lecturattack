@@ -10,50 +10,36 @@
 	<levelElements>
 		<positionX>1012</positionX>
 		<positionY>195</positionY>
-		<type>STUDENT</type> 
+		<type>ENEMY</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
 	</levelElements>
 	<levelElements>
 		<positionX>996</positionX>
 		<positionY>385</positionY>
-		<type>JAVA</type> 
+		<type>RAM</type> 
 		<positioning>HORIZONTAL</positioning>
-		<image>resources/images/JavaB2.png</image>
+		<image>resources/images/RamQ.png</image>
 	</levelElements>
 	<levelElements>
 		<positionX>938</positionX>
 		<positionY>471</positionY>
-		<type>RAM</type> 
+		<type>LIBRARY</type>
 		<positioning>VERTICAL</positioning>
-		<image>resources/images/Ram.png</image>
+		<image>resources/images/JavaB.png</image>
 	</levelElements>
 	<levelElements>
 		<positionX>1007</positionX>
 		<positionY>475</positionY>
-		<type>STUDENT</type> 
+		<type>ENEMY</type>
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
 	</levelElements>
 	<levelElements>
 		<positionX>1155</positionX>
 		<positionY>470</positionY>
-		<type>RAM</type> 
-		<positioning>VERTICAL</positioning>
-		<image>resources/images/Ram.png</image>
-	</levelElements>
-<levelElements>
-		<positionX>943</positionX>
-		<positionY>180</positionY>
-		<type>JAVA</type> 
+		<type>LIBRARY</type>
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/JavaB.png</image>
-	</levelElements>
-<levelElements>
-		<positionX>777</positionX>
-		<positionY>475</positionY>
-		<type>STUDENT</type> 
-		<positioning>VERTICAL</positioning>
-		<image>resources/images/studentOk.png</image>
 	</levelElements>
 </LevelData>

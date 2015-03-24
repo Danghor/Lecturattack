@@ -95,4 +95,5 @@ public class RigidRectangle {
     g.draw(polygon);
     g.drawRect(getCenter().x, getCenter().y, 1, 1);
   }
+
 }
