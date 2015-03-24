@@ -7,6 +7,7 @@ package Lecturattack.entities;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import Lecturattack.utilities.xmlHandling.configLoading.XmlVertice;
+import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -18,8 +19,7 @@ import java.util.List;
  * @author Nick Steyer
  */
 public class TargetMeta extends MetaObject {
-  //TODO is the Implementation visibility intended?
-  final int maxHits;//TODO isn't this always 3 per definition?
+    private final int maxHits;
   ArrayList<Image> images;
   TargetType targetType;
 
@@ -62,11 +62,19 @@ public class TargetMeta extends MetaObject {
     return (TargetMeta) instances.get(type);
   }
 
-  Image getImage(int index) {
-    return images.get(index); //no need for exception handling, since IndexOutOfBoundsException is already implemented
+  int getMaxHits() {
+    return maxHits;
   }
 
+  Image getImage(int index) {
+    //no need for exception handling, since IndexOutOfBoundsException is already implemented
+    //this exception should never occur in production
+    return images.get(index);
+  }
 
-
-
+  enum TargetType {
+    LIBRARY,
+    RAM,
+    ENEMY
+  }
 }

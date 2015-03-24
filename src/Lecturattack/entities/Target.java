@@ -2,7 +2,6 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -28,18 +27,13 @@ public class Target extends RigidBody {
   }
 
   void hit() {
-    if (hitCounter < metaObject.maxHits) {
+    if (hitCounter < metaObject.getMaxHits()) {
       hitCounter++;
     }
   }
 
-  boolean destroyed() {
-    return hitCounter >= metaObject.maxHits; //>= instead of == just to be sure
-  }
-
-  @Override
-  public EnhancedVector getCenter() {
-    return null;
+  boolean isDestroyed() {
+    return hitCounter >= metaObject.getMaxHits(); //>= instead of == just to be sure
   }
 
   @Override
