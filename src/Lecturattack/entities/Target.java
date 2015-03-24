@@ -11,14 +11,18 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Target extends RigidBody {
 
+  float x;
+  float y;
   private TargetMeta metaObject;
-
   private int hitCounter;
+
 
   public Target(TargetMeta targetMeta, float x, float y) {
     super(targetMeta, x, y);
     metaObject = targetMeta;
     hitCounter = 0;
+    this.x = x;
+    this.y = y;
   }
 
   void hit() {
@@ -38,6 +42,7 @@ public class Target extends RigidBody {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-
+    //TODO just dummy implementation
+    metaObject.getImage(0).draw(this.x, this.y);
   }
 }

@@ -1,20 +1,26 @@
-package Lecturattack.utilities.xmlHandling;
+package Lecturattack.utilities.xmlHandling.levelLoading;
+
+import Lecturattack.utilities.xmlHandling.Positioning;
 
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by Workflow on 20.03.2015.
+ * Created by Tim on 20.03.2015.
  */
 public class LevelElement {
-  private int id;
   private float positionX;
   private float positionY;
   private XmlObjectType type;
   private Positioning positioning;
+  private String image;
 
   @XmlElement
-  public void setId(int id) {
-    this.id = id;
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
   @XmlElement

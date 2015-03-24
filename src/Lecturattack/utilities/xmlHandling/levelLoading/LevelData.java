@@ -2,9 +2,7 @@
  * Copyright (c) 2015.
  */
 
-package Lecturattack.utilities;
-
-import Lecturattack.utilities.xmlHandling.LevelElement;
+package Lecturattack.utilities.xmlHandling.levelLoading;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,7 +23,6 @@ public class LevelData {
   }
 
   public LevelData(int id, List<LevelElement> levelElements) {
-    this.id = id;
     this.levelElements = levelElements;
   }
 
@@ -43,7 +40,7 @@ public class LevelData {
     return levelElements;
   }
 
-  public void setAnswers(List<LevelElement> levelElements) {
+  public void setLevelElements(List<LevelElement> levelElements) {
     this.levelElements = levelElements;
   }
 

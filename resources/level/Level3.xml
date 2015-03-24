@@ -10,14 +10,14 @@
 	<levelElements>
 		<positionX>1012</positionX>
 		<positionY>195</positionY>
-		<type>STUDENT</type> 
+		<type>ENEMY</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
 	</levelElements>
 	<levelElements>
 		<positionX>996</positionX>
 		<positionY>385</positionY>
-		<type>JAVA</type> 
+		<type>LIBRARY</type> 
 		<positioning>HORIZONTAL</positioning>
 		<image>resources/images/JavaB2.png</image>
 	</levelElements>
@@ -31,7 +31,7 @@
 	<levelElements>
 		<positionX>1007</positionX>
 		<positionY>475</positionY>
-		<type>STUDENT</type> 
+		<type>ENEMY</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
 	</levelElements>
@@ -52,14 +52,14 @@
 	<levelElements>
 		<positionX>777</positionX>
 		<positionY>475</positionY>
-		<type>STUDENT</type> 
+		<type>ENEMY</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
 	</levelElements>
 <levelElements>
 		<positionX>774</positionX>
 		<positionY>385</positionY>
-		<type>JAVA</type> 
+		<type>LIBRARY</type> 
 		<positioning>HORIZONTAL</positioning>
 		<image>resources/images/JavaB2.png</image>
 	</levelElements>

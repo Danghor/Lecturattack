@@ -1,4 +1,4 @@
-package Lecturattack.utilities.xmlHandling;
+package Lecturattack.utilities.xmlHandling.levelLoading;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
