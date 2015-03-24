@@ -24,4 +24,4 @@ hs_err_pid*
 # Other
 /bin/
 libs
-
+/src/prototypes/
