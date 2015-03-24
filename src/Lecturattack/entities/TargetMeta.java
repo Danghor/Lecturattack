@@ -45,17 +45,17 @@ public class TargetMeta extends MetaObject {
         e.printStackTrace();
       }
 
-      instances.put(targetStandard.getTargetMetaType(), new TargetMeta(images, targetStandard.getMaxHits(),targetStandard.getTargetType(),targetStandard.getVertices()));//TODO this is strange --> it would also accept TargetType instead of targetMetaType
+      instances.put(targetStandard.getTargetMetaType(), new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getTargetType(), targetStandard.getVertices()));//TODO this is strange --> it would also accept TargetType instead of targetMetaType
     }
   }
 
-  public TargetMeta(ArrayList<Image> images, int maxHits,TargetType targetType,List<XmlVertice> vertices) {
+  public TargetMeta(ArrayList<Image> images, int maxHits, TargetType targetType, List<XmlVertice> vertices) {
     this.images = images;
     this.maxHits = maxHits;
     this.targetType = targetType;
-    for(XmlVertice vertex:vertices){
-      float[] vertexPosition = {vertex.getX(),vertex.getY()};
-      this.outline=new ArrayList<>();
+    for (XmlVertice vertex : vertices) {
+      float[] vertexPosition = {vertex.getX(), vertex.getY()};
+      this.outline = new ArrayList<>();
       this.outline.add(vertexPosition);
     }
   }
