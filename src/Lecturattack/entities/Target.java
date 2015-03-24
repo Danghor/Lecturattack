@@ -23,13 +23,13 @@ public class Target extends RigidBody {
   }
 
   void hit() {
-    if (hitCounter < metaObject.maxHits) {
+    if (hitCounter < metaObject.getMaxHits()) {
       hitCounter++;
     }
   }
 
   boolean destroyed() {
-    return hitCounter >= metaObject.maxHits; //>= instead of == just to be sure
+    return hitCounter >= metaObject.getMaxHits(); //>= instead of == just to be sure
   }
 
   @Override
