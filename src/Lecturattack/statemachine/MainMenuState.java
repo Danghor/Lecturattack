@@ -2,21 +2,29 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.utilities.menu.AnimatedButton;
-import org.newdawn.slick.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Lecturattack.utilities.FileHandler;
+import Lecturattack.utilities.menu.AnimatedButton;
+
 /**
- * Created by Andreas Geis on 18/03/2015
+ * @author Andreas Geis
  */
 public class MainMenuState extends BasicGameState implements InputListener {
 
   private int iStateID;
   private StateBasedGame stateBasedGame;
+  private Image background;
   private Image logo;
-  private AnimatedButton[] menuButton = new AnimatedButton[3];
-  private int iMenuSelector = 0;
+  private AnimatedButton[] menuButton;
+  private int iMenuSelector;
 
   public MainMenuState(int iStateID) {
     this.iStateID = iStateID;
@@ -30,12 +38,10 @@ public class MainMenuState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    logo = new Image("resources/images/logo.png");
-    // TODO: check if the player is in level 2 or higher and replace the
-    // "Spiel Starten" image with "Spiel fortsetzen" for Button 1
-    menuButton[0] = new AnimatedButton(245, 500, new Image("resources/images/startGame_down.png"), new Image("resources/images/startGame.png"));
-    menuButton[1] = new AnimatedButton(495, 500, new Image("resources/images/levelSelect_down.png"), new Image("resources/images/levelSelect.png"));
-    menuButton[2] = new AnimatedButton(745, 500, new Image("resources/images/endGame_down.png"), new Image("resources/images/endGame.png"));
+    background = FileHandler.createMenuBackground();
+    logo = FileHandler.createMenuLogo();
+    menuButton = FileHandler.createMainMenuButtons();
+    iMenuSelector = 0;
   }
 
   @Override
@@ -71,7 +77,8 @@ public class MainMenuState extends BasicGameState implements InputListener {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    graphics.drawImage(logo, 270, 70);
+    graphics.drawImage(background, 0, 0);
+    graphics.drawImage(logo, 250, 70);
     for (int i = 0; i < menuButton.length; i++) {
       // check if the button currently has focus
       menuButton[i].render(graphics, iMenuSelector == i);
