@@ -23,6 +23,7 @@ public class Player implements Renderable {
 
   public Player() {
   }
+
   public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
     this.bodyImage = playerImage;
     this.armImage = armImage;
@@ -81,7 +82,7 @@ public class Player implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    graphics.drawImage(bodyImage,positionX,positionY);
+    graphics.drawImage(bodyImage, positionX, positionY);
   }
 
 
