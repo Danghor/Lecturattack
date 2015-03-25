@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,20 +17,20 @@ import Lecturattack.utilities.menu.AnimatedButton;
 /**
  * @author Andreas Geis
  */
-public class LevelSelectState extends BasicGameState {
-  private int iStateID;
+public class LevelSelectState extends BasicGameState implements InputListener {
+  private int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButton;
   private int iMenuSelector;
 
   public LevelSelectState(int iStateID) {
-    this.iStateID = iStateID;
+    this.stateID = iStateID;
   }
 
   @Override
   public int getID() {
-    return iStateID;
+    return stateID;
   }
 
   @Override
@@ -45,9 +46,6 @@ public class LevelSelectState extends BasicGameState {
 
   }
 
-  /*
-   * listen for user input
-   */
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT) {
