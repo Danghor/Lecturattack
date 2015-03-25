@@ -3,7 +3,7 @@ package Lecturattack.utilities.xmlHandling.configLoading;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by Tim on 23.03.2015.
+ * @author Tim Adamek
  */
 public class XmlVertex {
   private float x;
