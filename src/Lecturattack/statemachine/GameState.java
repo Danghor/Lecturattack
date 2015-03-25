@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private static int stateID;
+  private static int iStateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private float wind;
@@ -31,7 +31,7 @@ public class GameState extends BasicGameState implements InputListener {
   private InformationField playerName;
 
   public GameState(int iStateID) {
-    stateID = iStateID;
+    this.iStateID = iStateID;
   }
 
   public void loadLevel(int level) {
@@ -44,7 +44,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public int getID() {
-    return stateID;
+    return iStateID;
   }
 
   @Override

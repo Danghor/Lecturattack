@@ -101,7 +101,7 @@ public class FileHandler {
     AnimatedButton[] menuButton = new AnimatedButton[2];
     try {
       menuButton[0] = new AnimatedButton(245, 500, new Image("resources/images/continue_down.png"), new Image("resources/images/continue.png"));
-      menuButton[1] = new AnimatedButton(495, 500, new Image("resources/images/backToMenu_down.png"), new Image("resources/images/backToMenu.png"));
+      menuButton[1] = new AnimatedButton(745, 500, new Image("resources/images/backToMenu_down.png"), new Image("resources/images/backToMenu.png"));
     } catch (SlickException e) {
       System.out.println("Error while loading images.");
     }
