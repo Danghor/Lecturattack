@@ -70,10 +70,10 @@ public class TargetMeta extends MetaObject {
   private TargetMeta(ArrayList<Image> images, int maxHits, List<XmlVertex> vertices) {
     this.images = images;
     this.maxHits = maxHits;
-    this.outline = new ArrayList<>();
+    outline = new ArrayList<>();
     for (XmlVertex vertex : vertices) {
       float[] vertexPosition = {vertex.getX(), vertex.getY()};
-      this.outline.add(vertexPosition);
+      outline.add(vertexPosition);
     }
   }
 
