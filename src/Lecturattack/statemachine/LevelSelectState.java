@@ -18,19 +18,19 @@ import Lecturattack.utilities.menu.AnimatedButton;
  * @author Andreas Geis
  */
 public class LevelSelectState extends BasicGameState implements InputListener {
-  private int stateID;
+  private int iStateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButton;
   private int iMenuSelector;
 
   public LevelSelectState(int iStateID) {
-    this.stateID = iStateID;
+    this.iStateID = iStateID;
   }
 
   @Override
   public int getID() {
-    return stateID;
+    return iStateID;
   }
 
   @Override

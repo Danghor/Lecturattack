@@ -19,7 +19,7 @@ import Lecturattack.utilities.menu.AnimatedButton;
  */
 public class MainMenuState extends BasicGameState implements InputListener {
 
-  private int stateID;
+  private int iStateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private Image logo;
@@ -27,12 +27,12 @@ public class MainMenuState extends BasicGameState implements InputListener {
   private int iMenuSelector;
 
   public MainMenuState(int iStateID) {
-    this.stateID = iStateID;
+    this.iStateID = iStateID;
   }
 
   @Override
   public int getID() {
-    return stateID;
+    return iStateID;
   }
 
   @Override

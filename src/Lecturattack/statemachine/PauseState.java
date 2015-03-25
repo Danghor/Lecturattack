@@ -19,18 +19,18 @@ import Lecturattack.utilities.menu.AnimatedButton;
  */
 public class PauseState extends BasicGameState implements InputListener {
   private StateBasedGame stateBasedGame;
-  private static int stateID;
+  private static int iStateID;
   private Image background;
   private AnimatedButton[] menuButton;
   private int iMenuSelector;
 
   public PauseState(int iStateID) {
-    this.stateID = iStateID;
+    this.iStateID = iStateID;
   }
 
   @Override
   public int getID() {
-    return stateID;
+    return iStateID;
   }
 
   @Override
