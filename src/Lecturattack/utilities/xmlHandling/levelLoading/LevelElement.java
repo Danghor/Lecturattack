@@ -1,7 +1,5 @@
 package Lecturattack.utilities.xmlHandling.levelLoading;
 
-import Lecturattack.utilities.xmlHandling.Positioning;
-
 import javax.xml.bind.annotation.XmlElement;
 
 /**

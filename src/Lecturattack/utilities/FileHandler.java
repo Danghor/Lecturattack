@@ -24,7 +24,7 @@ public class FileHandler {
   public static List<TargetStandard> loadTargetConfig() {
     // because the JAXB marshalling need classes with XML annotations these "data classes" are nessesary
     // they do nothing but hold the date that is read from the config file
-    File file = new File("resources/config/target.xml");//TODO save in final var
+    File file = new File("resources/config/target.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     TargetConfig targets = null;
     try {//TODO projectils

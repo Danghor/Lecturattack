@@ -1,4 +1,4 @@
-package Lecturattack.utilities.xmlHandling;
+package Lecturattack.utilities.xmlHandling.levelLoading;
 
 /**
  * Created by Tim on 20.03.2015.
