@@ -6,22 +6,30 @@ import Lecturattack.entities.*;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import Lecturattack.utilities.FileHandler;
+import Lecturattack.utilities.LevelGenerator;
+import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nick Steyer on 09/03/2015
+ * @author Andreas Geis
  */
 
-public class GameState extends BasicGameState {
-  private static int ID;
+public class GameState extends BasicGameState implements InputListener {
+  private StateBasedGame stateBasedGame;
+  private static int stateID;
   private int currentLevel;
   private float wind;
   private Player player;
@@ -31,8 +39,8 @@ public class GameState extends BasicGameState {
   private InformationField score;
   private InformationField playerName;
 
-  public GameState(int iStateID) {
-    ID = iStateID;
+	public GameState(int iStateID) {
+    stateID = iStateID;
   }
 
   public void loadLevel(int level) {
@@ -43,13 +51,14 @@ public class GameState extends BasicGameState {
     //todo: loadlevel(currentLevel)
   }
 
-  @Override
-  public int getID() {
-    return ID;
-  }
+	@Override
+	public int getID() {
+		return stateID;
+	}
 
-  @Override
-  public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+	@Override
+	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    this.stateBasedGame = stateBasedGame;
     player = new Player();
     targets = new ArrayList<>();
 
@@ -75,4 +84,12 @@ public class GameState extends BasicGameState {
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
     //PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
   }
+  
+  @Override
+  public void keyPressed(int key, char c) {
+    if (key == Input.KEY_ESCAPE) {
+      stateBasedGame.enterState(3);
+    }
+  }
+  
 }

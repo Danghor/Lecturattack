@@ -14,6 +14,7 @@ public class Lecturattack extends StateBasedGame {
   public static final int MAINMENUSTATE = 0;
   public static final int LEVELSELECTSTATE = 1;
   public static final int GAMESTATE = 2;
+  public static final int PAUSESTATE = 3;
 
   public static final int FPS = 60;
   public static final int WIDTH = 1280;
@@ -41,5 +42,6 @@ public class Lecturattack extends StateBasedGame {
     addState(new MainMenuState(MAINMENUSTATE));
     addState(new LevelSelectState(LEVELSELECTSTATE));
     addState(new GameState(GAMESTATE));
+    addState(new PauseState(PAUSESTATE));
   }
 }

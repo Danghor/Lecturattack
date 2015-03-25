@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MainMenuState extends BasicGameState implements InputListener {
 
-  private int iStateID;
+  private int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private Image logo;
@@ -21,12 +21,12 @@ public class MainMenuState extends BasicGameState implements InputListener {
   private int iMenuSelector;
 
   public MainMenuState(int iStateID) {
-    this.iStateID = iStateID;
+    this.stateID = iStateID;
   }
 
   @Override
   public int getID() {
-    return iStateID;
+    return stateID;
   }
 
   @Override

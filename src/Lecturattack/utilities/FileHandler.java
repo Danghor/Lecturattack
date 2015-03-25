@@ -92,7 +92,18 @@ public class FileHandler {
       menuButton[5] = new AnimatedButton(745, 300, new Image("resources/images/level1_down.png"), new Image("resources/images/level1.png"));
       menuButton[6] = new AnimatedButton(245, 600, new Image("resources/images/back_down.png"), new Image("resources/images/back.png"));
     } catch (SlickException e) {
-      e.printStackTrace();
+      System.out.println("Error while loading images.");
+    }
+    return menuButton;
+  }
+  
+  public static AnimatedButton[] createPauseMenuButtons() {
+    AnimatedButton[] menuButton = new AnimatedButton[2];
+    try {
+      menuButton[0] = new AnimatedButton(245, 500, new Image("resources/images/continue_down.png"), new Image("resources/images/continue.png"));
+      menuButton[1] = new AnimatedButton(495, 500, new Image("resources/images/backToMenu_down.png"), new Image("resources/images/backToMenu.png"));
+    } catch (SlickException e) {
+      System.out.println("Error while loading images.");
     }
     return menuButton;
   }

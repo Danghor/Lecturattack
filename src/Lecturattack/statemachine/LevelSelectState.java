@@ -2,6 +2,15 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.menu.AnimatedButton;
 import org.newdawn.slick.*;
@@ -11,20 +20,20 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Andreas Geis
  */
-public class LevelSelectState extends BasicGameState {
-  private int iStateID;
+public class LevelSelectState extends BasicGameState implements InputListener {
+  private int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButton;
   private int iMenuSelector;
 
   public LevelSelectState(int iStateID) {
-    this.iStateID = iStateID;
+    this.stateID = iStateID;
   }
 
   @Override
   public int getID() {
-    return iStateID;
+    return stateID;
   }
 
   @Override
