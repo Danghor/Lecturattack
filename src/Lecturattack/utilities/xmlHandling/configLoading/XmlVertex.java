@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * Created by Tim on 23.03.2015.
  */
-public class XmlVertice {
+public class XmlVertex {
   private float x;
   private float y;
 

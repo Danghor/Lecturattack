@@ -6,7 +6,7 @@ package Lecturattack.entities;
 
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
-import Lecturattack.utilities.xmlHandling.configLoading.XmlVertice;
+import Lecturattack.utilities.xmlHandling.configLoading.XmlVertex;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -19,8 +19,7 @@ import java.util.List;
  */
 public class TargetMeta extends MetaObject {
   private final int maxHits;
-  ArrayList<Image> images;
-  TargetType targetType;
+  private ArrayList<Image> images;
 
   static {
     instances = new HashMap<TargetType, TargetMeta>();
@@ -62,17 +61,17 @@ public class TargetMeta extends MetaObject {
           type = TargetType.LIBRARYV;
         }
       }
-      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), type, targetStandard.getVertices());
+
+      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVertices());
       instances.put(type, targetMeta);
     }
   }
 
-  public TargetMeta(ArrayList<Image> images, int maxHits, TargetType targetType, List<XmlVertice> vertices) {
+  private TargetMeta(ArrayList<Image> images, int maxHits, List<XmlVertex> vertices) {
     this.images = images;
     this.maxHits = maxHits;
-    this.targetType = targetType;
     this.outline = new ArrayList<>();
-    for (XmlVertice vertex : vertices) {
+    for (XmlVertex vertex : vertices) {
       float[] vertexPosition = {vertex.getX(), vertex.getY()};
       this.outline.add(vertexPosition);
     }

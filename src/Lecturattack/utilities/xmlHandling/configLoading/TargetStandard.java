@@ -4,19 +4,16 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 /**
- * Created by Tim on 23.03.2015.
+ * @author Tim Adamek
  */
 public class TargetStandard {
-  /**
-   * Created by Tim on 20.03.2015.
-   */
   private String imageIntact;
   private String imageSlightlyBroken;
   private String imageAlmostBroken;
   private int maxHits;
   private String targetType;
   private String positioning;
-  private List<XmlVertice> vertices;
+  private List<XmlVertex> vertices;
 
   @XmlElement
   public String getImageIntact() {
@@ -73,11 +70,11 @@ public class TargetStandard {
   }
 
   @XmlElement(name="vertice")
-  public List<XmlVertice> getVertices() {
+  public List<XmlVertex> getVertices() {
     return vertices;
   }
 
-  public void setVertices(List<XmlVertice> vertices) {
+  public void setVertices(List<XmlVertex> vertices) {
     this.vertices = vertices;
   }
 
