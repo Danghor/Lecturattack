@@ -3,7 +3,7 @@ package Lecturattack.utilities.xmlHandling.levelLoading;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by Tim on 20.03.2015.
+ * @author Tim Adamek
  */
 public class LevelElement {
   private float positionX;

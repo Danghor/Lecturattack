@@ -30,7 +30,7 @@ public class TargetConfig {
   }
 
   public void setTargetStandards(List<TargetStandard> targetStandards) {
-    this.target = target;
+    this.target = targetStandards;
   }
 
 }
