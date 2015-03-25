@@ -69,7 +69,7 @@ public class TargetStandard {
     this.positioning = positioning;
   }
 
-  @XmlElement(name="vertice")
+  @XmlElement(name = "vertice")
   public List<XmlVertex> getVertices() {
     return vertices;
   }

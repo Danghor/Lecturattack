@@ -2,22 +2,20 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import Lecturattack.utilities.menu.AnimatedButton;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Andreas Geis
@@ -68,7 +66,7 @@ public class FileHandler {
   public static void setLastLevelNumber(int level) {
     //todo: alles in %APPDATA%
   }
-  
+
   public static AnimatedButton[] createMainMenuButtons() {
     AnimatedButton[] menuButton = new AnimatedButton[3];
     try {
@@ -82,7 +80,7 @@ public class FileHandler {
     }
     return menuButton;
   }
-  
+
   public static AnimatedButton[] createLevelSelectButtons() {
     AnimatedButton[] menuButton = new AnimatedButton[7];
     try {
@@ -98,7 +96,7 @@ public class FileHandler {
     }
     return menuButton;
   }
-  
+
   public static Image createMenuBackground() {
     Image background = null;
     try {
@@ -108,7 +106,7 @@ public class FileHandler {
     }
     return background;
   }
-  
+
   public static Image createMenuLogo() {
     Image logo = null;
     try {
