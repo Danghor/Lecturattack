@@ -23,7 +23,7 @@ public class TargetMeta extends MetaObject {
   TargetType targetType;
 
   static {
-    instances = new HashMap<>();
+    instances = new HashMap<TargetType, TargetMeta>();
 
     List<TargetStandard> targetStandards = FileHandler.loadTargetConfig();
 
@@ -32,6 +32,7 @@ public class TargetMeta extends MetaObject {
       try {
         //the images are not saved in a list because they are read from a config file
         //and having them in a list in a config file would be less readable (because the tag names would be the same)
+        //TODO maybe other way of doing this
         if (!targetStandard.getImageIntact().equals("")) {
           images.add(new Image(targetStandard.getImageIntact()));
         }
@@ -44,8 +45,25 @@ public class TargetMeta extends MetaObject {
       } catch (SlickException e) {
         e.printStackTrace();
       }
-
-      instances.put(targetStandard.getTargetMetaType(), new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getTargetType(), targetStandard.getVertices()));//TODO this is strange --> it would also accept TargetType instead of targetMetaType
+      //TODO
+      TargetType type;
+      if (targetStandard.getTargetType().equals("ENEMY")) {
+        type = TargetType.ENEMY;
+      } else if (targetStandard.getTargetType().equals("RAM")) {
+        if (targetStandard.getPositioning().equals("HORIZONTAL")) {
+          type = TargetType.RAMH;
+        } else {
+          type = TargetType.RAMV;
+        }
+      } else {
+        if (targetStandard.getPositioning().equals("HORIZONTAL")) {
+          type = TargetType.LIBRARYH;
+        } else {
+          type = TargetType.LIBRARYV;
+        }
+      }
+      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), type, targetStandard.getVertices());
+      instances.put(type, targetMeta);
     }
   }
 
@@ -53,14 +71,14 @@ public class TargetMeta extends MetaObject {
     this.images = images;
     this.maxHits = maxHits;
     this.targetType = targetType;
+    this.outline = new ArrayList<>();
     for (XmlVertice vertex : vertices) {
       float[] vertexPosition = {vertex.getX(), vertex.getY()};
-      this.outline = new ArrayList<>();
       this.outline.add(vertexPosition);
     }
   }
 
-  public static TargetMeta getInstance(TargetMetaType type) {
+  public static TargetMeta getInstance(TargetType type) {
     return (TargetMeta) instances.get(type);
   }
 
@@ -75,8 +93,10 @@ public class TargetMeta extends MetaObject {
   }
 
   public enum TargetType {
-    LIBRARY,
-    RAM,
+    LIBRARYV,
+    LIBRARYH,
+    RAMV,
+    RAMH,
     ENEMY
   }
 }

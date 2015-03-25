@@ -3,7 +3,7 @@ package Lecturattack.utilities;/*
  */
 
 import Lecturattack.entities.*;
-import Lecturattack.utilities.xmlHandling.Positioning;
+import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
 import org.newdawn.slick.Image;
@@ -29,27 +29,27 @@ public class LevelGenerator {
         } catch (SlickException e) {
           e.printStackTrace();
         }
-      } else if (levelElement.getType() == XmlObjectType.RAM) {
-        TargetMetaType targetMetaType;
-        if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
-          targetMetaType = TargetMetaType.RAMH;
-        } else {
-          targetMetaType = TargetMetaType.RAMV;
-        }
-        Target ram = new Target(TargetMeta.getInstance(targetMetaType), levelElement.getPositionX(), levelElement.getPositionY());
-        targets.add(ram);
-      } else if (levelElement.getType() == XmlObjectType.LIBRARY) {
-        TargetMetaType targetMetaType;
-        if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
-          targetMetaType = TargetMetaType.LIBRARYH;
-        } else {
-          targetMetaType = TargetMetaType.LIBRARYV;
-        }
-        Target library = new Target(TargetMeta.getInstance(targetMetaType), levelElement.getPositionX(), levelElement.getPositionY());
-        targets.add(library);
       } else {
-        Target enemy = new Target(TargetMeta.getInstance(TargetMetaType.ENEMY), levelElement.getPositionX(), levelElement.getPositionY());
-        targets.add(enemy);
+        TargetMeta.TargetType targetType;
+        Target target;
+        if (levelElement.getType() == XmlObjectType.RAM) {
+          if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
+            targetType = TargetMeta.TargetType.RAMH;
+          } else {
+            targetType = TargetMeta.TargetType.RAMV;
+          }
+        } else if (levelElement.getType() == XmlObjectType.LIBRARY) {
+          if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
+            targetType = TargetMeta.TargetType.LIBRARYH;
+          } else {
+            targetType = TargetMeta.TargetType.LIBRARYV;
+          }
+        } else {
+          targetType = TargetMeta.TargetType.ENEMY;
+        }
+        TargetMeta m = TargetMeta.getInstance(targetType);
+        target = new Target(TargetMeta.getInstance(targetType), levelElement.getPositionX(), levelElement.getPositionY());
+        targets.add(target);
       }
     }
   }
