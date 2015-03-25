@@ -2,30 +2,24 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.InputListener;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.menu.AnimatedButton;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author Andreas Geis
  */
 public class PauseState extends BasicGameState implements InputListener {
-  private StateBasedGame stateBasedGame;
   private static int stateID;
+  private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButton;
   private int iMenuSelector;
 
   public PauseState(int iStateID) {
-    this.stateID = iStateID;
+    stateID = iStateID;
   }
 
   @Override

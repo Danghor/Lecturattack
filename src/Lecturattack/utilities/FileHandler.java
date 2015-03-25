@@ -96,7 +96,7 @@ public class FileHandler {
     }
     return menuButton;
   }
-  
+
   public static AnimatedButton[] createPauseMenuButtons() {
     AnimatedButton[] menuButton = new AnimatedButton[2];
     try {
