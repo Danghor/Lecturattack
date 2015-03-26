@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 /**
- *@author Tim Adamek
+ * @author Tim Adamek
  */
 public class TargetStandard {
   private String imageIntact;

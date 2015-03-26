@@ -31,7 +31,7 @@ public class GameState extends BasicGameState implements InputListener {
   private InformationField playerName;
 
   public GameState(int iStateID) {
-    this.iStateID = iStateID;
+    GameState.iStateID = iStateID;
   }
 
   public void loadLevel(int level) {
