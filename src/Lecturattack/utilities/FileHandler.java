@@ -2,6 +2,8 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.utilities.xmlHandling.configLoading.ProjectileConfig;
+import Lecturattack.utilities.xmlHandling.configLoading.ProjectileStandard;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
@@ -24,12 +26,10 @@ public class FileHandler {
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; //TODO add LevelFiles
 
   public static List<TargetStandard> loadTargetConfig() {
-    // because the JAXB marshalling need classes with XML annotations these "data classes" are nessesary
-    // they do nothing but hold the date that is read from the config file
     File file = new File("resources/config/target.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     TargetConfig targets = null;
-    try {//TODO projectils
+    try {
       jaxbContext = JAXBContext.newInstance(TargetConfig.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       targets = (TargetConfig) jaxbUnmarshaller.unmarshal(file);
@@ -39,7 +39,21 @@ public class FileHandler {
     return targets.getTargetStandards();
   }
 
-  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
+  public static List<ProjectileStandard> loadProjectileStandards() {
+    File file = new File("resources/config/projectiles.xml");//TODO save in final var --> method for opening/vrating --> code dup
+    JAXBContext jaxbContext;
+    ProjectileConfig projectiles = null;
+    try {
+      jaxbContext = JAXBContext.newInstance(ProjectileConfig.class);
+      Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+      projectiles = (ProjectileConfig) jaxbUnmarshaller.unmarshal(file);
+    } catch (JAXBException e) {
+      e.printStackTrace();
+    }
+    return projectiles.getProjectileStandards();
+  }
+
+  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException{
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
       file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
