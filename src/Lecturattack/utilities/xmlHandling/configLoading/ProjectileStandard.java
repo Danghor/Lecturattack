@@ -1,6 +1,7 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
 import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +37,16 @@ public class ProjectileStandard {
 
   public void setVertices(List<XmlVertex> vertices) {
     this.vertices = vertices;
+  }
+
+  public ArrayList<float[]> getVerticesAsFloats(){//TODO maybe a interface/superclass which lets Projectile and Target Standard get this method
+    ArrayList<float[]> vertexes = new ArrayList<>();
+    for(XmlVertex vertice: vertices){
+      //the array constructor is not allowed when adding to a list
+      float[] points = {vertice.getX(),vertice.getY()};
+      vertexes.add(points);
+    }
+    return vertexes;
   }
 
 }

@@ -62,19 +62,15 @@ public class TargetMeta extends MetaObject {
         }
       }
 
-      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVertices());
+      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
       instances.put(type, targetMeta);
     }
   }
 
-  private TargetMeta(ArrayList<Image> images, int maxHits, List<XmlVertex> vertices) {
+  private TargetMeta(ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
     this.images = images;
     this.maxHits = maxHits;
-    outline = new ArrayList<>();
-    for (XmlVertex vertex : vertices) {
-      float[] vertexPosition = {vertex.getX(), vertex.getY()};
-      outline.add(vertexPosition);
-    }
+    this.outline = outline;
   }
 
   public static TargetMeta getInstance(TargetType type) {
