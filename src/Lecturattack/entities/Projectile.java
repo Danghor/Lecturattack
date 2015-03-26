@@ -5,6 +5,7 @@ package Lecturattack.entities;/*
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -29,6 +30,24 @@ public class Projectile extends RigidBody {
     this.angularVelocity = angularVelocity;
   }
 
+  private float getAngle() {
+    EnhancedVector vertexA = getCenter();
+    EnhancedVector vertexB = vertices.get(0);
+    EnhancedVector vertexC = new EnhancedVector(metaObject.outline.get(0)[0], metaObject.outline.get(0)[1]);
+
+    EnhancedVector edgeA = (EnhancedVector) (new EnhancedVector(vertexC.x, vertexC.y)).sub(vertexB);
+    EnhancedVector edgeB = (EnhancedVector) (new EnhancedVector(vertexC.x, vertexC.y)).sub(vertexA);
+    EnhancedVector edgeC = (EnhancedVector) (new EnhancedVector(vertexB.x, vertexB.y)).sub(vertexA);
+
+    float lengthA = edgeA.length();
+    float lengthB = edgeB.length();
+    float lengthC = edgeC.length();
+
+    float alpha = (float) Math.acos((lengthB * lengthB + lengthC * lengthC - lengthA * lengthA) / 2 * lengthB * lengthC);
+
+    return alpha;
+  }
+
   @Override
   public float getMass() {
     return metaObject.getMass();
@@ -36,7 +55,10 @@ public class Projectile extends RigidBody {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    metaObject.getImage().draw(vertices.get(0).x, vertices.get(0).y);
+    //the start position for drawing the figure is assumed to be the upper-left corner of the polygon
+    Image image = metaObject.getImage();
+    image.rotate(getAngle());
+    image.draw(vertices.get(0).x, vertices.get(0).y);
   }
 
   protected float getInertia() {
