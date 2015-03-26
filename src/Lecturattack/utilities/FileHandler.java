@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Tim Adamek, Andreas Geis
+ * @author Tim Adamek
+ * @author Andreas Geis
  */
 public class FileHandler {
   private static final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
@@ -53,7 +54,7 @@ public class FileHandler {
     return projectiles.getProjectileStandards();
   }
 
-  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException{
+  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
       file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
