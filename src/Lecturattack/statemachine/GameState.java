@@ -2,7 +2,10 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.*;
+import Lecturattack.entities.Flag;
+import Lecturattack.entities.InformationField;
+import Lecturattack.entities.Projectile;
+import Lecturattack.entities.Target;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.Level;
 import Lecturattack.utilities.LevelGenerator;
@@ -12,8 +15,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +28,6 @@ public class GameState extends BasicGameState implements InputListener {
   private float wind;
 
   private Level level;
-  //private Player player;
-  //private ArrayList<Target> targets;
   private Projectile projectile;
   private Flag flag;
   private InformationField score;
@@ -39,12 +38,11 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   public void loadLevel(int level) {
-    //player = new Player();
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       FileHandler.loadTargetConfig();
-      this.level=LevelGenerator.generateLevel(levelElements);
-    } catch (IOException e) {
+      this.level = LevelGenerator.getGeneratedLevel(levelElements);
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -68,10 +66,13 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+
     level.getPlayer().render(gameContainer, stateBasedGame, graphics);
+
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
+
   }
 
   @Override

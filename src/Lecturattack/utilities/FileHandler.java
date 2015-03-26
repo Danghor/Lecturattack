@@ -2,8 +2,6 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.Projectile;
-import Lecturattack.utilities.menu.AnimatedButton;
 import Lecturattack.utilities.xmlHandling.configLoading.ProjectileConfig;
 import Lecturattack.utilities.xmlHandling.configLoading.ProjectileStandard;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
@@ -55,7 +53,7 @@ public class FileHandler {
     return projectiles.getProjectileStandards();
   }
 
-  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
+  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException{
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
       file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
@@ -81,7 +79,7 @@ public class FileHandler {
   public static void setLastLevelNumber(int level) {
     //todo: alles in %APPDATA%
   }
-  
+
   public static Image loadImage(String fileName) {
     Image image = null;
     try {

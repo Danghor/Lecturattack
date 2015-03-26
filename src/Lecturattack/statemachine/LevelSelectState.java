@@ -40,7 +40,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     menuButton[5] = new AnimatedButton(745, 300, FileHandler.loadImage("level6_down"), FileHandler.loadImage("level6"));
     menuButton[6] = new AnimatedButton(245, 600, FileHandler.loadImage("back_down"), FileHandler.loadImage("back"));
   }
-  
+
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     currentSelection = 0;
