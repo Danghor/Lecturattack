@@ -5,6 +5,7 @@ package Lecturattack.statemachine;/*
 import Lecturattack.entities.*;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.LevelGenerator;
+import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private static int iStateID;
+  private static int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private float wind;
@@ -31,36 +32,38 @@ public class GameState extends BasicGameState implements InputListener {
   private InformationField playerName;
 
   public GameState(int stateID) {
-    GameState.iStateID = stateID;
+    GameState.stateID = stateID;
   }
 
   public void loadLevel(int level) {
-    // load player and targets with LevelLoader
-  }
-
-  private void resetLevel() {
-    //todo: loadlevel(currentLevel)
-  }
-
-  @Override
-  public int getID() {
-    return iStateID;
-  }
-
-  @Override
-  public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    this.stateBasedGame = stateBasedGame;
-    player = new Player();
+    //player = new Player();
     targets = new ArrayList<>();
+    player = new Player();
 
     try {//TODO see if exeption can be dealt with somewhere else
-      List<LevelElement> levelElements = FileHandler.getLevelData(1);//LEVEL number specified here
+      List<LevelElement> levelElements = FileHandler.getLevelData(level);
       FileHandler.loadTargetConfig();
       LevelGenerator.generateLevel(levelElements, player, targets);
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
 
+  private void resetLevel() {
+    loadLevel(currentLevel);
+  }
+
+  @Override
+  public int getID() {
+    return stateID;
+  }
+
+  @Override
+  public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    this.stateBasedGame = stateBasedGame;
+
+    currentLevel = 1; //default
+    resetLevel();
   }
 
   @Override
@@ -73,13 +76,13 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-    //PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
+    PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
   }
 
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_ESCAPE) {
-      stateBasedGame.enterState(3);
+      stateBasedGame.enterState(Lecturattack.PAUSESTATE);
     }
   }
 

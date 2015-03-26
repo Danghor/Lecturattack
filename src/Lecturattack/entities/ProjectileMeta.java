@@ -34,7 +34,7 @@ public class ProjectileMeta extends MetaObject {
     return image;
   }
 
-  private enum ProjectileType {
+  public enum ProjectileType {
     EXAM,
     ROBOT,
     POINTER

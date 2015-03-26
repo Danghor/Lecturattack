@@ -22,6 +22,9 @@ public class Player implements Renderable {
   private float positionY;
   private ProjectileMeta projectileMeta;
 
+  public Player() {
+  }
+
   public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
     this.bodyImage = playerImage;
     this.armImage = armImage;
@@ -85,7 +88,8 @@ public class Player implements Renderable {
 
     if (!isThrowing) {
 //todo: place projectile on hand and rotate correctly, this is just for testing
-      projectile.render(gameContainer, stateBasedGame, graphics);
+      //projectile = new Projectile(ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.POINTER), 0f, 0f);
+      //projectile.render(gameContainer, stateBasedGame, graphics);
     }
 
   }
