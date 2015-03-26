@@ -56,6 +56,7 @@ public class ProjectileMeta extends MetaObject {
     }
   }
 
+  //todo: add vertices
   private ProjectileMeta(Image image, ArrayList<TargetMeta.TargetType> destroys) {//TODO the vertices must probably be added to? if this is the case they are already provide in the xml class
     this.image = image;
     this.destroys = destroys;
@@ -65,7 +66,7 @@ public class ProjectileMeta extends MetaObject {
     return (ProjectileMeta) instances.get(type);
   }
 
-  ArrayList<TargetMeta.TargetType> getTargetType() {//TODO is it wanter that it has default visibility
+  ArrayList<TargetMeta.TargetType> getDestroyableTargetTypes() {
     return destroys;
   }
 

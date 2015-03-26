@@ -23,7 +23,7 @@ public class Player implements Renderable {
   private float positionY;
   private ProjectileMeta projectileMeta;
 
-  public Player(/*ProjectileMeta projectileMeta, */float positionX, float positionY, Image playerImage/*, Image armImage*/) {
+  public Player(/*ProjectileMeta projectileMeta,*/ float positionX, float positionY, Image playerImage/*, Image armImage*/) {
     //this.projectileMeta = projectileMeta;
     this.positionX = positionX;
     this.positionY = positionY;
