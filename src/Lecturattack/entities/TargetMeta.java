@@ -6,7 +6,6 @@ package Lecturattack.entities;
 
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
-import Lecturattack.utilities.xmlHandling.configLoading.XmlVertex;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
