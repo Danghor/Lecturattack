@@ -4,6 +4,7 @@ package Lecturattack.statemachine;/*
 
 import Lecturattack.entities.*;
 import Lecturattack.utilities.FileHandler;
+import Lecturattack.utilities.Level;
 import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
@@ -24,8 +25,10 @@ public class GameState extends BasicGameState implements InputListener {
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private float wind;
-  private Player player;
-  private ArrayList<Target> targets;
+
+  private Level level;
+  //private Player player;
+  //private ArrayList<Target> targets;
   private Projectile projectile;
   private Flag flag;
   private InformationField score;
@@ -37,13 +40,10 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     //player = new Player();
-    targets = new ArrayList<>();
-    player = new Player();
-
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       FileHandler.loadTargetConfig();
-      LevelGenerator.generateLevel(levelElements, player, targets);
+      this.level=LevelGenerator.generateLevel(levelElements);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -68,8 +68,8 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    player.render(gameContainer, stateBasedGame, graphics);
-    for (Target target : targets) {
+    level.getPlayer().render(gameContainer, stateBasedGame, graphics);
+    for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
   }

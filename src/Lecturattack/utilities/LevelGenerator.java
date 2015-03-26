@@ -21,8 +21,10 @@ import java.util.List;
 public class LevelGenerator {
 
   //todo: replace with mothod below
-  public static void generateLevel(List<LevelElement> levelElements, Player player, ArrayList<Target> targets) {
+  public static Level generateLevel(List<LevelElement> levelElements) {
     //todo: Test
+    Player player = new Player();
+    ArrayList<Target> targets = new ArrayList<>();
     for (LevelElement levelElement : levelElements) {
       if (levelElement.getType() == XmlObjectType.PLAYER) {
         player.setPositionX(levelElement.getPositionX());
@@ -55,6 +57,7 @@ public class LevelGenerator {
         targets.add(target);
       }
     }
+    return new Level(player,targets);
   }
 
   public static Level getGeneratedLevel(List<LevelElement> levelElements) {
