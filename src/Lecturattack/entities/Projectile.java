@@ -53,4 +53,15 @@ public class Projectile extends RigidBody {
       vertex.rotate(angle, center);
     }
   }
+
+  @Override
+  public void update(float delta) {
+    super.update(delta);
+
+    float angularAcceleration = torque / getInertia();
+    angularVelocity += angularAcceleration * delta;
+    rotate(angularVelocity * delta, getCenter());
+
+    torque = 0;
+  }
 }
