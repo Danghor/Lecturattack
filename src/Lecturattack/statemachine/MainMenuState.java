@@ -13,20 +13,20 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class MainMenuState extends BasicGameState implements InputListener {
 
-  private int iStateID;
+  private int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private Image logo;
   private AnimatedButton[] menuButton;
-  private int iMenuSelector;
+  private int menuSelector;
 
-  public MainMenuState(int iStateID) {
-    this.iStateID = iStateID;
+  public MainMenuState(int stateID) {
+    this.stateID = stateID;
   }
 
   @Override
   public int getID() {
-    return iStateID;
+    return stateID;
   }
 
   @Override
@@ -35,7 +35,7 @@ public class MainMenuState extends BasicGameState implements InputListener {
     background = FileHandler.createMenuBackground();
     logo = FileHandler.createMenuLogo();
     menuButton = FileHandler.createMainMenuButtons();
-    iMenuSelector = 0;
+    menuSelector = 0;
   }
 
   @Override
@@ -49,21 +49,21 @@ public class MainMenuState extends BasicGameState implements InputListener {
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT) {
-      if (iMenuSelector > 0) {
-        iMenuSelector--;
+      if (menuSelector > 0) {
+        menuSelector--;
       }
     } else if (key == Input.KEY_RIGHT) {
-      if (iMenuSelector < 2) {
-        iMenuSelector++;
+      if (menuSelector < 2) {
+        menuSelector++;
       }
     } else if (key == Input.KEY_ENTER) {
-      if (iMenuSelector == 0) {
+      if (menuSelector == 0) {
         stateBasedGame.enterState(2);
       }
-      if (iMenuSelector == 1) {
+      if (menuSelector == 1) {
         stateBasedGame.enterState(1);
       }
-      if (iMenuSelector == 2) {
+      if (menuSelector == 2) {
         System.exit(0);
       }
     }
@@ -75,7 +75,7 @@ public class MainMenuState extends BasicGameState implements InputListener {
     graphics.drawImage(logo, 250, 70);
     for (int i = 0; i < menuButton.length; i++) {
       // check if the button currently has focus
-      menuButton[i].render(graphics, iMenuSelector == i);
+      menuButton[i].render(graphics, menuSelector == i);
     }
   }
 

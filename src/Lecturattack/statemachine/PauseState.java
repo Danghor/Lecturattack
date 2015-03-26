@@ -16,7 +16,7 @@ public class PauseState extends BasicGameState implements InputListener {
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButton;
-  private int iMenuSelector;
+  private int menuSelector;
 
   public PauseState(int iStateID) {
     stateID = iStateID;
@@ -32,7 +32,7 @@ public class PauseState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.createMenuBackground();
     menuButton = FileHandler.createPauseMenuButtons();
-    iMenuSelector = 0;
+    menuSelector = 0;
   }
 
   @Override
@@ -44,23 +44,23 @@ public class PauseState extends BasicGameState implements InputListener {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
     for (int i = 0; i < menuButton.length; i++) {
-      menuButton[i].render(graphics, iMenuSelector == i);
+      menuButton[i].render(graphics, menuSelector == i);
     }
   }
 
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT || key == Input.KEY_RIGHT) {
-      if (iMenuSelector == 0) {
-        iMenuSelector++;
-      } else if (iMenuSelector == 1) {
-        iMenuSelector--;
+      if (menuSelector == 0) {
+        menuSelector++;
+      } else if (menuSelector == 1) {
+        menuSelector--;
       }
     } else if (key == Input.KEY_ENTER) {
-      if (iMenuSelector == 0) {
+      if (menuSelector == 0) {
         // continue the game
         stateBasedGame.enterState(2);
-      } else if (iMenuSelector == 1) {
+      } else if (menuSelector == 1) {
         // go back to MainMenu
         stateBasedGame.enterState(0);
       }

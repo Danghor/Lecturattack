@@ -12,19 +12,19 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Andreas Geis
  */
 public class LevelSelectState extends BasicGameState implements InputListener {
-  private int iStateID;
+  private int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButton;
-  private int iMenuSelector;
+  private int menuSelector; //todo: variable name not helpful
 
-  public LevelSelectState(int iStateID) {
-    this.iStateID = iStateID;
+  public LevelSelectState(int stateID) {
+    this.stateID = stateID;
   }
 
   @Override
   public int getID() {
-    return iStateID;
+    return stateID;
   }
 
   @Override
@@ -32,7 +32,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.createMenuBackground();
     menuButton = FileHandler.createLevelSelectButtons();
-    iMenuSelector = 0;
+    menuSelector = 0;
   }
 
   @Override
@@ -46,30 +46,30 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT) {
-      if (iMenuSelector > 0) {
-        iMenuSelector--;
+      if (menuSelector > 0) {
+        menuSelector--;
       }
     } else if (key == Input.KEY_RIGHT) {
-      if (iMenuSelector <= 5) {
-        iMenuSelector++;
+      if (menuSelector <= 5) {
+        menuSelector++;
       }
     } else if (key == Input.KEY_UP) {
-      if (iMenuSelector >= 3) {
-        iMenuSelector -= 3;
+      if (menuSelector >= 3) {
+        menuSelector -= 3;
       } else {
-        iMenuSelector = 0;
+        menuSelector = 0;
       }
     } else if (key == Input.KEY_DOWN) {
-      if (iMenuSelector <= 2) {
-        iMenuSelector += 3;
+      if (menuSelector <= 2) {
+        menuSelector += 3;
       } else {
-        iMenuSelector = 6;
+        menuSelector = 6;
       }
     } else if (key == Input.KEY_ENTER) {
-      if (iMenuSelector >= 0 && iMenuSelector <= 5) {
+      if (menuSelector >= 0 && menuSelector <= 5) {
         // TODO: give the GameState the selected level
         stateBasedGame.enterState(2);
-      } else if (iMenuSelector == 6) {
+      } else if (menuSelector == 6) {
         stateBasedGame.enterState(0);
       }
     }
@@ -80,7 +80,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     graphics.drawImage(background, 0, 0);
     for (int i = 0; i < menuButton.length; i++) {
       // check if the button currently has focus
-      menuButton[i].render(graphics, iMenuSelector == i);
+      menuButton[i].render(graphics, menuSelector == i);
     }
   }
 
