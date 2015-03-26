@@ -1,8 +1,13 @@
 package Lecturattack.entities;
 
+import Lecturattack.utilities.FileHandler;
+import Lecturattack.utilities.xmlHandling.configLoading.ProjectileStandard;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Tim Adamek
@@ -10,14 +15,44 @@ import java.util.HashMap;
  */
 public class ProjectileMeta extends MetaObject {
   private Image image;
-  private TargetMeta.TargetType destroys;
+  private ArrayList<TargetMeta.TargetType> destroys;
 
   static {
     instances = new HashMap<ProjectileType, ProjectileMeta>();
     //todo: initialize instances with data from config file
+    List<ProjectileStandard> projectileStandards = FileHandler.loadProjectileStandards();
+
+    for(ProjectileStandard projectileStandard:projectileStandards){
+      ArrayList<TargetMeta.TargetType> destroys= new ArrayList<>();
+      if(projectileStandard.getDestroys().equals("ENEMY")){
+        TargetMeta.TargetType ENEMY = TargetMeta.TargetType.ENEMY;
+        destroys.add(ENEMY);
+
+      }else if(projectileStandard.getDestroys().equals("RAM")){
+        TargetMeta.TargetType RAMH = TargetMeta.TargetType.RAMH;
+        TargetMeta.TargetType RAMV = TargetMeta.TargetType.RAMV;
+        destroys.add(RAMH);
+        destroys.add(RAMV);
+      }else if (projectileStandard.getDestroys().equals("RAM")) {
+        TargetMeta.TargetType LIBRARYH = TargetMeta.TargetType.LIBRARYH;
+        TargetMeta.TargetType LIBRARYV= TargetMeta.TargetType.LIBRARYV;
+        destroys.add(LIBRARYH);
+        destroys.add(LIBRARYV);
+      }
+
+      Image image= null;//TODO from FileHandler
+
+      try {
+        image = new Image(projectileStandard.getImage());
+      } catch (SlickException e) {
+        e.printStackTrace();
+      }
+
+      instances.put(ProjectileType.EXAM,new ProjectileMeta(image,destroys));
+    }
   }
 
-  private ProjectileMeta(Image image, TargetMeta.TargetType destroys) {
+  private ProjectileMeta(Image image, ArrayList<TargetMeta.TargetType> destroys) {//TODO the vertices must probably be added to? if this is the case they are already provide in the xml class
     this.image = image;
     this.destroys = destroys;
   }
@@ -26,7 +61,7 @@ public class ProjectileMeta extends MetaObject {
     return (ProjectileMeta) instances.get(type);
   }
 
-  TargetMeta.TargetType getTargetType() {
+  ArrayList<TargetMeta.TargetType> getTargetType() {//TODO is it wanter that it has default visibility
     return destroys;
   }
 
