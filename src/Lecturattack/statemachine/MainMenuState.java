@@ -18,7 +18,7 @@ public class MainMenuState extends BasicGameState implements InputListener {
   private Image background;
   private Image logo;
   private AnimatedButton[] menuButton;
-  private int menuSelector;
+  private int currentSelection;
 
   public MainMenuState(int stateID) {
     this.stateID = stateID;
@@ -32,10 +32,18 @@ public class MainMenuState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    background = FileHandler.createMenuBackground();
-    logo = FileHandler.createMenuLogo();
-    menuButton = FileHandler.createMainMenuButtons();
-    menuSelector = 0;
+    background = FileHandler.loadImage("backgroundMenu");
+    logo = FileHandler.loadImage("logo");
+    menuButton = new AnimatedButton[3];
+    menuButton[0] = new AnimatedButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));
+    menuButton[1] = new AnimatedButton(495, 500, FileHandler.loadImage("levelSelect_down"), FileHandler.loadImage("levelSelect"));
+    menuButton[2] = new AnimatedButton(745, 500, FileHandler.loadImage("endGame_down"), FileHandler.loadImage("endGame"));
+  }
+  
+  @Override
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    // reset the selection every time the state is entered
+    currentSelection = 0;
   }
 
   @Override
@@ -49,21 +57,21 @@ public class MainMenuState extends BasicGameState implements InputListener {
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT) {
-      if (menuSelector > 0) {
-        menuSelector--;
+      if (currentSelection > 0) {
+        currentSelection--;
       }
     } else if (key == Input.KEY_RIGHT) {
-      if (menuSelector < 2) {
-        menuSelector++;
+      if (currentSelection < 2) {
+        currentSelection++;
       }
     } else if (key == Input.KEY_ENTER) {
-      if (menuSelector == 0) {
+      if (currentSelection == 0) {
         stateBasedGame.enterState(2);
       }
-      if (menuSelector == 1) {
+      if (currentSelection == 1) {
         stateBasedGame.enterState(1);
       }
-      if (menuSelector == 2) {
+      if (currentSelection == 2) {
         System.exit(0);
       }
     }
@@ -75,7 +83,7 @@ public class MainMenuState extends BasicGameState implements InputListener {
     graphics.drawImage(logo, 250, 70);
     for (int i = 0; i < menuButton.length; i++) {
       // check if the button currently has focus
-      menuButton[i].render(graphics, menuSelector == i);
+      menuButton[i].render(graphics, currentSelection == i);
     }
   }
 

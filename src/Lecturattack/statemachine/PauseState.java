@@ -16,7 +16,7 @@ public class PauseState extends BasicGameState implements InputListener {
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButton;
-  private int menuSelector;
+  private int currentSelection;
 
   public PauseState(int iStateID) {
     stateID = iStateID;
@@ -30,9 +30,15 @@ public class PauseState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    background = FileHandler.createMenuBackground();
-    menuButton = FileHandler.createPauseMenuButtons();
-    menuSelector = 0;
+    background = FileHandler.loadImage("backgroundMenu");
+    menuButton = new AnimatedButton[2];
+    menuButton[0] = new AnimatedButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
+    menuButton[1] = new AnimatedButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
+  }
+  
+  @Override
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    currentSelection = 0;
   }
 
   @Override
@@ -44,23 +50,23 @@ public class PauseState extends BasicGameState implements InputListener {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
     for (int i = 0; i < menuButton.length; i++) {
-      menuButton[i].render(graphics, menuSelector == i);
+      menuButton[i].render(graphics, currentSelection == i);
     }
   }
 
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT || key == Input.KEY_RIGHT) {
-      if (menuSelector == 0) {
-        menuSelector++;
-      } else if (menuSelector == 1) {
-        menuSelector--;
+      if (currentSelection == 0) {
+        currentSelection++;
+      } else if (currentSelection == 1) {
+        currentSelection--;
       }
     } else if (key == Input.KEY_ENTER) {
-      if (menuSelector == 0) {
+      if (currentSelection == 0) {
         // continue the game
         stateBasedGame.enterState(2);
-      } else if (menuSelector == 1) {
+      } else if (currentSelection == 1) {
         // go back to MainMenu
         stateBasedGame.enterState(0);
       }
