@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class LevelGenerator {
 
+  //todo: replace with mothod below
   public static void generateLevel(List<LevelElement> levelElements, Player player, ArrayList<Target> targets) {
     //todo: Test
     for (LevelElement levelElement : levelElements) {
@@ -54,5 +55,10 @@ public class LevelGenerator {
         targets.add(target);
       }
     }
+  }
+
+  public static Level getGeneratedLevel(List<LevelElement> levelElements) {
+    //todo: implement this
+    return null;
   }
 }
