@@ -36,8 +36,14 @@ public class PauseState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    background = FileHandler.createMenuBackground();
-    menuButton = FileHandler.createPauseMenuButtons();
+    background = FileHandler.loadImage("backgroundMenu");
+    menuButton = new AnimatedButton[2];
+    menuButton[0] = new AnimatedButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
+    menuButton[1] = new AnimatedButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
+  }
+  
+  @Override
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     iMenuSelector = 0;
   }
 

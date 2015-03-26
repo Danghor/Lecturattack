@@ -69,65 +69,14 @@ public class FileHandler {
     //todo: alles in %APPDATA%
   }
   
-  public static AnimatedButton[] createMainMenuButtons() {
-    AnimatedButton[] menuButton = new AnimatedButton[3];
+  public static Image loadImage(String fileName) {
+    Image image = null;
     try {
-      // TODO: check if the player is in level 2 or higher and replace the
-      // "Spiel Starten" image with "Spiel fortsetzen" for Button 1
-      menuButton[0] = new AnimatedButton(245, 500, new Image("resources/images/startGame_down.png"), new Image("resources/images/startGame.png"));
-      menuButton[1] = new AnimatedButton(495, 500, new Image("resources/images/levelSelect_down.png"), new Image("resources/images/levelSelect.png"));
-      menuButton[2] = new AnimatedButton(745, 500, new Image("resources/images/endGame_down.png"), new Image("resources/images/endGame.png"));
+      image = new Image("resources/images/" + fileName + ".png");
     } catch (SlickException e) {
-      System.out.println("Error while loading images.");
+      System.out.println("Error while loading image.");
     }
-    return menuButton;
+    return image;
   }
   
-  public static AnimatedButton[] createLevelSelectButtons() {
-    AnimatedButton[] menuButton = new AnimatedButton[7];
-    try {
-      menuButton[0] = new AnimatedButton(245, 50, new Image("resources/images/level1_down.png"), new Image("resources/images/level1.png"));
-      menuButton[1] = new AnimatedButton(495, 50, new Image("resources/images/level1_down.png"), new Image("resources/images/level1.png"));
-      menuButton[2] = new AnimatedButton(745, 50, new Image("resources/images/level1_down.png"), new Image("resources/images/level1.png"));
-      menuButton[3] = new AnimatedButton(245, 300, new Image("resources/images/level1_down.png"), new Image("resources/images/level1.png"));
-      menuButton[4] = new AnimatedButton(495, 300, new Image("resources/images/level1_down.png"), new Image("resources/images/level1.png"));
-      menuButton[5] = new AnimatedButton(745, 300, new Image("resources/images/level1_down.png"), new Image("resources/images/level1.png"));
-      menuButton[6] = new AnimatedButton(245, 600, new Image("resources/images/back_down.png"), new Image("resources/images/back.png"));
-    } catch (SlickException e) {
-      System.out.println("Error while loading images.");
-    }
-    return menuButton;
-  }
-  
-  public static AnimatedButton[] createPauseMenuButtons() {
-    AnimatedButton[] menuButton = new AnimatedButton[2];
-    try {
-      menuButton[0] = new AnimatedButton(245, 500, new Image("resources/images/continue_down.png"), new Image("resources/images/continue.png"));
-      menuButton[1] = new AnimatedButton(745, 500, new Image("resources/images/backToMenu_down.png"), new Image("resources/images/backToMenu.png"));
-    } catch (SlickException e) {
-      System.out.println("Error while loading images.");
-    }
-    return menuButton;
-  }
-  
-  public static Image createMenuBackground() {
-    Image background = null;
-    try {
-      background = new Image("resources/images/backgroundMenu.png");
-    } catch (SlickException e) {
-      System.out.println("Error while loading images.");
-    }
-    return background;
-  }
-  
-  public static Image createMenuLogo() {
-    Image logo = null;
-    try {
-      logo = new Image("resources/images/logo.png");
-    } catch (SlickException e) {
-      System.out.println("Error while loading images.");
-    }
-    return logo;
-  }
-
 }

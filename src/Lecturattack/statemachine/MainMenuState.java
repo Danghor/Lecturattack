@@ -38,9 +38,17 @@ public class MainMenuState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    background = FileHandler.createMenuBackground();
-    logo = FileHandler.createMenuLogo();
-    menuButton = FileHandler.createMainMenuButtons();
+    background = FileHandler.loadImage("backgroundMenu");
+    logo = FileHandler.loadImage("logo");
+    menuButton = new AnimatedButton[3];
+    menuButton[0] = new AnimatedButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));
+    menuButton[1] = new AnimatedButton(495, 500, FileHandler.loadImage("levelSelect_down"), FileHandler.loadImage("levelSelect"));
+    menuButton[2] = new AnimatedButton(745, 500, FileHandler.loadImage("endGame_down"), FileHandler.loadImage("endGame"));
+  }
+  
+  @Override
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    // reset the selection every time the state is entered
     iMenuSelector = 0;
   }
 
