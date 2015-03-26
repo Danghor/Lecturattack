@@ -36,7 +36,7 @@ public class Projectile extends RigidBody {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-
+    metaObject.getImage().draw(vertices.get(0).x, vertices.get(0).y);
   }
 
   protected float getInertia() {

@@ -2,25 +2,23 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import Lecturattack.utilities.menu.AnimatedButton;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
- * @author Andreas Geis
+ * @author Tim Adamek, Andreas Geis
  */
 public class FileHandler {
   private static final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
@@ -78,5 +76,4 @@ public class FileHandler {
     }
     return image;
   }
-  
 }

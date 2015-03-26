@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nick Steyer on 19/03/2015
+ * @author Tim Adamek
  */
 @XmlRootElement(name = "targets")
 public class TargetConfig {
@@ -30,7 +30,7 @@ public class TargetConfig {
   }
 
   public void setTargetStandards(List<TargetStandard> targetStandards) {
-    this.target = target;
+    this.target = targetStandards;
   }
 
 }

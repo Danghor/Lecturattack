@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nick Steyer on 19/03/2015
+ * @author Tim Adamek
  */
-@XmlRootElement(name="LevelData")
+@XmlRootElement(name = "LevelData")
 public class LevelData {
   private int id;
-  private List<LevelElement> levelElements= new ArrayList<LevelElement>() {
+  private List<LevelElement> levelElements = new ArrayList<LevelElement>() {
   };
 
   public LevelData() {

@@ -2,35 +2,29 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.InputListener;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.menu.AnimatedButton;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author Andreas Geis
  */
 public class PauseState extends BasicGameState implements InputListener {
+  private static int stateID;
   private StateBasedGame stateBasedGame;
-  private static int iStateID;
   private Image background;
   private AnimatedButton[] menuButton;
-  private int iMenuSelector;
+  private int currentSelection;
 
   public PauseState(int iStateID) {
-    this.iStateID = iStateID;
+    stateID = iStateID;
   }
 
   @Override
   public int getID() {
-    return iStateID;
+    return stateID;
   }
 
   @Override
@@ -44,7 +38,7 @@ public class PauseState extends BasicGameState implements InputListener {
   
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    iMenuSelector = 0;
+    currentSelection = 0;
   }
 
   @Override
@@ -56,23 +50,23 @@ public class PauseState extends BasicGameState implements InputListener {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
     for (int i = 0; i < menuButton.length; i++) {
-      menuButton[i].render(graphics, iMenuSelector == i);
+      menuButton[i].render(graphics, currentSelection == i);
     }
   }
 
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT || key == Input.KEY_RIGHT) {
-      if (iMenuSelector == 0) {
-        iMenuSelector++;
-      } else if (iMenuSelector == 1) {
-        iMenuSelector--;
+      if (currentSelection == 0) {
+        currentSelection++;
+      } else if (currentSelection == 1) {
+        currentSelection--;
       }
     } else if (key == Input.KEY_ENTER) {
-      if (iMenuSelector == 0) {
+      if (currentSelection == 0) {
         // continue the game
         stateBasedGame.enterState(2);
-      } else if (iMenuSelector == 1) {
+      } else if (currentSelection == 1) {
         // go back to MainMenu
         stateBasedGame.enterState(0);
       }

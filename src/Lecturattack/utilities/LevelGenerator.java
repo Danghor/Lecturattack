@@ -2,9 +2,11 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.*;
-import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
+import Lecturattack.entities.Player;
+import Lecturattack.entities.Target;
+import Lecturattack.entities.TargetMeta;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -14,7 +16,7 @@ import java.util.List;
 
 
 /**
- * Created by Nick Steyer on 09/03/2015
+ * @author Tim Adamek
  */
 public class LevelGenerator {
 
