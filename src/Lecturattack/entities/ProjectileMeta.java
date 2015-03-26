@@ -22,25 +22,29 @@ public class ProjectileMeta extends MetaObject {
     //todo: initialize instances with data from config file
     List<ProjectileStandard> projectileStandards = FileHandler.loadProjectileStandards();
 
-    for(ProjectileStandard projectileStandard:projectileStandards){
-      ArrayList<TargetMeta.TargetType> destroys= new ArrayList<>();
-      if(projectileStandard.getDestroys().equals("ENEMY")){
-        TargetMeta.TargetType ENEMY = TargetMeta.TargetType.ENEMY;
-        destroys.add(ENEMY);
+    for (ProjectileStandard projectileStandard : projectileStandards) {
+      ArrayList<TargetMeta.TargetType> destroys = new ArrayList<>();
+      switch (projectileStandard.getDestroys()) {
+        case "ENEMY":
+          TargetMeta.TargetType ENEMY = TargetMeta.TargetType.ENEMY;
+          destroys.add(ENEMY);
 
-      }else if(projectileStandard.getDestroys().equals("RAM")){
-        TargetMeta.TargetType RAMH = TargetMeta.TargetType.RAMH;
-        TargetMeta.TargetType RAMV = TargetMeta.TargetType.RAMV;
-        destroys.add(RAMH);
-        destroys.add(RAMV);
-      }else if (projectileStandard.getDestroys().equals("RAM")) {
-        TargetMeta.TargetType LIBRARYH = TargetMeta.TargetType.LIBRARYH;
-        TargetMeta.TargetType LIBRARYV= TargetMeta.TargetType.LIBRARYV;
-        destroys.add(LIBRARYH);
-        destroys.add(LIBRARYV);
+          break;
+        case "RAM":
+          TargetMeta.TargetType RAMH = TargetMeta.TargetType.RAMH;
+          TargetMeta.TargetType RAMV = TargetMeta.TargetType.RAMV;
+          destroys.add(RAMH);
+          destroys.add(RAMV);
+          break;
+        case "LIBRARY":
+          TargetMeta.TargetType LIBRARYH = TargetMeta.TargetType.LIBRARYH;
+          TargetMeta.TargetType LIBRARYV = TargetMeta.TargetType.LIBRARYV;
+          destroys.add(LIBRARYH);
+          destroys.add(LIBRARYV);
+          break;
       }
 
-      Image image= null;//TODO from FileHandler
+      Image image = null;//TODO from FileHandler
 
       try {
         image = new Image(projectileStandard.getImage());
@@ -48,7 +52,7 @@ public class ProjectileMeta extends MetaObject {
         e.printStackTrace();
       }
 
-      instances.put(ProjectileType.EXAM,new ProjectileMeta(image,destroys));
+      instances.put(ProjectileType.EXAM, new ProjectileMeta(image, destroys));
     }
   }
 
