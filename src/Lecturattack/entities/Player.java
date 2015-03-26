@@ -9,7 +9,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * @author Tim Adamek, Nick Steyer
+ * @author Tim Adamek
+ * @author Nick Steyer
  */
 public class Player implements Renderable {
   private Image bodyImage;
