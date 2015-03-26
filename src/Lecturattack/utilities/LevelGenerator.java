@@ -20,23 +20,28 @@ import java.util.List;
  */
 public class LevelGenerator {
 
-  //todo: replace with mothod below
-  public static Level generateLevel(List<LevelElement> levelElements) {
-    //todo: Test
-    Player player = new Player();
+  public static Level getGeneratedLevel(List<LevelElement> levelElements) throws SlickException {
+    Player player = null;
     ArrayList<Target> targets = new ArrayList<>();
+
     for (LevelElement levelElement : levelElements) {
-      if (levelElement.getType() == XmlObjectType.PLAYER) {
-        player.setPositionX(levelElement.getPositionX());
-        player.setPositionY(levelElement.getPositionY());
-        try {
-          player.setBodyImage(new Image(levelElement.getImage()));
-        } catch (SlickException e) {
-          e.printStackTrace();
-        }
-      } else {
+
+      if (levelElement.getType() == XmlObjectType.PLAYER) { //Player
+
+        float posX = levelElement.getPositionX();
+        float posY = levelElement.getPositionY();
+        Image bodyImage = new Image(levelElement.getImage());
+
+        player = new Player(posX, posY, bodyImage);
+
+      } else { //Target
+
+        TargetMeta targetMeta;
+        float posX = levelElement.getPositionX();
+        float posY = levelElement.getPositionY();
+
         TargetMeta.TargetType targetType;
-        Target target;
+
         if (levelElement.getType() == XmlObjectType.RAM) {
           if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
             targetType = TargetMeta.TargetType.RAMH;
@@ -53,15 +58,13 @@ public class LevelGenerator {
           targetType = TargetMeta.TargetType.ENEMY;
         }
 
-        target = new Target(TargetMeta.getInstance(targetType), levelElement.getPositionX(), levelElement.getPositionY());
-        targets.add(target);
-      }
-    }
-    return new Level(player,targets);
-  }
+        targetMeta = TargetMeta.getInstance(targetType);
+        targets.add(new Target(targetMeta, posX, posY));
 
-  public static Level getGeneratedLevel(List<LevelElement> levelElements) {
-    //todo: implement this
-    return null;
+      }
+
+    }
+
+    return new Level(player, targets);
   }
 }

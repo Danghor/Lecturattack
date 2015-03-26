@@ -35,7 +35,7 @@ public class PauseState extends BasicGameState implements InputListener {
     menuButton[0] = new AnimatedButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
     menuButton[1] = new AnimatedButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
   }
-  
+
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     currentSelection = 0;

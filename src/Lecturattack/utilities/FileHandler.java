@@ -2,7 +2,6 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.utilities.menu.AnimatedButton;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
@@ -66,7 +65,7 @@ public class FileHandler {
   public static void setLastLevelNumber(int level) {
     //todo: alles in %APPDATA%
   }
-  
+
   public static Image loadImage(String fileName) {
     Image image = null;
     try {

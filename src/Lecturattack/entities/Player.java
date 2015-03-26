@@ -9,7 +9,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * @author Tim Adamek
+ * @author Tim Adamek, Nick Steyer
  */
 public class Player implements Renderable {
   private Image bodyImage;
@@ -22,13 +22,12 @@ public class Player implements Renderable {
   private float positionY;
   private ProjectileMeta projectileMeta;
 
-  public Player() {
-  }
-
-  public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
+  public Player(/*ProjectileMeta projectileMeta, */float positionX, float positionY, Image playerImage/*, Image armImage*/) {
+    //this.projectileMeta = projectileMeta;
+    this.positionX = positionX;
+    this.positionY = positionY;
     this.bodyImage = playerImage;
-    this.armImage = armImage;
-    this.projectileMeta = projectileMeta;
+    //this.armImage = armImage;
   }
 
   public float getPositionY() {
