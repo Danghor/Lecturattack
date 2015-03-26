@@ -8,12 +8,9 @@ import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 /**
- * Created by Tim on 23.03.2015.
+ *@author Tim Adamek
  */
 public class TargetStandard {
-  /**
-   * Created by Tim on 20.03.2015.
-   */
   private String imageIntact;
   private String imageSlightlyBroken;
   private String imageAlmostBroken;

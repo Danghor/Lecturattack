@@ -1,6 +1,4 @@
-package Lecturattack.utilities;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.utilities;
 
 import org.newdawn.slick.geom.Vector2f;
 

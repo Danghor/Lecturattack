@@ -1,14 +1,10 @@
 package Lecturattack.utilities.xmlHandling;
 
-/**
- * Created by Tim on 20.03.2015.
- */
-
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Created by Tim on 20.03.2015.
+ * @author Tim Adamek
  */
 @XmlType(name = "positioningType")
 @XmlEnum

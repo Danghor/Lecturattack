@@ -5,7 +5,7 @@ import Lecturattack.utilities.xmlHandling.Positioning;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Created by Tim on 20.03.2015.
+ * @author Tim Adamek
  */
 public class LevelElement {
   private float positionX;

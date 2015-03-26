@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Nick Steyer on 09/03/2015
+ * @author Tim Adamek,
  */
 public class FileHandler {
   private static final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";

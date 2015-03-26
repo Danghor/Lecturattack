@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * Created by Nick Steyer on 09/03/2015
+ * @author Tim Adamek
  */
 public class LevelGenerator {
 
