@@ -6,7 +6,7 @@ package Lecturattack.entities;
 
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
-import Lecturattack.utilities.xmlHandling.configLoading.XmlVertice;
+import Lecturattack.utilities.xmlHandling.configLoading.XmlVertex;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -19,11 +19,10 @@ import java.util.List;
  */
 public class TargetMeta extends MetaObject {
   private final int maxHits;
-  ArrayList<Image> images;
-  TargetType targetType;
+  private ArrayList<Image> images;
 
   static {
-    instances = new HashMap<>();
+    instances = new HashMap<TargetType, TargetMeta>();
 
     List<TargetStandard> targetStandards = FileHandler.loadTargetConfig();
 
@@ -32,6 +31,7 @@ public class TargetMeta extends MetaObject {
       try {
         //the images are not saved in a list because they are read from a config file
         //and having them in a list in a config file would be less readable (because the tag names would be the same)
+        //TODO maybe other way of doing this
         if (!targetStandard.getImageIntact().equals("")) {
           images.add(new Image(targetStandard.getImageIntact()));
         }
@@ -44,23 +44,40 @@ public class TargetMeta extends MetaObject {
       } catch (SlickException e) {
         e.printStackTrace();
       }
+      //TODO
+      TargetType type;
+      if (targetStandard.getTargetType().equals("ENEMY")) {
+        type = TargetType.ENEMY;
+      } else if (targetStandard.getTargetType().equals("RAM")) {
+        if (targetStandard.getPositioning().equals("HORIZONTAL")) {
+          type = TargetType.RAMH;
+        } else {
+          type = TargetType.RAMV;
+        }
+      } else {
+        if (targetStandard.getPositioning().equals("HORIZONTAL")) {
+          type = TargetType.LIBRARYH;
+        } else {
+          type = TargetType.LIBRARYV;
+        }
+      }
 
-      instances.put(targetStandard.getTargetMetaType(), new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getTargetType(), targetStandard.getVertices()));//TODO this is strange --> it would also accept TargetType instead of targetMetaType
+      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVertices());
+      instances.put(type, targetMeta);
     }
   }
 
-  public TargetMeta(ArrayList<Image> images, int maxHits, TargetType targetType, List<XmlVertice> vertices) {
+  private TargetMeta(ArrayList<Image> images, int maxHits, List<XmlVertex> vertices) {
     this.images = images;
     this.maxHits = maxHits;
-    this.targetType = targetType;
-    for (XmlVertice vertex : vertices) {
+    outline = new ArrayList<>();
+    for (XmlVertex vertex : vertices) {
       float[] vertexPosition = {vertex.getX(), vertex.getY()};
-      this.outline = new ArrayList<>();
-      this.outline.add(vertexPosition);
+      outline.add(vertexPosition);
     }
   }
 
-  public static TargetMeta getInstance(TargetMetaType type) {
+  public static TargetMeta getInstance(TargetType type) {
     return (TargetMeta) instances.get(type);
   }
 
@@ -75,8 +92,10 @@ public class TargetMeta extends MetaObject {
   }
 
   public enum TargetType {
-    LIBRARY,
-    RAM,
+    LIBRARYV,
+    LIBRARYH,
+    RAMV,
+    RAMH,
     ENEMY
   }
 }
