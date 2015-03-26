@@ -38,7 +38,6 @@ public abstract class RigidBody implements Renderable {
     this.linearVelocity = linearVelocity;
   }
 
-  //todo:test
   public EnhancedVector getCenter() {
     int n = vertices.size(); //number of vertices on the polygon
     double centerXSum = 0; //the summation part of calculating the x-axis of the center
@@ -99,5 +98,14 @@ public abstract class RigidBody implements Renderable {
     }
   }
 
+  public void update(float delta) {
+    EnhancedVector acceleration;
+
+    acceleration = new EnhancedVector(force.x * (1 / getMass()), force.y * (1 / getMass()));
+    linearVelocity.add(acceleration.scale(delta));
+    move(new EnhancedVector(linearVelocity.x * delta, linearVelocity.y * delta));
+
+    force = new EnhancedVector(0, 0);
+  }
 
 }

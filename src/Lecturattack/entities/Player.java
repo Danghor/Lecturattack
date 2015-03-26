@@ -20,6 +20,7 @@ public class Player implements Renderable {
   private PowerSlider powerSlider;
   private float positionX;
   private float positionY;
+  private ProjectileMeta projectileMeta;
 
   public Player() {
   }
@@ -27,7 +28,7 @@ public class Player implements Renderable {
   public Player(Image playerImage, Image armImage, ProjectileMeta projectileMeta) {
     this.bodyImage = playerImage;
     this.armImage = armImage;
-    this.projectile = new Projectile(projectileMeta, 0f, 0f); //todo: set actual position for the projectile
+    this.projectileMeta = projectileMeta;
   }
 
   public float getPositionY() {
@@ -64,6 +65,7 @@ public class Player implements Renderable {
 
   public void reset() {
     isThrowing = false;
+    projectile = new Projectile(projectileMeta, 0f, 0f); //todo: set actual position for the projectile
   }
 
 
@@ -83,6 +85,13 @@ public class Player implements Renderable {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     graphics.drawImage(bodyImage, positionX, positionY);
+
+    if (!isThrowing) {
+//todo: place projectile on hand and rotate correctly, this is just for testing
+      //projectile = new Projectile(ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.POINTER), 0f, 0f);
+      //projectile.render(gameContainer, stateBasedGame, graphics);
+    }
+
   }
 
 
