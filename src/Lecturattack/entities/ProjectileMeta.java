@@ -64,7 +64,6 @@ public class ProjectileMeta extends MetaObject {
   private Image image;
   private ArrayList<TargetMeta.TargetType> destroys;
 
-  //todo: add vertices
   private ProjectileMeta(ArrayList<float[]> outline, Image image, ArrayList<TargetMeta.TargetType> destroys) {
     this.outline = outline;
     this.image = image;

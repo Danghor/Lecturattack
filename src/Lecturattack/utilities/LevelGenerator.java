@@ -2,13 +2,11 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.Player;
 import Lecturattack.entities.Target;
 import Lecturattack.entities.TargetMeta;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
@@ -21,18 +19,16 @@ import java.util.List;
 public class LevelGenerator {
 
   public static Level getGeneratedLevel(List<LevelElement> levelElements) throws SlickException {
-    Player player = null;
+    float playerPositionX = 0f;
+    float playerPositionY = 0f;
     ArrayList<Target> targets = new ArrayList<>();
 
     for (LevelElement levelElement : levelElements) {
 
       if (levelElement.getType() == XmlObjectType.PLAYER) { //Player
 
-        float posX = levelElement.getPositionX();
-        float posY = levelElement.getPositionY();
-        Image bodyImage = new Image(levelElement.getImage());
-
-        player = new Player(posX, posY, bodyImage);
+        playerPositionX = levelElement.getPositionX();
+        playerPositionY = levelElement.getPositionY();
 
       } else { //Target
 
@@ -65,6 +61,6 @@ public class LevelGenerator {
 
     }
 
-    return new Level(player, targets);
+    return new Level(targets, playerPositionX, playerPositionY);
   }
 }
