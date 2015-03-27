@@ -2,10 +2,7 @@ package Lecturattack.utilities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.utilities.xmlHandling.configLoading.ProjectileConfig;
-import Lecturattack.utilities.xmlHandling.configLoading.ProjectileStandard;
-import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
-import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
+import Lecturattack.utilities.xmlHandling.configLoading.*;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import org.newdawn.slick.Image;
@@ -73,6 +70,25 @@ public class FileHandler {
     return level.getLevelElements();
   }
 
+
+  public static List<PlayerStandard> loadPlayerData(){
+    File file = new File("resources/config/player.xml");//TODO save in final var --> method for opening/vrating --> code dup
+    JAXBContext jaxbContext;
+    PlayerConfig players = null;
+    try {
+      jaxbContext = JAXBContext.newInstance(PlayerConfig.class);
+      Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+      players = (PlayerConfig) jaxbUnmarshaller.unmarshal(file);
+    } catch (JAXBException e) {
+      e.printStackTrace();
+    }
+    return players.getPlayerStandards();
+
+
+  }
+
+
+
   public static int getLastLevelNumber() {
     return 0;
   }
@@ -80,6 +96,9 @@ public class FileHandler {
   public static void setLastLevelNumber(int level) {
     //todo: alles in %APPDATA%
   }
+
+
+
 
   public static Image loadImage(String fileName) {
     Image image = null;

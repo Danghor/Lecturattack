@@ -24,7 +24,7 @@ public class ProjectileConfig {
     return projectile;
   }
 
-  public void setTargetStandards(List<ProjectileStandard> projectileStandard) {
+  public void setProjectileStandards(List<ProjectileStandard> projectileStandard) {
     this.projectile = projectileStandard;
   }
 

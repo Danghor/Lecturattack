@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<players>
+    <player>
+        <name>MUSE</name>
+        <imageBody>resources/images/Muse.png</imageBody>
+        <imageArm>resources/images/MuseArm.png</imageArm>
+        <projectile>POINTER</projectile>
+    </player>
+    <player>
+        <name>SPEEDY</name>
+        <imageBody>resources/images/Speedy.png</imageBody>
+        <imageArm>resources/images/SpeedyArm.png</imageArm>
+        <projectile>ANDROID</projectile>
+    </player>
+    <player>
+        <name>STROEHTIE</name>
+        <imageBody>resources/images/Stroehtie.png</imageBody>
+        <imageArm>resources/images/StroehtieArm.png</imageArm>
+        <projectile>EXAM</projectile>
+    </player>
+</players>
