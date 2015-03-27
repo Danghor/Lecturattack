@@ -40,13 +40,13 @@ public class ProjectileStandard {
   }
 
   public ArrayList<float[]> getVerticesAsFloats() {//TODO maybe a interface/superclass which lets Projectile and Target Standard get this method
-    ArrayList<float[]> vertexes = new ArrayList<>();
-    for (XmlVertex vertice : vertices) {
+    ArrayList<float[]> vertices = new ArrayList<>();
+    for (XmlVertex vertex : this.vertices) {
       //the array constructor is not allowed when adding to a list
-      float[] points = {vertice.getX(), vertice.getY()};
-      vertexes.add(points);
+      float[] points = {vertex.getX(), vertex.getY()};
+      vertices.add(points);
     }
-    return vertexes;
+    return vertices;
   }
 
 }

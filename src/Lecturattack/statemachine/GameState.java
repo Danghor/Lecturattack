@@ -46,7 +46,6 @@ public class GameState extends BasicGameState implements InputListener {
     players = new ArrayList();
     //TODO see if this can be done somwhere else
 
-
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
