@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LevelData id="1">
 	<levelElements>
-		<positionX>45</positionX>
-		<positionY>280</positionY>
+		<positionX>58</positionX>
+		<positionY>438</positionY>
 		<type>PLAYER</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/Muse.png</image>
 	</levelElements>
 	<levelElements>
-		<positionX>1012</positionX>
-		<positionY>195</positionY>
+		<positionX>1133</positionX>
+		<positionY>575</positionY>
 		<type>STUDENT</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
 	</levelElements>
 	<levelElements>
-		<positionX>996</positionX>
-		<positionY>385</positionY>
+		<positionX>1118</positionX>
+		<positionY>529</positionY>
 		<type>JAVA</type> 
 		<positioning>HORIZONTAL</positioning>
 		<image>resources/images/JavaB2.png</image>
 	</levelElements>
 	<levelElements>
-		<positionX>938</positionX>
-		<positionY>471</positionY>
+		<positionX>1200</positionX>
+		<positionY>572</positionY>
 		<type>RAM</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/Ram.png</image>
 	</levelElements>
 	<levelElements>
-		<positionX>1007</positionX>
-		<positionY>475</positionY>
+		<positionX>1133</positionX>
+		<positionY>435</positionY>
 		<type>STUDENT</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
 	</levelElements>
 	<levelElements>
-		<positionX>1155</positionX>
-		<positionY>470</positionY>
+		<positionX>1089</positionX>
+		<positionY>572</positionY>
 		<type>RAM</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/Ram.png</image>
 	</levelElements>
 <levelElements>
-		<positionX>943</positionX>
-		<positionY>180</positionY>
+		<positionX>1089</positionX>
+		<positionY>430</positionY>
 		<type>JAVA</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/JavaB.png</image>
 	</levelElements>
 <levelElements>
-		<positionX>777</positionX>
-		<positionY>475</positionY>
+		<positionX>1024</positionX>
+		<positionY>575</positionY>
 		<type>STUDENT</type> 
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/studentOk.png</image>
