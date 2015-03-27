@@ -17,9 +17,6 @@ import java.util.List;
  * @author Nick Steyer, Tim Adamek
  */
 public class TargetMeta extends MetaObject {
-  private final int maxHits;
-  private ArrayList<Image> images;
-
   static {
     instances = new HashMap<TargetType, TargetMeta>();
 
@@ -65,6 +62,9 @@ public class TargetMeta extends MetaObject {
       instances.put(type, targetMeta);
     }
   }
+
+  private final int maxHits;
+  private ArrayList<Image> images;
 
   private TargetMeta(ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
     this.images = images;

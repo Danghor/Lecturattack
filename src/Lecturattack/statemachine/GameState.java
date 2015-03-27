@@ -74,7 +74,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    graphics.drawImage(background,0,0);
+    graphics.drawImage(background, 0, 0);
     level.getPlayer().render(gameContainer, stateBasedGame, graphics);
 
     for (Target target : level.getTargets()) {
