@@ -62,7 +62,7 @@ public class ProjectileMeta extends MetaObject {
   private ArrayList<TargetMeta.TargetType> destroys;
 
   //todo: add vertices
-  private ProjectileMeta(ArrayList<float[]> outline, Image image, ArrayList<TargetMeta.TargetType> destroys) {//TODO the vertices must probably be added to? if this is the case they are already provide in the xml class
+  private ProjectileMeta(ArrayList<float[]> outline, Image image, ArrayList<TargetMeta.TargetType> destroys) {
     this.outline = outline;
     this.image = image;
     this.destroys = destroys;

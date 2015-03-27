@@ -37,6 +37,6 @@ public class Target extends RigidBody {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    metaObject.getImage(hitCounter).draw(vertices.get(0).x, vertices.get(0).y);
+    graphics.drawImage(metaObject.getImage(hitCounter),vertices.get(0).x, vertices.get(0).y);
   }
 }
