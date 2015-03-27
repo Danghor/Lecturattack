@@ -51,8 +51,7 @@ public class ProjectileMeta extends MetaObject {
       } catch (SlickException e) {
         e.printStackTrace();
       }
-
-      instances.put(ProjectileType.EXAM, new ProjectileMeta(image, destroys));
+      instances.put(ProjectileType.EXAM, new ProjectileMeta(image, destroys));// TODO:Nick in constructor projectileStandard.getVerticesAsFloats()
     }
   }
 
