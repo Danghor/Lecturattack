@@ -14,16 +14,17 @@ import java.util.List;
  * @author Nick Steyer
  */
 public class ProjectileMeta extends MetaObject {
-  private Image image;
-  private ArrayList<TargetMeta.TargetType> destroys;
-
   static {
     instances = new HashMap<ProjectileType, ProjectileMeta>();
     //todo: initialize instances with data from config file
     List<ProjectileStandard> projectileStandards = FileHandler.loadProjectileStandards();
 
     for (ProjectileStandard projectileStandard : projectileStandards) {
+
+      ArrayList<float[]> outline;
+      Image image = null;//TODO from FileHandler
       ArrayList<TargetMeta.TargetType> destroys = new ArrayList<>();
+
       switch (projectileStandard.getDestroys()) {
         case "ENEMY":
           TargetMeta.TargetType ENEMY = TargetMeta.TargetType.ENEMY;
@@ -44,20 +45,25 @@ public class ProjectileMeta extends MetaObject {
           break;
       }
 
-      Image image = null;//TODO from FileHandler
-
       try {
         image = new Image(projectileStandard.getImage());
       } catch (SlickException e) {
         e.printStackTrace();
       }
 
-      instances.put(ProjectileType.EXAM, new ProjectileMeta(image, destroys));
+      outline = projectileStandard.getVerticesAsFloats();
+
+      instances.put(ProjectileType.EXAM, new ProjectileMeta(outline, image, destroys));
+
     }
   }
 
+  private Image image;
+  private ArrayList<TargetMeta.TargetType> destroys;
+
   //todo: add vertices
-  private ProjectileMeta(Image image, ArrayList<TargetMeta.TargetType> destroys) {//TODO the vertices must probably be added to? if this is the case they are already provide in the xml class
+  private ProjectileMeta(ArrayList<float[]> outline, Image image, ArrayList<TargetMeta.TargetType> destroys) {//TODO the vertices must probably be added to? if this is the case they are already provide in the xml class
+    this.outline = outline;
     this.image = image;
     this.destroys = destroys;
   }
