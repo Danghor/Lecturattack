@@ -68,10 +68,9 @@ public class GameState extends BasicGameState implements InputListener {
 
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
-      //players.add(new Player(meta.getImageBody()));
-//todo: add players
+      //TODO dont't create the image here
+      players.add(new Player(new Image(meta.getImageBody())));
     }
-
     currentPlayer = 0;
     currentLevel = 1; //default
     resetLevel();
@@ -88,11 +87,28 @@ public class GameState extends BasicGameState implements InputListener {
 
   }
 
+
+
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
     wind = (float) ((Math.random() * 10) % 5);
-    PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
+
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)){
+      players.get(currentPlayer).moveArm(1);//TODO constants for angle
+    }else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+      players.get(currentPlayer).moveArm(-1);
+    }else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
+      players.get(currentPlayer).throwProjectile(1);
+    }else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
+      players.get(currentPlayer).throwProjectile(-1);
+    }
+
+    //PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
   }
+
+
+
+
 
   @Override
   public void keyPressed(int key, char c) {
@@ -100,5 +116,4 @@ public class GameState extends BasicGameState implements InputListener {
       stateBasedGame.enterState(Lecturattack.PAUSESTATE);
     }
   }
-
 }

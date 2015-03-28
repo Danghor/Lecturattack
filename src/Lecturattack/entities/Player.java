@@ -24,11 +24,15 @@ public class Player implements Renderable {
   private float positionY;
   private ProjectileMeta projectileMeta;
 
+
+  private float directionAngle;
+
   public Player(/*ProjectileMeta projectileMeta, */ Image playerImage/*, Image armImage*/) {
     //this.projectileMeta = projectileMeta;
     this.positionX = 0f;
     this.positionY = 0f;
     this.bodyImage = playerImage;
+    //TODO read from config
     //this.armImage = armImage;
   }
 
@@ -48,13 +52,21 @@ public class Player implements Renderable {
 
   public void moveArm(float degreeDifference) {
     //todo: check if movement possible, turn arm etc.
+    if (!isThrowing) {
+      this.directionAngle += degreeDifference;
+    }
   }
 
   /**
    * @param strength
    */
+
+  //TODO remove
+  float strength=70;
+
   public final Projectile throwProjectile(float strength) {
-    isThrowing = true;
+
+     isThrowing = true;
     return null;
   }
 
@@ -68,6 +80,12 @@ public class Player implements Renderable {
       //projectile = new Projectile(ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.POINTER), 0f, 0f);
       //projectile.render(gameContainer, stateBasedGame, graphics);
     }
+
+
+    double directionRad = Math.toRadians(directionAngle);
+
+
+    graphics.drawLine(this.positionX + 50, this.positionY + 150, this.positionX + 50 + ((float) Math.cos(directionRad)*strength), this.positionY + 150 + ((float) Math.sin(directionRad)*strength));
 
   }
 }
