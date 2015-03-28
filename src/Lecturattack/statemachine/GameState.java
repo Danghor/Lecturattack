@@ -80,7 +80,7 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
-    players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
+    //players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
 
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
@@ -89,9 +89,9 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   @Override
-  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     wind = (float) ((Math.random() * 10) % 5);
-    PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
+    PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
   }
 
   @Override
