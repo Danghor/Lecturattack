@@ -2,10 +2,7 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.Flag;
-import Lecturattack.entities.InformationField;
-import Lecturattack.entities.Projectile;
-import Lecturattack.entities.Target;
+import Lecturattack.entities.*;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.Level;
 import Lecturattack.utilities.LevelGenerator;
@@ -28,7 +25,8 @@ public class GameState extends BasicGameState implements InputListener {
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private float wind;
-  private ArrayList players;
+  private ArrayList<Player> players;
+  private int currentPlayer;
   private Level level;
   private Projectile projectile;
   private Flag flag;
@@ -42,10 +40,8 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     background = FileHandler.loadImage("background");
-    List<PlayerStandard> playerStandards = FileHandler.loadPlayerData();
-    players = new ArrayList();
-    //TODO see if this can be done somwhere else
 
+    //TODO see if this can be done somwhere else
 
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
@@ -68,6 +64,15 @@ public class GameState extends BasicGameState implements InputListener {
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
 
+    players = new ArrayList<>();
+
+    List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
+    for (PlayerStandard meta : playerStandards) {
+      //players.add(new Player(meta.getImageBody()));
+//todo: add players
+    }
+
+    currentPlayer = 0;
     currentLevel = 1; //default
     resetLevel();
   }
@@ -75,7 +80,7 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
-    level.getPlayer().render(gameContainer, stateBasedGame, graphics);
+    players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
 
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
@@ -85,6 +90,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    wind = (float) ((Math.random() * 10) % 5);
     PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
   }
 

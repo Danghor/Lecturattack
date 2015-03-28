@@ -71,7 +71,7 @@ public class FileHandler {
   }
 
 
-  public static List<PlayerStandard> loadPlayerData() {
+  public static List<PlayerStandard> getPlayerData() {
     File file = new File("resources/config/player.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     PlayerConfig players = null;
@@ -83,8 +83,6 @@ public class FileHandler {
       e.printStackTrace();
     }
     return players.getPlayerStandards();
-
-
   }
 
 

@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Nick Steyer
  */
 public class Player implements Renderable {
+
   private Image bodyImage;
   private Image armImage;
   private float angle; //the current angle of the player's arm
@@ -23,44 +24,20 @@ public class Player implements Renderable {
   private float positionY;
   private ProjectileMeta projectileMeta;
 
-  public Player(/*ProjectileMeta projectileMeta,*/ float positionX, float positionY, Image playerImage/*, Image armImage*/) {
+  public Player(/*ProjectileMeta projectileMeta, */ Image playerImage/*, Image armImage*/) {
     //this.projectileMeta = projectileMeta;
-    this.positionX = positionX;
-    this.positionY = positionY;
+    this.positionX = 0f;
+    this.positionY = 0f;
     this.bodyImage = playerImage;
     //this.armImage = armImage;
-  }
-
-  public float getPositionY() {
-    return positionY;
   }
 
   public void setPositionY(float positionY) {
     this.positionY = positionY;
   }
 
-  public float getPositionX() {
-    return positionX;
-  }
-
   public void setPositionX(float positionX) {
     this.positionX = positionX;
-  }
-
-  public Image getBodyImage() {
-    return bodyImage;
-  }
-
-  public void setBodyImage(Image bodyImage) {
-    this.bodyImage = bodyImage;
-  }
-
-  public Image getArmImage() {
-    return armImage;
-  }
-
-  public void setArmImage(Image armImage) {
-    this.armImage = armImage;
   }
 
   public void reset() {
@@ -93,6 +70,4 @@ public class Player implements Renderable {
     }
 
   }
-
-
 }

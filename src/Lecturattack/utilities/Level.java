@@ -4,7 +4,6 @@
 
 package Lecturattack.utilities;
 
-import Lecturattack.entities.Player;
 import Lecturattack.entities.Target;
 
 import java.util.ArrayList;
@@ -13,19 +12,25 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public class Level {
-  private Player player;
   private ArrayList<Target> targets;
+  private float playerPositionX;
+  private float playerPositionY;
 
-  public Level(Player player, ArrayList<Target> targets) {
-    this.player = player;
+  public Level(ArrayList<Target> targets, float playerPositionX, float playerPositionY) {
     this.targets = targets;
+    this.playerPositionX = playerPositionX;
+    this.playerPositionY = playerPositionY;
   }
 
   public ArrayList<Target> getTargets() {
     return targets;
   }
 
-  public Player getPlayer() {
-    return player;
+  public float getPlayerPositionY() {
+    return playerPositionY;
+  }
+
+  public float getPlayerPositionX() {
+    return playerPositionX;
   }
 }
