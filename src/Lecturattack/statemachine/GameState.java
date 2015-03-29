@@ -40,8 +40,6 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   public void loadLevel(int level) {
-    background = FileHandler.loadImage("background");
-
     //TODO see if this can be done somwhere else
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
@@ -63,6 +61,8 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
+
+    background = FileHandler.loadImage("background");
 
     players = new ArrayList<>();
 
