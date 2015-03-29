@@ -42,6 +42,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     background = FileHandler.loadImage("background");
+
     //TODO see if this can be done somwhere else
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
@@ -68,9 +69,9 @@ public class GameState extends BasicGameState implements InputListener {
 
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
-      //TODO dont't create the image here
       players.add(new Player(meta));
     }
+
     currentPlayer = 0;
     currentLevel = 1; //default
     resetLevel();
@@ -79,17 +80,19 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
+
     players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
+
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
 
+    //render projectile here, if the player doesn't have it
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
 
   }
-
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
