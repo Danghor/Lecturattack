@@ -38,7 +38,7 @@ public class FileHandler {
   }
 
   public static List<ProjectileStandard> loadProjectileStandards() {
-    File file = new File("resources/config/projectiles.xml");//TODO save in final var --> method for opening/vrating --> code dup
+    File file = new File("resources/config/projectile.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     ProjectileConfig projectiles = null;
     try {

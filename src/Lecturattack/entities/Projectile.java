@@ -6,6 +6,7 @@ import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -57,8 +58,16 @@ public class Projectile extends RigidBody {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     //the start position for drawing the figure is assumed to be the upper-left corner of the polygon
     Image image = metaObject.getImage();
-    image.rotate(getAngle());
-    image.draw(vertices.get(0).x, vertices.get(0).y);
+    //the image.rotate(angle) method
+    image.setRotation(image.getRotation()+getAngle());
+    try {
+
+      graphics.drawImage(new Image(image.getResourceReference()), 300, 300);
+    } catch (SlickException e) {
+      e.printStackTrace();
+    }
+    //graphics.drawImage(image, 300, 300);
+//
   }
 
   protected float getInertia() {

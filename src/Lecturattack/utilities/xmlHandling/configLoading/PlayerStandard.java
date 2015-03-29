@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Tim Adamek
  */
 public class PlayerStandard {
-  private String name;
+  private String name;//TODO see fi really necessary
   private String imageArm;
   private String imageBody;
   private String projectile;

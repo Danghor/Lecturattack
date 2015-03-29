@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<projectils>
-    <projectil>
+<projectiles>
+    <projectile>
         <image>resources/images/CPointer.png</image>
         <destroys>RAM</destroys>
         <vertice>
@@ -19,8 +19,8 @@
             <x>0</x>
             <y>197</y>
         </vertice>
-    </projectil>
-    <projectil>
+    </projectile>
+    <projectile>
         <image>resources/images/Android.png</image>
         <destroys>LIBRARY</destroys>
         <vertice>
@@ -39,8 +39,8 @@
             <x>197</x>
             <y>0</y>
         </vertice>
-    </projectil>
-    <projectil>
+    </projectile>
+    <projectile>
         <image>resources/images/exam.png</image>
         <destroys>ENEMY</destroys>
         <vertice>
@@ -59,5 +59,5 @@
             <x>197</x>
             <y>0</y>
         </vertice>
-    </projectil>
-</projectils>
+    </projectile>
+</projectiles>

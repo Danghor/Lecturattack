@@ -3,9 +3,11 @@ package Lecturattack.entities;
  * Copyright (c) 2015.
  */
 
+import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -27,13 +29,24 @@ public class Player implements Renderable {
 
   private float directionAngle;
 
-  public Player(/*ProjectileMeta projectileMeta, */ Image playerImage/*, Image armImage*/) {
-    //this.projectileMeta = projectileMeta;
+  public Player(PlayerStandard playerStandard) {
     this.positionX = 0f;
     this.positionY = 0f;
-    this.bodyImage = playerImage;
-    //TODO read from config
-    //this.armImage = armImage;
+    try {
+      bodyImage = new Image(playerStandard.getImageBody());//TODO don'T do this here --> filehandler
+      armImage = new Image(playerStandard.getImageArm());
+    } catch (SlickException e) {
+      e.printStackTrace();
+    }
+    ProjectileMeta.ProjectileType projectileType = null;//If the wrong projectie is specifed in playerStandart ProjectileMeta.getInstance() will also return null
+    if (playerStandard.getProjectile().equals("ANDROID")) {
+      projectileType = ProjectileMeta.ProjectileType.ROBOT;
+    } else if (playerStandard.getProjectile().equals("EXAM")) {
+      projectileType = ProjectileMeta.ProjectileType.EXAM;
+    } else if (playerStandard.getProjectile().equals("POINTER")) {
+      projectileType = ProjectileMeta.ProjectileType.POINTER;
+    }
+    projectileMeta = ProjectileMeta.getInstance(projectileType);
   }
 
   public void setPositionY(float positionY) {
@@ -62,12 +75,14 @@ public class Player implements Renderable {
    */
 
   //TODO remove
-  float strength=70;
+  float strength = 70;
 
   public final Projectile throwProjectile(float strength) {
 
-     isThrowing = true;
-    return null;
+    //isThrowing = true;
+//    projectile = new Projectile(projectileMeta,1,1);
+    projectile = new Projectile(projectileMeta, 110f, 110f);//TODO position
+    return projectile;
   }
 
 
@@ -75,17 +90,14 @@ public class Player implements Renderable {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     graphics.drawImage(bodyImage, positionX, positionY);
 
-    if (!isThrowing) {
-//todo: place projectile on hand and rotate correctly, this is just for testing
-      //projectile = new Projectile(ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.POINTER), 0f, 0f);
-      //projectile.render(gameContainer, stateBasedGame, graphics);
-    }
+//    if (isThrowing) {
+//      //todo: place projectile on hand and rotate correctly, this is just for testing
+//       projectile.render(gameContainer, stateBasedGame, graphics);
+//    }
 
 
     double directionRad = Math.toRadians(directionAngle);
-
-
-    graphics.drawLine(this.positionX + 50, this.positionY + 150, this.positionX + 50 + ((float) Math.cos(directionRad)*strength), this.positionY + 150 + ((float) Math.sin(directionRad)*strength));
+    graphics.drawLine(this.positionX + 50, this.positionY + 150, this.positionX + 50 + ((float) Math.cos(directionRad) * strength), this.positionY + 150 + ((float) Math.sin(directionRad) * strength));
 
   }
 }

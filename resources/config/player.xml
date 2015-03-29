@@ -10,7 +10,7 @@
         <name>SPEEDY</name>
         <imageBody>resources/images/Speedy.png</imageBody>
         <imageArm>resources/images/SpeedyArm.png</imageArm>
-        <projectile>ANDROID</projectile>
+        <projectile>ROBOT</projectile>
     </player>
     <player>
         <name>STROEHTIE</name>

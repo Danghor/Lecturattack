@@ -10,7 +10,7 @@ import java.util.List;
  */
 @XmlRootElement(name = "projectiles")
 public class ProjectileConfig {
-  private List<ProjectileStandard> projectile = new ArrayList<ProjectileStandard>();
+  private List<ProjectileStandard> projectile = new ArrayList<>();
 
   public ProjectileConfig() {
   }
