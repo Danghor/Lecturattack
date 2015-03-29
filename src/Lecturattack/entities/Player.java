@@ -29,24 +29,12 @@ public class Player implements Renderable {
 
   private float directionAngle;
 
-  public Player(PlayerStandard playerStandard) {
+  public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta) {
     this.positionX = 0f;
     this.positionY = 0f;
-    try {
-      bodyImage = new Image(playerStandard.getImageBody());//TODO don'T do this here --> filehandler
-      armImage = new Image(playerStandard.getImageArm());
-    } catch (SlickException e) {
-      e.printStackTrace();
-    }
-    ProjectileMeta.ProjectileType projectileType = null;//If the wrong projectie is specifed in playerStandart ProjectileMeta.getInstance() will also return null
-    if (playerStandard.getProjectile().equals("ANDROID")) {
-      projectileType = ProjectileMeta.ProjectileType.ROBOT;
-    } else if (playerStandard.getProjectile().equals("EXAM")) {
-      projectileType = ProjectileMeta.ProjectileType.EXAM;
-    } else if (playerStandard.getProjectile().equals("POINTER")) {
-      projectileType = ProjectileMeta.ProjectileType.POINTER;
-    }
-    projectileMeta = ProjectileMeta.getInstance(projectileType);
+    this.bodyImage = bodyImage;
+    this.armImage = armImage;
+    this.projectileMeta = projectileMeta;
   }
 
   public void setPositionY(float positionY) {

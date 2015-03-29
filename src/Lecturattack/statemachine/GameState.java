@@ -69,7 +69,7 @@ public class GameState extends BasicGameState implements InputListener {
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
       //TODO dont't create the image here
-      players.add(new Player(meta));
+      players.add(new Player(meta.getBodyImageAsImage(),meta.getArmImageAsImage(),meta.getProjectileMeta()));
     }
     currentPlayer = 0;
     currentLevel = 1; //default
