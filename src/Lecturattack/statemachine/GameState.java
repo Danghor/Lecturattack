@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Tim Adamek, Andreas Geis
+ * @author Tim Adamek
+ * @author Andreas Geis
+ * @author Nick Steyer
  */
 
 public class GameState extends BasicGameState implements InputListener {
@@ -82,33 +84,28 @@ public class GameState extends BasicGameState implements InputListener {
       target.render(gameContainer, stateBasedGame, graphics);
     }
 
-    if(projectile!=null){
-      projectile.render(gameContainer,stateBasedGame,graphics);
+    if (projectile != null) {
+      projectile.render(gameContainer, stateBasedGame, graphics);
     }
 
   }
-
 
 
   @Override
-  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     wind = (float) ((Math.random() * 10) % 5);
-
-    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)){
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
       players.get(currentPlayer).moveArm(1);//TODO constants for angle
-    }else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
       players.get(currentPlayer).moveArm(-1);
-    }else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
-      projectile=players.get(currentPlayer).throwProjectile(1);
-    }else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
-      projectile=players.get(currentPlayer).throwProjectile(-1);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
+      projectile = players.get(currentPlayer).throwProjectile(1);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
+      projectile = players.get(currentPlayer).throwProjectile(-1);
     }
 
-    //PhysicsEngine.calculateStep(null, null, 0, 0);//TODO real values
+    PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
   }
-
-
-
 
 
   @Override
