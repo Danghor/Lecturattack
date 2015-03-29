@@ -24,7 +24,6 @@ public class Player implements Renderable {
   float strength = 70;
   private Image bodyImage;
   private Image armImage;
-  private float angle; //the current angle of the player's arm
   private boolean isThrowing;
   private Projectile projectile;
   private PowerSlider powerSlider;
@@ -84,13 +83,16 @@ public class Player implements Renderable {
     return projectile;
   }
 
-
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+    armImage.setRotation(directionAngle);
+
     graphics.drawImage(bodyImage, positionX, positionY);
+    graphics.drawImage(armImage, positionX, positionY);
 
     if (!isThrowing) {
-      //todo: place projectile on hand and rotate correctly, this is just for testing
+      //todo: set position to middle of the player's hand
+      projectile.setCenterPosition(100, 100);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
 
