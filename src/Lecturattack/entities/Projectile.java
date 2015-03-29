@@ -44,9 +44,7 @@ public class Projectile extends RigidBody {
     float lengthB = edgeB.length();
     float lengthC = edgeC.length();
 
-    float alpha = (float) Math.acos((lengthB * lengthB + lengthC * lengthC - lengthA * lengthA) / 2 * lengthB * lengthC);
-
-    return alpha;
+    return (float) Math.acos((lengthB * lengthB + lengthC * lengthC - lengthA * lengthA) / 2 * lengthB * lengthC);
   }
 
   @Override
