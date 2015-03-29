@@ -63,7 +63,7 @@ public class PlayerStandard {
   //TODO see if this is really a good idea because there might be a lot of dependencys
   public ProjectileMeta getProjectileMeta(){
       ProjectileMeta projectileMeta = null;//If the wrong projectie is specifed in playerStandart ProjectileMeta.getInstance() will also return null
-      if (projectile.equals("ANDROID")) {
+      if (projectile.equals("ROBOT")) {
         projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.ROBOT);
       } else if (projectile.equals("EXAM")) {
         projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.EXAM);
