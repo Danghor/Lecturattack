@@ -16,10 +16,6 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Player implements Renderable {
 
-  /**
-   * @param strength
-   */
-
   //TODO remove
   float strength = 70;
   private Image bodyImage;
