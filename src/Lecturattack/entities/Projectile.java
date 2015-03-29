@@ -59,7 +59,7 @@ public class Projectile extends RigidBody {
     //the start position for drawing the figure is assumed to be the upper-left corner of the polygon
     Image image = metaObject.getImage();
     //the image.rotate(angle) method
-    image.setRotation(image.getRotation()+getAngle());
+    image.setRotation(image.getRotation() + getAngle());
     try {
 
       graphics.drawImage(new Image(image.getResourceReference()), 300, 300);

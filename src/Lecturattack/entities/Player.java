@@ -16,6 +16,12 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Player implements Renderable {
 
+  /**
+   * @param strength
+   */
+
+  //TODO remove
+  float strength = 70;
   private Image bodyImage;
   private Image armImage;
   private float angle; //the current angle of the player's arm
@@ -25,8 +31,6 @@ public class Player implements Renderable {
   private float positionX;
   private float positionY;
   private ProjectileMeta projectileMeta;
-
-
   private float directionAngle;
 
   public Player(PlayerStandard playerStandard) {
@@ -62,20 +66,12 @@ public class Player implements Renderable {
     projectile = new Projectile(projectileMeta, 0f, 0f); //todo: set actual position for the projectile
   }
 
-
   public void moveArm(float degreeDifference) {
     //todo: check if movement possible, turn arm etc.
     if (!isThrowing) {
       this.directionAngle += degreeDifference;
     }
   }
-
-  /**
-   * @param strength
-   */
-
-  //TODO remove
-  float strength = 70;
 
   public final Projectile throwProjectile(float strength) {
 
