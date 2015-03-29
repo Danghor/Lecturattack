@@ -108,4 +108,13 @@ public abstract class RigidBody implements Renderable {
     force = new EnhancedVector(0, 0);
   }
 
+  public void setCenterPosition(float x, float y) {
+    EnhancedVector destination = new EnhancedVector(x, y);
+    EnhancedVector center = getCenter();
+
+    EnhancedVector direction = (EnhancedVector) destination.sub(center);
+
+    move(direction);
+  }
+
 }

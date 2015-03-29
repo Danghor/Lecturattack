@@ -79,7 +79,8 @@ public class ProjectileMeta extends MetaObject {
   }
 
   Image getImage() {
-    return image;
+    //copying is necessary for rotating, otherwise instances could not be rotated individually
+    return image.copy();
   }
 
   public enum ProjectileType {

@@ -43,9 +43,7 @@ public class Projectile extends RigidBody {
     float lengthB = edgeB.length();
     float lengthC = edgeC.length();
 
-    float alpha = (float) Math.acos((lengthB * lengthB + lengthC * lengthC - lengthA * lengthA) / 2 * lengthB * lengthC);
-
-    return alpha;
+    return (float) Math.acos((lengthB * lengthB + lengthC * lengthC - lengthA * lengthA) / (2 * lengthB * lengthC));
   }
 
   @Override
@@ -55,10 +53,16 @@ public class Projectile extends RigidBody {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    //the start position for drawing the figure is assumed to be the upper-left corner of the polygon
     Image image = metaObject.getImage();
+
     image.rotate(getAngle());
-    image.draw(vertices.get(0).x, vertices.get(0).y);
+
+    try {
+      //the start position for drawing the figure is assumed to be the upper-left corner of the polygon
+      graphics.drawImage(image, vertices.get(0).x, vertices.get(0).y);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   protected float getInertia() {
