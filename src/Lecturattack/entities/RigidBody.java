@@ -16,7 +16,7 @@ public abstract class RigidBody implements Renderable {
   protected EnhancedVector force;
 
   protected RigidBody(MetaObject meta, float x, float y) {
-    this.vertices = new ArrayList<EnhancedVector>();
+    this.vertices = new ArrayList<>();
 
     for (float[] vertexPosition : meta.getOutline()) {
       vertices.add(new EnhancedVector(vertexPosition[0], vertexPosition[1]));
@@ -106,6 +106,15 @@ public abstract class RigidBody implements Renderable {
     move(new EnhancedVector(linearVelocity.x * delta, linearVelocity.y * delta));
 
     force = new EnhancedVector(0, 0);
+  }
+
+  public void setCenterPosition(float x, float y) {
+    EnhancedVector destination = new EnhancedVector(x, y);
+    EnhancedVector center = getCenter();
+
+    EnhancedVector direction = (EnhancedVector) destination.sub(center);
+
+    move(direction);
   }
 
 }

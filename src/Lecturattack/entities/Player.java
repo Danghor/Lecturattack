@@ -16,17 +16,16 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Player implements Renderable {
 
+  //TODO remove
+  float strength = 70;
   private Image bodyImage;
   private Image armImage;
-  private float angle; //the current angle of the player's arm
   private boolean isThrowing;
   private Projectile projectile;
   private PowerSlider powerSlider;
   private float positionX;
   private float positionY;
   private ProjectileMeta projectileMeta;
-
-
   private float directionAngle;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta) {
@@ -35,21 +34,18 @@ public class Player implements Renderable {
     this.bodyImage = bodyImage;
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
+    reset();
   }
 
-  public void setPositionY(float positionY) {
-    this.positionY = positionY;
-  }
-
-  public void setPositionX(float positionX) {
-    this.positionX = positionX;
+  public void setPosition(float x, float y) {
+    positionX = x;
+    positionY = y;
   }
 
   public void reset() {
     isThrowing = false;
-    projectile = new Projectile(projectileMeta, 0f, 0f); //todo: set actual position for the projectile
+    projectile = new Projectile(projectileMeta, 0f, 0f);
   }
-
 
   public void moveArm(float degreeDifference) {
     //todo: check if movement possible, turn arm etc.
@@ -58,31 +54,23 @@ public class Player implements Renderable {
     }
   }
 
-  /**
-   * @param strength
-   */
-
-  //TODO remove
-  float strength = 70;
-
   public final Projectile throwProjectile(float strength) {
-
-    //isThrowing = true;
-//    projectile = new Projectile(projectileMeta,1,1);
-    projectile = new Projectile(projectileMeta, 110f, 110f);//TODO position
+    isThrowing = true;
     return projectile;
   }
 
-
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+    armImage.setRotation(directionAngle);
+
     graphics.drawImage(bodyImage, positionX, positionY);
+    graphics.drawImage(armImage, positionX, positionY);
 
-//    if (isThrowing) {
-//      //todo: place projectile on hand and rotate correctly, this is just for testing
-//       projectile.render(gameContainer, stateBasedGame, graphics);
-//    }
-
+    if (!isThrowing) {
+      //todo: set position to middle of the player's hand
+      projectile.setCenterPosition(100, 100);
+      projectile.render(gameContainer, stateBasedGame, graphics);
+    }
 
     double directionRad = Math.toRadians(directionAngle);
     graphics.drawLine(this.positionX + 50, this.positionY + 150, this.positionX + 50 + ((float) Math.cos(directionRad) * strength), this.positionY + 150 + ((float) Math.sin(directionRad) * strength));
