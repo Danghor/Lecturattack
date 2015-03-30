@@ -6,7 +6,6 @@ package Lecturattack.entities;
 
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
-import Lecturattack.utilities.xmlHandling.configLoading.XmlVertex;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -18,11 +17,8 @@ import java.util.List;
  * @author Nick Steyer, Tim Adamek
  */
 public class TargetMeta extends MetaObject {
-  private final int maxHits;
-  private ArrayList<Image> images;
-
   static {
-    instances = new HashMap<TargetType, TargetMeta>();
+    instances = new HashMap<>();
 
     List<TargetStandard> targetStandards = FileHandler.loadTargetConfig();
 
@@ -46,35 +42,40 @@ public class TargetMeta extends MetaObject {
       }
       //TODO
       TargetType type;
-      if (targetStandard.getTargetType().equals("ENEMY")) {
-        type = TargetType.ENEMY;
-      } else if (targetStandard.getTargetType().equals("RAM")) {
-        if (targetStandard.getPositioning().equals("HORIZONTAL")) {
-          type = TargetType.RAMH;
-        } else {
-          type = TargetType.RAMV;
-        }
-      } else {
-        if (targetStandard.getPositioning().equals("HORIZONTAL")) {
-          type = TargetType.LIBRARYH;
-        } else {
-          type = TargetType.LIBRARYV;
-        }
+      switch (targetStandard.getTargetType()) {
+        case "ENEMY":
+          type = TargetType.ENEMY;
+          break;
+        case "RAM":
+          if (targetStandard.getPositioning().equals("HORIZONTAL")) {
+            type = TargetType.RAMH;
+          } else {
+            type = TargetType.RAMV;
+          }
+          break;
+        case "LIBRARY":
+          if (targetStandard.getPositioning().equals("HORIZONTAL")) {
+            type = TargetType.LIBRARYH;
+          } else {
+            type = TargetType.LIBRARYV;
+          }
+          break;
+        default:
+          throw new RuntimeException("Invalid TargetType given.");
       }
 
-      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVertices());
+      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
       instances.put(type, targetMeta);
     }
   }
 
-  private TargetMeta(ArrayList<Image> images, int maxHits, List<XmlVertex> vertices) {
+  private final int maxHits;
+  private ArrayList<Image> images;
+
+  private TargetMeta(ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
     this.images = images;
     this.maxHits = maxHits;
-    outline = new ArrayList<>();
-    for (XmlVertex vertex : vertices) {
-      float[] vertexPosition = {vertex.getX(), vertex.getY()};
-      outline.add(vertexPosition);
-    }
+    this.outline = outline;
   }
 
   public static TargetMeta getInstance(TargetType type) {

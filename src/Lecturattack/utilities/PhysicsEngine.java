@@ -12,5 +12,4 @@ public class PhysicsEngine {
   public static void calculateStep(Projectile projectile, ArrayList<Target> targets, float wind, float delta) {
 
   }
-
 }

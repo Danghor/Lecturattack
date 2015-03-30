@@ -12,34 +12,29 @@
         <positionY>195</positionY>
         <type>ENEMY</type>
         <positioning>VERTICAL</positioning>
-        <image>resources/images/studentOk.png</image>
     </levelElements>
     <levelElements>
         <positionX>996</positionX>
         <positionY>385</positionY>
         <type>RAM</type>
         <positioning>HORIZONTAL</positioning>
-        <image>resources/images/RamQ.png</image>
     </levelElements>
     <levelElements>
         <positionX>938</positionX>
         <positionY>471</positionY>
         <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>
-        <image>resources/images/JavaB.png</image>
     </levelElements>
     <levelElements>
         <positionX>1007</positionX>
         <positionY>475</positionY>
         <type>ENEMY</type>
         <positioning>VERTICAL</positioning>
-        <image>resources/images/studentOk.png</image>
     </levelElements>
     <levelElements>
         <positionX>1155</positionX>
         <positionY>470</positionY>
         <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>
-        <image>resources/images/JavaB.png</image>
     </levelElements>
 </LevelData>
