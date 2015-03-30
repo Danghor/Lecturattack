@@ -24,7 +24,7 @@
 	<levelElements>
 		<positionX>1089</positionX>
 		<positionY>572</positionY>
-		<type>JAVA</type> 
+		<type>LIBRARY</type>
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/JavaB.png</image>
 	</levelElements>
@@ -38,7 +38,7 @@
 	<levelElements>
 		<positionX>977</positionX>
 		<positionY>572</positionY>
-		<type>JAVA</type> 
+		<type>LIBRARY</type>
 		<positioning>VERTICAL</positioning>
 		<image>resources/images/JavaB.png</image>
 	</levelElements>
