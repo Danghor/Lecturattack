@@ -26,7 +26,6 @@ public class GameState extends BasicGameState implements InputListener {
   private static int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
-  private float wind;
   private ArrayList<Player> players;
   private int currentPlayer;
   private Level level;
@@ -41,8 +40,6 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   public void loadLevel(int level) {
-    background = FileHandler.loadImage("background");
-
     //TODO see if this can be done somwhere else
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
@@ -64,6 +61,8 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
+
+    background = FileHandler.loadImage("background");
 
     players = new ArrayList<>();
 
@@ -96,16 +95,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-    wind = (float) ((Math.random() * 10) % 5);
-    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(1);//TODO constants for angle
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      players.get(currentPlayer).moveArm(-1);
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
-      projectile = players.get(currentPlayer).throwProjectile(1);
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
-      projectile = players.get(currentPlayer).throwProjectile(-1);
-    }
+    float wind = (float) ((Math.random() * 10) % 5);
+
+    processUserInput(gameContainer);
 
     PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
   }
@@ -115,6 +107,19 @@ public class GameState extends BasicGameState implements InputListener {
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_ESCAPE) {
       stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+    }
+  }
+
+  private void processUserInput(GameContainer gameContainer) {
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
+      players.get(currentPlayer).moveArm(1);//TODO constants for angle
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+      players.get(currentPlayer).moveArm(-1);
+      //todo: I hope that the code below is just for testing o.O
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
+      projectile = players.get(currentPlayer).throwProjectile(1);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
+      projectile = players.get(currentPlayer).throwProjectile(-1);
     }
   }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ProjectileMeta extends MetaObject {
   static {
-    instances = new HashMap<ProjectileType, ProjectileMeta>();
+    instances = new HashMap<>();
     List<ProjectileStandard> projectileStandards = FileHandler.loadProjectileStandards();
 
     for (ProjectileStandard projectileStandard : projectileStandards) {
