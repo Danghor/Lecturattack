@@ -42,7 +42,7 @@ public class GameState extends BasicGameState implements InputListener {
   public void loadLevel(int level) {
     //TODO see if this can be done somwhere else
     try {//TODO see if exeption can be dealt with somewhere else
-      List<LevelElement> levelElements = FileHandler.getLevelData(level);
+      List<LevelElement> levelElements = FileHandler.getLevelData(6);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
     } catch (Exception e) {
       e.printStackTrace();

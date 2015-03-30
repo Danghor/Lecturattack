@@ -25,6 +25,8 @@ public class Player implements Renderable {
   private PowerSlider powerSlider;
   private float positionX;
   private float positionY;
+  private float projectilePositionX;
+  private float projectilePositionY;
   private ProjectileMeta projectileMeta;
   private float directionAngle;
 
@@ -35,6 +37,10 @@ public class Player implements Renderable {
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
     reset();
+
+    this.projectilePositionX=100;
+    this.projectilePositionY=250;
+
   }
 
   public void setPosition(float x, float y) {
@@ -51,6 +57,8 @@ public class Player implements Renderable {
     //todo: check if movement possible, turn arm etc.
     if (!isThrowing) {
       this.directionAngle += degreeDifference;
+      projectilePositionX= ((float) Math.cos(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(60)+25;
+      projectilePositionY= ((float) Math.sin(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(200+25);
     }
   }
 
@@ -61,19 +69,23 @@ public class Player implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+    armImage.setCenterOfRotation(36,146);//TODO keep updated if changes
     armImage.setRotation(directionAngle);
 
+    double directionRad = Math.toRadians(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, positionX, positionY);
 
     if (!isThrowing) {
       //todo: set position to middle of the player's hand
-      projectile.setCenterPosition(100, 100);
+     // float positionX = 100;
+    //  float positionY = 100;
+
+      projectile.setCenterPosition(projectilePositionX,projectilePositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
 
-    double directionRad = Math.toRadians(directionAngle);
-    graphics.drawLine(this.positionX + 50, this.positionY + 150, this.positionX + 50 + ((float) Math.cos(directionRad) * strength), this.positionY + 150 + ((float) Math.sin(directionRad) * strength));
+    graphics.drawLine(85, 225,  ((float) Math.cos(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(60)+25, ((float) Math.sin(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(200+25));
 
   }
 }
