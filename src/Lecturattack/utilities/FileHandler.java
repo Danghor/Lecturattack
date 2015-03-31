@@ -1,6 +1,4 @@
-package Lecturattack.utilities;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.utilities;
 
 import Lecturattack.utilities.xmlHandling.configLoading.*;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;

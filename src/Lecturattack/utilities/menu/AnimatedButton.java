@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 /**
- * Created by Andreas Geis on 18/03/2015
+ * @author Andreas Geis
  */
 public class AnimatedButton {
   private float x;
