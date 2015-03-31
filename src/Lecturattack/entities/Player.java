@@ -23,11 +23,10 @@ public class Player implements Renderable {
   private PowerSlider powerSlider;
   private float positionX;
   private float positionY;
-  private float projectilePositionX;
-  private float projectilePositionY;
+  private float projectileCenterPositionX;
+  private float projectileCenterPositionY;
   private ProjectileMeta projectileMeta;
   private float directionAngle;
-
 
   private float armShoulderX;//must be set in relation to player
   private float armShoulderY;
@@ -46,11 +45,11 @@ public class Player implements Renderable {
     positionX = x;
     positionY = y;
     //the position of the arm must be set in relation to the player
-    armShoulderX = x - 36;
-    armShoulderY = y + 10;
+    armShoulderX = x - 42;
+    armShoulderY = y + 9;
     //set the position of the projectile to be on the hand
-    this.projectilePositionX = x + 80;
-    this.projectilePositionY = y + 195;
+    this.projectileCenterPositionX = x + 80;
+    this.projectileCenterPositionY = y + 195;
   }
 
   public void reset() {
@@ -62,8 +61,8 @@ public class Player implements Renderable {
     //todo: check if movement possible, turn arm etc.
     if (!isThrowing) {
       this.directionAngle += degreeDifference;
-      projectilePositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX + 85;
-      projectilePositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY + 135;
+      projectileCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX + 85;
+      projectileCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY + 135;
     }
   }
 
@@ -76,13 +75,12 @@ public class Player implements Renderable {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     armImage.setRotation(directionAngle);
-    double directionRad = Math.toRadians(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, armShoulderX, armShoulderY);
 
     if (!isThrowing) {
       //todo: set position to middle of the player's hand
-      projectile.setCenterPosition(projectilePositionX, projectilePositionY);
+      projectile.setCenterPosition(projectileCenterPositionX, projectileCenterPositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
   }
