@@ -35,7 +35,7 @@ public class PowerSlider implements Renderable {
   /**
    * updates the PowerSlider, depending on direction it either moves right or left
    *
-   * @param delta
+   * @param delta The time-difference compared to the previous step.
    */
   public void update(int delta) {
     if (direction) {

@@ -7,7 +7,6 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -40,19 +39,18 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     currentLevel = level;
-    // TODO see if this can be done somwhere else
-    try {// TODO see if exeption can be dealt with somewhere else
+    // TODO see if this can be done somewhere else
+    try {// TODO see if exception can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
       for (Player player : players) {
         player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
+        player.reset();
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
-    // reset player and projectile 
-    players.get(currentPlayer).reset();
+
     projectile = null;
   }
 
@@ -112,15 +110,48 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void keyPressed(int key, char c) {
-    if (key == Input.KEY_SPACE) {
-      Projectile projectile;
-      projectile = players.get(currentPlayer).throwProjectile();
-      if (projectile != null) {
-        this.projectile = projectile;
-      }
-    } else if (key == Input.KEY_ESCAPE) {
-      stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+    switch (key) {
+      case Input.KEY_SPACE:
+        Projectile projectile;
+        projectile = players.get(currentPlayer).throwProjectile();
+        if (projectile != null) {
+          this.projectile = projectile;
+        }
+        break;
+      case Input.KEY_ESCAPE:
+        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+        break;
+      case Input.KEY_UP:
+        selectNextPlayer();
+        break;
+      case Input.KEY_DOWN:
+        selectPreviousPlayer();
+        break;
     }
+  }
+
+  private void selectNextPlayer() {
+    float previousAngle = players.get(currentPlayer).getAngle();
+
+    if (currentPlayer >= players.size() - 1) {
+      currentPlayer = 0;
+    } else {
+      currentPlayer++;
+    }
+
+    players.get(currentPlayer).setAngle(previousAngle);
+  }
+
+  private void selectPreviousPlayer() {
+    float previousAngle = players.get(currentPlayer).getAngle();
+
+    if (currentPlayer <= 0) {
+      currentPlayer = players.size() - 1;
+    } else {
+      currentPlayer--;
+    }
+
+    players.get(currentPlayer).setAngle(previousAngle);
   }
 
   private void processUserInput(GameContainer gameContainer) {
@@ -130,5 +161,5 @@ public class GameState extends BasicGameState implements InputListener {
       players.get(currentPlayer).moveArm(-1);
     }
   }
-  
+
 }
