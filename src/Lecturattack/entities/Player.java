@@ -30,6 +30,12 @@ public class Player implements Renderable {
   private ProjectileMeta projectileMeta;
   private float directionAngle;
 
+
+
+  private float armShoulderX;//must be set in relation to player
+  private float armShoulderY;
+
+
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta) {
     this.positionX = 0f;
     this.positionY = 0f;
@@ -38,14 +44,18 @@ public class Player implements Renderable {
     this.projectileMeta = projectileMeta;
     reset();
 
-    this.projectilePositionX=100;
-    this.projectilePositionY=250;
-
   }
 
   public void setPosition(float x, float y) {
     positionX = x;
     positionY = y;
+    //the position of the arm must be set in relation to the player
+    armShoulderX=x-36;
+    armShoulderY=y+10;
+
+    //set the position of the projectile to be on the hand
+    this.projectilePositionX=x+80;
+    this.projectilePositionY=y+195;
   }
 
   public void reset() {
@@ -57,35 +67,28 @@ public class Player implements Renderable {
     //todo: check if movement possible, turn arm etc.
     if (!isThrowing) {
       this.directionAngle += degreeDifference;
-      projectilePositionX= ((float) Math.cos(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(60)+25;
-      projectilePositionY= ((float) Math.sin(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(200+25);
+      projectilePositionX= ((float) Math.cos(Math.toRadians(directionAngle)+Math.PI/4) * strength)+armShoulderX+85;
+      projectilePositionY= ((float) Math.sin(Math.toRadians(directionAngle)+Math.PI/4) * strength)+armShoulderY+135;
     }
   }
 
   public final Projectile throwProjectile(float strength) {
     isThrowing = true;
+    //TODO apply force to projectile
     return projectile;
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    armImage.setCenterOfRotation(36,146);//TODO keep updated if changes
     armImage.setRotation(directionAngle);
-
     double directionRad = Math.toRadians(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
-    graphics.drawImage(armImage, positionX, positionY);
+    graphics.drawImage(armImage, armShoulderX, armShoulderY);
 
     if (!isThrowing) {
       //todo: set position to middle of the player's hand
-     // float positionX = 100;
-    //  float positionY = 100;
-
       projectile.setCenterPosition(projectilePositionX,projectilePositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-
-    graphics.drawLine(85, 225,  ((float) Math.cos(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(60)+25, ((float) Math.sin(Math.toRadians(directionAngle)+Math.PI/4) * strength)+(200+25));
-
   }
 }
