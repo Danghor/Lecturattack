@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Nick Steyer, Tim Adamek
+ * @author Nick Steyer
+ * @author Tim Adamek
  */
 public class TargetMeta extends MetaObject {
   static {

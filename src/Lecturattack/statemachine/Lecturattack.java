@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author Andreas Geis
+ * @author Tim Adamek
  */
 public class Lecturattack extends StateBasedGame {
   public static final int MAINMENUSTATE = 0;

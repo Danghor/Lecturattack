@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2015.
- */
-
 package Lecturattack.utilities.xmlHandling.configLoading;
 
 import javax.xml.bind.annotation.XmlElement;

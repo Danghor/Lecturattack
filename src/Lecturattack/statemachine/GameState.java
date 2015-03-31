@@ -1,6 +1,4 @@
-package Lecturattack.statemachine;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.statemachine;
 
 import Lecturattack.entities.*;
 import Lecturattack.utilities.FileHandler;
@@ -45,8 +43,8 @@ public class GameState extends BasicGameState implements InputListener {
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(6);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
-      for(Player player: players){
-        player.setPosition(this.level.getPlayerPositionX(),this.level.getPlayerPositionY());
+      for (Player player : players) {
+        player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -72,7 +70,7 @@ public class GameState extends BasicGameState implements InputListener {
 
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
-      players.add(new Player(meta.getBodyImageAsImage(),meta.getArmImageAsImage(),meta.getProjectileMeta()));
+      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta()));
     }
 
     currentPlayer = 0;
