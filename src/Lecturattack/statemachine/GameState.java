@@ -45,6 +45,9 @@ public class GameState extends BasicGameState implements InputListener {
     try {//TODO see if exeption can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(6);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
+      for(Player player: players){
+        player.setPosition(this.level.getPlayerPositionX(),this.level.getPlayerPositionY());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
