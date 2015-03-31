@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private static int stateID;
+  public static int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
@@ -39,9 +39,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     currentLevel = level;
-    //TODO see if this can be done somewhere else
-    try {//TODO see if exception can be dealt with somewhere else
-      List<LevelElement> levelElements = FileHandler.getLevelData(4);
+    // TODO see if this can be done somewhere else
+    try {// TODO see if exception can be dealt with somewhere else
+      List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
       for (Player player : players) {
         player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
@@ -49,6 +49,10 @@ public class GameState extends BasicGameState implements InputListener {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    
+    // reset player and projectile 
+    players.get(currentPlayer).reset();
+    projectile = null;
   }
 
   private void resetLevel() {
@@ -74,8 +78,7 @@ public class GameState extends BasicGameState implements InputListener {
     }
 
     currentPlayer = 0;
-    currentLevel = 1; //default
-    resetLevel();
+    currentLevel = 1; // default
   }
 
   @Override
@@ -88,7 +91,7 @@ public class GameState extends BasicGameState implements InputListener {
       target.render(gameContainer, stateBasedGame, graphics);
     }
 
-    //render projectile here, if the player doesn't have it
+    // render projectile here, if the player doesn't have it
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
@@ -106,15 +109,13 @@ public class GameState extends BasicGameState implements InputListener {
     players.get(currentPlayer).update(delta);
   }
 
-
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_SPACE) {
-      //TODO andreas rename
-      Projectile helper;
-      helper = players.get(currentPlayer).throwProjectile();
-      if (helper != null) {
-        projectile = helper;
+      Projectile projectile;
+      projectile = players.get(currentPlayer).throwProjectile();
+      if (projectile != null) {
+        this.projectile = projectile;
       }
     } else if (key == Input.KEY_ESCAPE) {
       stateBasedGame.enterState(Lecturattack.PAUSESTATE);
@@ -123,9 +124,10 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void processUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(1);//TODO constants for angle
+      players.get(currentPlayer).moveArm(1);// TODO constants for angle
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
       players.get(currentPlayer).moveArm(-1);
     }
   }
+  
 }
