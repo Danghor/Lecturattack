@@ -39,8 +39,8 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     currentLevel = level;
-    //TODO see if this can be done somwhere else
-    try {//TODO see if exeption can be dealt with somewhere else
+    //TODO see if this can be done somewhere else
+    try {//TODO see if exception can be dealt with somewhere else
       List<LevelElement> levelElements = FileHandler.getLevelData(4);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
       for (Player player : players) {

@@ -80,7 +80,7 @@ public class Player implements Renderable {
    * lock the current Selection (setAngle or setPower) and increment the
    * playerState do nothing if the player already threw the projectile
    *
-   * @return
+   * @return projectile
    */
   public final Projectile throwProjectile() {
     if (playerState == PlayerState.ANGLE_SELECTION) {
