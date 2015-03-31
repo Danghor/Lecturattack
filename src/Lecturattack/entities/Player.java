@@ -4,14 +4,9 @@ package Lecturattack.entities;
  * Copyright (c) 2015.
  */
 
-import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
-
-import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -78,6 +73,7 @@ public class Player implements Renderable {
     playerState = PlayerState.ANGLE_SELECTION;
     projectile = new Projectile(projectileMeta, 0f, 0f);
     powerSlider = new PowerSlider();
+    
   }
 
   public void moveArm(float degreeDifference) {
