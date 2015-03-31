@@ -65,6 +65,7 @@ public class Player implements Renderable {
     playerState = PlayerState.ANGLE_SELECTION;
     projectile = new Projectile(projectileMeta, 0f, 0f);
     powerSlider = new PowerSlider();
+    
   }
 
   public void moveArm(float degreeDifference) {

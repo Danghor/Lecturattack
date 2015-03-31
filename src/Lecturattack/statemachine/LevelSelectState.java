@@ -78,8 +78,8 @@ public class LevelSelectState extends BasicGameState implements InputListener {
       }
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection >= 0 && currentSelection <= 5) {
-        // TODO: give the GameState the selected level
-        stateBasedGame.enterState(2);
+        ((GameState) stateBasedGame.getState(GameState.stateID)).loadLevel(currentSelection + 1);
+        stateBasedGame.enterState(GameState.stateID);
       } else if (currentSelection == 6) {
         stateBasedGame.enterState(0);
       }

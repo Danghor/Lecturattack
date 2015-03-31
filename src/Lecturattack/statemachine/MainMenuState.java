@@ -4,6 +4,7 @@ package Lecturattack.statemachine;/*
 
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.menu.AnimatedButton;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -66,6 +67,8 @@ public class MainMenuState extends BasicGameState implements InputListener {
       }
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection == 0) {
+        // TODO load current level from file and start that level
+        ((GameState) stateBasedGame.getState(GameState.stateID)).loadLevel(1);
         stateBasedGame.enterState(2);
       }
       if (currentSelection == 1) {
