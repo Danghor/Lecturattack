@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Player implements Renderable {
 
   //TODO remove
-  float strength = 70;
+  float strength = 54;
   private Image bodyImage;
   private Image armImage;
   private boolean isThrowing;
@@ -27,6 +27,9 @@ public class Player implements Renderable {
   private float handCenterPositionY;
   private ProjectileMeta projectileMeta;
   private float directionAngle;
+
+  private float armImageX;//must be set in relation to player
+  private float armImageY;
 
   private float armShoulderX;//must be set in relation to player
   private float armShoulderY;
@@ -41,15 +44,25 @@ public class Player implements Renderable {
     reset();
   }
 
+
+
   public void setPosition(float x, float y) {
     positionX = x;
     positionY = y;
-    //the position of the arm must be set in relation to the player
-    armShoulderX = x - 42;
-    armShoulderY = y + 9;
+
+    //the position of the arm image must be set in relation to the player,
+    //the shoulder is NOT the top left corner but the middle of the image
+    armImageX = x - 42;
+    armImageY = y + 9;
+
+    armShoulderX=armImageX+armImage.getWidth()/2;
+    armShoulderY=armImageY+armImage.getHeight()/2;
+
+
     //set the position of the projectile to be on the hand
-    this.handCenterPositionX = x + 80;
-    this.handCenterPositionY = y + 195;
+    // +Math.PI/4 reduces changes the angle, the hand is not at the position where it wouldbe
+    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4)* strength) + armShoulderX;
+    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
   }
 
   public void reset() {
@@ -61,7 +74,7 @@ public class Player implements Renderable {
     //todo: check if movement possible, turn arm etc.
     if (!isThrowing) {
       this.directionAngle += degreeDifference;
-      handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
+      handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4)* strength) + armShoulderX;
       handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
     }
   }
@@ -76,7 +89,7 @@ public class Player implements Renderable {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     armImage.setRotation(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
-    graphics.drawImage(armImage, armShoulderX, armShoulderY);
+    graphics.drawImage(armImage, armImageX, armImageY);
 
     if (!isThrowing) {
       //todo: set position to middle of the player's hand
