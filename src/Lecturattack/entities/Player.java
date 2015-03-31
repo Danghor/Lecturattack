@@ -61,6 +61,15 @@ public class Player implements Renderable {
     this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
   }
 
+  public float getAngle() {
+    return directionAngle;
+  }
+
+  public void setAngle(float angleInDegrees) {
+    float difference = angleInDegrees - directionAngle;
+    moveArm(difference);
+  }
+
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
     projectile = new Projectile(projectileMeta, 0f, 0f);
@@ -102,7 +111,6 @@ public class Player implements Renderable {
 
     if (playerState != PlayerState.THROWING) {
       //todo: set position to middle of the player's hand
-      graphics.drawRect(handCenterPositionX, handCenterPositionY, 5, 5);
       projectile.setCenterPosition(handCenterPositionX, handCenterPositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }

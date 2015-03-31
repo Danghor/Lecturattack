@@ -45,13 +45,12 @@ public class GameState extends BasicGameState implements InputListener {
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
       for (Player player : players) {
         player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
+        player.reset();
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    // reset player and projectile 
-    players.get(currentPlayer).reset();
     projectile = null;
   }
 
@@ -111,15 +110,48 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void keyPressed(int key, char c) {
-    if (key == Input.KEY_SPACE) {
-      Projectile projectile;
-      projectile = players.get(currentPlayer).throwProjectile();
-      if (projectile != null) {
-        this.projectile = projectile;
-      }
-    } else if (key == Input.KEY_ESCAPE) {
-      stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+    switch (key) {
+      case Input.KEY_SPACE:
+        Projectile projectile;
+        projectile = players.get(currentPlayer).throwProjectile();
+        if (projectile != null) {
+          this.projectile = projectile;
+        }
+        break;
+      case Input.KEY_ESCAPE:
+        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+        break;
+      case Input.KEY_UP:
+        selectNextPlayer();
+        break;
+      case Input.KEY_DOWN:
+        selectPreviousPlayer();
+        break;
     }
+  }
+
+  private void selectNextPlayer() {
+    float previousAngle = players.get(currentPlayer).getAngle();
+
+    if (currentPlayer >= players.size() - 1) {
+      currentPlayer = 0;
+    } else {
+      currentPlayer++;
+    }
+
+    players.get(currentPlayer).setAngle(previousAngle);
+  }
+
+  private void selectPreviousPlayer() {
+    float previousAngle = players.get(currentPlayer).getAngle();
+
+    if (currentPlayer <= 0) {
+      currentPlayer = players.size() - 1;
+    } else {
+      currentPlayer--;
+    }
+
+    players.get(currentPlayer).setAngle(previousAngle);
   }
 
   private void processUserInput(GameContainer gameContainer) {
