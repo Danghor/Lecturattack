@@ -10,7 +10,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import Lecturattack.utilities.FileHandler;
 
 /**
+<<<<<<< HEAD
  * @author Andreas Geis
+=======
+ *
+>>>>>>> origin/master
  */
 public class PowerSlider implements Renderable {
   private float force;

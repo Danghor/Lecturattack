@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * Created by Nick Steyer on 08/03/2015
+ *
  */
 public class InformationField implements Renderable {
   @Override

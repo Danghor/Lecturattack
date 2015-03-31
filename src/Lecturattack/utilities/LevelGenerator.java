@@ -1,6 +1,4 @@
-package Lecturattack.utilities;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.utilities;
 
 import Lecturattack.entities.Target;
 import Lecturattack.entities.TargetMeta;
