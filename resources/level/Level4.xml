@@ -45,13 +45,13 @@
     <levelElements>
         <positionX>1004</positionX>
         <positionY>529</positionY>
-        <type>JAVA</type>
+        <type>LIBRARY</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>
     <levelElements>
         <positionX>1089</positionX>
         <positionY>430</positionY>
-        <type>JAVA</type>
+        <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
 </LevelData>
