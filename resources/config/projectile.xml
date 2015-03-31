@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectiles>
     <projectile>
-        <image>resources/images/CPointer.png</image>
-        <destroys>RAM</destroys>
+        <image>resources/images/exam.png</image>
+        <destroys>ENEMY</destroys>
         <vertice>
             <x>0</x>
             <y>0</y>
         </vertice>
         <vertice>
-            <x>85</x>
+            <x>58</x>
             <y>0</y>
         </vertice>
         <vertice>
-            <x>85</x>
-            <y>197</y>
+            <x>59</x>
+            <y>70</y>
         </vertice>
         <vertice>
             <x>0</x>
-            <y>197</y>
+            <y>70</y>
         </vertice>
     </projectile>
     <projectile>
@@ -28,36 +28,36 @@
             <y>0</y>
         </vertice>
         <vertice>
-            <x>0</x>
-            <y>85</y>
-        </vertice>
-        <vertice>
-            <x>197</x>
-            <y>85</y>
-        </vertice>
-        <vertice>
-            <x>197</x>
+            <x>29</x>
             <y>0</y>
+        </vertice>
+        <vertice>
+            <x>29</x>
+            <y>35</y>
+        </vertice>
+        <vertice>
+            <x>0</x>
+            <y>35</y>
         </vertice>
     </projectile>
     <projectile>
-        <image>resources/images/exam.png</image>
-        <destroys>ENEMY</destroys>
+        <image>resources/images/CPointer.png</image>
+        <destroys>RAM</destroys>
         <vertice>
             <x>0</x>
             <y>0</y>
         </vertice>
         <vertice>
-            <x>0</x>
-            <y>85</y>
-        </vertice>
-        <vertice>
-            <x>197</x>
-            <y>85</y>
-        </vertice>
-        <vertice>
-            <x>197</x>
+            <x>29</x>
             <y>0</y>
+        </vertice>
+        <vertice>
+            <x>29</x>
+            <y>31</y>
+        </vertice>
+        <vertice>
+            <x>0</x>
+            <y>31</y>
         </vertice>
     </projectile>
 </projectiles>

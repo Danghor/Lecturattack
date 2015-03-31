@@ -62,8 +62,8 @@ public class Player implements Renderable {
     //todo: check if movement possible, turn arm etc.
     if (!isThrowing) {
       this.directionAngle += degreeDifference;
-      projectilePositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX + 85;
-      projectilePositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY + 135;
+      projectilePositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
+      projectilePositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
     }
   }
 
@@ -76,12 +76,12 @@ public class Player implements Renderable {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     armImage.setRotation(directionAngle);
-    double directionRad = Math.toRadians(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, armShoulderX, armShoulderY);
 
     if (!isThrowing) {
       //todo: set position to middle of the player's hand
+      graphics.drawRect(projectilePositionX,projectilePositionY,5,5);
       projectile.setCenterPosition(projectilePositionX, projectilePositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
