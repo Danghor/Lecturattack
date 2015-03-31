@@ -102,7 +102,7 @@ public class GameState extends BasicGameState implements InputListener {
     processUserInput(gameContainer);
 
     PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
-    
+
     players.get(currentPlayer).update(delta);
   }
 
@@ -112,11 +112,11 @@ public class GameState extends BasicGameState implements InputListener {
     if (key == Input.KEY_SPACE) {
       //TODO andreas rename
       Projectile helper;
-      helper=players.get(currentPlayer).throwProjectile();
-      if(helper!=null){
-        projectile=helper;
+      helper = players.get(currentPlayer).throwProjectile();
+      if (helper != null) {
+        projectile = helper;
       }
-    } else    if (key == Input.KEY_ESCAPE) {
+    } else if (key == Input.KEY_ESCAPE) {
       stateBasedGame.enterState(Lecturattack.PAUSESTATE);
     }
   }
