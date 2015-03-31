@@ -4,14 +4,9 @@ package Lecturattack.entities;
  * Copyright (c) 2015.
  */
 
-import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
-
-import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -25,11 +20,6 @@ public class Player implements Renderable {
   float strength = 54;
   private Image bodyImage;
   private Image armImage;
-
-  public enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, THROWING
-  }
-
   private Projectile projectile;
   private PowerSlider powerSlider;
   private float positionX;
@@ -38,12 +28,9 @@ public class Player implements Renderable {
   private float handCenterPositionY;
   private ProjectileMeta projectileMeta;
   private float directionAngle;
-
   private PlayerState playerState;
-
   private float armImageX;//must be set in relation to player
   private float armImageY;
-
   private float armShoulderX;//must be set in relation to player
   private float armShoulderY;
 
@@ -54,77 +41,6 @@ public class Player implements Renderable {
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
     reset();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
   public void setPosition(float x, float y) {
@@ -135,13 +51,13 @@ public class Player implements Renderable {
     armImageX = x - 42;
     armImageY = y + 9;
 
-    armShoulderX=armImageX+armImage.getWidth()/2;
-    armShoulderY=armImageY+armImage.getHeight()/2;
+    armShoulderX = armImageX + armImage.getWidth() / 2;
+    armShoulderY = armImageY + armImage.getHeight() / 2;
 
 
     //set the position of the projectile to be on the hand
     // +Math.PI/4 reduces changes the angle, the hand is not at the position where it wouldbe
-    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4)* strength) + armShoulderX;
+    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
     this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
   }
 
@@ -155,7 +71,7 @@ public class Player implements Renderable {
     // todo: check if movement possible, turn arm etc.
     if (playerState == PlayerState.ANGLE_SELECTION) {
       this.directionAngle += degreeDifference;
-      handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4)* strength) + armShoulderX;
+      handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
       handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
     }
   }
@@ -163,6 +79,7 @@ public class Player implements Renderable {
   /**
    * lock the current Selection (setAngle or setPower) and increment the
    * playerState do nothing if the player already threw the projectile
+   *
    * @return
    */
   public final Projectile throwProjectile() {
@@ -188,8 +105,8 @@ public class Player implements Renderable {
       projectile.setCenterPosition(handCenterPositionX, handCenterPositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-    
-    if(playerState == PlayerState.POWER_SLIDER || playerState == PlayerState.THROWING){
+
+    if (playerState == PlayerState.POWER_SLIDER || playerState == PlayerState.THROWING) {
       powerSlider.render(gameContainer, stateBasedGame, graphics);
     }
   }
@@ -198,5 +115,9 @@ public class Player implements Renderable {
     if (playerState == PlayerState.POWER_SLIDER) {
       powerSlider.update(delta);
     }
+  }
+
+  public enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, THROWING
   }
 }
