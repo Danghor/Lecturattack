@@ -23,8 +23,8 @@ public class Player implements Renderable {
   private PowerSlider powerSlider;
   private float positionX;
   private float positionY;
-  private float projectileCenterPositionX;
-  private float projectileCenterPositionY;
+  private float handCenterPositionX;
+  private float handCenterPositionY;
   private ProjectileMeta projectileMeta;
   private float directionAngle;
 
@@ -48,8 +48,8 @@ public class Player implements Renderable {
     armShoulderX = x - 42;
     armShoulderY = y + 9;
     //set the position of the projectile to be on the hand
-    this.projectileCenterPositionX = x + 80;
-    this.projectileCenterPositionY = y + 195;
+    this.handCenterPositionX = x + 80;
+    this.handCenterPositionY = y + 195;
   }
 
   public void reset() {
@@ -61,8 +61,8 @@ public class Player implements Renderable {
     //todo: check if movement possible, turn arm etc.
     if (!isThrowing) {
       this.directionAngle += degreeDifference;
-      projectileCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX + 85;
-      projectileCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY + 135;
+      handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX + 85;
+      handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY + 135;
     }
   }
 
@@ -80,7 +80,7 @@ public class Player implements Renderable {
 
     if (!isThrowing) {
       //todo: set position to middle of the player's hand
-      projectile.setCenterPosition(projectileCenterPositionX, projectileCenterPositionY);
+      projectile.setCenterPosition(handCenterPositionX, handCenterPositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
   }
