@@ -4,7 +4,6 @@ package Lecturattack.statemachine;/*
 
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.menu.AnimatedButton;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;

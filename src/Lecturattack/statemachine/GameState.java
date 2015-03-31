@@ -49,7 +49,7 @@ public class GameState extends BasicGameState implements InputListener {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
+
     // reset player and projectile 
     players.get(currentPlayer).reset();
     projectile = null;
@@ -129,5 +129,5 @@ public class GameState extends BasicGameState implements InputListener {
       players.get(currentPlayer).moveArm(-1);
     }
   }
-  
+
 }
