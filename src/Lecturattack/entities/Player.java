@@ -43,7 +43,6 @@ public class Player implements Renderable {
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
     reset();
-
   }
 
   public void setPosition(float x, float y) {
@@ -52,7 +51,6 @@ public class Player implements Renderable {
     //the position of the arm must be set in relation to the player
     armShoulderX=x-36;
     armShoulderY=y+10;
-
     //set the position of the projectile to be on the hand
     this.projectilePositionX=x+80;
     this.projectilePositionY=y+195;
