@@ -15,7 +15,7 @@
     <levelElements>
         <positionX>1118</positionX>
         <positionY>529</positionY>
-        <type>JAVA</type>
+        <type>LIBRARY</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>
     <levelElements>
@@ -51,7 +51,7 @@
     <levelElements>
         <positionX>1004</positionX>
         <positionY>529</positionY>
-        <type>JAVA</type>
+        <type>LIBRARY</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>
 </LevelData>
