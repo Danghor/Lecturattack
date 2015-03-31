@@ -102,12 +102,21 @@ public class GameState extends BasicGameState implements InputListener {
     processUserInput(gameContainer);
 
     PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
+    
+    players.get(currentPlayer).update(delta);
   }
 
 
   @Override
   public void keyPressed(int key, char c) {
-    if (key == Input.KEY_ESCAPE) {
+    if (key == Input.KEY_SPACE) {
+      //TODO andreas rename
+      Projectile helper;
+      helper=players.get(currentPlayer).throwProjectile();
+      if(helper!=null){
+        projectile=helper;
+      }
+    } else    if (key == Input.KEY_ESCAPE) {
       stateBasedGame.enterState(Lecturattack.PAUSESTATE);
     }
   }
@@ -117,11 +126,6 @@ public class GameState extends BasicGameState implements InputListener {
       players.get(currentPlayer).moveArm(1);//TODO constants for angle
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
       players.get(currentPlayer).moveArm(-1);
-      //todo: I hope that the code below is just for testing o.O
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
-      projectile = players.get(currentPlayer).throwProjectile(1);
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
-      projectile = players.get(currentPlayer).throwProjectile(-1);
     }
   }
 }
