@@ -98,7 +98,7 @@ public abstract class RigidBody implements Renderable {
     }
   }
 
-  public void update(float delta) {
+  public void update(int delta) {
     EnhancedVector acceleration;
 
     acceleration = new EnhancedVector(force.x * (1 / getMass()), force.y * (1 / getMass()));
