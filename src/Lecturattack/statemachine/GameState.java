@@ -105,7 +105,7 @@ public class GameState extends BasicGameState implements InputListener {
 
     PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
 
-    players.get(currentPlayer).update(delta);
+    players.get(currentPlayer).updatePowerSlider(delta);
   }
 
   @Override

@@ -40,6 +40,7 @@ public class Player implements Renderable {
     this.bodyImage = bodyImage;
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
+    this.powerSlider = new PowerSlider();
     reset();
   }
 
@@ -73,8 +74,7 @@ public class Player implements Renderable {
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
     projectile = new Projectile(projectileMeta, 0f, 0f);
-    powerSlider = new PowerSlider();
-
+    powerSlider.reset();
   }
 
   public void moveArm(float degreeDifference) {
@@ -120,7 +120,7 @@ public class Player implements Renderable {
     }
   }
 
-  public void update(int delta) {
+  public void updatePowerSlider(int delta) {
     if (playerState == PlayerState.POWER_SLIDER) {
       powerSlider.update(delta);
     }

@@ -43,7 +43,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
 
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    currentSelection = 0;
+    currentSelection = 6;
   }
 
   @Override
