@@ -32,11 +32,6 @@ public class Player implements Renderable {
   private float armImageY;
   private float armShoulderX;//must be set in relation to player
   private float armShoulderY;
-
-  private enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, THROWING
-  }
-
   private PlayerState playerState;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta) {
@@ -103,11 +98,11 @@ public class Player implements Renderable {
     } else if (playerState == PlayerState.POWER_SLIDER) {
       playerState = PlayerState.THROWING;
       float velocityX = ((float) Math.cos(Math.toRadians(directionAngle)) * powerSlider.getForce());
-      float velocityY = ((float) Math.sin(Math.toRadians(directionAngle)) * powerSlider.getForce()) ;
+      float velocityY = ((float) Math.sin(Math.toRadians(directionAngle)) * powerSlider.getForce());
       projectile.applyForce(velocityX, velocityY);
       return projectile;
     }
-    return  null;
+    return null;
   }
 
   @Override
@@ -134,5 +129,9 @@ public class Player implements Renderable {
   private void setProjectilePosition() {
     this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
     this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
+  }
+
+  private enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, THROWING
   }
 }

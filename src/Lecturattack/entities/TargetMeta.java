@@ -67,7 +67,7 @@ public class TargetMeta extends MetaObject {
       }
 
       TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
-      targetMeta.mass=targetStandard.getMass();
+      targetMeta.mass = targetStandard.getMass();
       instances.put(type, targetMeta);
     }
   }

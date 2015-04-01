@@ -35,7 +35,7 @@ public class PowerSlider implements Renderable {
    * @param delta The time-difference compared to the previous step.
    */
   public void update(int delta) {
-    
+
     if (movingRight) {
       force += SCALE * delta;
       if (force > MAX_FORCE) {
