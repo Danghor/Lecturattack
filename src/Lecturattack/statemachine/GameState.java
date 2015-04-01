@@ -122,6 +122,7 @@ public class GameState extends BasicGameState implements InputListener {
         stateBasedGame.enterState(Lecturattack.PAUSESTATE);
         break;
       case Input.KEY_UP:
+//todo: check if player is throwing right now
         selectNextPlayer();
         break;
       case Input.KEY_DOWN:
