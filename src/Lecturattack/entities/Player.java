@@ -36,6 +36,7 @@ public class Player implements Renderable {
   private enum PlayerState {
     ANGLE_SELECTION, POWER_SLIDER, THROWING
   }
+
   private PlayerState playerState;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta) {
@@ -75,7 +76,7 @@ public class Player implements Renderable {
 
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
-    directionAngle=0;
+    directionAngle = 0;
     projectile = new Projectile(projectileMeta, 0f, 0f);
     powerSlider = new PowerSlider();
     setProjectilePosition();
@@ -99,10 +100,15 @@ public class Player implements Renderable {
     if (playerState == PlayerState.ANGLE_SELECTION) {
       playerState = PlayerState.POWER_SLIDER;
       return null;
+    } else if (playerState == PlayerState.POWER_SLIDER) {
+      playerState = PlayerState.THROWING;
+      float velocityX = (float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) + powerSlider.getForce();
+      float velocityY = (float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) + powerSlider.getForce();
+      projectile.applyForce(velocityX, velocityY);
+      return projectile;
     } else {
       playerState = PlayerState.THROWING;
-      // TODO apply force to projectile using powerSlider.getForce();
-      return projectile;
+      return null;
     }
   }
 
@@ -111,13 +117,11 @@ public class Player implements Renderable {
     armImage.setRotation(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, armImageX, armImageY);
-
     if (playerState != PlayerState.THROWING) {
       //todo: set position to middle of the player's hand
       projectile.setCenterPosition(handCenterPositionX, handCenterPositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-
     if (playerState == PlayerState.POWER_SLIDER || playerState == PlayerState.THROWING) {
       powerSlider.render(gameContainer, stateBasedGame, graphics);
     }
@@ -129,7 +133,7 @@ public class Player implements Renderable {
     }
   }
 
-  private void setProjectilePosition(){
+  private void setProjectilePosition() {
     this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
     this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
   }
