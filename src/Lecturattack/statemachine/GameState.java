@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  public static final int DEGREE_ARM_MOVE = 1;
+  private static final int DEGREE_ARM_MOVE = 1;
   public static int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
@@ -51,9 +51,9 @@ public class GameState extends BasicGameState implements InputListener {
       e.printStackTrace();
     }
     for (Player player : players) {
-        player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
-        player.reset();
-      }
+      player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
+      player.reset();
+    }
     projectile = null;
   }
 
@@ -69,16 +69,12 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-
     background = FileHandler.loadImage("background");
-
     players = new ArrayList<>();
-
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta()));
     }
-
     currentPlayer = 0;
     currentLevel = 1; // default
   }
@@ -86,14 +82,12 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
-
     players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
-
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
-
     // render projectile here, if the player doesn't have it
+    // the projectile is only not null if it was returned by the player
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }

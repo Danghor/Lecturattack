@@ -17,7 +17,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Player implements Renderable {
 
   //TODO remove
-  float strength = 54;
+  private float strength = 54;
   private Image bodyImage;
   private Image armImage;
   private Projectile projectile;
@@ -28,11 +28,15 @@ public class Player implements Renderable {
   private float handCenterPositionY;
   private ProjectileMeta projectileMeta;
   private float directionAngle;
-  private PlayerState playerState;
   private float armImageX;//must be set in relation to player
   private float armImageY;
   private float armShoulderX;//must be set in relation to player
   private float armShoulderY;
+
+  private enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, THROWING
+  }
+  private PlayerState playerState;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta) {
     this.positionX = 0f;
@@ -57,8 +61,7 @@ public class Player implements Renderable {
 
     //set the position of the projectile to be on the hand
     // +Math.PI/4 reduces changes the angle, the hand is not at the position where it wouldbe
-    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
-    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
+    setProjectilePosition();
   }
 
   public float getAngle() {
@@ -72,17 +75,17 @@ public class Player implements Renderable {
 
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
+    directionAngle=0;
     projectile = new Projectile(projectileMeta, 0f, 0f);
     powerSlider = new PowerSlider();
-
+    setProjectilePosition();
   }
 
   public void moveArm(float degreeDifference) {
     // todo: check if movement possible, turn arm etc.
     if (playerState == PlayerState.ANGLE_SELECTION) {
       this.directionAngle += degreeDifference;
-      handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
-      handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
+      setProjectilePosition();
     }
   }
 
@@ -126,7 +129,8 @@ public class Player implements Renderable {
     }
   }
 
-  public enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, THROWING
+  private void setProjectilePosition(){
+    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
+    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
   }
 }
