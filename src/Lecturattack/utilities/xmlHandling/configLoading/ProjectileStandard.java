@@ -11,6 +11,16 @@ public class ProjectileStandard {
   private String image;
   private String destroys;
   private List<XmlVertex> vertices;
+  private float mass;
+
+  @XmlElement
+  public float getMass() {
+    return mass;
+  }
+
+  public void setMass(float mass) {
+    this.mass = mass;
+  }
 
   @XmlElement
   public String getImage() {

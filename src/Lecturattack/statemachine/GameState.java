@@ -11,6 +11,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
+  private static final int DEGREE_ARM_MOVE = 1;
   public static int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
@@ -40,17 +42,18 @@ public class GameState extends BasicGameState implements InputListener {
   public void loadLevel(int level) {
     currentLevel = level;
     // TODO see if this can be done somewhere else
-    try {// TODO see if exception can be dealt with somewhere else
+    try {
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
-      for (Player player : players) {
-        player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
-        player.reset();
-      }
-    } catch (Exception e) {
+    } catch (SlickException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
       e.printStackTrace();
     }
-
+    for (Player player : players) {
+      player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
+      player.reset();
+    }
     projectile = null;
   }
 
@@ -66,31 +69,26 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-
     background = FileHandler.loadImage("background");
-
     players = new ArrayList<>();
-
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta()));
     }
-
     currentPlayer = 0;
     currentLevel = 1; // default
+
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
-
     players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
-
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
-
     // render projectile here, if the player doesn't have it
+    // the projectile is only not null if it was returned by the player
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
@@ -104,7 +102,9 @@ public class GameState extends BasicGameState implements InputListener {
     processUserInput(gameContainer);
 
     PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
-
+    if (projectile != null) {
+      projectile.update(delta);
+    }
     players.get(currentPlayer).updatePowerSlider(delta);
   }
 
@@ -112,10 +112,9 @@ public class GameState extends BasicGameState implements InputListener {
   public void keyPressed(int key, char c) {
     switch (key) {
       case Input.KEY_SPACE:
-        Projectile projectile;
-        projectile = players.get(currentPlayer).throwProjectile();
-        if (projectile != null) {
-          this.projectile = projectile;
+        Projectile checkProjectile = players.get(currentPlayer).throwProjectile();
+        if (checkProjectile != null) {
+          this.projectile = checkProjectile;
         }
         break;
       case Input.KEY_ESCAPE:
@@ -156,9 +155,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void processUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(1);// TODO constants for angle
+      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);// TODO constants for angle
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      players.get(currentPlayer).moveArm(-1);
+      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
     }
   }
 

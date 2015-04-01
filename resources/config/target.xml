@@ -23,6 +23,7 @@
             <x>0</x>
             <y>197</y>
         </vertice>
+        <mass>10</mass>
     </target>
     <target>
         <imageIntact>resources/images/RamQ.png</imageIntact>
@@ -47,6 +48,7 @@
             <x>197</x>
             <y>0</y>
         </vertice>
+        <mass>10</mass>
     </target>
     <target>
         <imageIntact>resources/images/JavaB.png</imageIntact>
@@ -71,6 +73,7 @@
             <x>0</x>
             <y>197</y>
         </vertice>
+        <mass>20</mass>
     </target>
     <target>
         <imageIntact>resources/images/JavaB2.png</imageIntact>
@@ -95,6 +98,7 @@
             <x>197</x>
             <y>0</y>
         </vertice>
+        <mass>20</mass>
     </target>
     <target>
         <imageIntact>resources/images/studentOk.png</imageIntact>
@@ -119,6 +123,7 @@
             <x>0</x>
             <y>191</y>
         </vertice>
+        <mass>80</mass>
     </target>
     <!-- TODO maybe it needs the vertices? -->
 </targets>
