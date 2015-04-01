@@ -29,6 +29,7 @@ public class TargetMeta extends MetaObject {
         //the images are not saved in a list because they are read from a config file
         //and having them in a list in a config file would be less readable (because the tag names would be the same)
         //TODO maybe other way of doing this
+
         if (!targetStandard.getImageIntact().equals("")) {
           images.add(new Image(targetStandard.getImageIntact()));
         }
@@ -66,6 +67,7 @@ public class TargetMeta extends MetaObject {
       }
 
       TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
+      targetMeta.mass=targetStandard.getMass();
       instances.put(type, targetMeta);
     }
   }

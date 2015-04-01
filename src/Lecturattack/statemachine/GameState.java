@@ -77,6 +77,7 @@ public class GameState extends BasicGameState implements InputListener {
     }
     currentPlayer = 0;
     currentLevel = 1; // default
+
   }
 
   @Override
@@ -103,6 +104,9 @@ public class GameState extends BasicGameState implements InputListener {
     PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
 
     players.get(currentPlayer).update(delta);
+    if(projectile!=null){
+      projectile.update(delta);
+    }
   }
 
   @Override

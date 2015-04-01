@@ -15,6 +15,16 @@ public class TargetStandard {
   private String targetType;
   private String positioning;
   private List<XmlVertex> vertices;
+  private float mass;
+
+  @XmlElement
+  public float getMass() {
+    return mass;
+  }
+
+  public void setMass(float mass) {
+    this.mass = mass;
+  }
 
   @XmlElement
   public String getImageIntact() {
