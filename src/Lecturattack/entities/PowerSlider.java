@@ -1,6 +1,4 @@
-package Lecturattack.entities;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.entities;
 
 import Lecturattack.utilities.FileHandler;
 import org.newdawn.slick.GameContainer;
@@ -28,7 +26,7 @@ public class PowerSlider implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    graphics.drawImage(powerslide, 10, 380);
+    graphics.drawImage(powerslide, 10, 380);//TODO constants
     graphics.drawImage(powerslideLine, 10 + force, 368);
   }
 

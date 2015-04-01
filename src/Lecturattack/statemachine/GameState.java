@@ -11,6 +11,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
+  public static final int DEGREE_ARM_MOVE = 1;
   public static int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
@@ -40,17 +42,18 @@ public class GameState extends BasicGameState implements InputListener {
   public void loadLevel(int level) {
     currentLevel = level;
     // TODO see if this can be done somewhere else
-    try {// TODO see if exception can be dealt with somewhere else
+    try {
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
-      for (Player player : players) {
+    } catch (SlickException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    for (Player player : players) {
         player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
         player.reset();
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
     projectile = null;
   }
 
@@ -156,9 +159,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void processUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(1);// TODO constants for angle
+      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);// TODO constants for angle
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      players.get(currentPlayer).moveArm(-1);
+      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
     }
   }
 
