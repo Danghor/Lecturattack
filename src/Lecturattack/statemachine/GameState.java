@@ -102,7 +102,7 @@ public class GameState extends BasicGameState implements InputListener {
     processUserInput(gameContainer);
 
     PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
-    if(projectile!=null){
+    if (projectile != null) {
       projectile.update(delta);
     }
     players.get(currentPlayer).updatePowerSlider(delta);
@@ -112,10 +112,9 @@ public class GameState extends BasicGameState implements InputListener {
   public void keyPressed(int key, char c) {
     switch (key) {
       case Input.KEY_SPACE:
-        Projectile projectile;
-        projectile = players.get(currentPlayer).throwProjectile();
-        if (projectile != null) {
-          this.projectile = projectile;
+        Projectile checkProjectile = players.get(currentPlayer).throwProjectile();
+        if (checkProjectile != null) {
+          this.projectile = checkProjectile;
         }
         break;
       case Input.KEY_ESCAPE:

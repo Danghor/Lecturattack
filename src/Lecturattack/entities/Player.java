@@ -100,17 +100,14 @@ public class Player implements Renderable {
   public final Projectile throwProjectile() {
     if (playerState == PlayerState.ANGLE_SELECTION) {
       playerState = PlayerState.POWER_SLIDER;
-      return null;
     } else if (playerState == PlayerState.POWER_SLIDER) {
       playerState = PlayerState.THROWING;
       float velocityX = ((float) Math.cos(Math.toRadians(directionAngle)) * powerSlider.getForce());
       float velocityY = ((float) Math.sin(Math.toRadians(directionAngle)) * powerSlider.getForce()) ;
       projectile.applyForce(velocityX, velocityY);
       return projectile;
-    } else {
-      playerState = PlayerState.THROWING;
-      return null;
     }
+    return  null;
   }
 
   @Override
