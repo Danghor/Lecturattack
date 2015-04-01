@@ -19,6 +19,7 @@
             <x>0</x>
             <y>35</y>
         </vertice>
+        <mass>3</mass>
     </projectile>
     <projectile>
         <image>resources/images/Android.png</image>
@@ -39,6 +40,7 @@
             <x>0</x>
             <y>35</y>
         </vertice>
+        <mass>1</mass>
     </projectile>
     <projectile>
         <image>resources/images/CPointer.png</image>
@@ -59,5 +61,6 @@
             <x>0</x>
             <y>31</y>
         </vertice>
+        <mass>1</mass>
     </projectile>
 </projectiles>

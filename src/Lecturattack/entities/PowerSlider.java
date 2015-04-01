@@ -1,6 +1,4 @@
-package Lecturattack.entities;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.entities;
 
 import Lecturattack.utilities.FileHandler;
 import org.newdawn.slick.GameContainer;
@@ -14,21 +12,20 @@ import org.newdawn.slick.state.StateBasedGame;
 public class PowerSlider implements Renderable {
   // powerslide.png has 255px and powserslideLine is 5px width
   private static final int MAX_FORCE = 250;
+  private static final float SCALE = 0.5f;
   private float force;
-  private boolean direction;
+  private boolean movingRight;
   private Image powerslide;
   private Image powerslideLine;
 
   public PowerSlider() {
-    force = 0;
-    direction = true;
     powerslide = FileHandler.loadImage("powerslide");
     powerslideLine = FileHandler.loadImage("powerslideLine");
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    graphics.drawImage(powerslide, 10, 380);
+    graphics.drawImage(powerslide, 10, 380);//TODO constants
     graphics.drawImage(powerslideLine, 10 + force, 368);
   }
 
@@ -38,22 +35,28 @@ public class PowerSlider implements Renderable {
    * @param delta The time-difference compared to the previous step.
    */
   public void update(int delta) {
-    if (direction) {
-      force += 0.5 * delta;
+    
+    if (movingRight) {
+      force += SCALE * delta;
       if (force > MAX_FORCE) {
         force = MAX_FORCE;
-        direction = false;
+        movingRight = false;
       }
     } else {
-      force -= 0.5 * delta;
+      force -= SCALE * delta;
       if (force < 0) {
         force = 0;
-        direction = true;
+        movingRight = true;
       }
     }
   }
 
   public float getForce() {
     return force;
+  }
+
+  public void reset() {
+    force = 0;
+    movingRight = true;
   }
 }
