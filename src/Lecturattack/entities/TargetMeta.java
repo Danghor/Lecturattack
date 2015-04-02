@@ -90,8 +90,7 @@ public class TargetMeta extends MetaObject {
   }
 
   Image getImage(int index) {
-    //no need for exception handling, since IndexOutOfBoundsException is already implemented
-    //this exception should never occur in production
+    //the IndexOutOfBoundsException should never occur in production
     return images.get(index);
   }
 

@@ -45,9 +45,7 @@ public class GameState extends BasicGameState implements InputListener {
     try {
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
-    } catch (SlickException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (SlickException | IOException e) {
       e.printStackTrace();
     }
     for (Player player : players) {
