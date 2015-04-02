@@ -97,12 +97,10 @@ public class GameState extends BasicGameState implements InputListener {
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     float wind = (float) ((Math.random() * 10) % 5);
 
-    processUserInput(gameContainer);
+    changeThrowingDegreeWithUserInput(gameContainer);
 
-    PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
-    if (projectile != null) {
-      projectile.update(delta);
-    }
+    PhysicsEngine.calculateStep(projectile, null, wind, delta);//TODO real values
+
     players.get(currentPlayer).updatePowerSlider(delta);
   }
 
@@ -119,12 +117,23 @@ public class GameState extends BasicGameState implements InputListener {
         stateBasedGame.enterState(Lecturattack.PAUSESTATE);
         break;
       case Input.KEY_UP:
-//todo: check if player is throwing right now
-        selectNextPlayer();
+        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectNextPlayer();
+        }
         break;
       case Input.KEY_DOWN:
-        selectPreviousPlayer();
+        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectPreviousPlayer();
+        }
         break;
+    }
+  }
+
+  private void changeThrowingDegreeWithUserInput(GameContainer gameContainer) {
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
+      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
     }
   }
 
@@ -151,13 +160,4 @@ public class GameState extends BasicGameState implements InputListener {
 
     players.get(currentPlayer).setAngle(previousAngle);
   }
-
-  private void processUserInput(GameContainer gameContainer) {
-    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);// TODO constants for angle
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
-    }
-  }
-
 }

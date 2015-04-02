@@ -13,7 +13,7 @@ public class PowerSlider implements Renderable {
   // powerslide.png has 255px and powserslideLine is 5px width
   private static final int MAX_FORCE = 250;
   private static final float SCALE = 0.5f;
-  private float force;
+  private float selectedForce;
   private boolean movingRight;
   private Image powerslide;
   private Image powerslideLine;
@@ -26,7 +26,7 @@ public class PowerSlider implements Renderable {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     graphics.drawImage(powerslide, 10, 380);//TODO constants
-    graphics.drawImage(powerslideLine, 10 + force, 368);
+    graphics.drawImage(powerslideLine, 10 + selectedForce, 368);
   }
 
   /**
@@ -37,26 +37,27 @@ public class PowerSlider implements Renderable {
   public void update(int delta) {
 
     if (movingRight) {
-      force += SCALE * delta;
-      if (force > MAX_FORCE) {
-        force = MAX_FORCE;
+      selectedForce += SCALE * delta;
+      if (selectedForce > MAX_FORCE) {
+        selectedForce = MAX_FORCE;
         movingRight = false;
       }
     } else {
-      force -= SCALE * delta;
-      if (force < 0) {
-        force = 0;
+      selectedForce -= SCALE * delta;
+      if (selectedForce < 0) {
+        selectedForce = 0;
         movingRight = true;
       }
     }
+
   }
 
-  public float getForce() {
-    return force;
+  public float getSelectedForce() {
+    return selectedForce;
   }
 
   public void reset() {
-    force = 0;
+    selectedForce = 0;
     movingRight = true;
   }
 }

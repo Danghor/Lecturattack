@@ -55,10 +55,9 @@ public class Player implements Renderable {
     armShoulderX = armImageX + armImage.getWidth() / 2;
     armShoulderY = armImageY + armImage.getHeight() / 2;
 
-
     //set the position of the projectile to be on the hand
     // +Math.PI/4 reduces changes the angle, the hand is not at the position where it wouldbe
-    setProjectilePosition();
+    setHandCenterPosition();
   }
 
   public float getAngle() {
@@ -70,11 +69,15 @@ public class Player implements Renderable {
     moveArm(difference);
   }
 
+  public PlayerState getPlayerState() {
+    return playerState;
+  }
+
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
     directionAngle = 0;
     projectile = new Projectile(projectileMeta, 0f, 0f);
-    setProjectilePosition();
+    setHandCenterPosition();
     powerSlider.reset();
   }
 
@@ -82,7 +85,7 @@ public class Player implements Renderable {
     // todo: check if movement possible, turn arm etc.
     if (playerState == PlayerState.ANGLE_SELECTION) {
       this.directionAngle += degreeDifference;
-      setProjectilePosition();
+      setHandCenterPosition();
     }
   }
 
@@ -93,16 +96,19 @@ public class Player implements Renderable {
    * @return projectile
    */
   public final Projectile throwProjectile() {
+    Projectile projectileReturned = null;
+
     if (playerState == PlayerState.ANGLE_SELECTION) {
       playerState = PlayerState.POWER_SLIDER;
     } else if (playerState == PlayerState.POWER_SLIDER) {
       playerState = PlayerState.THROWING;
-      float velocityX = ((float) Math.cos(Math.toRadians(directionAngle)) * powerSlider.getForce());
-      float velocityY = ((float) Math.sin(Math.toRadians(directionAngle)) * powerSlider.getForce());
+      float velocityX = ((float) Math.cos(Math.toRadians(directionAngle)) * powerSlider.getSelectedForce());
+      float velocityY = ((float) Math.sin(Math.toRadians(directionAngle)) * powerSlider.getSelectedForce());
       projectile.applyForce(velocityX, velocityY);
-      return projectile;
+      projectileReturned = projectile;
     }
-    return null;
+
+    return projectileReturned;
   }
 
   @Override
@@ -126,12 +132,12 @@ public class Player implements Renderable {
     }
   }
 
-  private void setProjectilePosition() {
-    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
-    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
+  private void setHandCenterPosition() {
+    handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
+    handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
   }
 
-  private enum PlayerState {
+  public enum PlayerState {
     ANGLE_SELECTION, POWER_SLIDER, THROWING
   }
 }

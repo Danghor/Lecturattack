@@ -81,12 +81,12 @@ public class Projectile extends RigidBody {
   }
 
   @Override
-  public void update(int delta) {
-    super.update(delta);
+  public void update(float deltaInSeconds) {
+    super.update(deltaInSeconds);
 
     float angularAcceleration = torque / getInertia();
-    angularVelocity += angularAcceleration * delta;
-    rotate(angularVelocity * delta, getCenter());
+    angularVelocity += angularAcceleration * deltaInSeconds;
+    rotate(angularVelocity * deltaInSeconds, getCenter());
 
     torque = 0;
   }
