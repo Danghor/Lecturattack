@@ -16,9 +16,13 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Player implements Renderable {
 
+  //this constant is the translation of the throw angle, so that the angle is tangential
+  public static final double THROW_ANGLE_TRANSLATION = Math.PI / 6;
+  //this constant is the translation of the angle, which is used in calculating the middle of the player hand
+  public static final double PROJECTILE_ANGLE_TRANSLATION = Math.PI / 4;
   public static final float amplifier = 3f;
+  private final float projectileOnHandScale = 54;
   //TODO remove
-  private float strength = 54;
   private Image bodyImage;
   private Image armImage;
   private Projectile projectile;
@@ -103,8 +107,8 @@ public class Player implements Renderable {
       playerState = PlayerState.POWER_SLIDER;
     } else if (playerState == PlayerState.POWER_SLIDER) {
       playerState = PlayerState.THROWING;
-      float velocityX = ((float) Math.cos(Math.toRadians(directionAngle)) * powerSlider.getSelectedForce());
-      float velocityY = ((float) Math.sin(Math.toRadians(directionAngle)) * powerSlider.getSelectedForce());
+      float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
+      float velocityX = -((float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
       projectile.applyForce(velocityX * amplifier, velocityY * amplifier);
       projectileReturned = projectile;
     }
@@ -114,6 +118,8 @@ public class Player implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+
+
     armImage.setRotation(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, armImageX, armImageY);
@@ -125,6 +131,10 @@ public class Player implements Renderable {
     if (playerState == PlayerState.POWER_SLIDER || playerState == PlayerState.THROWING) {
       powerSlider.render(gameContainer, stateBasedGame, graphics);
     }
+    graphics.drawLine(armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
+            armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
+            armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale - (float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale,
+            armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale + (float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale);
   }
 
   public void updatePowerSlider(int delta) {
@@ -134,8 +144,8 @@ public class Player implements Renderable {
   }
 
   private void setHandCenterPosition() {
-    handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderX;
-    handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + Math.PI / 4) * strength) + armShoulderY;
+    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderX;
+    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderY;
   }
 
   public enum PlayerState {
