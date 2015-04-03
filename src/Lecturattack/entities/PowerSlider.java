@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class PowerSlider implements Renderable {
   // powerslide.png has 255px and powserslideLine is 5px width
   private static final int MAX_FORCE = 250;
-  private static final float SCALE = 0.5f;
+  private static final float SPEED_SCALE = 0.1f;
   private float force;
   private boolean movingRight;
   private Image powerslide;
@@ -37,13 +37,13 @@ public class PowerSlider implements Renderable {
   public void update(int delta) {
     
     if (movingRight) {
-      force += SCALE * delta;
+      force += SPEED_SCALE * delta;
       if (force > MAX_FORCE) {
         force = MAX_FORCE;
         movingRight = false;
       }
     } else {
-      force -= SCALE * delta;
+      force -= SPEED_SCALE * delta;
       if (force < 0) {
         force = 0;
         movingRight = true;
