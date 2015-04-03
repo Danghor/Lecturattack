@@ -90,7 +90,6 @@ public class GameState extends BasicGameState implements InputListener {
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-
   }
 
   @Override
@@ -99,7 +98,7 @@ public class GameState extends BasicGameState implements InputListener {
 
     changeThrowingDegreeWithUserInput(gameContainer);
 
-    PhysicsEngine.calculateStep(projectile, null, wind, delta);//TODO real values
+    PhysicsEngine.calculateStep(projectile, level.getTargets(), wind, delta, level.getGroundLevel());
 
     players.get(currentPlayer).updatePowerSlider(delta);
   }

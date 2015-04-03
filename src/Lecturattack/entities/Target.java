@@ -13,7 +13,6 @@ public class Target extends RigidBody {
   private TargetMeta metaObject;
   private int hitCounter;
 
-
   public Target(TargetMeta targetMeta, float x, float y) {
     super(targetMeta, x, y);
     metaObject = targetMeta;

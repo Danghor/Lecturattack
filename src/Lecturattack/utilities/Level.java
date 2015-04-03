@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public class Level {
+  private final float groundLevel;
   private ArrayList<Target> targets;
   private float playerPositionX;
   private float playerPositionY;
@@ -16,6 +17,20 @@ public class Level {
     this.targets = targets;
     this.playerPositionX = playerPositionX;
     this.playerPositionY = playerPositionY;
+
+    float lowestPoint = 0;
+    for (Target target : targets) {
+      float biggestY = target.getBiggestY();
+      if (biggestY > lowestPoint) {
+        lowestPoint = biggestY;
+      }
+    }
+
+    groundLevel = lowestPoint;
+  }
+
+  public float getGroundLevel() {
+    return groundLevel;
   }
 
   public ArrayList<Target> getTargets() {

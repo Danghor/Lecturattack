@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Player implements Renderable {
 
+  public static final float amplifier = 3f;
   //TODO remove
   private float strength = 54;
   private Image bodyImage;
@@ -104,7 +105,7 @@ public class Player implements Renderable {
       playerState = PlayerState.THROWING;
       float velocityX = ((float) Math.cos(Math.toRadians(directionAngle)) * powerSlider.getSelectedForce());
       float velocityY = ((float) Math.sin(Math.toRadians(directionAngle)) * powerSlider.getSelectedForce());
-      projectile.applyForce(velocityX, velocityY);
+      projectile.applyForce(velocityX * amplifier, velocityY * amplifier);
       projectileReturned = projectile;
     }
 

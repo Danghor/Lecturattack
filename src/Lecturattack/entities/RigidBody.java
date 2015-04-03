@@ -98,14 +98,26 @@ public abstract class RigidBody implements Renderable {
     }
   }
 
-  public void update(float deltaInSeconds) {
+  public void update(float scaledDelta) {
     EnhancedVector acceleration;
 
-    acceleration = new EnhancedVector(force.x * (1 / getMass()), force.y * (1 / getMass()));
-    linearVelocity.add(acceleration.scale(deltaInSeconds));
-    move(new EnhancedVector(linearVelocity.x * deltaInSeconds, linearVelocity.y * deltaInSeconds));
+    acceleration = new EnhancedVector(force.x / getMass(), force.y / getMass());
+    linearVelocity.add(acceleration.scale(scaledDelta));
+    move(new EnhancedVector(linearVelocity.x * scaledDelta, linearVelocity.y * scaledDelta));
 
     force = new EnhancedVector(0, 0);
+  }
+
+  public float getBiggestY() {
+    float biggestY = 0f;
+
+    for (EnhancedVector vertex : vertices) {
+      if (vertex.y > biggestY) {
+        biggestY = vertex.y;
+      }
+    }
+
+    return biggestY;
   }
 
   public void setCenterPosition(float x, float y) {
