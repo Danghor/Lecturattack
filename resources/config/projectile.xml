@@ -8,16 +8,16 @@
             <y>0</y>
         </vertice>
         <vertice>
-            <x>58</x>
+            <x>29</x>
             <y>0</y>
         </vertice>
         <vertice>
-            <x>59</x>
-            <y>70</y>
+            <x>29</x>
+            <y>35</y>
         </vertice>
         <vertice>
             <x>0</x>
-            <y>70</y>
+            <y>35</y>
         </vertice>
         <mass>3</mass>
     </projectile>
