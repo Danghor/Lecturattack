@@ -94,13 +94,16 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-    float wind = (float) ((Math.random() * 10) % 5);
 
     changeThrowingDegreeWithUserInput(gameContainer);
 
-    PhysicsEngine.calculateStep(projectile, level.getTargets(), wind, delta, level.getGroundLevel());
+    PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
 
     players.get(currentPlayer).updatePowerSlider(delta);
+  }
+
+  private float getRandomWind() {
+    return (float) ((Math.random() * 10) % 5 - 2.5);
   }
 
   @Override
