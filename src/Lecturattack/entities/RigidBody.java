@@ -3,6 +3,7 @@ package Lecturattack.entities;/*
  */
 
 import Lecturattack.utilities.EnhancedVector;
+import org.newdawn.slick.geom.Polygon;
 
 import java.util.ArrayList;
 
@@ -129,4 +130,18 @@ public abstract class RigidBody implements Renderable {
     move(direction);
   }
 
+  public boolean collidesWith(RigidBody partner) {
+    Polygon polygon1 = new Polygon();
+    Polygon polygon2 = new Polygon();
+
+    for (EnhancedVector vertex : vertices) {
+      polygon1.addPoint(vertex.x, vertex.y);
+    }
+
+    for (EnhancedVector vertex : partner.vertices) {
+      polygon2.addPoint(vertex.x, vertex.y);
+    }
+
+    return polygon1.intersects(polygon2);
+  }
 }
