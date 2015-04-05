@@ -14,6 +14,7 @@ public class PhysicsEngine {
 
   public static void calculateStep(Projectile projectile, ArrayList<Target> targets, float wind, int deltaInMilliseconds, float groundLevel) {
     float scaledDelta = (float) deltaInMilliseconds / 100;
+    EnhancedVector oldPosition;
 
     if (projectile != null) {
       projectile.applyForce(wind, GRAVITATION_ACCELERATION * projectile.getMass());
@@ -23,10 +24,24 @@ public class PhysicsEngine {
 
     for (Target target : targets) {
       target.applyForce(0f, GRAVITATION_ACCELERATION * target.getMass());
-      EnhancedVector oldPosition = new EnhancedVector(target.getCenter().x, target.getCenter().y);
+      oldPosition = target.getCenter();
+
       target.update(scaledDelta);
       moveAboveGround(target, groundLevel);
+
+      boolean intersectionDetected = false;
+      for (Target otherTarget : targets) {
+        if (!target.equals(otherTarget) && target.collidesWith(otherTarget)) {
+          intersectionDetected = true;
+        }
+      }
+
+      if (intersectionDetected) {
+        EnhancedVector newPosition = target.getCenter();
+        target.move((EnhancedVector) oldPosition.sub(newPosition));
+      }
     }
+
   }
 
   private static void moveAboveGround(RigidBody body, float groundLevel) {

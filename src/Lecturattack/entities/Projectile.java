@@ -30,6 +30,7 @@ public class Projectile extends RigidBody {
     this.angularVelocity = angularVelocity;
   }
 
+  //todo: fix this, it goes to 180, 180 is NaN and then it goes down again
   private float getAngle() {
     EnhancedVector vertexA = getCenter();
     EnhancedVector vertexB = vertices.get(0);
