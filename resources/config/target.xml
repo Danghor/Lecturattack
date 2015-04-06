@@ -104,7 +104,7 @@
         <imageIntact>resources/images/studentOk.png</imageIntact>
         <imageSlightlyBroken>resources/images/studentHit.png</imageSlightlyBroken>
         <imageAlmostBroken></imageAlmostBroken>
-        <maxHits>3</maxHits>
+        <maxHits>2</maxHits>
         <targetType>ENEMY</targetType>
         <targetMetaType>ENEMY</targetMetaType>
         <vertice>
