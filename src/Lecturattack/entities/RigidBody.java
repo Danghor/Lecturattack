@@ -3,6 +3,7 @@ package Lecturattack.entities;/*
  */
 
 import Lecturattack.utilities.EnhancedVector;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public abstract class RigidBody implements Renderable {
     this.linearVelocity = linearVelocity;
   }
 
+  /**
+   * Calculates the center point of this object based on it's vertices.
+   *
+   * @return An EnhancedVector object representing the center point.
+   */
   public EnhancedVector getCenter() {
     int n = vertices.size(); //number of vertices on the polygon
     double centerXSum = 0; //the summation part of calculating the x-axis of the center
@@ -70,6 +76,13 @@ public abstract class RigidBody implements Renderable {
     return new EnhancedVector(centerX, centerY);
   }
 
+  //todo: fix, sometimes a negative area is calculated
+
+  /**
+   * This method is only executed once in order to calculate and save the area of this object.
+   *
+   * @return The calculated area of this object based on it's vertices.
+   */
   private double getArea() {
     double area;
 
@@ -80,7 +93,7 @@ public abstract class RigidBody implements Renderable {
       areaSum += (vertices.get(i).x * vertices.get(i + 1).y - vertices.get(i + 1).x * vertices.get(i).y);
     }
 
-    //Xn, Yn is to be assumed the same as X0, Y0
+    //Xn, Yn are to be assumed the same as X0, Y0
     areaSum += (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
 
     area = 0.5 * areaSum;
@@ -143,5 +156,45 @@ public abstract class RigidBody implements Renderable {
     }
 
     return polygon1.intersects(polygon2);
+  }
+
+  /**
+   * @param partner The RigidBody this object is colliding with.
+   *
+   * @return The line of the given RigidBody with which this object intersects.
+   */
+  public Line getFirstIntersectingLine(RigidBody partner) {
+    Line returnedLine = null;
+    Polygon polygon = new Polygon();
+
+    for (EnhancedVector vertex : vertices) {
+      polygon.addPoint(vertex.x, vertex.y);
+    }
+
+    ArrayList<Line> lines = new ArrayList<>();
+
+    //get ArrayList of all Lines of the partner body
+    ArrayList<EnhancedVector> pv = partner.vertices; //for comprehension purposes
+    int partnerSize = pv.size();
+
+    for (int i = 0; i < partnerSize - 1; i++) {
+      lines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
+    }
+
+    lines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
+
+    for (Line line : lines) {
+      if (polygon.intersects(line)) {
+        returnedLine = line;
+        break; //todo: avoid break
+      }
+    }
+
+    if (returnedLine != null) {
+      return returnedLine;
+    } else {
+      throw new IllegalArgumentException("The given partner body does not intersect with this object.");
+    }
+
   }
 }

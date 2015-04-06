@@ -39,6 +39,10 @@ public class GameState extends BasicGameState implements InputListener {
     GameState.stateID = stateID;
   }
 
+  private static float getRandomWind() {
+    return (float) ((Math.random() * 10) % 5 - 2.5);
+  }
+
   public void loadLevel(int level) {
     currentLevel = level;
     // TODO see if this can be done somewhere else
@@ -100,10 +104,6 @@ public class GameState extends BasicGameState implements InputListener {
     PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
 
     players.get(currentPlayer).updatePowerSlider(delta);
-  }
-
-  private float getRandomWind() {
-    return (float) ((Math.random() * 10) % 5 - 2.5);
   }
 
   @Override

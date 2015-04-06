@@ -66,16 +66,18 @@ public class TargetMeta extends MetaObject {
           throw new RuntimeException("Invalid TargetType given.");
       }
 
-      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
+      TargetMeta targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
       targetMeta.mass = targetStandard.getMass();
       instances.put(type, targetMeta);
     }
   }
 
-  private final int maxHits;
+  private final int maxHits; //when the Target is hit as many times as maxHits, the Target is destroyed
   private ArrayList<Image> images;
+  private TargetType type;
 
-  private TargetMeta(ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
+  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
+    this.type = type;
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
@@ -85,13 +87,17 @@ public class TargetMeta extends MetaObject {
     return (TargetMeta) instances.get(type);
   }
 
-  int getMaxHits() {
-    return maxHits;
+  TargetType getType() {
+    return type;
   }
 
   Image getImage(int index) {
     //the IndexOutOfBoundsException should never occur in production
     return images.get(index);
+  }
+
+  int getMaxHits() {
+    return maxHits;
   }
 
   public enum TargetType {

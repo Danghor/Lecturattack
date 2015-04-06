@@ -8,6 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.ArrayList;
+
 /**
  * @author Nick Steyer
  */
@@ -20,6 +22,10 @@ public class Projectile extends RigidBody {
     super(projectileMeta, x, y);
     metaObject = projectileMeta;
     torque = 0f;
+  }
+
+  public ArrayList<TargetMeta.TargetType> getDestroys() {
+    return metaObject.getDestroys();
   }
 
   public float getAngularVelocity() {

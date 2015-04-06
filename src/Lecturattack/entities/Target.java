@@ -19,13 +19,19 @@ public class Target extends RigidBody {
     hitCounter = 0;
   }
 
-  void hit() {
+  public TargetMeta.TargetType getType() {
+    return metaObject.getType();
+  }
+
+  //todo: hit with a specific projectile to avoid determining whether it can be hit in the physics engine
+  //just hit it here and then determine here if it gets damaged or not
+  public void hit() {
     if (hitCounter < metaObject.getMaxHits()) {
       hitCounter++;
     }
   }
 
-  boolean isDestroyed() {
+  public boolean isDestroyed() {
     return hitCounter >= metaObject.getMaxHits(); //>= instead of == just to be sure
   }
 
@@ -36,6 +42,8 @@ public class Target extends RigidBody {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    graphics.drawImage(metaObject.getImage(hitCounter), vertices.get(0).x, vertices.get(0).y);
+    if (!isDestroyed()) {
+      graphics.drawImage(metaObject.getImage(hitCounter), vertices.get(0).x, vertices.get(0).y);
+    }
   }
 }

@@ -75,6 +75,10 @@ public class ProjectileMeta extends MetaObject {
     return (ProjectileMeta) instances.get(type);
   }
 
+  ArrayList<TargetMeta.TargetType> getDestroys() {
+    return destroys;
+  }
+
   ArrayList<TargetMeta.TargetType> getDestroyableTargetTypes() {
     return destroys;
   }
