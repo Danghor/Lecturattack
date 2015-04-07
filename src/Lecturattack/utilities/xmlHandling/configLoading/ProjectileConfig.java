@@ -10,6 +10,8 @@ import java.util.List;
  */
 @XmlRootElement(name = "projectiles")
 public class ProjectileConfig {
+  //this class is a wrapping class, which holds multiple ProjectileStandards,
+  //this is needed because JAXP can only return a singe object when unmarshalling, not a list of objects
   private List<ProjectileStandard> projectile = new ArrayList<>();
 
   public ProjectileConfig() {

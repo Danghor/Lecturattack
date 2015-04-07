@@ -17,10 +17,12 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Player implements Renderable {
 
   //this constant is the translation of the throw angle, so that the angle is tangential
-  public static final double THROW_ANGLE_TRANSLATION = Math.PI / 6;
+  private static final double THROW_ANGLE_TRANSLATION = Math.PI / 6;
   //this constant is the translation of the angle, which is used in calculating the middle of the player hand
-  public static final double PROJECTILE_ANGLE_TRANSLATION =Math.PI/4;
-  private final float projectileOnHandScale = 54;
+  private static final double PROJECTILE_ANGLE_TRANSLATION = Math.PI / 4;
+  //this constant specifies a scale, it is scaling up the value of the trigonometric calculation, for the projectile in the hand of the player,
+  //this is needed, because these calculations are for a circle with a radius of 1, in this case the radius is bigger so it must be scaled
+  private static final float projectileOnHandScale = 54;
   //TODO remove
   private Image bodyImage;
   private Image armImage;
@@ -129,9 +131,9 @@ public class Player implements Renderable {
     if (playerState == PlayerState.POWER_SLIDER || playerState == PlayerState.THROWING) {
       powerSlider.render(gameContainer, stateBasedGame, graphics);
     }
-    graphics.drawLine(armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) +PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
-            armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) +PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
-            armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) +PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale - (float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale,
+    graphics.drawLine(armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
+            armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
+            armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale - (float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale,
             armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale + (float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale);
   }
 
@@ -142,7 +144,7 @@ public class Player implements Renderable {
   }
 
   private void setProjectilePosition() {
-    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) +PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderX;
-    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) +PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderY;
+    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderX;
+    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderY;
   }
 }

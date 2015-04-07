@@ -8,6 +8,7 @@ import java.util.List;
  * @author Tim Adamek
  */
 public class ProjectileStandard {
+  //the objects of this class hold the information about the ProjectileMetaObjects, which is read from the configs
   private String image;
   private String destroys;
   private List<XmlVertex> vertices;

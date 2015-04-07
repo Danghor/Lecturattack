@@ -10,6 +10,8 @@ import java.util.List;
  */
 @XmlRootElement(name = "players")
 public class PlayerConfig {
+  //this class is a wrapping class, which holds multiple Players,
+  //this is needed because JAXP can only return a singe object when unmarshalling, not a list of objects
   private List<PlayerStandard> players = new ArrayList<>();
 
   public PlayerConfig() {

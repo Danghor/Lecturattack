@@ -10,13 +10,15 @@ import java.util.List;
  */
 @XmlRootElement(name = "targets")
 public class TargetConfig {
+  //this class is a wrapping class, which holds multiple TargetStandards,
+  //this is needed because JAXP can only return a singe object when unmarshalling, not a list of objects
   private List<TargetStandard> target = new ArrayList<TargetStandard>() {
   };
 
   public TargetConfig() {
   }
 
-  public TargetConfig(int id, List<TargetStandard> target) {
+  public TargetConfig(List<TargetStandard> target) {
     this.target = target;
   }
 
