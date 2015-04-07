@@ -24,6 +24,7 @@ public class FileHandler {
 
   /**
    * This method loads the target.xml as a config for the TargetMeta instances
+   *
    * @return the loaded configs for the Targets
    */
   public static List<TargetStandard> loadTargetConfig() {
@@ -39,8 +40,10 @@ public class FileHandler {
     }
     return targets.getTargetStandards();
   }
+
   /**
    * This method loads the target.xml as a config for the ProjectileMeta instances
+   *
    * @return the loaded configs for the Projectiles
    */
   public static List<ProjectileStandard> loadProjectileStandards() {
@@ -59,7 +62,9 @@ public class FileHandler {
 
   /**
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
+   *
    * @param levelNumber the level which should be loaded
+   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    * @throws IOException
@@ -85,6 +90,7 @@ public class FileHandler {
 
   /**
    * Loads the configs for the player
+   *
    * @return the loaded players objects which resemble the xml
    */
   public static List<PlayerStandard> getPlayerData() {
