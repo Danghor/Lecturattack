@@ -56,8 +56,8 @@ public class ProjectileMeta extends MetaObject {
 
       outline = projectileStandard.getVerticesAsFloats();
       ProjectileMeta projectileMeta = new ProjectileMeta(outline, image, destroys);
-      projectileMeta.mass=projectileStandard.getMass();
-      instances.put(type,projectileMeta );
+      projectileMeta.mass = projectileStandard.getMass();
+      instances.put(type, projectileMeta);
 
     }
   }
@@ -73,6 +73,10 @@ public class ProjectileMeta extends MetaObject {
 
   public static ProjectileMeta getInstance(ProjectileType type) {
     return (ProjectileMeta) instances.get(type);
+  }
+
+  ArrayList<TargetMeta.TargetType> getDestroys() {
+    return destroys;
   }
 
   ArrayList<TargetMeta.TargetType> getDestroyableTargetTypes() {

@@ -61,15 +61,19 @@ public class PlayerStandard {
     return new Image(imageBody);
   }
 
-  //TODO see if this is really a good idea because there might be a lot of dependencys
+  //TODO see if this is really a good idea because there might be a lot of dependencies
   public ProjectileMeta getProjectileMeta() {
-    ProjectileMeta projectileMeta = null;//If the wrong projectie is specifed in playerStandart ProjectileMeta.getInstance() will also return null
-    if (projectile.equals("ROBOT")) {
-      projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.ROBOT);
-    } else if (projectile.equals("EXAM")) {
-      projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.EXAM);
-    } else if (projectile.equals("POINTER")) {
-      projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.POINTER);
+    ProjectileMeta projectileMeta = null;//If the wrong projectile is specified in playerStandard ProjectileMeta.getInstance() will also return null
+    switch (projectile) {
+      case "ROBOT":
+        projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.ROBOT);
+        break;
+      case "EXAM":
+        projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.EXAM);
+        break;
+      case "POINTER":
+        projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.POINTER);
+        break;
     }
     return projectileMeta;
   }
