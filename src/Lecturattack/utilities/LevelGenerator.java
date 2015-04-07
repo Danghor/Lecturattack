@@ -17,7 +17,9 @@ import java.util.List;
 public class LevelGenerator {
   /**
    * Creates a level for the given LevelElements
+   *
    * @param levelElements all elements in the level, these objects are the loaded XMLobjects
+   *
    * @return a Level object, which holds the information about the entire level
    * @throws SlickException
    */
