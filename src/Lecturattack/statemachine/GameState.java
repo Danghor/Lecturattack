@@ -39,15 +39,17 @@ public class GameState extends BasicGameState implements InputListener {
     GameState.stateID = stateID;
   }
 
+  private static float getRandomWind() {
+    return (float) ((Math.random() * 10) % 5 - 2.5);
+  }
+
   public void loadLevel(int level) {
     currentLevel = level;
     // TODO see if this can be done somewhere else
     try {
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
-    } catch (SlickException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (SlickException | IOException e) {
       e.printStackTrace();
     }
     for (Player player : players) {
@@ -92,19 +94,15 @@ public class GameState extends BasicGameState implements InputListener {
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-
   }
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-    float wind = (float) ((Math.random() * 10) % 5);
 
-    processUserInput(gameContainer);
+    changeThrowingDegreeWithUserInput(gameContainer);
 
-    PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
-    if (projectile != null) {
-      projectile.update(delta);
-    }
+    PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
+
     players.get(currentPlayer).updatePowerSlider(delta);
   }
 
@@ -121,11 +119,23 @@ public class GameState extends BasicGameState implements InputListener {
         stateBasedGame.enterState(Lecturattack.PAUSESTATE);
         break;
       case Input.KEY_UP:
-        selectNextPlayer();
+        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectNextPlayer();
+        }
         break;
       case Input.KEY_DOWN:
-        selectPreviousPlayer();
+        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectPreviousPlayer();
+        }
         break;
+    }
+  }
+
+  private void changeThrowingDegreeWithUserInput(GameContainer gameContainer) {
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
+      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
     }
   }
 
@@ -152,13 +162,4 @@ public class GameState extends BasicGameState implements InputListener {
 
     players.get(currentPlayer).setAngle(previousAngle);
   }
-
-  private void processUserInput(GameContainer gameContainer) {
-    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);// TODO constants for angle
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
-    }
-  }
-
 }

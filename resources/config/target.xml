@@ -12,16 +12,16 @@
             <y>0</y>
         </vertice>
         <vertice>
-            <x>85</x>
+            <x>43</x>
             <y>0</y>
         </vertice>
         <vertice>
-            <x>85</x>
-            <y>197</y>
+            <x>43</x>
+            <y>99</y>
         </vertice>
         <vertice>
             <x>0</x>
-            <y>197</y>
+            <y>99</y>
         </vertice>
         <mass>10</mass>
     </target>
@@ -38,14 +38,14 @@
         </vertice>
         <vertice>
             <x>0</x>
-            <y>85</y>
+            <y>43</y>
         </vertice>
         <vertice>
-            <x>197</x>
-            <y>85</y>
+            <x>99</x>
+            <y>43</y>
         </vertice>
         <vertice>
-            <x>197</x>
+            <x>99</x>
             <y>0</y>
         </vertice>
         <mass>10</mass>
@@ -62,16 +62,16 @@
             <y>0</y>
         </vertice>
         <vertice>
-            <x>85</x>
+            <x>43</x>
             <y>0</y>
         </vertice>
         <vertice>
-            <x>85</x>
-            <y>197</y>
+            <x>43</x>
+            <y>99</y>
         </vertice>
         <vertice>
             <x>0</x>
-            <y>197</y>
+            <y>99</y>
         </vertice>
         <mass>20</mass>
     </target>
@@ -88,14 +88,14 @@
         </vertice>
         <vertice>
             <x>0</x>
-            <y>85</y>
+            <y>43</y>
         </vertice>
         <vertice>
-            <x>197</x>
-            <y>85</y>
+            <x>99</x>
+            <y>43</y>
         </vertice>
         <vertice>
-            <x>197</x>
+            <x>99</x>
             <y>0</y>
         </vertice>
         <mass>20</mass>
@@ -104,7 +104,7 @@
         <imageIntact>resources/images/studentOk.png</imageIntact>
         <imageSlightlyBroken>resources/images/studentHit.png</imageSlightlyBroken>
         <imageAlmostBroken></imageAlmostBroken>
-        <maxHits>3</maxHits>
+        <maxHits>2</maxHits>
         <targetType>ENEMY</targetType>
         <targetMetaType>ENEMY</targetMetaType>
         <vertice>
@@ -112,18 +112,17 @@
             <y>0</y>
         </vertice>
         <vertice>
-            <x>151</x>
+            <x>66</x>
             <y>0</y>
         </vertice>
         <vertice>
-            <x>151</x>
-            <y>191</y>
+            <x>66</x>
+            <y>95</y>
         </vertice>
         <vertice>
             <x>0</x>
-            <y>191</y>
+            <y>95</y>
         </vertice>
-        <mass>80</mass>
+        <mass>60</mass>
     </target>
-    <!-- TODO maybe it needs the vertices? -->
 </targets>

@@ -47,6 +47,17 @@ public class EnhancedVector extends Vector2f {
     this.y = (float) newY;
   }
 
+  /**
+   * Returns the angle between this object and the given EnhancedVector in degrees.
+   *
+   * @param partner The EnhancedVector this object is intersecting with.
+   *
+   * @return The angle between this object and the given partner vector.
+   */
+  public float getAngle(EnhancedVector partner) {
+    return (float) Math.toDegrees(Math.atan2(partner.y - this.y, partner.x - this.x));
+  }
+
   public EnhancedVector getScaled(float factor) {
     return (EnhancedVector) super.scale(factor);
   }
