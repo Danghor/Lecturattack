@@ -17,12 +17,16 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Player implements Renderable {
 
   //this constant is the translation of the throw angle, so that the angle is tangential
-  public static final double THROW_ANGLE_TRANSLATION = Math.PI / 6;
+  private static final double THROW_ANGLE_TRANSLATION = Math.PI / 6;
+
   //this constant is the translation of the angle, which is used in calculating the middle of the player hand
-  public static final double PROJECTILE_ANGLE_TRANSLATION = Math.PI / 4;
+  private static final double PROJECTILE_ANGLE_TRANSLATION = Math.PI / 4;
+
+  //this constant specifies a scale, it is scaling up the value of the trigonometric calculation, for the projectile in the hand of the player,
+  //this is needed, because these calculations are for a circle with a radius of 1, in this case the radius is bigger so it must be scaled
+  private static final float projectileOnHandScale = 54;
+  //todo  comment on use of amplifier
   public static final float amplifier = 3f;
-  private final float projectileOnHandScale = 54;
-  //TODO remove
   private Image bodyImage;
   private Image armImage;
   private Projectile projectile;
