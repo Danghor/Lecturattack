@@ -15,6 +15,8 @@ import java.util.List;
  */
 @XmlRootElement(name = "LevelData")
 public class LevelData {
+  //this class is a wrapping class, which holds multiple LevelObjects,
+  //this is needed because JAXP can only return a singe object when unmarshalling, not a list of objects
   private int id;
   private List<LevelElement> levelElements = new ArrayList<LevelElement>() {
   };

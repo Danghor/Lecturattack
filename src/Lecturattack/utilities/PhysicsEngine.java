@@ -89,6 +89,7 @@ public class PhysicsEngine {
       if (intersectionDetected) {
         EnhancedVector newPosition = target.getCenter();
         target.move((EnhancedVector) oldPosition.sub(newPosition));
+        target.setLinearVelocity(new EnhancedVector(0f, 0f));
       }
 
     }
@@ -104,6 +105,7 @@ public class PhysicsEngine {
   private static void moveAboveGround(RigidBody body, float groundLevel) {
     if (body.getBiggestY() >= groundLevel) {
       body.move(new EnhancedVector(0f, groundLevel - body.getBiggestY()));
+      body.setLinearVelocity(new EnhancedVector(0f, 0f));
     }
   }
 }

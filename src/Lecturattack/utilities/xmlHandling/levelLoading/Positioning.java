@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "positioningType")
 @XmlEnum
 public enum Positioning {
-
+  //this is for loading the positioning of the targets in the level elements
   VERTICAL,
   HORIZONTAL;
 

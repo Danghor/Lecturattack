@@ -8,6 +8,7 @@ import java.util.List;
  * @author Tim Adamek
  */
 public class TargetStandard {
+  //the objects of this class hold the information about the TargetMetaObjects, which is read from the configs
   private String imageIntact;
   private String imageSlightlyBroken;
   private String imageAlmostBroken;

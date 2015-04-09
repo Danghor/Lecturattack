@@ -40,6 +40,7 @@ public class GameState extends BasicGameState implements InputListener {
     GameState.stateID = stateID;
   }
 
+  //todo: save wind for current level and only refresh when new level is loaded
   private static float getRandomWind() {
     return (float) ((Math.random() * 10) % 5 - 2.5);
   }
