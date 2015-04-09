@@ -8,6 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.ArrayList;
+
 /**
  * @author Nick Steyer
  */
@@ -22,6 +24,10 @@ public class Projectile extends RigidBody {
     torque = 0f;
   }
 
+  public ArrayList<TargetMeta.TargetType> getDestroys() {
+    return metaObject.getDestroys();
+  }
+
   public float getAngularVelocity() {
     return angularVelocity;
   }
@@ -30,6 +36,7 @@ public class Projectile extends RigidBody {
     this.angularVelocity = angularVelocity;
   }
 
+  //todo: fix this, it goes to 180, 180 is NaN and then it goes down again
   private float getAngle() {
     EnhancedVector vertexA = getCenter();
     EnhancedVector vertexB = vertices.get(0);
@@ -81,12 +88,12 @@ public class Projectile extends RigidBody {
   }
 
   @Override
-  public void update(float delta) {
-    super.update(delta);
+  public void update(float scaledDelta) {
+    super.update(scaledDelta);
 
     float angularAcceleration = torque / getInertia();
-    angularVelocity += angularAcceleration * delta;
-    rotate(angularVelocity * delta, getCenter());
+    angularVelocity += angularAcceleration * scaledDelta;
+    rotate(angularVelocity * scaledDelta, getCenter());
 
     torque = 0;
   }

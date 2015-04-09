@@ -32,18 +32,18 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
     menuButton = new AnimatedButton[7];
-    menuButton[0] = new AnimatedButton(245, 50, FileHandler.loadImage("level1_down"), FileHandler.loadImage("level1"));
-    menuButton[1] = new AnimatedButton(495, 50, FileHandler.loadImage("level2_down"), FileHandler.loadImage("level2"));
-    menuButton[2] = new AnimatedButton(745, 50, FileHandler.loadImage("level3_down"), FileHandler.loadImage("level3"));
-    menuButton[3] = new AnimatedButton(245, 300, FileHandler.loadImage("level4_down"), FileHandler.loadImage("level4"));
-    menuButton[4] = new AnimatedButton(495, 300, FileHandler.loadImage("level5_down"), FileHandler.loadImage("level5"));
-    menuButton[5] = new AnimatedButton(745, 300, FileHandler.loadImage("level6_down"), FileHandler.loadImage("level6"));
-    menuButton[6] = new AnimatedButton(245, 600, FileHandler.loadImage("back_down"), FileHandler.loadImage("back"));
+    menuButton[0] = new AnimatedButton(150, 150, FileHandler.loadImage("level1_down"), FileHandler.loadImage("level1"));
+    menuButton[1] = new AnimatedButton(489, 150, FileHandler.loadImage("level2_down"), FileHandler.loadImage("level2"));
+    menuButton[2] = new AnimatedButton(828, 150, FileHandler.loadImage("level3_down"), FileHandler.loadImage("level3"));
+    menuButton[3] = new AnimatedButton(150, 350, FileHandler.loadImage("level4_down"), FileHandler.loadImage("level4"));
+    menuButton[4] = new AnimatedButton(489, 350, FileHandler.loadImage("level5_down"), FileHandler.loadImage("level5"));
+    menuButton[5] = new AnimatedButton(828, 350, FileHandler.loadImage("level6_down"), FileHandler.loadImage("level6"));
+    menuButton[6] = new AnimatedButton(150, 600, FileHandler.loadImage("back_down"), FileHandler.loadImage("back"));
   }
 
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    currentSelection = 0;
+    currentSelection = 6;
   }
 
   @Override
@@ -78,8 +78,8 @@ public class LevelSelectState extends BasicGameState implements InputListener {
       }
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection >= 0 && currentSelection <= 5) {
-        // TODO: give the GameState the selected level
-        stateBasedGame.enterState(2);
+        ((GameState) stateBasedGame.getState(GameState.stateID)).loadLevel(currentSelection + 1);
+        stateBasedGame.enterState(GameState.stateID);
       } else if (currentSelection == 6) {
         stateBasedGame.enterState(0);
       }

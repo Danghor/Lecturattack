@@ -1,6 +1,4 @@
-package Lecturattack.statemachine;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.statemachine;
 
 import Lecturattack.entities.*;
 import Lecturattack.utilities.FileHandler;
@@ -13,6 +11,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,8 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private static int stateID;
+  private static final int DEGREE_ARM_MOVE = 1;
+  public static int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
@@ -39,14 +39,25 @@ public class GameState extends BasicGameState implements InputListener {
     GameState.stateID = stateID;
   }
 
+  //todo: save wind for current level and only refresh when new level is loaded
+  private static float getRandomWind() {
+    return (float) ((Math.random() * 10) % 5 - 2.5);
+  }
+
   public void loadLevel(int level) {
-    //TODO see if this can be done somwhere else
-    try {//TODO see if exeption can be dealt with somewhere else
+    currentLevel = level;
+    // TODO see if this can be done somewhere else
+    try {
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
-    } catch (Exception e) {
+    } catch (SlickException | IOException e) {
       e.printStackTrace();
     }
+    for (Player player : players) {
+      player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
+      player.reset();
+    }
+    projectile = null;
   }
 
   private void resetLevel() {
@@ -61,65 +72,95 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-
     background = FileHandler.loadImage("background");
-
     players = new ArrayList<>();
-
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
-      players.add(new Player(meta));
+      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta()));
     }
-
     currentPlayer = 0;
-    currentLevel = 1; //default
-    resetLevel();
+    currentLevel = 1; // default
+
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
-
     players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
-
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
-
-    //render projectile here, if the player doesn't have it
+    // render projectile here, if the player doesn't have it
+    // the projectile is only not null if it was returned by the player
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-
   }
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-    float wind = (float) ((Math.random() * 10) % 5);
 
-    processUserInput(gameContainer);
+    changeThrowingDegreeWithUserInput(gameContainer);
 
-    PhysicsEngine.calculateStep(null, null, wind, delta);//TODO real values
+    PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
+
+    players.get(currentPlayer).updatePowerSlider(delta);
   }
-
 
   @Override
   public void keyPressed(int key, char c) {
-    if (key == Input.KEY_ESCAPE) {
-      stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+    switch (key) {
+      case Input.KEY_SPACE:
+        Projectile checkProjectile = players.get(currentPlayer).throwProjectile();
+        if (checkProjectile != null) {
+          this.projectile = checkProjectile;
+        }
+        break;
+      case Input.KEY_ESCAPE:
+        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+        break;
+      case Input.KEY_UP:
+        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectNextPlayer();
+        }
+        break;
+      case Input.KEY_DOWN:
+        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectPreviousPlayer();
+        }
+        break;
     }
   }
 
-  private void processUserInput(GameContainer gameContainer) {
+  private void changeThrowingDegreeWithUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(1);//TODO constants for angle
+      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      players.get(currentPlayer).moveArm(-1);
-      //todo: I hope that the code below is just for testing o.O
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
-      projectile = players.get(currentPlayer).throwProjectile(1);
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
-      projectile = players.get(currentPlayer).throwProjectile(-1);
+      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
     }
+  }
+
+  private void selectNextPlayer() {
+    float previousAngle = players.get(currentPlayer).getAngle();
+
+    if (currentPlayer >= players.size() - 1) {
+      currentPlayer = 0;
+    } else {
+      currentPlayer++;
+    }
+
+    players.get(currentPlayer).setAngle(previousAngle);
+  }
+
+  private void selectPreviousPlayer() {
+    float previousAngle = players.get(currentPlayer).getAngle();
+
+    if (currentPlayer <= 0) {
+      currentPlayer = players.size() - 1;
+    } else {
+      currentPlayer--;
+    }
+
+    players.get(currentPlayer).setAngle(previousAngle);
   }
 }

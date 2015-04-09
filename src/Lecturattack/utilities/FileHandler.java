@@ -1,6 +1,4 @@
-package Lecturattack.utilities;/*
- * Copyright (c) 2015.
- */
+package Lecturattack.utilities;
 
 import Lecturattack.utilities.xmlHandling.configLoading.*;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
@@ -23,6 +21,12 @@ public class FileHandler {
   private static final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; //TODO add LevelFiles
 
+
+  /**
+   * This method loads the target.xml as a config for the TargetMeta instances
+   *
+   * @return the loaded configs for the Targets
+   */
   public static List<TargetStandard> loadTargetConfig() {
     File file = new File("resources/config/target.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
@@ -37,6 +41,11 @@ public class FileHandler {
     return targets.getTargetStandards();
   }
 
+  /**
+   * This method loads the target.xml as a config for the ProjectileMeta instances
+   *
+   * @return the loaded configs for the Projectiles
+   */
   public static List<ProjectileStandard> loadProjectileStandards() {
     File file = new File("resources/config/projectile.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
@@ -51,6 +60,15 @@ public class FileHandler {
     return projectiles.getProjectileStandards();
   }
 
+  /**
+   * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
+   *
+   * @param levelNumber the level which should be loaded
+   *
+   * @return the elements in the level
+   * @throws IllegalArgumentException
+   * @throws IOException
+   */
   public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
@@ -70,7 +88,11 @@ public class FileHandler {
     return level.getLevelElements();
   }
 
-
+  /**
+   * Loads the configs for the player
+   *
+   * @return the loaded players objects which resemble the xml
+   */
   public static List<PlayerStandard> getPlayerData() {
     File file = new File("resources/config/player.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
@@ -85,7 +107,6 @@ public class FileHandler {
     return players.getPlayerStandards();
   }
 
-
   public static int getLastLevelNumber() {
     return 0;
   }
@@ -93,7 +114,6 @@ public class FileHandler {
   public static void setLastLevelNumber(int level) {
     //todo: alles in %APPDATA%
   }
-
 
   public static Image loadImage(String fileName) {
     Image image = null;

@@ -8,6 +8,7 @@ import java.util.List;
  * @author Tim Adamek
  */
 public class TargetStandard {
+  //the objects of this class hold the information about the TargetMetaObjects, which is read from the configs
   private String imageIntact;
   private String imageSlightlyBroken;
   private String imageAlmostBroken;
@@ -15,6 +16,16 @@ public class TargetStandard {
   private String targetType;
   private String positioning;
   private List<XmlVertex> vertices;
+  private float mass;
+
+  @XmlElement
+  public float getMass() {
+    return mass;
+  }
+
+  public void setMass(float mass) {
+    this.mass = mass;
+  }
 
   @XmlElement
   public String getImageIntact() {

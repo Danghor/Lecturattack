@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Tim Adamek
  */
 public class LevelElement {
+  //each object of this class represent one element (player, target) which is loaded from the xml
   private float positionX;
   private float positionY;
   private XmlObjectType type;

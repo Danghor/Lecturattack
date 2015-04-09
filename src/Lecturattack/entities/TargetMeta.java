@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Nick Steyer, Tim Adamek
+ * @author Nick Steyer
+ * @author Tim Adamek
  */
 public class TargetMeta extends MetaObject {
   static {
@@ -28,6 +29,7 @@ public class TargetMeta extends MetaObject {
         //the images are not saved in a list because they are read from a config file
         //and having them in a list in a config file would be less readable (because the tag names would be the same)
         //TODO maybe other way of doing this
+
         if (!targetStandard.getImageIntact().equals("")) {
           images.add(new Image(targetStandard.getImageIntact()));
         }
@@ -64,15 +66,18 @@ public class TargetMeta extends MetaObject {
           throw new RuntimeException("Invalid TargetType given.");
       }
 
-      TargetMeta targetMeta = new TargetMeta(images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
+      TargetMeta targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
+      targetMeta.mass = targetStandard.getMass();
       instances.put(type, targetMeta);
     }
   }
 
-  private final int maxHits;
+  private final int maxHits; //when the Target is hit as many times as maxHits, the Target is destroyed
   private ArrayList<Image> images;
+  private TargetType type;
 
-  private TargetMeta(ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
+  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
+    this.type = type;
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
@@ -82,14 +87,17 @@ public class TargetMeta extends MetaObject {
     return (TargetMeta) instances.get(type);
   }
 
-  int getMaxHits() {
-    return maxHits;
+  TargetType getType() {
+    return type;
   }
 
   Image getImage(int index) {
-    //no need for exception handling, since IndexOutOfBoundsException is already implemented
-    //this exception should never occur in production
+    //the IndexOutOfBoundsException should never occur in production
     return images.get(index);
+  }
+
+  int getMaxHits() {
+    return maxHits;
   }
 
   public enum TargetType {
