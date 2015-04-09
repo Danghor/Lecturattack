@@ -109,6 +109,14 @@
         <targetMetaType>ENEMY</targetMetaType>
         <vertice>
             <x>0</x>
+            <y>7</y>
+        </vertice>
+        <vertice>
+            <x>40</x>
+            <y>7</y>
+        </vertice>
+        <vertice>
+            <x>40</x>
             <y>0</y>
         </vertice>
         <vertice>
@@ -117,6 +125,14 @@
         </vertice>
         <vertice>
             <x>66</x>
+            <y>30</y>
+        </vertice>
+        <vertice>
+            <x>42</x>
+            <y>30</y>
+        </vertice>
+        <vertice>
+            <x>42</x>
             <y>95</y>
         </vertice>
         <vertice>
