@@ -32,9 +32,10 @@ public class GameState extends BasicGameState implements InputListener {
   private Level level;
   private Projectile projectile;
   private Flag flag;
-  private InformationField score;
+  private InformationField scoreField;
   private InformationField playerName;
   private Image background;
+  private int score;
 
   public GameState(int stateID) {
     GameState.stateID = stateID;
@@ -60,7 +61,11 @@ public class GameState extends BasicGameState implements InputListener {
     }
     projectile = null;
     
-    score = new InformationField(30, 400, "Score: ");
+    scoreField = new InformationField(1000, 25, "Score: ");
+    // set a starting score
+    score = 100;
+    playerName = new InformationField(1000, 0, "Dozent: ");
+    playerName.setDynamicText(players.get(currentPlayer).getName());
   }
 
   private void resetLevel() {
@@ -79,7 +84,7 @@ public class GameState extends BasicGameState implements InputListener {
     players = new ArrayList<>();
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
-      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta()));
+      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
     currentPlayer = 0;
     currentLevel = 1; // default
@@ -99,7 +104,8 @@ public class GameState extends BasicGameState implements InputListener {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
     
-    score.render(gameContainer, stateBasedGame, graphics);
+    scoreField.render(gameContainer, stateBasedGame, graphics);
+    playerName.render(gameContainer, stateBasedGame, graphics);
     
   }
 
@@ -108,7 +114,8 @@ public class GameState extends BasicGameState implements InputListener {
 
     changeThrowingDegreeWithUserInput(gameContainer);
 
-    PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
+    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
+    scoreField.setDynamicText(Integer.toString(score));
 
     players.get(currentPlayer).updatePowerSlider(delta);
   }
@@ -120,6 +127,7 @@ public class GameState extends BasicGameState implements InputListener {
         Projectile checkProjectile = players.get(currentPlayer).throwProjectile();
         if (checkProjectile != null) {
           this.projectile = checkProjectile;
+          score -= 10;
         }
         break;
       case Input.KEY_ESCAPE:
@@ -156,6 +164,7 @@ public class GameState extends BasicGameState implements InputListener {
     }
 
     players.get(currentPlayer).setAngle(previousAngle);
+    playerName.setDynamicText(players.get(currentPlayer).getName());
   }
 
   private void selectPreviousPlayer() {
@@ -168,5 +177,6 @@ public class GameState extends BasicGameState implements InputListener {
     }
 
     players.get(currentPlayer).setAngle(previousAngle);
+    playerName.setDynamicText(players.get(currentPlayer).getName());
   }
 }
