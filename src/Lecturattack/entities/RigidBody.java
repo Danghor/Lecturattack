@@ -2,6 +2,7 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.statemachine.Lecturattack;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
@@ -165,28 +166,66 @@ public abstract class RigidBody implements Renderable {
    */
   public Line getFirstIntersectingLine(RigidBody partner) {
     Line returnedLine = null;
-    Polygon polygon = new Polygon();
+    Line movingLine; //the line pointing in the direction of movement (using linearVelocity), starts at the center point of the body
 
-    for (EnhancedVector vertex : vertices) {
-      polygon.addPoint(vertex.x, vertex.y);
+    float movingLineStartX = getCenter().x;
+    float movingLineStartY = getCenter().y;
+    float movingLineEndX;
+    float movingLineEndY;
+
+    if (linearVelocity.x < 0) {
+      movingLineEndX = 0;
+    } else {
+      movingLineEndX = Lecturattack.WIDTH;
     }
 
-    ArrayList<Line> lines = new ArrayList<>();
+    if (linearVelocity.y < 0) {
+      movingLineEndY = 0;
+    } else {
+      movingLineEndY = Lecturattack.HEIGHT;
+    }
+
+    movingLine = new Line(movingLineStartX, movingLineStartY, movingLineEndX, movingLineEndY);
+
+    ArrayList<Line> partnerLines = new ArrayList<>();
 
     //get ArrayList of all Lines of the partner body
     ArrayList<EnhancedVector> pv = partner.vertices; //for comprehension purposes
     int partnerSize = pv.size();
 
     for (int i = 0; i < partnerSize - 1; i++) {
-      lines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
+      partnerLines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
     }
 
-    lines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
+    partnerLines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
 
-    for (Line line : lines) {
-      if (polygon.intersects(line)) {
-        returnedLine = line;
-        break; //todo: avoid break
+    //minimum distance to the obstacle on moving direction; default value: maximum distance
+    float shortestFoundDistance = (float) Math.sqrt(Math.pow(Lecturattack.HEIGHT, 2) + Math.pow(Lecturattack.WIDTH, 2));
+    float x1 = movingLine.getX1();
+    float y1 = movingLine.getY1();
+    float x2 = movingLine.getX2();
+    float y2 = movingLine.getY2();
+    float x3;
+    float y3;
+    float x4;
+    float y4;
+    for (Line line : partnerLines) {
+      if (movingLine.intersects(line)) {
+        x3 = line.getX1();
+        y3 = line.getY1();
+        x4 = line.getX2();
+        y4 = line.getY2();
+
+        float denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        EnhancedVector intersection = new EnhancedVector(((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denominator, ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denominator);
+        EnhancedVector distanceIntersectionCenter = (EnhancedVector) intersection.sub(getCenter());
+
+        //distanceIntersectionCenter is now the distance between the center of the RigidBody and the intersection of the moving line and the line of the partner body
+
+        if (distanceIntersectionCenter.length() < shortestFoundDistance) {
+          shortestFoundDistance = distanceIntersectionCenter.length();
+          returnedLine = line;
+        }
       }
     }
 
@@ -197,4 +236,5 @@ public abstract class RigidBody implements Renderable {
     }
 
   }
+
 }

@@ -47,14 +47,13 @@ public class PhysicsEngine {
 
         //todo: rebounce vv
         Line lineCollidedWith = projectile.getFirstIntersectingLine(targetCollidedWith);
-        EnhancedVector targetLine = new EnhancedVector(lineCollidedWith.getX2() - lineCollidedWith.getX1(), lineCollidedWith.getY2() - lineCollidedWith.getY1());
+        EnhancedVector vectorCollidedWith = new EnhancedVector(lineCollidedWith.getX2() - lineCollidedWith.getX1(), lineCollidedWith.getY2() - lineCollidedWith.getY1());
 
-        float intersectionAngle = projectile.getLinearVelocity().getAngle(targetLine);
+        float intersectionAngle = projectile.getLinearVelocity().getAngle(vectorCollidedWith);
         if (intersectionAngle > 90) {
           intersectionAngle = 180 - intersectionAngle;
         }
       }
-
     }
 
     //----------target operations----------
@@ -105,7 +104,7 @@ public class PhysicsEngine {
   private static void moveAboveGround(RigidBody body, float groundLevel) {
     if (body.getBiggestY() >= groundLevel) {
       body.move(new EnhancedVector(0f, groundLevel - body.getBiggestY()));
-      body.setLinearVelocity(new EnhancedVector(0f, 0f));
+      body.setLinearVelocity(new EnhancedVector(body.getLinearVelocity().x, 0f));
     }
   }
 }
