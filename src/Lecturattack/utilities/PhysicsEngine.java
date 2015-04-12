@@ -47,7 +47,7 @@ public class PhysicsEngine {
           targetCollidedWith.hit();
         }
 
-        projectile.reflectAtObstacle(targetCollidedWith);
+        projectile.reflect(targetCollidedWith);
 
       }
     }

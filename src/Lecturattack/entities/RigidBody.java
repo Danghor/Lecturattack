@@ -265,5 +265,117 @@ public abstract class RigidBody implements Renderable {
     }
   }
 
+  /**
+   * @param partner The RigidBody this object is colliding with.
+   *
+   * @return The line of the given RigidBody with which this object intersects.
+   */
+  public void reflect(RigidBody partner) {
+    Line intersectingLine = null;
+    Polygon thisPolygon = new Polygon();
+
+    for (EnhancedVector vertex : vertices) {
+      EnhancedVector toCenter = getCenter();
+      toCenter.sub(vertex);
+      toCenter.normalise();
+      thisPolygon.addPoint(vertex.x - toCenter.x, vertex.y - toCenter.y);
+    }
+
+    ArrayList<Line> partnerLines = new ArrayList<>();
+
+    //get ArrayList of all Lines of the partner body
+    ArrayList<EnhancedVector> pv = partner.vertices; //for comprehension purposes
+    int partnerSize = pv.size();
+
+    for (int i = 0; i < partnerSize - 1; i++) {
+      partnerLines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
+    }
+
+    partnerLines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
+
+    ArrayList<Line> potentialCollisionLines = new ArrayList<>(); //lines to be in question for collision response
+
+    for (Line line : partnerLines) {
+      if (thisPolygon.intersects(line)) {
+        potentialCollisionLines.add(line);
+      }
+    }
+
+    ArrayList<Integer> penetrationSizes = new ArrayList<>();
+    int currentSizeArrayIndex = -1;
+
+    if (potentialCollisionLines.size() > 1) {
+      //determine, which line on the target has the longest segment "penetrating" the projectile
+      for (Line partnerLine : potentialCollisionLines) {
+        currentSizeArrayIndex++;
+        penetrationSizes.add(0);
+        Point start = new Point(partnerLine.getX1(), partnerLine.getY1());
+        Point end = new Point(partnerLine.getX2(), partnerLine.getY2());
+        Point currentPoint;
+        if (thisPolygon.contains(start) && thisPolygon.contains(end)) {
+          intersectingLine = partnerLine;
+          break;
+        } else if (thisPolygon.contains(start)) {
+          currentPoint = start;
+          EnhancedVector direction = new EnhancedVector(end.getX() - start.getX(), end.getY() - start.getY());
+          while (thisPolygon.contains(currentPoint)) {
+            int previousSize = penetrationSizes.get(currentSizeArrayIndex);
+            penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);
+            currentPoint.setX(currentPoint.getX() + direction.x);
+            currentPoint.setY(currentPoint.getY() + direction.y);
+          }
+        } else if (thisPolygon.contains(end)) {
+          currentPoint = end;
+          EnhancedVector direction = new EnhancedVector(start.getX() - end.getX(), start.getY() - end.getY());
+          while (thisPolygon.contains(currentPoint)) {
+            int previousSize = penetrationSizes.get(currentSizeArrayIndex);
+            penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);
+            currentPoint.setX(currentPoint.getX() + direction.x);
+            currentPoint.setY(currentPoint.getY() + direction.y);
+          }
+        }
+      }
+
+      int biggestFoundSize = 0;
+      for (int i = 0; i < penetrationSizes.size(); i++) {
+        if (penetrationSizes.get(i) > biggestFoundSize) {
+          intersectingLine = potentialCollisionLines.get(i);
+        }
+      }
+    } else if (potentialCollisionLines.size() == 1) {
+      intersectingLine = potentialCollisionLines.get(0);
+    }
+
+    if (intersectingLine != null) {
+      EnhancedVector startPoint = new EnhancedVector(intersectingLine.getX1(), intersectingLine.getY1());
+      EnhancedVector lineVector = (EnhancedVector) (new EnhancedVector(intersectingLine.getX2(), intersectingLine.getY2())).sub(startPoint);
+      EnhancedVector perpendicularToTarget = lineVector.getPerpendicular();
+
+      perpendicularToTarget.normalise();
+
+      EnhancedVector intersectionTestVector = (EnhancedVector) startPoint.sub(perpendicularToTarget);
+      Point intersectionTestPoint = new Point(intersectionTestVector.x, intersectionTestVector.y);
+      Polygon partnerPolygon = new Polygon();
+
+      for (EnhancedVector vertex : partner.vertices) {
+        partnerPolygon.addPoint(vertex.x, vertex.y);
+      }
+
+      if (intersectionTestPoint.contains(partnerPolygon)) {
+        perpendicularToTarget.negate();
+      }
+
+      float dx = linearVelocity.x;
+      float dy = linearVelocity.y;
+      float nx = perpendicularToTarget.x;
+      float ny = perpendicularToTarget.y;
+
+      linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
+      linearVelocity.scale(DAMPING);
+    } else {
+      throw new IllegalArgumentException("The given partner body does not intersect with this object.");
+    }
+
+  }
 
 }
