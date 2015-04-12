@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author Andreas Geis
+ * @author Laura Hillenbrand
  */
 public class MainMenuState extends BasicGameState implements InputListener {
 
