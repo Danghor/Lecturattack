@@ -4,7 +4,6 @@ import Lecturattack.entities.Projectile;
 import Lecturattack.entities.RigidBody;
 import Lecturattack.entities.Target;
 import Lecturattack.entities.TargetMeta;
-import org.newdawn.slick.geom.Line;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public class PhysicsEngine {
   public static void calculateStep(Projectile projectile, ArrayList<Target> targets, float wind, int deltaInMilliseconds, float groundLevel) {
     float scaledDelta = (float) deltaInMilliseconds / 100;
     EnhancedVector oldPosition;
-    boolean intersectionDetected;
+    boolean intersectionBetweenTargetsDetected;
     Target targetCollidedWith;
     ArrayList<Integer> targetsToBeRemoved = new ArrayList<>();
 
@@ -25,10 +24,12 @@ public class PhysicsEngine {
     if (projectile != null) {
       oldPosition = projectile.getCenter();
 
+      //update projectile
       projectile.applyForce(wind, GRAVITATION_ACCELERATION * projectile.getMass());
       projectile.update(scaledDelta);
       moveAboveGround(projectile, groundLevel);
 
+      //detect if projectile collided with target
       targetCollidedWith = null;
       for (Target target : targets) {
         if (projectile.collidesWith(target)) {
@@ -37,6 +38,7 @@ public class PhysicsEngine {
         }
       }
 
+      //if projectile collided with target, perform collision response
       if (targetCollidedWith != null) {
         //change projectile velocity in other direction
         //destroy target
@@ -45,14 +47,8 @@ public class PhysicsEngine {
           targetCollidedWith.hit();
         }
 
-        //todo: rebounce vv
-        Line lineCollidedWith = projectile.getFirstIntersectingLine(targetCollidedWith);
-        EnhancedVector vectorCollidedWith = new EnhancedVector(lineCollidedWith.getX2() - lineCollidedWith.getX1(), lineCollidedWith.getY2() - lineCollidedWith.getY1());
+        projectile.reflectAtObstacle(targetCollidedWith);
 
-        float intersectionAngle = projectile.getLinearVelocity().getAngle(vectorCollidedWith);
-        if (intersectionAngle > 90) {
-          intersectionAngle = 180 - intersectionAngle;
-        }
       }
     }
 
@@ -78,14 +74,14 @@ public class PhysicsEngine {
 
       moveAboveGround(target, groundLevel);
 
-      intersectionDetected = false;
+      intersectionBetweenTargetsDetected = false;
       for (Target otherTarget : targets) {
         if (!target.equals(otherTarget) && target.collidesWith(otherTarget)) {
-          intersectionDetected = true;
+          intersectionBetweenTargetsDetected = true;
         }
       }
 
-      if (intersectionDetected) {
+      if (intersectionBetweenTargetsDetected) {
         EnhancedVector newPosition = target.getCenter();
         target.move((EnhancedVector) oldPosition.sub(newPosition));
         target.setLinearVelocity(new EnhancedVector(0f, 0f));

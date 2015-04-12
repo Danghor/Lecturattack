@@ -5,6 +5,7 @@ package Lecturattack.entities;/*
 import Lecturattack.statemachine.Lecturattack;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Polygon;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public abstract class RigidBody implements Renderable {
+  private static final float DAMPING = 0.8f;
   protected final double area; //area is not expected to change
   protected ArrayList<EnhancedVector> vertices;
   protected EnhancedVector linearVelocity;
@@ -160,12 +162,13 @@ public abstract class RigidBody implements Renderable {
   }
 
   /**
-   * @param partner The RigidBody this object is colliding with.
+   * This method will reflect the linearVelocity of this object on the given partner body, i.e. it will "rebounce" this object on the side of the partner.
+   * This method only works if the two bodies do indeed collide.
    *
-   * @return The line of the given RigidBody with which this object intersects.
+   * @param partner The RigidBody this object is colliding with.
    */
-  public Line getFirstIntersectingLine(RigidBody partner) {
-    Line returnedLine = null;
+  public void reflectAtObstacle(RigidBody partner) {
+    Line intersectingLine = null;
     Line movingLine; //the line pointing in the direction of movement (using linearVelocity), starts at the center point of the body
 
     float movingLineStartX = getCenter().x;
@@ -201,6 +204,7 @@ public abstract class RigidBody implements Renderable {
 
     //minimum distance to the obstacle on moving direction; default value: maximum distance
     float shortestFoundDistance = (float) Math.sqrt(Math.pow(Lecturattack.HEIGHT, 2) + Math.pow(Lecturattack.WIDTH, 2));
+    EnhancedVector shortestIntersection = null;
     float x1 = movingLine.getX1();
     float y1 = movingLine.getY1();
     float x2 = movingLine.getX2();
@@ -224,17 +228,42 @@ public abstract class RigidBody implements Renderable {
 
         if (distanceIntersectionCenter.length() < shortestFoundDistance) {
           shortestFoundDistance = distanceIntersectionCenter.length();
-          returnedLine = line;
+          intersectingLine = line;
         }
       }
     }
 
-    if (returnedLine != null) {
-      return returnedLine;
-    } else {
-      throw new IllegalArgumentException("The given partner body does not intersect with this object.");
-    }
+    if (intersectingLine != null) {
+      EnhancedVector startPoint = new EnhancedVector(intersectingLine.getX1(), intersectingLine.getY1());
+      EnhancedVector lineVector = (EnhancedVector) (new EnhancedVector(intersectingLine.getX2(), intersectingLine.getY2())).sub(startPoint);
+      EnhancedVector perpendicularToTarget = lineVector.getPerpendicular();
 
+      perpendicularToTarget.normalise();
+
+      EnhancedVector intersectionTestVector = (EnhancedVector) startPoint.sub(perpendicularToTarget);
+      Point intersectionTestPoint = new Point(intersectionTestVector.x, intersectionTestVector.y);
+      Polygon partnerPolygon = new Polygon();
+
+      for (EnhancedVector vertex : partner.vertices) {
+        partnerPolygon.addPoint(vertex.x, vertex.y);
+      }
+
+      if (intersectionTestPoint.intersects(partnerPolygon)) {
+        perpendicularToTarget.negate();
+      }
+
+      float dx = linearVelocity.x;
+      float dy = linearVelocity.y;
+      float nx = perpendicularToTarget.x;
+      float ny = perpendicularToTarget.y;
+
+      linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
+      linearVelocity.scale(DAMPING);
+
+    } else {
+      throw new IllegalArgumentException("This object does not intersect with the partner body.");
+    }
   }
+
 
 }
