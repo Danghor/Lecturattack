@@ -1,24 +1,36 @@
 package Lecturattack.utilities;
 
+import Lecturattack.statemachine.GameState;
 import Lecturattack.utilities.xmlHandling.configLoading.*;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Tim Adamek
  * @author Andreas Geis
+ * @author Laura Hillenbrand
+ * @author Stefanie Raschke
  */
 public class FileHandler {
-  private static final String LAST_LEVEL_FILE_PATH = ".\\latestLevel.txt";
+  private static final String LAST_LEVEL_FILE_PATH = System.getProperty("user.home")+"\\AppData\\Lecturattack.txt";
+  public static int latestLevel=1;
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; //TODO add LevelFiles
 
 
@@ -106,14 +118,84 @@ public class FileHandler {
     }
     return players.getPlayerStandards();
   }
+  
+  
+  
+  
+  
+  
+  
+  
 
   public static int getLastLevelNumber() {
-    return 0;
-  }
+	  
+	  FileReader fr;
+      BufferedReader br;
+      try {
+          fr = new FileReader(LAST_LEVEL_FILE_PATH);
+          br = new BufferedReader(fr);
+         
+          // Textzeilen der Datei einlesen und auf Konsole ausgeben:
+          String text;
+          text = br.readLine();
+          latestLevel=Integer.parseInt(text);
 
-  public static void setLastLevelNumber(int level) {
-    //todo: alles in %APPDATA%
+          fr.close();
+      }
+      catch (IOException e){
+          System.out.println("Fehler beim Lesen der Datei " + LAST_LEVEL_FILE_PATH);
+          System.out.println(e.toString());
+      }
+	  
+	  
+    return latestLevel;
+    
+    
+    
+    
   }
+  
+  public static void setLastLevelNumber(int level) {
+	  if(level<latestLevel){
+	  latestLevel++;
+		try {
+            String text = Integer.toString(latestLevel);
+            BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
+            out.write(text);
+            out.close();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Exception ");       
+        }
+
+        return ;
+		
+	  }
+  }
+  
+  public static void resetLevelNumber(){
+	  try {
+          String text = "1";
+          BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
+          out.write(text);
+          out.close();
+      }
+      catch (IOException e)
+      {
+          System.out.println("Exception ");       
+      } 
+  }
+  
+ 
+
+  
+  
+  
+  
+  
+  
+  
 
   public static Image loadImage(String fileName) {
     Image image = null;
