@@ -77,7 +77,7 @@ public class Player implements Renderable {
     float difference = angleInDegrees - directionAngle;
     moveArm(difference);
   }
-  
+
   public String getName() {
     return name;
   }

@@ -6,8 +6,6 @@ import Lecturattack.entities.Target;
 import Lecturattack.entities.TargetMeta;
 import Lecturattack.entities.TargetMeta.TargetType;
 
-import org.newdawn.slick.geom.Line;
-
 import java.util.ArrayList;
 
 /**
@@ -50,7 +48,7 @@ public class PhysicsEngine {
         TargetMeta.TargetType type = targetCollidedWith.getType();
         if (projectile.getDestroys().contains(type)) {
           targetCollidedWith.hit();
-          if(type == TargetType.ENEMY){
+          if (type == TargetType.ENEMY) {
             scoreIncrement += 100;
           } else {
             scoreIncrement += 10;
@@ -100,7 +98,7 @@ public class PhysicsEngine {
       }
 
     }
-    
+
     return scoreIncrement;
 
   }
