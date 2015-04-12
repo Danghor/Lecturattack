@@ -40,13 +40,15 @@ public class Player implements Renderable {
   private float armShoulderX;//must be set in relation to player
   private float armShoulderY;
   private PlayerState playerState;
+  private String name;
 
-  public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta) {
+  public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     this.positionX = 0f;
     this.positionY = 0f;
     this.bodyImage = bodyImage;
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
+    this.name = name;
     this.powerSlider = new PowerSlider();
     reset();
   }
@@ -74,6 +76,10 @@ public class Player implements Renderable {
   public void setAngle(float angleInDegrees) {
     float difference = angleInDegrees - directionAngle;
     moveArm(difference);
+  }
+  
+  public String getName() {
+    return name;
   }
 
   public PlayerState getPlayerState() {

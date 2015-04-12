@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class PlayerStandard {
   //the objects of this class hold the information about the Players, which is read from the configs
-  private String name;//TODO see fi really necessary
+  private String name;
   private String imageArm;
   private String imageBody;
   private String projectile;
