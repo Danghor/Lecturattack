@@ -47,7 +47,7 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   public void loadLevel(int level) {
-    currentLevel = level;
+    setCurrentLevel(level);
     // TODO see if this can be done somewhere else
     try {
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
@@ -69,7 +69,7 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   private void resetLevel() {
-    loadLevel(currentLevel);
+    loadLevel(getCurrentLevel());
   }
 
   @Override
@@ -87,7 +87,7 @@ public class GameState extends BasicGameState implements InputListener {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
     currentPlayer = 0;
-    currentLevel = 1; // default
+    setCurrentLevel(1); // default
 
   }
 
@@ -179,4 +179,12 @@ public class GameState extends BasicGameState implements InputListener {
     players.get(currentPlayer).setAngle(previousAngle);
     playerName.setDynamicText(players.get(currentPlayer).getName());
   }
+
+public int getCurrentLevel() {
+	return currentLevel;
+}
+
+public void setCurrentLevel(int currentLevel) {
+	this.currentLevel = currentLevel;
+}
 }
