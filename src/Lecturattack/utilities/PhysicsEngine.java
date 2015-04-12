@@ -27,7 +27,7 @@ public class PhysicsEngine {
       //update projectile
       projectile.applyForce(wind, GRAVITATION_ACCELERATION * projectile.getMass());
       projectile.update(scaledDelta);
-      moveAboveGround(projectile, groundLevel);
+      reflectOnGround(projectile, groundLevel);
 
       //detect if projectile collided with target
       targetCollidedWith = null;
@@ -49,6 +49,8 @@ public class PhysicsEngine {
 
         projectile.reflect(targetCollidedWith);
 
+        //EnhancedVector newPosition = projectile.getCenter();
+        //projectile.move((EnhancedVector) oldPosition.sub(newPosition));
       }
     }
 
@@ -101,6 +103,13 @@ public class PhysicsEngine {
     if (body.getBiggestY() >= groundLevel) {
       body.move(new EnhancedVector(0f, groundLevel - body.getBiggestY()));
       body.setLinearVelocity(new EnhancedVector(body.getLinearVelocity().x, 0f));
+    }
+  }
+
+  private static void reflectOnGround(RigidBody body, float groundLevel) {
+    if (body.getBiggestY() >= groundLevel) {
+      body.move(new EnhancedVector(0f, groundLevel - body.getBiggestY()));
+      body.setLinearVelocity(new EnhancedVector(body.getLinearVelocity().x, -body.getLinearVelocity().y));
     }
   }
 }

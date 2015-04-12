@@ -2,7 +2,6 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.statemachine.Lecturattack;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Point;
@@ -167,109 +166,6 @@ public abstract class RigidBody implements Renderable {
    *
    * @param partner The RigidBody this object is colliding with.
    */
-  public void reflectAtObstacle(RigidBody partner) {
-    Line intersectingLine = null;
-    Line movingLine; //the line pointing in the direction of movement (using linearVelocity), starts at the center point of the body
-
-    float movingLineStartX = getCenter().x;
-    float movingLineStartY = getCenter().y;
-    float movingLineEndX;
-    float movingLineEndY;
-
-    if (linearVelocity.x < 0) {
-      movingLineEndX = 0;
-    } else {
-      movingLineEndX = Lecturattack.WIDTH;
-    }
-
-    if (linearVelocity.y < 0) {
-      movingLineEndY = 0;
-    } else {
-      movingLineEndY = Lecturattack.HEIGHT;
-    }
-
-    movingLine = new Line(movingLineStartX, movingLineStartY, movingLineEndX, movingLineEndY);
-
-    ArrayList<Line> partnerLines = new ArrayList<>();
-
-    //get ArrayList of all Lines of the partner body
-    ArrayList<EnhancedVector> pv = partner.vertices; //for comprehension purposes
-    int partnerSize = pv.size();
-
-    for (int i = 0; i < partnerSize - 1; i++) {
-      partnerLines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
-    }
-
-    partnerLines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
-
-    //minimum distance to the obstacle on moving direction; default value: maximum distance
-    float shortestFoundDistance = (float) Math.sqrt(Math.pow(Lecturattack.HEIGHT, 2) + Math.pow(Lecturattack.WIDTH, 2));
-    EnhancedVector shortestIntersection = null;
-    float x1 = movingLine.getX1();
-    float y1 = movingLine.getY1();
-    float x2 = movingLine.getX2();
-    float y2 = movingLine.getY2();
-    float x3;
-    float y3;
-    float x4;
-    float y4;
-    for (Line line : partnerLines) {
-      if (movingLine.intersects(line)) {
-        x3 = line.getX1();
-        y3 = line.getY1();
-        x4 = line.getX2();
-        y4 = line.getY2();
-
-        float denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-        EnhancedVector intersection = new EnhancedVector(((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denominator, ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denominator);
-        EnhancedVector distanceIntersectionCenter = (EnhancedVector) intersection.sub(getCenter());
-
-        //distanceIntersectionCenter is now the distance between the center of the RigidBody and the intersection of the moving line and the line of the partner body
-
-        if (distanceIntersectionCenter.length() < shortestFoundDistance) {
-          shortestFoundDistance = distanceIntersectionCenter.length();
-          intersectingLine = line;
-        }
-      }
-    }
-
-    if (intersectingLine != null) {
-      EnhancedVector startPoint = new EnhancedVector(intersectingLine.getX1(), intersectingLine.getY1());
-      EnhancedVector lineVector = (EnhancedVector) (new EnhancedVector(intersectingLine.getX2(), intersectingLine.getY2())).sub(startPoint);
-      EnhancedVector perpendicularToTarget = lineVector.getPerpendicular();
-
-      perpendicularToTarget.normalise();
-
-      EnhancedVector intersectionTestVector = (EnhancedVector) startPoint.sub(perpendicularToTarget);
-      Point intersectionTestPoint = new Point(intersectionTestVector.x, intersectionTestVector.y);
-      Polygon partnerPolygon = new Polygon();
-
-      for (EnhancedVector vertex : partner.vertices) {
-        partnerPolygon.addPoint(vertex.x, vertex.y);
-      }
-
-      if (intersectionTestPoint.intersects(partnerPolygon)) {
-        perpendicularToTarget.negate();
-      }
-
-      float dx = linearVelocity.x;
-      float dy = linearVelocity.y;
-      float nx = perpendicularToTarget.x;
-      float ny = perpendicularToTarget.y;
-
-      linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
-      linearVelocity.scale(DAMPING);
-
-    } else {
-      throw new IllegalArgumentException("This object does not intersect with the partner body.");
-    }
-  }
-
-  /**
-   * @param partner The RigidBody this object is colliding with.
-   *
-   * @return The line of the given RigidBody with which this object intersects.
-   */
   public void reflect(RigidBody partner) {
     Line intersectingLine = null;
     Polygon thisPolygon = new Polygon();
@@ -361,8 +257,8 @@ public abstract class RigidBody implements Renderable {
         partnerPolygon.addPoint(vertex.x, vertex.y);
       }
 
-      if (intersectionTestPoint.contains(partnerPolygon)) {
-        perpendicularToTarget.negate();
+      if (partnerPolygon.contains(intersectionTestPoint)) {
+        perpendicularToTarget.negateLocal();
       }
 
       float dx = linearVelocity.x;
@@ -372,6 +268,12 @@ public abstract class RigidBody implements Renderable {
 
       linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
       linearVelocity.scale(DAMPING);
+
+      while (this.collidesWith(partner)) {
+        EnhancedVector direction = (EnhancedVector) this.getCenter().sub(partner.getCenter());
+        direction.normalise();
+        this.move(direction);
+      }
     } else {
       throw new IllegalArgumentException("The given partner body does not intersect with this object.");
     }
