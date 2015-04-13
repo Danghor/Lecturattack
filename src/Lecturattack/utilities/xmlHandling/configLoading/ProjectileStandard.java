@@ -41,7 +41,7 @@ public class ProjectileStandard {
     this.destroys = destroys;
   }
 
-  @XmlElement(name = "vertice")
+  @XmlElement(name = "vertex")
   public List<XmlVertex> getVertices() {
     return vertices;
   }
