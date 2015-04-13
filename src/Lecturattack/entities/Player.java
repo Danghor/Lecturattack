@@ -137,7 +137,6 @@ public class Player implements Renderable {
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, armImageX, armImageY);
     if (playerState != PlayerState.THROWING) {
-      //todo: set position to middle of the player's hand
       projectile.setCenterPosition(handCenterPositionX, handCenterPositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }

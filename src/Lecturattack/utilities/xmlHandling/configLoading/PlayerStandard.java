@@ -61,7 +61,6 @@ public class PlayerStandard {
     return new Image(imageBody);
   }
 
-  //TODO see if this is really a good idea because there might be a lot of dependencies
   public ProjectileMeta getProjectileMeta() {
     ProjectileMeta projectileMeta = null;//If the wrong projectile is specified in playerStandard ProjectileMeta.getInstance() will also return null
     switch (projectile) {
