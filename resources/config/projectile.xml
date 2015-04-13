@@ -19,7 +19,7 @@
             <x>0</x>
             <y>35</y>
         </vertex>
-        <mass>1.25</mass>
+        <mass>1.2</mass>
     </projectile>
     <projectile>
         <image>resources/images/Android.png</image>

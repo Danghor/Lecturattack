@@ -17,7 +17,7 @@ public class Lecturattack extends StateBasedGame {
   public static final int GAMESTATE = 2;
   public static final int PAUSESTATE = 3;
 
-  public static final int FPS = 60;
+  public static final int FPS = 80;
   public static final int WIDTH = 1280;
   public static final int HEIGHT = 720;
   public static final boolean TOGGLE_FULLSCREEN = false;
