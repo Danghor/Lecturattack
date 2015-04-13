@@ -7,7 +7,6 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -60,7 +59,7 @@ public class GameState extends BasicGameState implements InputListener {
       player.reset();
     }
     projectile = null;
-    
+
     scoreField = new InformationField(1000, 25, "Score: ");
     // set a starting score
     score = 100;
@@ -103,10 +102,10 @@ public class GameState extends BasicGameState implements InputListener {
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-    
+
     scoreField.render(gameContainer, stateBasedGame, graphics);
     playerName.render(gameContainer, stateBasedGame, graphics);
-    
+
   }
 
   @Override
@@ -180,11 +179,11 @@ public class GameState extends BasicGameState implements InputListener {
     playerName.setDynamicText(players.get(currentPlayer).getName());
   }
 
-public int getCurrentLevel() {
-	return currentLevel;
-}
+  public int getCurrentLevel() {
+    return currentLevel;
+  }
 
-public void setCurrentLevel(int currentLevel) {
-	this.currentLevel = currentLevel;
-}
+  public void setCurrentLevel(int currentLevel) {
+    this.currentLevel = currentLevel;
+  }
 }

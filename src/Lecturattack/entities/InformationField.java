@@ -17,19 +17,19 @@ public class InformationField implements Renderable {
   private String dynamicText;
   private java.awt.Font oAwtFont;
   private TrueTypeFont oTrueTypeFont;
-  
+
   public InformationField(int x, int y, String fixedText) {
     this.x = x;
-    this.y =y;
+    this.y = y;
     this.fixedText = fixedText;
     oAwtFont = new java.awt.Font("Sanserif", java.awt.Font.BOLD, 24);
     oTrueTypeFont = new TrueTypeFont(oAwtFont, false);
   }
-  
-  public void setDynamicText(String dynamicText){
+
+  public void setDynamicText(String dynamicText) {
     this.dynamicText = dynamicText;
   }
-  
+
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     oTrueTypeFont.drawString(x, y, fixedText + dynamicText);
