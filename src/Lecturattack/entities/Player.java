@@ -77,7 +77,7 @@ public class Player implements Renderable {
     float difference = angleInDegrees - directionAngle;
     moveArm(difference);
   }
-  
+
   public String getName() {
     return name;
   }
@@ -95,9 +95,14 @@ public class Player implements Renderable {
   }
 
   public void moveArm(float degreeDifference) {
-    // todo: check if movement possible, turn arm etc.
     if (playerState == PlayerState.ANGLE_SELECTION) {
-      this.directionAngle += degreeDifference;
+      // the player can only move his arm in a certain angle,
+      // this checks if the player can still move his arm
+      if (degreeDifference > 0 && directionAngle < 20) {
+        this.directionAngle += degreeDifference;
+      } else if (degreeDifference < 0 && directionAngle > -180) {
+        this.directionAngle += degreeDifference;
+      }
       setHandCenterPosition();
     }
   }
