@@ -4,6 +4,8 @@ import Lecturattack.entities.Projectile;
 import Lecturattack.entities.RigidBody;
 import Lecturattack.entities.Target;
 import Lecturattack.entities.TargetMeta;
+import Lecturattack.entities.TargetMeta.TargetType;
+
 import org.newdawn.slick.geom.Line;
 
 import java.util.ArrayList;
@@ -14,12 +16,14 @@ import java.util.ArrayList;
 public class PhysicsEngine {
   private static final float GRAVITATION_ACCELERATION = 9.81f;
 
-  public static void calculateStep(Projectile projectile, ArrayList<Target> targets, float wind, int deltaInMilliseconds, float groundLevel) {
+  public static int calculateStep(Projectile projectile, ArrayList<Target> targets, float wind, int deltaInMilliseconds, float groundLevel) {
     float scaledDelta = (float) deltaInMilliseconds / 100;
     EnhancedVector oldPosition;
     boolean intersectionDetected;
     Target targetCollidedWith;
     ArrayList<Integer> targetsToBeRemoved = new ArrayList<>();
+    // if the player hits any target in this step, add them to the score
+    int scoreIncrement = 0;
 
     //----------projectile operations----------
     if (projectile != null) {
@@ -43,6 +47,11 @@ public class PhysicsEngine {
         TargetMeta.TargetType type = targetCollidedWith.getType();
         if (projectile.getDestroys().contains(type)) {
           targetCollidedWith.hit();
+          if(type == TargetType.ENEMY){
+            scoreIncrement += 100;
+          } else {
+            scoreIncrement += 10;
+          }
         }
 
         //todo: rebounce vv
@@ -93,6 +102,8 @@ public class PhysicsEngine {
       }
 
     }
+    
+    return scoreIncrement;
 
   }
 
