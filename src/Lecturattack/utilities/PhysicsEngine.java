@@ -3,8 +3,6 @@ package Lecturattack.utilities;
 import Lecturattack.entities.Projectile;
 import Lecturattack.entities.RigidBody;
 import Lecturattack.entities.Target;
-import Lecturattack.entities.TargetMeta;
-import Lecturattack.entities.TargetMeta.TargetType;
 
 import java.util.ArrayList;
 
@@ -43,22 +41,8 @@ public class PhysicsEngine {
 
       //if projectile collided with target, perform collision response
       if (targetCollidedWith != null) {
-        //change projectile velocity in other direction
-        //destroy target
-        TargetMeta.TargetType type = targetCollidedWith.getType();
-        if (projectile.getDestroys().contains(type)) {
-          targetCollidedWith.hit();
-          if (type == TargetType.ENEMY) {
-            scoreIncrement += 100;
-          } else {
-            scoreIncrement += 10;
-          }
-        }
-
+        scoreIncrement += targetCollidedWith.hit(projectile);
         projectile.reflect(targetCollidedWith);
-
-        //EnhancedVector newPosition = projectile.getCenter();
-        //projectile.move((EnhancedVector) oldPosition.sub(newPosition));
       }
     }
 

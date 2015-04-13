@@ -73,6 +73,7 @@ public class TargetMeta extends MetaObject {
   }
 
   private final int maxHits; //when the Target is hit as many times as maxHits, the Target is destroyed
+  private final int hitScore; //the score received when a target of this type gets hit
   private ArrayList<Image> images;
   private TargetType type;
 
@@ -81,10 +82,31 @@ public class TargetMeta extends MetaObject {
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
+
+    switch (type) {
+      case RAMH:
+      case RAMV:
+        hitScore = 10;
+        break;
+      case LIBRARYH:
+      case LIBRARYV:
+        hitScore = 10;
+        break;
+      case ENEMY:
+        hitScore = 100;
+        break;
+      default:
+        hitScore = 0;
+        break;
+    }
   }
 
   public static TargetMeta getInstance(TargetType type) {
     return (TargetMeta) instances.get(type);
+  }
+
+  int getHitScore() {
+    return hitScore;
   }
 
   TargetType getType() {

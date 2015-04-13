@@ -23,12 +23,15 @@ public class Target extends RigidBody {
     return metaObject.getType();
   }
 
-  //todo: hit with a specific projectile to avoid determining whether it can be hit in the physics engine
-  //just hit it here and then determine here if it gets damaged or not
-  public void hit() {
-    if (hitCounter < metaObject.getMaxHits()) {
+  public int hit(Projectile projectile) {
+    int scoreReturned = 0;
+
+    if (projectile.getDestroys().contains(getType()) && hitCounter < metaObject.getMaxHits()) {
       hitCounter++;
+      scoreReturned = getHitScore();
     }
+
+    return scoreReturned;
   }
 
   public boolean isDestroyed() {
@@ -38,6 +41,10 @@ public class Target extends RigidBody {
   @Override
   public float getMass() {
     return metaObject.getMass();
+  }
+
+  public int getHitScore() {
+    return metaObject.getHitScore();
   }
 
   @Override
