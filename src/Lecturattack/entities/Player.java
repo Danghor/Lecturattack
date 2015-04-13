@@ -98,11 +98,10 @@ public class Player implements Renderable {
     if (playerState == PlayerState.ANGLE_SELECTION) {
       // the player can only move his arm in a certain angle,
       // this checks if the player can still move his arm
-      if (degreeDifference > 0 && directionAngle < 20) {
-        this.directionAngle += degreeDifference;
-      } else if (degreeDifference < 0 && directionAngle > -180) {
+      if ((degreeDifference > 0 && directionAngle < 20) || (degreeDifference < 0 && directionAngle > -180)) {
         this.directionAngle += degreeDifference;
       }
+      System.out.println(directionAngle);
       setHandCenterPosition();
     }
   }
