@@ -35,14 +35,10 @@ public class GameState extends BasicGameState implements InputListener {
   private InformationField playerName;
   private Image background;
   private int score;
+  private float wind;
 
   public GameState(int stateID) {
     GameState.stateID = stateID;
-  }
-
-  //todo: save wind for current level and only refresh when new level is loaded
-  private static float getRandomWind() {
-    return (float) ((Math.random() * 10) % 5 - 2.5);
   }
 
   public void loadLevel(int level) {
@@ -64,6 +60,9 @@ public class GameState extends BasicGameState implements InputListener {
     score = 100;
     playerName = new InformationField(1000, 0, "Dozent: ");
     playerName.setDynamicText(players.get(currentPlayer).getName());
+
+    //generate a new random wind every time the level is reloaded TODO -> after every throw
+    wind = (float) ((Math.random() * 10) % 5 - 2.5);
   }
 
   private void resetLevel() {
@@ -86,7 +85,7 @@ public class GameState extends BasicGameState implements InputListener {
     }
     currentPlayer = 0;
     setCurrentLevel(1); // default
-
+    flag = new Flag();
   }
 
   @Override
@@ -104,6 +103,7 @@ public class GameState extends BasicGameState implements InputListener {
 
     scoreField.render(gameContainer, stateBasedGame, graphics);
     playerName.render(gameContainer, stateBasedGame, graphics);
+    flag.render(gameContainer, stateBasedGame, graphics);
 
   }
 
@@ -112,9 +112,10 @@ public class GameState extends BasicGameState implements InputListener {
 
     changeThrowingDegreeWithUserInput(gameContainer);
 
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
+    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), wind, delta, level.getGroundLevel());
     scoreField.setDynamicText(Integer.toString(score));
 
+    flag.setWindScale(wind);
     players.get(currentPlayer).updatePowerSlider(delta);
   }
 
