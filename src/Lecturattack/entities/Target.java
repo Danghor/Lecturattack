@@ -58,8 +58,8 @@ public class Target extends RigidBody {
 //TODO remove if not needed anymor
 // This shows the hitbox of the targets
     Polygon poly = new Polygon();
-    for (EnhancedVector point : vertices){
-      poly.addPoint(point.getX(),point.getY());
+    for (EnhancedVector point : vertices) {
+      poly.addPoint(point.getX(), point.getY());
     }
     graphics.draw(poly);
   }
