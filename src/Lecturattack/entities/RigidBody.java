@@ -213,8 +213,6 @@ public abstract class RigidBody implements Renderable {
    * @return A boolean value indicating whether or not the current object flew out of the frame sideways or down.
    */
   public boolean isUnreachable() {
-    boolean test = getBiggestX() < 0 || getSmallestX() > Lecturattack.WIDTH || getSmallestY() > Lecturattack.HEIGHT;
-
     return getBiggestX() < 0 || getSmallestX() > Lecturattack.WIDTH || getSmallestY() > Lecturattack.HEIGHT;
   }
 
@@ -281,21 +279,18 @@ public abstract class RigidBody implements Renderable {
         Point start = new Point(partnerLine.getX1(), partnerLine.getY1());
         Point end = new Point(partnerLine.getX2(), partnerLine.getY2());
         Point currentPoint;
-        if (thisPolygon.contains(start) && thisPolygon.contains(end)) {
+        if (thisPolygon.contains(start) && thisPolygon.contains(end)) { //this object contains both edges of the partnerLine
           intersectingLine = partnerLine;
-          break;
-        } else if (thisPolygon.contains(start)) {
-          currentPoint = start;
-          EnhancedVector direction = new EnhancedVector(end.getX() - start.getX(), end.getY() - start.getY());
-          while (thisPolygon.contains(currentPoint)) {
-            int previousSize = penetrationSizes.get(currentSizeArrayIndex);
-            penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);
-            currentPoint.setX(currentPoint.getX() + direction.x);
-            currentPoint.setY(currentPoint.getY() + direction.y);
+          break; //todo: avoid break;
+        } else {
+          EnhancedVector direction;
+          if (thisPolygon.contains(start)) { //this object contains the start point of the partnerLine
+            currentPoint = start;
+            direction = new EnhancedVector(end.getX() - start.getX(), end.getY() - start.getY());
+          } else { //this object contains the end point of the partnerLine
+            currentPoint = end;
+            direction = new EnhancedVector(start.getX() - end.getX(), start.getY() - end.getY());
           }
-        } else if (thisPolygon.contains(end)) {
-          currentPoint = end;
-          EnhancedVector direction = new EnhancedVector(start.getX() - end.getX(), start.getY() - end.getY());
           while (thisPolygon.contains(currentPoint)) {
             int previousSize = penetrationSizes.get(currentSizeArrayIndex);
             penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);

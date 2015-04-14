@@ -35,6 +35,7 @@ public class GameState extends BasicGameState implements InputListener {
   private InformationField playerName;
   private Image background;
   private int score;
+  private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
 
   public GameState(int stateID) {
     GameState.stateID = stateID;
@@ -83,6 +84,7 @@ public class GameState extends BasicGameState implements InputListener {
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("background");
+    deadTargets = new ArrayList<>();
     players = new ArrayList<>();
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
@@ -100,8 +102,15 @@ public class GameState extends BasicGameState implements InputListener {
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
-    // render projectile here, if the player doesn't have it
-    // the projectile is only not null if it was returned by the player
+
+    for (Target deadTarget : deadTargets) {
+      deadTarget.render(gameContainer, stateBasedGame, graphics);
+    }
+
+    /**
+     * Render projectile here, if the player doesn't have it
+     * If the player has the projectile, it's null
+     */
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
@@ -122,7 +131,7 @@ public class GameState extends BasicGameState implements InputListener {
 
     changeThrowingDegreeWithUserInput(gameContainer);
 
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
+    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, getRandomWind(), delta, level.getGroundLevel());
     scoreField.setDynamicText(Integer.toString(score));
 
     getCurrentPlayer().updatePowerSlider(delta);
