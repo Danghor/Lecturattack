@@ -95,9 +95,13 @@ public class Player implements Renderable {
   }
 
   public void moveArm(float degreeDifference) {
-    // todo: check if movement possible, turn arm etc.
     if (playerState == PlayerState.ANGLE_SELECTION) {
-      this.directionAngle += degreeDifference;
+      // the player can only move his arm in a certain angle,
+      // this checks if the player can still move his arm
+      if ((degreeDifference > 0 && directionAngle < 20) || (degreeDifference < 0 && directionAngle > -180)) {
+        this.directionAngle += degreeDifference;
+      }
+      System.out.println(directionAngle);
       setHandCenterPosition();
     }
   }
@@ -132,7 +136,6 @@ public class Player implements Renderable {
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, armImageX, armImageY);
     if (playerState != PlayerState.THROWING) {
-      //todo: set position to middle of the player's hand
       projectile.setCenterPosition(handCenterPositionX, handCenterPositionY);
       projectile.render(gameContainer, stateBasedGame, graphics);
     }

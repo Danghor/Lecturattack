@@ -3,64 +3,64 @@
     <projectile>
         <image>resources/images/exam.png</image>
         <destroys>ENEMY</destroys>
-        <vertice>
+        <vertex>
             <x>0</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>29</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>29</x>
             <y>35</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>35</y>
-        </vertice>
+        </vertex>
         <mass>1.2</mass>
     </projectile>
     <projectile>
         <image>resources/images/Android.png</image>
         <destroys>LIBRARY</destroys>
-        <vertice>
+        <vertex>
             <x>0</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>29</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>29</x>
             <y>35</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>35</y>
-        </vertice>
+        </vertex>
         <mass>1</mass>
     </projectile>
     <projectile>
         <image>resources/images/CPointer.png</image>
         <destroys>RAM</destroys>
-        <vertice>
+        <vertex>
             <x>0</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>29</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>29</x>
             <y>31</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>31</y>
-        </vertice>
+        </vertex>
         <mass>1</mass>
     </projectile>
 </projectiles>

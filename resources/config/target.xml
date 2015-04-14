@@ -7,22 +7,22 @@
         <maxHits>3</maxHits>
         <targetType>RAM</targetType>
         <positioning>VERTICAL</positioning>
-        <vertice>
+        <vertex>
             <x>0</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>43</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>43</x>
             <y>99</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>99</y>
-        </vertice>
+        </vertex>
         <mass>10</mass>
     </target>
     <target>
@@ -32,22 +32,22 @@
         <maxHits>3</maxHits>
         <targetType>RAM</targetType>
         <positioning>HORIZONTAL</positioning>
-        <vertice>
+        <vertex>
             <x>0</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>43</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>99</x>
             <y>43</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>99</x>
             <y>0</y>
-        </vertice>
+        </vertex>
         <mass>10</mass>
     </target>
     <target>
@@ -57,22 +57,22 @@
         <maxHits>3</maxHits>
         <targetType>LIBRARY</targetType>
         <positioning>VERTICAL</positioning>
-        <vertice>
+        <vertex>
             <x>0</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>43</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>43</x>
             <y>99</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>99</y>
-        </vertice>
+        </vertex>
         <mass>20</mass>
     </target>
     <target>
@@ -82,22 +82,22 @@
         <maxHits>3</maxHits>
         <targetType>LIBRARY</targetType>
         <positioning>HORIZONTAL</positioning>
-        <vertice>
+        <vertex>
             <x>0</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>43</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>99</x>
             <y>43</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>99</x>
             <y>0</y>
-        </vertice>
+        </vertex>
         <mass>20</mass>
     </target>
     <target>
@@ -107,22 +107,38 @@
         <maxHits>2</maxHits>
         <targetType>ENEMY</targetType>
         <targetMetaType>ENEMY</targetMetaType>
-        <vertice>
+        <vertex>
             <x>0</x>
+            <y>7</y>
+        </vertex>
+        <vertex>
+            <x>40</x>
+            <y>7</y>
+        </vertex>
+        <vertex>
+            <x>40</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>66</x>
             <y>0</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>66</x>
+            <y>30</y>
+        </vertex>
+        <vertex>
+            <x>42</x>
+            <y>30</y>
+        </vertex>
+        <vertex>
+            <x>42</x>
             <y>95</y>
-        </vertice>
-        <vertice>
+        </vertex>
+        <vertex>
             <x>0</x>
             <y>95</y>
-        </vertice>
+        </vertex>
         <mass>60</mass>
     </target>
 </targets>

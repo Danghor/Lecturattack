@@ -36,13 +36,12 @@ public class TargetMeta extends MetaObject {
         if (!targetStandard.getImageSlightlyBroken().equals("")) {
           images.add(new Image(targetStandard.getImageSlightlyBroken()));
         }
-        if (!targetStandard.getImageAlmostBroken().equals("")) {//TODO find another way than just leaving one field blank --> maybe really list
+        if (!targetStandard.getImageAlmostBroken().equals("")) {
           images.add(new Image(targetStandard.getImageAlmostBroken()));
         }
       } catch (SlickException e) {
         e.printStackTrace();
       }
-      //TODO
       TargetType type;
       switch (targetStandard.getTargetType()) {
         case "ENEMY":
