@@ -55,8 +55,8 @@ public class Target extends RigidBody {
       metaObject.getImage(hitCounter).draw(getSmallestX(), getSmallestY());
     }
 
-//TODO remove if not needed anymor
-// This shows the hitbox of the targets
+    //TODO remove if not needed anymore
+    // This shows the hitbox of the targets
     Polygon poly = new Polygon();
     for (EnhancedVector point : vertices) {
       poly.addPoint(point.getX(), point.getY());
