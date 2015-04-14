@@ -34,13 +34,16 @@ public class GameState extends BasicGameState implements InputListener {
   private InformationField scoreField;
   private InformationField playerName;
   private Image background;
+  private Image victory;
+  private Image defeat;
   private int score;
+  private GameStatus gameStatus;
 
   public GameState(int stateID) {
     GameState.stateID = stateID;
   }
 
-  //todo: save wind for current level and only refresh when new level is loaded
+  // todo: save wind for current level and only refresh when new level is loaded
   private static float getRandomWind() {
     return (float) ((Math.random() * 10) % 5 - 2.5);
   }
@@ -60,11 +63,12 @@ public class GameState extends BasicGameState implements InputListener {
     }
     projectile = null;
 
-    scoreField = new InformationField(1000, 25, "Score: ");
+    scoreField = new InformationField(10, 25, "Score: ");
     // set a starting score
     score = 100;
-    playerName = new InformationField(1000, 0, "Dozent: ");
+    playerName = new InformationField(10, 0, "Dozent: ");
     playerName.setDynamicText(players.get(currentPlayer).getName());
+    gameStatus = GameStatus.PLAYING;
   }
 
   private void resetLevel() {
@@ -80,6 +84,8 @@ public class GameState extends BasicGameState implements InputListener {
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("background");
+    victory = FileHandler.loadImage("victory");
+    defeat = FileHandler.loadImage("defeat");
     players = new ArrayList<>();
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
@@ -102,46 +108,69 @@ public class GameState extends BasicGameState implements InputListener {
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-
     scoreField.render(gameContainer, stateBasedGame, graphics);
     playerName.render(gameContainer, stateBasedGame, graphics);
-
+    if (gameStatus == GameStatus.LEVEL_WON) {
+      graphics.drawImage(victory, 0, 0);
+    } else if (gameStatus == GameStatus.LEVEL_LOST) {
+      graphics.drawImage(defeat, 0, 0);
+    }
   }
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-
     changeThrowingDegreeWithUserInput(gameContainer);
-
     score += PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
     scoreField.setDynamicText(Integer.toString(score));
-
     players.get(currentPlayer).updatePowerSlider(delta);
+  }
+
+  /**
+   * gets called when the projectile is not moving anymore and the previous turn
+   * is over
+   */
+  public void initiateNextThrow() {
+    // TODO: call this function
+    // TODO: check if there are no more enemies alive
+    if (false) {
+      gameStatus = GameStatus.LEVEL_WON;
+    } else if (score <= 0) {
+      gameStatus = GameStatus.LEVEL_LOST;
+    } else {
+      players.get(currentPlayer).reset();
+    }
   }
 
   @Override
   public void keyPressed(int key, char c) {
     switch (key) {
-      case Input.KEY_SPACE:
+    case Input.KEY_SPACE:
+      if (gameStatus == GameStatus.PLAYING) {
         Projectile checkProjectile = players.get(currentPlayer).throwProjectile();
         if (checkProjectile != null) {
           this.projectile = checkProjectile;
           score -= 10;
         }
-        break;
-      case Input.KEY_ESCAPE:
-        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
-        break;
-      case Input.KEY_UP:
-        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
-          selectNextPlayer();
-        }
-        break;
-      case Input.KEY_DOWN:
-        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
-          selectPreviousPlayer();
-        }
-        break;
+      } else if (gameStatus == GameStatus.LEVEL_WON) {
+        currentLevel++;
+        loadLevel(currentLevel);
+      } else if (gameStatus == GameStatus.LEVEL_LOST) {
+        loadLevel(currentLevel);
+      }
+      break;
+    case Input.KEY_ESCAPE:
+      stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+      break;
+    case Input.KEY_UP:
+      if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+        selectNextPlayer();
+      }
+      break;
+    case Input.KEY_DOWN:
+      if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+        selectPreviousPlayer();
+      }
+      break;
     }
   }
 
@@ -185,5 +214,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void setCurrentLevel(int currentLevel) {
     this.currentLevel = currentLevel;
+  }
+
+  public enum GameStatus {
+    PLAYING, LEVEL_WON, LEVEL_LOST
   }
 }
