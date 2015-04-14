@@ -52,7 +52,7 @@ public class Target extends RigidBody {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     if (!isDestroyed()) {
-      graphics.drawImage(metaObject.getImage(hitCounter), vertices.get(0).x, vertices.get(0).y);
+      metaObject.getImage(hitCounter).draw(getSmallestX(), getSmallestY());
     }
 
 //TODO remove if not needed anymor
