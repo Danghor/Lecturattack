@@ -2,6 +2,7 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,7 +22,7 @@ public class Target extends RigidBody {
     hitCounter = 0;
   }
 
-  public TargetMeta.TargetType getType() {
+  public TargetType getType() {
     return metaObject.getType();
   }
 

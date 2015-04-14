@@ -2,6 +2,7 @@ package Lecturattack.utilities;
 
 import Lecturattack.entities.Target;
 import Lecturattack.entities.TargetMeta;
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
@@ -40,24 +41,24 @@ public class LevelGenerator {
         TargetMeta targetMeta;
         float posX = levelElement.getPositionX();
         float posY = levelElement.getPositionY();
-        TargetMeta.TargetType targetType;
+        TargetType targetType;
 
         //the targets levelElements are distinguished by their XmlObjectType, which specifys what target they are (or if they are a player).
         //after that for RAM and LIBRARY the position must be checked, because there are different targetMetas for them
         if (levelElement.getType() == XmlObjectType.RAM) {
           if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
-            targetType = TargetMeta.TargetType.RAMH;
+            targetType = TargetType.RAMH;
           } else {
-            targetType = TargetMeta.TargetType.RAMV;
+            targetType = TargetType.RAMV;
           }
         } else if (levelElement.getType() == XmlObjectType.LIBRARY) {
           if (levelElement.getPositioning() == Positioning.HORIZONTAL) {
-            targetType = TargetMeta.TargetType.LIBRARYH;
+            targetType = TargetType.LIBRARYH;
           } else {
-            targetType = TargetMeta.TargetType.LIBRARYV;
+            targetType = TargetType.LIBRARYV;
           }
         } else {
-          targetType = TargetMeta.TargetType.ENEMY;
+          targetType = TargetType.ENEMY;
         }
         targetMeta = TargetMeta.getInstance(targetType);
         targets.add(new Target(targetMeta, posX, posY));

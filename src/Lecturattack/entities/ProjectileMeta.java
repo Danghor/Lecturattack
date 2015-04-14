@@ -1,5 +1,7 @@
 package Lecturattack.entities;
 
+import Lecturattack.entities.types.ProjectileType;
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.ProjectileStandard;
 import org.newdawn.slick.Image;
@@ -24,24 +26,24 @@ public class ProjectileMeta extends MetaObject {
 
       ArrayList<float[]> outline;
       Image image = null;
-      ArrayList<TargetMeta.TargetType> destroys = new ArrayList<>();
+      ArrayList<TargetType> destroys = new ArrayList<>();
 
       switch (projectileStandard.getDestroys()) {
         case "ENEMY":
-          TargetMeta.TargetType ENEMY = TargetMeta.TargetType.ENEMY;
+          TargetType ENEMY = TargetType.ENEMY;
           destroys.add(ENEMY);
           type = ProjectileType.EXAM; //todo: read type from XML files
           break;
         case "RAM":
-          TargetMeta.TargetType RAMH = TargetMeta.TargetType.RAMH;
-          TargetMeta.TargetType RAMV = TargetMeta.TargetType.RAMV;
+          TargetType RAMH = TargetType.RAMH;
+          TargetType RAMV = TargetType.RAMV;
           destroys.add(RAMH);
           destroys.add(RAMV);
           type = ProjectileType.POINTER;
           break;
         case "LIBRARY":
-          TargetMeta.TargetType LIBRARYH = TargetMeta.TargetType.LIBRARYH;
-          TargetMeta.TargetType LIBRARYV = TargetMeta.TargetType.LIBRARYV;
+          TargetType LIBRARYH = TargetType.LIBRARYH;
+          TargetType LIBRARYV = TargetType.LIBRARYV;
           destroys.add(LIBRARYH);
           destroys.add(LIBRARYV);
           type = ProjectileType.ROBOT;
@@ -63,9 +65,9 @@ public class ProjectileMeta extends MetaObject {
   }
 
   private Image image;
-  private ArrayList<TargetMeta.TargetType> destroys;
+  private ArrayList<TargetType> destroys;
 
-  private ProjectileMeta(ArrayList<float[]> outline, Image image, ArrayList<TargetMeta.TargetType> destroys) {
+  private ProjectileMeta(ArrayList<float[]> outline, Image image, ArrayList<TargetType> destroys) {
     this.outline = outline;
     this.image = image;
     this.destroys = destroys;
@@ -75,11 +77,11 @@ public class ProjectileMeta extends MetaObject {
     return (ProjectileMeta) instances.get(type);
   }
 
-  ArrayList<TargetMeta.TargetType> getDestroys() {
+  ArrayList<TargetType> getDestroys() {
     return destroys;
   }
 
-  ArrayList<TargetMeta.TargetType> getDestroyableTargetTypes() {
+  ArrayList<TargetType> getDestroyableTargetTypes() {
     return destroys;
   }
 
@@ -87,11 +89,4 @@ public class ProjectileMeta extends MetaObject {
     //copying is necessary for rotating, otherwise instances could not be rotated individually
     return image.copy();
   }
-
-  public enum ProjectileType {
-    EXAM,
-    ROBOT,
-    POINTER
-  }
-
 }
