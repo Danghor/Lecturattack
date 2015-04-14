@@ -101,7 +101,6 @@ public class Player implements Renderable {
       if ((degreeDifference > 0 && directionAngle < 20) || (degreeDifference < 0 && directionAngle > -180)) {
         this.directionAngle += degreeDifference;
       }
-      System.out.println(directionAngle);
       setHandCenterPosition();
     }
   }
