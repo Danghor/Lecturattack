@@ -27,7 +27,7 @@ public class GameState extends BasicGameState implements InputListener {
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
-  private int currentPlayer;
+  private int currentPlayerIndex;
   private Level level;
   private Projectile projectile;
   private Flag flag;
@@ -43,6 +43,10 @@ public class GameState extends BasicGameState implements InputListener {
   //todo: save wind for current level and only refresh when new level is loaded
   private static float getRandomWind() {
     return (float) ((Math.random() * 10) % 5 - 2.5);
+  }
+
+  private Player getCurrentPlayer() {
+    return players.get(currentPlayerIndex);
   }
 
   public void loadLevel(int level) {
@@ -63,7 +67,7 @@ public class GameState extends BasicGameState implements InputListener {
     // set a starting score
     score = 100;
     playerName = new InformationField(1000, 0, "Dozent: ");
-    playerName.setDynamicText(players.get(currentPlayer).getName());
+    playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
   private void resetLevel() {
@@ -84,7 +88,7 @@ public class GameState extends BasicGameState implements InputListener {
     for (PlayerStandard meta : playerStandards) {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
-    currentPlayer = 0;
+    currentPlayerIndex = 0;
     setCurrentLevel(1); // default
 
   }
@@ -92,7 +96,7 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
-    players.get(currentPlayer).render(gameContainer, stateBasedGame, graphics);
+    getCurrentPlayer().render(gameContainer, stateBasedGame, graphics);
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
@@ -109,20 +113,26 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+    if (projectile != null) {
+      if (projectile.isUnreachable()) {
+        projectile = null;
+        getCurrentPlayer().reset();
+      }
+    }
 
     changeThrowingDegreeWithUserInput(gameContainer);
 
     score += PhysicsEngine.calculateStep(projectile, level.getTargets(), getRandomWind(), delta, level.getGroundLevel());
     scoreField.setDynamicText(Integer.toString(score));
 
-    players.get(currentPlayer).updatePowerSlider(delta);
+    getCurrentPlayer().updatePowerSlider(delta);
   }
 
   @Override
   public void keyPressed(int key, char c) {
     switch (key) {
       case Input.KEY_SPACE:
-        Projectile checkProjectile = players.get(currentPlayer).throwProjectile();
+        Projectile checkProjectile = getCurrentPlayer().throwProjectile();
         if (checkProjectile != null) {
           this.projectile = checkProjectile;
           score -= 10;
@@ -132,12 +142,12 @@ public class GameState extends BasicGameState implements InputListener {
         stateBasedGame.enterState(Lecturattack.PAUSESTATE);
         break;
       case Input.KEY_UP:
-        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+        if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
           selectNextPlayer();
         }
         break;
       case Input.KEY_DOWN:
-        if (players.get(currentPlayer).getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+        if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
           selectPreviousPlayer();
         }
         break;
@@ -146,36 +156,36 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void changeThrowingDegreeWithUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      players.get(currentPlayer).moveArm(DEGREE_ARM_MOVE);
+      getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      players.get(currentPlayer).moveArm(-DEGREE_ARM_MOVE);
+      getCurrentPlayer().moveArm(-DEGREE_ARM_MOVE);
     }
   }
 
   private void selectNextPlayer() {
-    float previousAngle = players.get(currentPlayer).getAngle();
+    float previousAngle = getCurrentPlayer().getAngle();
 
-    if (currentPlayer >= players.size() - 1) {
-      currentPlayer = 0;
+    if (currentPlayerIndex >= players.size() - 1) {
+      currentPlayerIndex = 0;
     } else {
-      currentPlayer++;
+      currentPlayerIndex++;
     }
 
-    players.get(currentPlayer).setAngle(previousAngle);
-    playerName.setDynamicText(players.get(currentPlayer).getName());
+    getCurrentPlayer().setAngle(previousAngle);
+    playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
   private void selectPreviousPlayer() {
-    float previousAngle = players.get(currentPlayer).getAngle();
+    float previousAngle = getCurrentPlayer().getAngle();
 
-    if (currentPlayer <= 0) {
-      currentPlayer = players.size() - 1;
+    if (currentPlayerIndex <= 0) {
+      currentPlayerIndex = players.size() - 1;
     } else {
-      currentPlayer--;
+      currentPlayerIndex--;
     }
 
-    players.get(currentPlayer).setAngle(previousAngle);
-    playerName.setDynamicText(players.get(currentPlayer).getName());
+    getCurrentPlayer().setAngle(previousAngle);
+    playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
   public int getCurrentLevel() {
