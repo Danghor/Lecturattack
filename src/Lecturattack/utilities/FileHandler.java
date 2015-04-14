@@ -19,7 +19,8 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
-  private static final String LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Lecturattack.txt";
+  //todo: create folder "Coffee Productions" in appdata/roaming
+  private static final String LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; //TODO add LevelFiles
   public static int latestLevel = 1;
 
@@ -140,11 +141,8 @@ public class FileHandler {
         out.write(text);
         out.close();
       } catch (IOException e) {
-        System.out.println("Exception ");
+        System.out.println("Exception");
       }
-
-      return;
-
     }
   }
 
@@ -155,7 +153,7 @@ public class FileHandler {
       out.write(text);
       out.close();
     } catch (IOException e) {
-      System.out.println("Exception ");
+      System.out.println("Exception");
     }
   }
 
