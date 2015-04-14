@@ -2,6 +2,7 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.statemachine.Lecturattack;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Point;
@@ -134,6 +135,40 @@ public abstract class RigidBody implements Renderable {
     }
 
     return biggestY;
+  }
+
+  /**
+   * This method only works correctly if the RigidBody is not fully or partially outside of the visible frame.
+   *
+   * @return The abscissa of the vertex with the smallest x-value.
+   */
+  public float getSmallestX() {
+    float smallestX = Lecturattack.WIDTH;
+
+    for (EnhancedVector vertex : vertices) {
+      if (vertex.x < smallestX) {
+        smallestX = vertex.x;
+      }
+    }
+
+    return smallestX;
+  }
+
+  /**
+   * This method only works correctly if the RigidBody is not fully or partially outside of the visible frame.
+   *
+   * @return The ordinate of the vertex with the smallest y-value.
+   */
+  public float getSmallestY() {
+    float smallestY = Lecturattack.HEIGHT;
+
+    for (EnhancedVector vertex : vertices) {
+      if (vertex.y < smallestY) {
+        smallestY = vertex.y;
+      }
+    }
+
+    return smallestY;
   }
 
   public void setCenterPosition(float x, float y) {

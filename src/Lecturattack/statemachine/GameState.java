@@ -50,7 +50,6 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     setCurrentLevel(level);
-    // TODO see if this can be done somewhere else
     try {
       List<LevelElement> levelElements = FileHandler.getLevelData(level);
       this.level = LevelGenerator.getGeneratedLevel(levelElements);
