@@ -2,11 +2,20 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.utilities.FileHandler;
-import Lecturattack.utilities.menu.AnimatedButton;
-import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import Lecturattack.utilities.FileHandler;
+import Lecturattack.utilities.menu.Button;
+import Lecturattack.utilities.menu.LevelButton;
+import Lecturattack.utilities.menu.MenuButton;
 
 /**
  * @author Andreas Geis
@@ -16,7 +25,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   private final int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
-  private AnimatedButton[] menuButton;
+  private Button[] menuButtons;
   private int currentSelection;
 
   public LevelSelectState(int stateID) {
@@ -32,28 +41,29 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
-    menuButton = new AnimatedButton[8];
-    menuButton[0] = new AnimatedButton(150, 150, FileHandler.loadImage("level1_down"), FileHandler.loadImage("level1"));
-    menuButton[1] = new AnimatedButton(489, 150, FileHandler.loadImage("level2_down"), FileHandler.loadImage("level2"));
-    menuButton[2] = new AnimatedButton(828, 150, FileHandler.loadImage("level3_down"), FileHandler.loadImage("level3"));
-    menuButton[3] = new AnimatedButton(150, 350, FileHandler.loadImage("level4_down"), FileHandler.loadImage("level4"));
-    menuButton[4] = new AnimatedButton(489, 350, FileHandler.loadImage("level5_down"), FileHandler.loadImage("level5"));
-    menuButton[5] = new AnimatedButton(828, 350, FileHandler.loadImage("level6_down"), FileHandler.loadImage("level6"));
-    menuButton[6] = new AnimatedButton(150, 600, FileHandler.loadImage("back_down"), FileHandler.loadImage("back"));
-    menuButton[7] = new AnimatedButton(888, 600, FileHandler.loadImage("reset_down"), FileHandler.loadImage("reset"));
+    menuButtons = new Button[8];
+    menuButtons[0] = new LevelButton(150, 150, FileHandler.loadImage("level1"), FileHandler.loadImage("level1_locked"));
+    menuButtons[1] = new LevelButton(489, 150, FileHandler.loadImage("level2"), FileHandler.loadImage("level2_locked"));
+    menuButtons[2] = new LevelButton(828, 150, FileHandler.loadImage("level3"), FileHandler.loadImage("level3_locked"));
+    menuButtons[3] = new LevelButton(150, 350, FileHandler.loadImage("level4"), FileHandler.loadImage("level4_locked"));
+    menuButtons[4] = new LevelButton(489, 350, FileHandler.loadImage("level5"), FileHandler.loadImage("level5_locked"));
+    menuButtons[5] = new LevelButton(828, 350, FileHandler.loadImage("level6"), FileHandler.loadImage("level6_locked"));
+    menuButtons[6] = new MenuButton(150, 600, FileHandler.loadImage("back_down"), FileHandler.loadImage("back"));
+    menuButtons[7] = new MenuButton(888, 600, FileHandler.loadImage("reset_down"), FileHandler.loadImage("reset"));
   }
 
   @Override
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    int lastLevelNumber = FileHandler.getLastLevelNumber();
+    currentSelection = 6;
+    // initialize the level select with the current player progress
+    for (int i = 0; i < lastLevelNumber; i++) {
+      menuButtons[i].setActive();
+    }
+  }
+  
   public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 
-  }
-
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    graphics.drawImage(background, 0, 0);
-    for (int i = 0; i < menuButton.length; i++) {
-      menuButton[i].render(graphics, currentSelection == i);
-    }
   }
 
   /*
@@ -86,19 +96,42 @@ public class LevelSelectState extends BasicGameState implements InputListener {
         currentSelection = 7;
       }
     } else if (key == Input.KEY_ENTER) {
-      if (currentSelection >= 0 && currentSelection <= 5) {
+      // check if the level is unlocked yet
+      if (menuButtons[currentSelection] instanceof LevelButton && menuButtons[currentSelection].getActive()) {
         ((GameState) stateBasedGame.getState(GameState.stateID)).loadLevel(currentSelection + 1);
         stateBasedGame.enterState(GameState.stateID);
       } else if (currentSelection == 6) {
         stateBasedGame.enterState(0);
       } else if (currentSelection == 7) {
-        FileHandler.resetLevelNumber();
+        FileHandler.resetLastLevelNumber();
+        for (int i = 1; i <= 5; i++) {
+          menuButtons[i].setInactive();
+        }
       }
     }
   }
 
   @Override
-  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    currentSelection = 6;
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    graphics.drawImage(background, 0, 0);
+    // draw a red rectangle around the selected level
+    int rectPosition = 6;
+    graphics.setLineWidth(7);
+    graphics.setColor(Color.red);
+    for (int i = 0; i < menuButtons.length; i++) {
+      if (currentSelection == i) {
+        // only change the button image, if it is a menu button
+        // level select buttons get changed from player progress
+        if (menuButtons[i] instanceof MenuButton) {
+          menuButtons[i].setActive(); 
+        }
+        rectPosition = i;
+      }
+      menuButtons[i].render(gameContainer, stateBasedGame, graphics);
+    }
+    // check if a level is selected, or a menu button
+    if (rectPosition <= 5) {
+      graphics.drawRect(menuButtons[rectPosition].getX(), menuButtons[rectPosition].getY(), 302, 169);
+    }
   }
 }
