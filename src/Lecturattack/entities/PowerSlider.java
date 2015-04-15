@@ -23,12 +23,6 @@ public class PowerSlider implements Renderable {
     powerslideLine = FileHandler.loadImage("powerslideLine");
   }
 
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    graphics.drawImage(powerslide, 10, 380);//TODO.andreas constants for the position
-    graphics.drawImage(powerslideLine, 10 + selectedForce, 368);
-  }
-
   /**
    * updates the PowerSlider, depending on direction it either moves right or left
    *
@@ -51,12 +45,18 @@ public class PowerSlider implements Renderable {
     }
   }
 
-  public float getSelectedForce() {
-    return selectedForce;
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+    graphics.drawImage(powerslide, 10, 380);//TODO.andreas constants for the position
+    graphics.drawImage(powerslideLine, 10 + selectedForce, 368);
   }
 
   public void reset() {
     selectedForce = 0;
     movingRight = true;
+  }
+
+  public float getSelectedForce() {
+    return selectedForce;
   }
 }

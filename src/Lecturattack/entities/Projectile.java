@@ -25,6 +25,38 @@ public class Projectile extends RigidBody {
     torque = 0f;
   }
 
+  @Override
+  public void update(float scaledDelta) {
+    super.update(scaledDelta);
+
+    float angularAcceleration = torque / getInertia();
+    angularVelocity += angularAcceleration * scaledDelta;
+    rotate(angularVelocity * scaledDelta, getCenter());
+
+    torque = 0;
+  }
+
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+    Image image = metaObject.getImage();
+    image.rotate(getAngle());
+    try {
+      graphics.drawImage(image, getSmallestX(), getSmallestY());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void applyTorque(float value) {
+    torque += value;
+  }
+
+  public void rotate(float angle, EnhancedVector center) {
+    for (EnhancedVector vertex : vertices) {
+      vertex.rotate(angle, center);
+    }
+  }
+
   public ArrayList<TargetType> getDestroys() {
     return metaObject.getDestroys();
   }
@@ -46,11 +78,9 @@ public class Projectile extends RigidBody {
     EnhancedVector edgeA = (EnhancedVector) (new EnhancedVector(vertexC.x, vertexC.y)).sub(vertexB);
     EnhancedVector edgeB = (EnhancedVector) (new EnhancedVector(vertexC.x, vertexC.y)).sub(vertexA);
     EnhancedVector edgeC = (EnhancedVector) (new EnhancedVector(vertexB.x, vertexB.y)).sub(vertexA);
-
     float lengthA = edgeA.length();
     float lengthB = edgeB.length();
     float lengthC = edgeC.length();
-
     return (float) Math.acos((lengthB * lengthB + lengthC * lengthC - lengthA * lengthA) / (2 * lengthB * lengthC));
   }
 
@@ -59,42 +89,9 @@ public class Projectile extends RigidBody {
     return metaObject.getMass();
   }
 
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    Image image = metaObject.getImage();
-
-    image.rotate(getAngle());
-
-    try {
-      graphics.drawImage(image, getSmallestX(), getSmallestY());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   protected float getInertia() {
     double length = (new EnhancedVector(getCenter().x - vertices.get(0).x, getCenter().y - vertices.get(0).y)).length();
     return (getMass() * (float) Math.pow(length, 4)) / 120000;
   }
 
-  public void applyTorque(float value) {
-    torque += value;
-  }
-
-  public void rotate(float angle, EnhancedVector center) {
-    for (EnhancedVector vertex : vertices) {
-      vertex.rotate(angle, center);
-    }
-  }
-
-  @Override
-  public void update(float scaledDelta) {
-    super.update(scaledDelta);
-
-    float angularAcceleration = torque / getInertia();
-    angularVelocity += angularAcceleration * scaledDelta;
-    rotate(angularVelocity * scaledDelta, getCenter());
-
-    torque = 0;
-  }
 }
