@@ -101,7 +101,6 @@ public class Player implements Renderable {
       if ((degreeDifference > 0 && directionAngle < 20) || (degreeDifference < 0 && directionAngle > -180)) {
         this.directionAngle += degreeDifference;
       }
-      System.out.println(directionAngle);
       setHandCenterPosition();
     }
   }
@@ -130,8 +129,6 @@ public class Player implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-
-
     armImage.setRotation(directionAngle);
     graphics.drawImage(bodyImage, positionX, positionY);
     graphics.drawImage(armImage, armImageX, armImageY);

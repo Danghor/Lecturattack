@@ -2,6 +2,7 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,14 +22,14 @@ public class Target extends RigidBody {
     hitCounter = 0;
   }
 
-  public TargetMeta.TargetType getType() {
+  public TargetType getType() {
     return metaObject.getType();
   }
 
   public int hit(Projectile projectile) {
     int scoreReturned = 0;
 
-    if (projectile.getDestroys().contains(getType()) && hitCounter < metaObject.getMaxHits()) {
+    if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
       hitCounter++;
       scoreReturned = getHitScore();
     }
@@ -51,12 +52,18 @@ public class Target extends RigidBody {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    if (!isDestroyed()) {
-      graphics.drawImage(metaObject.getImage(hitCounter), vertices.get(0).x, vertices.get(0).y);
+    /**
+     * The image is being rendered if:
+     *  1. The target is not destroyed, OR
+     *  2. The target is an ENEMY that has not been fallen out of the game frame yet.
+     */
+
+    if (!isDestroyed() || (getType() == TargetType.ENEMY && !isUnreachable())) {
+      metaObject.getImage(hitCounter).draw(getSmallestX(), getSmallestY());
     }
 
-//TODO remove if not needed anymor
-// This shows the hitbox of the targets
+    //TODO remove if not needed anymore
+    // This shows the hitbox of the targets
     Polygon poly = new Polygon();
     for (EnhancedVector point : vertices) {
       poly.addPoint(point.getX(), point.getY());

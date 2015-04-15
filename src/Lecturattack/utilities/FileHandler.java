@@ -4,6 +4,7 @@ import Lecturattack.utilities.xmlHandling.configLoading.*;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
 import javax.xml.bind.JAXBContext;
@@ -22,6 +23,7 @@ public class FileHandler {
   //todo: create folder "Coffee Productions" in appdata/roaming
   private static final String LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; //TODO add LevelFiles
+  private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   public static int latestLevel = 1;
 
   /**
@@ -125,7 +127,7 @@ public class FileHandler {
 
       fr.close();
     } catch (IOException e) {
-      System.out.println("Fehler beim Lesen der Datei " + LAST_LEVEL_FILE_PATH);
+      System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
       System.out.println(e.toString());
     }
 
@@ -141,7 +143,7 @@ public class FileHandler {
         out.write(text);
         out.close();
       } catch (IOException e) {
-        System.out.println("Exception");
+        System.out.println("Exception");//todo: not helpful
       }
     }
   }
@@ -153,7 +155,7 @@ public class FileHandler {
       out.write(text);
       out.close();
     } catch (IOException e) {
-      System.out.println("Exception");
+      System.out.println("Exception");//todo: not helpful
     }
   }
 
@@ -165,5 +167,18 @@ public class FileHandler {
       System.out.println("Error while loading image.");
     }
     return image;
+  }
+
+  public static Music getBackgroundMusic() {
+    Music bgMusic = null;
+
+    try {
+      bgMusic = new Music(BACKGROUND_MUSIC_PATH);
+    } catch (SlickException e) {
+      System.out.println("Could not process file " + BACKGROUND_MUSIC_PATH);
+      e.printStackTrace();
+    }
+
+    return bgMusic;
   }
 }

@@ -103,17 +103,17 @@
     <target>
         <imageIntact>resources/images/studentOk.png</imageIntact>
         <imageSlightlyBroken>resources/images/studentHit.png</imageSlightlyBroken>
-        <imageAlmostBroken></imageAlmostBroken>
-        <maxHits>2</maxHits>
+        <imageAlmostBroken/>
+        <maxHits>1</maxHits>
         <targetType>ENEMY</targetType>
         <targetMetaType>ENEMY</targetMetaType>
         <vertex>
             <x>0</x>
-            <y>7</y>
+            <y>4</y>
         </vertex>
         <vertex>
             <x>40</x>
-            <y>7</y>
+            <y>4</y>
         </vertex>
         <vertex>
             <x>40</x>

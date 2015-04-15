@@ -2,6 +2,7 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.statemachine.Lecturattack;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Point;
@@ -124,16 +125,76 @@ public abstract class RigidBody implements Renderable {
     force = new EnhancedVector(0, 0);
   }
 
-  public float getBiggestY() {
-    float biggestY = 0f;
+  public float getBiggestX() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float biggestX = vertices.get(0).x;
 
-    for (EnhancedVector vertex : vertices) {
-      if (vertex.y > biggestY) {
-        biggestY = vertex.y;
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.x > biggestX) {
+          biggestX = vertex.x;
+        }
       }
-    }
 
-    return biggestY;
+      return biggestX;
+    }
+  }
+
+  public float getBiggestY() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float biggestY = vertices.get(0).y;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.y > biggestY) {
+          biggestY = vertex.y;
+        }
+      }
+
+      return biggestY;
+    }
+  }
+
+  /**
+   * @return The abscissa of the vertex with the smallest x-value.
+   */
+  public float getSmallestX() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float smallestX = vertices.get(0).x;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.x < smallestX) {
+          smallestX = vertex.x;
+        }
+      }
+
+      return smallestX;
+    }
+  }
+
+  /**
+   * This method only works correctly if the RigidBody is not fully or partially outside of the visible frame.
+   *
+   * @return The ordinate of the vertex with the smallest y-value.
+   */
+  public float getSmallestY() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float smallestY = vertices.get(0).y;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.y < smallestY) {
+          smallestY = vertex.y;
+        }
+      }
+
+      return smallestY;
+    }
   }
 
   public void setCenterPosition(float x, float y) {
@@ -143,6 +204,16 @@ public abstract class RigidBody implements Renderable {
     EnhancedVector direction = (EnhancedVector) destination.sub(center);
 
     move(direction);
+  }
+
+  /**
+   * Determines whether or not this object is outside of the visible frame, except for the top.
+   * The top is ignored, since the Object will eventually fall down again.
+   *
+   * @return A boolean value indicating whether or not the current object flew out of the frame sideways or down.
+   */
+  public boolean isUnreachable() {
+    return getBiggestX() < 0 || getSmallestX() > Lecturattack.WIDTH || getSmallestY() > Lecturattack.HEIGHT;
   }
 
   public boolean collidesWith(RigidBody partner) {
@@ -208,21 +279,18 @@ public abstract class RigidBody implements Renderable {
         Point start = new Point(partnerLine.getX1(), partnerLine.getY1());
         Point end = new Point(partnerLine.getX2(), partnerLine.getY2());
         Point currentPoint;
-        if (thisPolygon.contains(start) && thisPolygon.contains(end)) {
+        if (thisPolygon.contains(start) && thisPolygon.contains(end)) { //this object contains both edges of the partnerLine
           intersectingLine = partnerLine;
-          break;
-        } else if (thisPolygon.contains(start)) {
-          currentPoint = start;
-          EnhancedVector direction = new EnhancedVector(end.getX() - start.getX(), end.getY() - start.getY());
-          while (thisPolygon.contains(currentPoint)) {
-            int previousSize = penetrationSizes.get(currentSizeArrayIndex);
-            penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);
-            currentPoint.setX(currentPoint.getX() + direction.x);
-            currentPoint.setY(currentPoint.getY() + direction.y);
+          break; //todo: avoid break;
+        } else {
+          EnhancedVector direction;
+          if (thisPolygon.contains(start)) { //this object contains the start point of the partnerLine
+            currentPoint = start;
+            direction = new EnhancedVector(end.getX() - start.getX(), end.getY() - start.getY());
+          } else { //this object contains the end point of the partnerLine
+            currentPoint = end;
+            direction = new EnhancedVector(start.getX() - end.getX(), start.getY() - end.getY());
           }
-        } else if (thisPolygon.contains(end)) {
-          currentPoint = end;
-          EnhancedVector direction = new EnhancedVector(start.getX() - end.getX(), start.getY() - end.getY());
           while (thisPolygon.contains(currentPoint)) {
             int previousSize = penetrationSizes.get(currentSizeArrayIndex);
             penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);
