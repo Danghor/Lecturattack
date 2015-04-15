@@ -12,10 +12,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Flag implements Renderable {
   private float windScale;
-  private Polygon triangle = new Polygon();
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+    Polygon triangle = new Polygon();
     triangle.addPoint(gameContainer.getWidth() / 2, 10);
     triangle.addPoint(gameContainer.getWidth() / 2, 70);
     triangle.addPoint(gameContainer.getWidth() / 2 + windScale, 40);
