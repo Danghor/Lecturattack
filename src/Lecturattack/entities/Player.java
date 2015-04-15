@@ -42,10 +42,6 @@ public class Player implements Renderable {
   private PlayerState playerState;
   private String name;
 
-  public enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, THROWING
-  }
-
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     this.positionX = 0f;
     this.positionY = 0f;
@@ -56,8 +52,6 @@ public class Player implements Renderable {
     this.powerSlider = new PowerSlider();
     reset();
   }
-
-
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
@@ -159,5 +153,9 @@ public class Player implements Renderable {
 
   public PlayerState getPlayerState() {
     return playerState;
+  }
+
+  public enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, THROWING
   }
 }

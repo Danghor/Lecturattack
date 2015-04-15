@@ -11,7 +11,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +39,6 @@ public class GameState extends BasicGameState implements InputListener {
   private float wind;
   private GameStatus gameStatus;
   private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
-
-  public enum GameStatus {
-    PLAYING, LEVEL_WON, LEVEL_LOST
-  }
 
   public GameState(int stateID) {
     GameState.stateID = stateID;
@@ -147,19 +142,14 @@ public class GameState extends BasicGameState implements InputListener {
 
   public void loadLevel(int level) {
     setCurrentLevel(level);
-    try {
-      List<LevelElement> levelElements = FileHandler.getLevelData(level);
-      this.level = LevelGenerator.getGeneratedLevel(levelElements);
-    } catch (SlickException | IOException e) {
-      e.printStackTrace();
-    }
+    List<LevelElement> levelElements = FileHandler.getLevelData(level);
+    this.level = LevelGenerator.getGeneratedLevel(levelElements);
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
       randomizeWind();
     }
     projectile = null;
-
 
     //generate a new random wind every time the level is reloaded TODO -> after every throw
     wind = (float) ((Math.random() * 10) % 5 - 2.5);
@@ -242,5 +232,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   private Player getCurrentPlayer() {
     return players.get(currentPlayerIndex);
+  }
+
+  public enum GameStatus {
+    PLAYING, LEVEL_WON, LEVEL_LOST
   }
 }
