@@ -22,7 +22,7 @@ import Lecturattack.utilities.menu.MenuButton;
  * @author Stefanie Raschke
  */
 public class LevelSelectState extends BasicGameState implements InputListener {
-  private int stateID;
+  private final int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private Button[] menuButtons;
@@ -61,8 +61,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
       menuButtons[i].setActive();
     }
   }
-
-  @Override
+  
   public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 
   }
@@ -135,5 +134,4 @@ public class LevelSelectState extends BasicGameState implements InputListener {
       graphics.drawRect(menuButtons[rectPosition].getX(), menuButtons[rectPosition].getY(), 302, 169);
     }
   }
-
 }

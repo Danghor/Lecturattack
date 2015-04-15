@@ -13,7 +13,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,46 +38,12 @@ public class GameState extends BasicGameState implements InputListener {
   private Image victory;
   private Image defeat;
   private int score;
+  private float wind;
   private GameStatus gameStatus;
   private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
 
   public GameState(int stateID) {
     GameState.stateID = stateID;
-  }
-
-  // todo: save wind for current level and only refresh when new level is loaded
-  private static float getRandomWind() {
-    return (float) ((Math.random() * 10) % 5 - 2.5);
-  }
-
-  private Player getCurrentPlayer() {
-    return players.get(currentPlayerIndex);
-  }
-
-  public void loadLevel(int level) {
-    setCurrentLevel(level);
-    try {
-      List<LevelElement> levelElements = FileHandler.getLevelData(level);
-      this.level = LevelGenerator.getGeneratedLevel(levelElements);
-    } catch (SlickException | IOException e) {
-      e.printStackTrace();
-    }
-    for (Player player : players) {
-      player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
-      player.reset();
-    }
-    projectile = null;
-
-    scoreField = new InformationField(10, 25, "Score: ");
-    // set a starting score
-    score = 100;
-    playerName = new InformationField(10, 0, "Dozent: ");
-    playerName.setDynamicText(getCurrentPlayer().getName());
-    gameStatus = GameStatus.PLAYING;
-  }
-
-  private void resetLevel() {
-    loadLevel(getCurrentLevel());
   }
 
   @Override
@@ -100,7 +65,21 @@ public class GameState extends BasicGameState implements InputListener {
     }
     currentPlayerIndex = 0;
     setCurrentLevel(1); // default
+    flag = new Flag();
+  }
 
+  @Override
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+    if (projectile != null) {
+      if (projectile.isUnreachable()) {
+        initiateNextThrow();
+      }
+    }
+    changeThrowingAngleWithUserInput(gameContainer);
+    flag.setWindScale(wind);
+    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+    scoreField.setDynamicText(Integer.toString(score));
+    getCurrentPlayer().updatePowerSlider(delta);
   }
 
   @Override
@@ -110,12 +89,10 @@ public class GameState extends BasicGameState implements InputListener {
     for (Target target : level.getTargets()) {
       target.render(gameContainer, stateBasedGame, graphics);
     }
-
     for (Target deadTarget : deadTargets) {
       deadTarget.render(gameContainer, stateBasedGame, graphics);
     }
-
-    /**
+    /*
      * Render projectile here, if the player doesn't have it
      * If the player has the projectile, it's null
      */
@@ -124,28 +101,12 @@ public class GameState extends BasicGameState implements InputListener {
     }
     scoreField.render(gameContainer, stateBasedGame, graphics);
     playerName.render(gameContainer, stateBasedGame, graphics);
+    flag.render(gameContainer, stateBasedGame, graphics);
     if (gameStatus == GameStatus.LEVEL_WON) {
       graphics.drawImage(victory, 0, 0);
     } else if (gameStatus == GameStatus.LEVEL_LOST) {
       graphics.drawImage(defeat, 0, 0);
     }
-  }
-
-  @Override
-  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-
-    if (projectile != null) {
-      if (projectile.isUnreachable()) {
-        initiateNextThrow();
-      }
-    }
-
-    changeThrowingDegreeWithUserInput(gameContainer);
-
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, getRandomWind(), delta, level.getGroundLevel());
-    scoreField.setDynamicText(Integer.toString(score));
-
-    getCurrentPlayer().updatePowerSlider(delta);
   }
 
   /**
@@ -168,6 +129,7 @@ public class GameState extends BasicGameState implements InputListener {
     } else {
       projectile = null;
       getCurrentPlayer().reset();
+      randomizeWind();
     }
   }
 
@@ -204,7 +166,31 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
-  private void changeThrowingDegreeWithUserInput(GameContainer gameContainer) {
+  public void loadLevel(int level) {
+    setCurrentLevel(level);
+    List<LevelElement> levelElements = FileHandler.getLevelData(level);
+    this.level = LevelGenerator.getGeneratedLevel(levelElements);
+    for (Player player : players) {
+      player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
+      player.reset();
+    }
+
+    projectile = null;
+    randomizeWind();
+
+    scoreField = new InformationField(10, 25, "Score: ");
+    // set a starting score
+    score = 100;
+    playerName = new InformationField(10, 0, "Dozent: ");
+    playerName.setDynamicText(getCurrentPlayer().getName());
+    gameStatus = GameStatus.PLAYING;
+  }
+
+  private void resetLevel() {
+    loadLevel(getCurrentLevel());
+  }
+
+  private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
       getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
@@ -238,12 +224,20 @@ public class GameState extends BasicGameState implements InputListener {
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
+  private void randomizeWind() {
+    wind += (float) ((Math.random() * 5) % 5 - 2.5);
+  }
+
   public int getCurrentLevel() {
     return currentLevel;
   }
 
   public void setCurrentLevel(int currentLevel) {
     this.currentLevel = currentLevel;
+  }
+
+  private Player getCurrentPlayer() {
+    return players.get(currentPlayerIndex);
   }
 
   public enum GameStatus {

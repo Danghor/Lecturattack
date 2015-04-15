@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class EnhancedVectorTest { //Convention: ClassNameTest
 
   @Test
-  public void rotate_clockwise90Degrees_vectorCorrectlyRotated() { //Convention: testedMethod_testedScenarion_expectedResult
+  public void rotate_clockwise90Degrees_vectorCorrectlyRotated() { //Convention: testedMethod_testedScenario_expectedResult
     //Arrange
     EnhancedVector sut; //sut: SystemUnderTest
     EnhancedVector center;

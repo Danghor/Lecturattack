@@ -21,9 +21,7 @@ public class ProjectileMeta extends MetaObject {
     List<ProjectileStandard> projectileStandards = FileHandler.loadProjectileStandards();
 
     for (ProjectileStandard projectileStandard : projectileStandards) {
-
       ProjectileType type = null;
-
       ArrayList<float[]> outline;
       Image image = null;
       ArrayList<TargetType> destroys = new ArrayList<>();
@@ -60,7 +58,6 @@ public class ProjectileMeta extends MetaObject {
       ProjectileMeta projectileMeta = new ProjectileMeta(outline, image, destroys);
       projectileMeta.mass = projectileStandard.getMass();
       instances.put(type, projectileMeta);
-
     }
   }
 

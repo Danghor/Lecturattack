@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class FileHandler {
   // todo: create folder "Coffee Productions" in appdata/roaming
-  private static final String LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
+  private static String LAST_LEVEL_FILE_PATH = "";
   private static final String[] PATH_TO_LEVELS = new String[] { "resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml", }; // TODO
                                                                                                                                                                                                                                                        // add
                                                                                                                                                                                                                                                        // LevelFiles
@@ -83,9 +83,8 @@ public class FileHandler {
    *
    * @return the elements in the level
    * @throws IllegalArgumentException
-   * @throws IOException
    */
-  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
+  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
       file = new File(PATH_TO_LEVELS[levelNumber - 1]);// TODO mapping
@@ -141,7 +140,7 @@ public class FileHandler {
     try {
       fr = new FileReader(LAST_LEVEL_FILE_PATH);
       br = new BufferedReader(fr);
-      // Textzeilen der Datei einlesen und auf Konsole ausgeben:
+      // read lines in file
       String text;
       text = br.readLine();
       latestLevel = Integer.parseInt(text);
@@ -153,6 +152,10 @@ public class FileHandler {
     return latestLevel;
   }
 
+  /**
+   * 
+   * @param level
+   */
   public static void setLastLevelNumber(int level) {
     if (level > lastLevelNumber) {
       lastLevelNumber = level;
@@ -168,7 +171,6 @@ public class FileHandler {
   }
 
   public static void resetLastLevelNumber() {
-    lastLevelNumber = 1;
     try {
       String text = "1";
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
@@ -177,6 +179,21 @@ public class FileHandler {
     } catch (IOException e) {
       System.out.println("Error while writing in text file");
     }
+  }
+
+  /**
+   * This method sets the file path according to the used system
+   */
+  public static void getSystem() {
+    String sysName = System.getProperty("os.name");
+    if (sysName.contains("Windows")) {
+      LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
+    } else if (sysName.contains("Linux")) {
+      LAST_LEVEL_FILE_PATH = System.getenv("APPDATA") + "/Lecturattack.txt";
+    } else if (sysName.contains("Mac")) {
+      LAST_LEVEL_FILE_PATH = "~/Documents/Saved Games/GAMENAME/Lecturattack.txt";
+    }
+    File levelFile = new File(LAST_LEVEL_FILE_PATH);
   }
 
   public static Image loadImage(String fileName) {
