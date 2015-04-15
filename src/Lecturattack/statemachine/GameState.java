@@ -146,6 +146,11 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
+  /**
+   * load the specified level in the gamestate
+   *
+   * @param level the integer value which indicates the level (1= first level , 2 = second level, ...)
+   */
   public void loadLevel(int level) {
     setCurrentLevel(level);
     try {
@@ -154,23 +159,29 @@ public class GameState extends BasicGameState implements InputListener {
     } catch (SlickException | IOException e) {
       e.printStackTrace();
     }
+    // every time a level is loaded the player have to be returned to their original state and their position is set for every leveel
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
     }
+    // when a new level is loaded the player holds the projectile, so it has to be null in the gamestate
     projectile = null;
-
-
+    // generate a start wind
     randomizeWind();
-    scoreField = new InformationField(10, 25, "Score: ");
+
     // set a starting score
+    scoreField = new InformationField(10, 25, "Score: ");
     score = 100;
     playerName = new InformationField(10, 0, "Dozent: ");
     playerName.setDynamicText(getCurrentPlayer().getName());
     gameStatus = GameStatus.PLAYING;
   }
 
+  /**
+   * return the level to its original state
+   */
   private void resetLevel() {
+    //to reset the level it is only necessary to load the current level again
     loadLevel(getCurrentLevel());
   }
 
@@ -215,13 +226,11 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void selectPreviousPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
-
     if (currentPlayerIndex <= 0) {
       currentPlayerIndex = players.size() - 1;
     } else {
       currentPlayerIndex--;
     }
-
     getCurrentPlayer().setAngle(previousAngle);
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
