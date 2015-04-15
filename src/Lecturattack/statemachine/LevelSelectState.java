@@ -2,20 +2,13 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.InputListener;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.menu.Button;
 import Lecturattack.utilities.menu.LevelButton;
 import Lecturattack.utilities.menu.MenuButton;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author Andreas Geis
@@ -61,7 +54,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
       menuButtons[i].setActive();
     }
   }
-  
+
   public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 
   }
@@ -123,7 +116,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
         // only change the button image, if it is a menu button
         // level select buttons get changed from player progress
         if (menuButtons[i] instanceof MenuButton) {
-          menuButtons[i].setActive(); 
+          menuButtons[i].setActive();
         }
         rectPosition = i;
       }

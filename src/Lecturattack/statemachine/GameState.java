@@ -8,7 +8,6 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;

@@ -1,11 +1,10 @@
 package Lecturattack.utilities.menu;
 
+import Lecturattack.entities.Renderable;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
-
-import Lecturattack.entities.Renderable;
 
 /**
  * @author Andreas Geis
@@ -45,11 +44,11 @@ public class Button implements Renderable {
   public void setActive() {
     this.active = true;
   }
-  
+
   public void setInactive() {
     this.active = false;
   }
-  
+
   public boolean getActive() {
     return active;
   }

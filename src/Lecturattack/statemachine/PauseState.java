@@ -45,7 +45,7 @@ public class PauseState extends BasicGameState implements InputListener {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
     for (int i = 0; i < menuButton.length; i++) {
-   // check if the button currently has focus
+      // check if the button currently has focus
       if (currentSelection == i) {
         menuButton[i].setActive();
       }

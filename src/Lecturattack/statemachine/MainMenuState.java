@@ -34,8 +34,8 @@ public class MainMenuState extends BasicGameState implements InputListener {
     background = FileHandler.loadImage("backgroundMenu");
     logo = FileHandler.loadImage("logo");
 //todo: process values
-FileHandler.getSystem();
-FileHandler.getLastLevelNumber();
+    FileHandler.getSystem();
+    FileHandler.getLastLevelNumber();
     menuButton = new MenuButton[3];
     menuButton[0] = new MenuButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));
     menuButton[1] = new MenuButton(495, 500, FileHandler.loadImage("levelSelect_down"), FileHandler.loadImage("levelSelect"));

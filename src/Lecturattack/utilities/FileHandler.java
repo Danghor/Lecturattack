@@ -20,12 +20,12 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
+  private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; // TODO
+  // add
+  // LevelFiles
+  private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   // todo: create folder "Coffee Productions" in appdata/roaming
   private static String LAST_LEVEL_FILE_PATH = "";
-  private static final String[] PATH_TO_LEVELS = new String[] { "resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml", }; // TODO
-                                                                                                                                                                                                                                                       // add
-                                                                                                                                                                                                                                                       // LevelFiles
-  private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   private static int lastLevelNumber = -1;
 
   /**
@@ -34,10 +34,7 @@ public class FileHandler {
    * @return the loaded configs for the Targets
    */
   public static List<TargetStandard> loadTargetConfig() {
-    File file = new File("resources/config/target.xml");// TODO save in final
-                                                        // var --> method for
-                                                        // opening/vrating -->
-                                                        // code dup
+    File file = new File("resources/config/target.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     TargetConfig targets = null;
     try {
@@ -51,17 +48,12 @@ public class FileHandler {
   }
 
   /**
-   * This method loads the target.xml as a config for the ProjectileMeta
-   * instances
+   * This method loads the target.xml as a config for the ProjectileMeta instances
    *
    * @return the loaded configs for the Projectiles
    */
   public static List<ProjectileStandard> loadProjectileStandards() {
-    File file = new File("resources/config/projectile.xml");// TODO save in
-                                                            // final var -->
-                                                            // method for
-                                                            // opening/vrating
-                                                            // --> code dup
+    File file = new File("resources/config/projectile.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     ProjectileConfig projectiles = null;
     try {
@@ -75,11 +67,9 @@ public class FileHandler {
   }
 
   /**
-   * This method loads a Level and returns a list of elements in the level, this
-   * includes all targets and the position of the player
+   * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
-   * @param levelNumber
-   *          the level which should be loaded
+   * @param levelNumber the level which should be loaded
    *
    * @return the elements in the level
    * @throws IllegalArgumentException
@@ -87,8 +77,7 @@ public class FileHandler {
   public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
-      file = new File(PATH_TO_LEVELS[levelNumber - 1]);// TODO mapping
-                                                       // levelNumber to file
+      file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
     } else {
       throw new IllegalArgumentException("The Level must be between 1 and 6");
     }
@@ -110,10 +99,7 @@ public class FileHandler {
    * @return the loaded players objects which resemble the xml
    */
   public static List<PlayerStandard> getPlayerData() {
-    File file = new File("resources/config/player.xml");// TODO save in final
-                                                        // var --> method for
-                                                        // opening/vrating -->
-                                                        // code dup
+    File file = new File("resources/config/player.xml");//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     PlayerConfig players = null;
     try {
@@ -133,31 +119,7 @@ public class FileHandler {
     return lastLevelNumber;
   }
 
-  public static int getLastLevelFromFile() {
-	  File f = new File(LAST_LEVEL_FILE_PATH);
-	  if(f.exists() && !f.isDirectory()) { 
-	    FileReader fr;
-	    BufferedReader br;
-	    try {
-	      fr = new FileReader(LAST_LEVEL_FILE_PATH);
-	      br = new BufferedReader(fr);
-	      // read lines in file
-	      String text;
-	      text = br.readLine();
-	      lastLevelNumber = Integer.parseInt(text);
-	      fr.close();
-	    } catch (IOException e) {
-	      System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
-	      System.out.println(e.toString());
-	    }
-	  }else{
-	    lastLevelNumber=1;
-	  }
-    return lastLevelNumber;
-  }
-
   /**
-   * 
    * @param level
    */
   public static void setLastLevelNumber(int level) {
@@ -172,6 +134,29 @@ public class FileHandler {
         System.out.println("Error while writing in text file");
       }
     }
+  }
+
+  public static int getLastLevelFromFile() {
+    File f = new File(LAST_LEVEL_FILE_PATH);
+    if (f.exists() && !f.isDirectory()) {
+      FileReader fr;
+      BufferedReader br;
+      try {
+        fr = new FileReader(LAST_LEVEL_FILE_PATH);
+        br = new BufferedReader(fr);
+        // read lines in file
+        String text;
+        text = br.readLine();
+        lastLevelNumber = Integer.parseInt(text);
+        fr.close();
+      } catch (IOException e) {
+        System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
+        System.out.println(e.toString());
+      }
+    } else {
+      lastLevelNumber = 1;
+    }
+    return lastLevelNumber;
   }
 
   public static void resetLastLevelNumber() {
