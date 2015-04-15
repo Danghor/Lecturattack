@@ -2,8 +2,10 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.statemachine.Lecturattack;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Polygon;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public abstract class RigidBody implements Renderable {
+  private static final float DAMPING = 0.8f;
   protected final double area; //area is not expected to change
   protected ArrayList<EnhancedVector> vertices;
   protected EnhancedVector linearVelocity;
@@ -122,16 +125,76 @@ public abstract class RigidBody implements Renderable {
     force = new EnhancedVector(0, 0);
   }
 
-  public float getBiggestY() {
-    float biggestY = 0f;
+  public float getBiggestX() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float biggestX = vertices.get(0).x;
 
-    for (EnhancedVector vertex : vertices) {
-      if (vertex.y > biggestY) {
-        biggestY = vertex.y;
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.x > biggestX) {
+          biggestX = vertex.x;
+        }
       }
-    }
 
-    return biggestY;
+      return biggestX;
+    }
+  }
+
+  public float getBiggestY() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float biggestY = vertices.get(0).y;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.y > biggestY) {
+          biggestY = vertex.y;
+        }
+      }
+
+      return biggestY;
+    }
+  }
+
+  /**
+   * @return The abscissa of the vertex with the smallest x-value.
+   */
+  public float getSmallestX() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float smallestX = vertices.get(0).x;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.x < smallestX) {
+          smallestX = vertex.x;
+        }
+      }
+
+      return smallestX;
+    }
+  }
+
+  /**
+   * This method only works correctly if the RigidBody is not fully or partially outside of the visible frame.
+   *
+   * @return The ordinate of the vertex with the smallest y-value.
+   */
+  public float getSmallestY() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float smallestY = vertices.get(0).y;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.y < smallestY) {
+          smallestY = vertex.y;
+        }
+      }
+
+      return smallestY;
+    }
   }
 
   public void setCenterPosition(float x, float y) {
@@ -141,6 +204,16 @@ public abstract class RigidBody implements Renderable {
     EnhancedVector direction = (EnhancedVector) destination.sub(center);
 
     move(direction);
+  }
+
+  /**
+   * Determines whether or not this object is outside of the visible frame, except for the top.
+   * The top is ignored, since the Object will eventually fall down again.
+   *
+   * @return A boolean value indicating whether or not the current object flew out of the frame sideways or down.
+   */
+  public boolean isUnreachable() {
+    return getBiggestX() < 0 || getSmallestX() > Lecturattack.WIDTH || getSmallestY() > Lecturattack.HEIGHT;
   }
 
   public boolean collidesWith(RigidBody partner) {
@@ -159,42 +232,120 @@ public abstract class RigidBody implements Renderable {
   }
 
   /**
-   * @param partner The RigidBody this object is colliding with.
+   * This method will reflect the linearVelocity of this object on the given partner body, i.e. it will "rebounce" this object on the side of the partner.
+   * This method only works if the two bodies do indeed collide.
    *
-   * @return The line of the given RigidBody with which this object intersects.
+   * @param partner The RigidBody this object is colliding with.
    */
-  public Line getFirstIntersectingLine(RigidBody partner) {
-    Line returnedLine = null;
-    Polygon polygon = new Polygon();
+  public void reflect(RigidBody partner) {
+    Line intersectingLine = null;
+    Polygon thisPolygon = new Polygon();
 
     for (EnhancedVector vertex : vertices) {
-      polygon.addPoint(vertex.x, vertex.y);
+      EnhancedVector toCenter = getCenter();
+      toCenter.sub(vertex);
+      toCenter.normalise();
+      thisPolygon.addPoint(vertex.x - toCenter.x, vertex.y - toCenter.y);
     }
 
-    ArrayList<Line> lines = new ArrayList<>();
+    ArrayList<Line> partnerLines = new ArrayList<>();
 
     //get ArrayList of all Lines of the partner body
     ArrayList<EnhancedVector> pv = partner.vertices; //for comprehension purposes
     int partnerSize = pv.size();
 
     for (int i = 0; i < partnerSize - 1; i++) {
-      lines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
+      partnerLines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
     }
 
-    lines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
+    partnerLines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
 
-    for (Line line : lines) {
-      if (polygon.intersects(line)) {
-        returnedLine = line;
-        break; //todo: avoid break
+    ArrayList<Line> potentialCollisionLines = new ArrayList<>(); //lines to be in question for collision response
+
+    for (Line line : partnerLines) {
+      if (thisPolygon.intersects(line)) {
+        potentialCollisionLines.add(line);
       }
     }
 
-    if (returnedLine != null) {
-      return returnedLine;
+    ArrayList<Integer> penetrationSizes = new ArrayList<>();
+    int currentSizeArrayIndex = -1;
+
+    if (potentialCollisionLines.size() > 1) {
+      //determine, which line on the target has the longest segment "penetrating" the projectile
+      for (Line partnerLine : potentialCollisionLines) {
+        currentSizeArrayIndex++;
+        penetrationSizes.add(0);
+        Point start = new Point(partnerLine.getX1(), partnerLine.getY1());
+        Point end = new Point(partnerLine.getX2(), partnerLine.getY2());
+        Point currentPoint;
+        if (thisPolygon.contains(start) && thisPolygon.contains(end)) { //this object contains both edges of the partnerLine
+          intersectingLine = partnerLine;
+          break; //todo: avoid break;
+        } else {
+          EnhancedVector direction;
+          if (thisPolygon.contains(start)) { //this object contains the start point of the partnerLine
+            currentPoint = start;
+            direction = new EnhancedVector(end.getX() - start.getX(), end.getY() - start.getY());
+          } else { //this object contains the end point of the partnerLine
+            currentPoint = end;
+            direction = new EnhancedVector(start.getX() - end.getX(), start.getY() - end.getY());
+          }
+          while (thisPolygon.contains(currentPoint)) {
+            int previousSize = penetrationSizes.get(currentSizeArrayIndex);
+            penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);
+            currentPoint.setX(currentPoint.getX() + direction.x);
+            currentPoint.setY(currentPoint.getY() + direction.y);
+          }
+        }
+      }
+
+      int biggestFoundSize = 0;
+      for (int i = 0; i < penetrationSizes.size(); i++) {
+        if (penetrationSizes.get(i) > biggestFoundSize) {
+          intersectingLine = potentialCollisionLines.get(i);
+        }
+      }
+    } else if (potentialCollisionLines.size() == 1) {
+      intersectingLine = potentialCollisionLines.get(0);
+    }
+
+    if (intersectingLine != null) {
+      EnhancedVector startPoint = new EnhancedVector(intersectingLine.getX1(), intersectingLine.getY1());
+      EnhancedVector lineVector = (EnhancedVector) (new EnhancedVector(intersectingLine.getX2(), intersectingLine.getY2())).sub(startPoint);
+      EnhancedVector perpendicularToTarget = lineVector.getPerpendicular();
+
+      perpendicularToTarget.normalise();
+
+      EnhancedVector intersectionTestVector = (EnhancedVector) startPoint.sub(perpendicularToTarget);
+      Point intersectionTestPoint = new Point(intersectionTestVector.x, intersectionTestVector.y);
+      Polygon partnerPolygon = new Polygon();
+
+      for (EnhancedVector vertex : partner.vertices) {
+        partnerPolygon.addPoint(vertex.x, vertex.y);
+      }
+
+      if (partnerPolygon.contains(intersectionTestPoint)) {
+        perpendicularToTarget.negateLocal();
+      }
+
+      float dx = linearVelocity.x;
+      float dy = linearVelocity.y;
+      float nx = perpendicularToTarget.x;
+      float ny = perpendicularToTarget.y;
+
+      linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
+      linearVelocity.scale(DAMPING);
+
+      while (this.collidesWith(partner)) {
+        EnhancedVector direction = (EnhancedVector) this.getCenter().sub(partner.getCenter());
+        direction.normalise();
+        this.move(direction);
+      }
     } else {
       throw new IllegalArgumentException("The given partner body does not intersect with this object.");
     }
 
   }
+
 }

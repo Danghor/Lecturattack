@@ -2,6 +2,7 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -24,7 +25,7 @@ public class Projectile extends RigidBody {
     torque = 0f;
   }
 
-  public ArrayList<TargetMeta.TargetType> getDestroys() {
+  public ArrayList<TargetType> getDestroys() {
     return metaObject.getDestroys();
   }
 
@@ -65,8 +66,7 @@ public class Projectile extends RigidBody {
     image.rotate(getAngle());
 
     try {
-      //the start position for drawing the figure is assumed to be the upper-left corner of the polygon
-      graphics.drawImage(image, vertices.get(0).x, vertices.get(0).y);
+      graphics.drawImage(image, getSmallestX(), getSmallestY());
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -61,4 +61,9 @@ public class EnhancedVector extends Vector2f {
   public EnhancedVector getScaled(float factor) {
     return (EnhancedVector) super.scale(factor);
   }
+
+  public EnhancedVector getPerpendicular() {
+    //noinspection SuspiciousNameCombination
+    return new EnhancedVector(-this.y, this.x);
+  }
 }

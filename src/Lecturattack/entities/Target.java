@@ -2,8 +2,11 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.entities.types.TargetType;
+import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -19,16 +22,19 @@ public class Target extends RigidBody {
     hitCounter = 0;
   }
 
-  public TargetMeta.TargetType getType() {
+  public TargetType getType() {
     return metaObject.getType();
   }
 
-  //todo: hit with a specific projectile to avoid determining whether it can be hit in the physics engine
-  //just hit it here and then determine here if it gets damaged or not
-  public void hit() {
-    if (hitCounter < metaObject.getMaxHits()) {
+  public int hit(Projectile projectile) {
+    int scoreReturned = 0;
+
+    if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
       hitCounter++;
+      scoreReturned = getHitScore();
     }
+
+    return scoreReturned;
   }
 
   public boolean isDestroyed() {
@@ -40,10 +46,28 @@ public class Target extends RigidBody {
     return metaObject.getMass();
   }
 
+  public int getHitScore() {
+    return metaObject.getHitScore();
+  }
+
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    if (!isDestroyed()) {
-      graphics.drawImage(metaObject.getImage(hitCounter), vertices.get(0).x, vertices.get(0).y);
+    /**
+     * The image is being rendered if:
+     *  1. The target is not destroyed, OR
+     *  2. The target is an ENEMY that has not been fallen out of the game frame yet.
+     */
+
+    if (!isDestroyed() || (getType() == TargetType.ENEMY && !isUnreachable())) {
+      metaObject.getImage(hitCounter).draw(getSmallestX(), getSmallestY());
     }
+
+    //TODO remove if not needed anymore
+    // This shows the hitbox of the targets
+    Polygon poly = new Polygon();
+    for (EnhancedVector point : vertices) {
+      poly.addPoint(point.getX(), point.getY());
+    }
+    graphics.draw(poly);
   }
 }

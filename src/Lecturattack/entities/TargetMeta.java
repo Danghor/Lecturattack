@@ -4,6 +4,7 @@
 
 package Lecturattack.entities;
 
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import org.newdawn.slick.Image;
@@ -36,13 +37,12 @@ public class TargetMeta extends MetaObject {
         if (!targetStandard.getImageSlightlyBroken().equals("")) {
           images.add(new Image(targetStandard.getImageSlightlyBroken()));
         }
-        if (!targetStandard.getImageAlmostBroken().equals("")) {//TODO find another way than just leaving one field blank --> maybe really list
+        if (!targetStandard.getImageAlmostBroken().equals("")) {
           images.add(new Image(targetStandard.getImageAlmostBroken()));
         }
       } catch (SlickException e) {
         e.printStackTrace();
       }
-      //TODO
       TargetType type;
       switch (targetStandard.getTargetType()) {
         case "ENEMY":
@@ -73,6 +73,7 @@ public class TargetMeta extends MetaObject {
   }
 
   private final int maxHits; //when the Target is hit as many times as maxHits, the Target is destroyed
+  private final int hitScore; //the score received when a target of this type gets hit
   private ArrayList<Image> images;
   private TargetType type;
 
@@ -81,10 +82,31 @@ public class TargetMeta extends MetaObject {
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
+
+    switch (type) {
+      case RAMH:
+      case RAMV:
+        hitScore = 10;
+        break;
+      case LIBRARYH:
+      case LIBRARYV:
+        hitScore = 10;
+        break;
+      case ENEMY:
+        hitScore = 100;
+        break;
+      default:
+        hitScore = 0;
+        break;
+    }
   }
 
   public static TargetMeta getInstance(TargetType type) {
     return (TargetMeta) instances.get(type);
+  }
+
+  int getHitScore() {
+    return hitScore;
   }
 
   TargetType getType() {
@@ -98,13 +120,5 @@ public class TargetMeta extends MetaObject {
 
   int getMaxHits() {
     return maxHits;
-  }
-
-  public enum TargetType {
-    LIBRARYV,
-    LIBRARYH,
-    RAMV,
-    RAMH,
-    ENEMY
   }
 }

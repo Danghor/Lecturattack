@@ -63,22 +63,24 @@ public class LevelSelectState extends BasicGameState implements InputListener {
         currentSelection--;
       }
     } else if (key == Input.KEY_RIGHT) {
-      if (currentSelection <= 5) {
+      if (currentSelection <= 6) {
         currentSelection++;
       }
     } else if (key == Input.KEY_UP) {
-      if (currentSelection >= 3) {
+      if (currentSelection >= 3 && currentSelection <= 6) {
         currentSelection -= 3;
+      } else if (currentSelection == 7) {
+        currentSelection = 5;
       } else {
         currentSelection = 0;
       }
     } else if (key == Input.KEY_DOWN) {
-      if (currentSelection <= 2) {
+      if (currentSelection <= 3) {
         currentSelection += 3;
-      } else if(currentSelection==3||currentSelection==4){
+      } else if (currentSelection == 4) {
         currentSelection = 6;
-      }else{
-    	  currentSelection=7;
+      } else {
+        currentSelection = 7;
       }
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection >= 0 && currentSelection <= 5) {
@@ -86,8 +88,8 @@ public class LevelSelectState extends BasicGameState implements InputListener {
         stateBasedGame.enterState(GameState.stateID);
       } else if (currentSelection == 6) {
         stateBasedGame.enterState(0);
-      }else if(currentSelection==7){
-    	  FileHandler.resetLevelNumber();
+      } else if (currentSelection == 7) {
+        FileHandler.resetLevelNumber();
       }
     }
   }
