@@ -134,22 +134,26 @@ public class FileHandler {
   }
 
   public static int getLastLevelFromFile() {
-    FileReader fr;
-    BufferedReader br;
-    int latestLevel = 1;
-    try {
-      fr = new FileReader(LAST_LEVEL_FILE_PATH);
-      br = new BufferedReader(fr);
-      // read lines in file
-      String text;
-      text = br.readLine();
-      latestLevel = Integer.parseInt(text);
-      fr.close();
-    } catch (IOException e) {
-      System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
-      System.out.println(e.toString());
-    }
-    return latestLevel;
+	  File f = new File(LAST_LEVEL_FILE_PATH);
+	  if(f.exists() && !f.isDirectory()) { 
+	    FileReader fr;
+	    BufferedReader br;
+	    try {
+	      fr = new FileReader(LAST_LEVEL_FILE_PATH);
+	      br = new BufferedReader(fr);
+	      // read lines in file
+	      String text;
+	      text = br.readLine();
+	      lastLevelNumber = Integer.parseInt(text);
+	      fr.close();
+	    } catch (IOException e) {
+	      System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
+	      System.out.println(e.toString());
+	    }
+	  }else{
+	    lastLevelNumber=1;
+	  }
+    return lastLevelNumber;
   }
 
   /**
