@@ -56,6 +56,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("background");
     victory = FileHandler.loadImage("victory");
@@ -225,8 +226,11 @@ public class GameState extends BasicGameState implements InputListener {
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
+  /**
+   * generate a random wind
+   */
   private void randomizeWind() {
-    wind += (float) ((Math.random() * 5) % 5 - 2.5);
+    wind = (float) ((Math.random() * 6) % 3 - 1.5);
   }
 
   public int getCurrentLevel() {
