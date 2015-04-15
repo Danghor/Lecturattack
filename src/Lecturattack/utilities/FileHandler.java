@@ -20,11 +20,11 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
-  //todo: create folder "Coffee Productions" in appdata/roaming
-  private static String LAST_LEVEL_FILE_PATH = "";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; //TODO add LevelFiles
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   public static int latestLevel = 1;
+  //todo: create folder "Coffee Productions" in appdata/roaming
+  private static String LAST_LEVEL_FILE_PATH = "";
 
   /**
    * This method loads the target.xml as a config for the TargetMeta instances
@@ -110,10 +110,9 @@ public class FileHandler {
     return players.getPlayerStandards();
   }
 
-/**
- * 
- * @return
- */
+  /**
+   * @return
+   */
   public static int getLastLevelNumber() {
     FileReader fr;
     BufferedReader br;
@@ -134,10 +133,10 @@ public class FileHandler {
 
     return latestLevel;
   }
-/**
- * 
- * @param level
- */
+
+  /**
+   * @param level
+   */
   public static void setLastLevelNumber(int level) {
     if (level < latestLevel) {
       latestLevel++;
@@ -151,9 +150,10 @@ public class FileHandler {
       }
     }
   }
-/**
- * 
- */
+
+  /**
+   *
+   */
   public static void resetLevelNumber() {
     try {
       String text = "1";
@@ -164,19 +164,20 @@ public class FileHandler {
       System.out.println("Exception");//todo: not helpful
     }
   }
+
   /**
    * This method sets the file path according to the used system
    */
-  public static void getSystem(){
-	  String sysName=System.getProperty("os.name");
-	  if (sysName.contains("Windows")){
-		  LAST_LEVEL_FILE_PATH=System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
-	  }else if(sysName.contains("Linux")){
-		  LAST_LEVEL_FILE_PATH=System.getenv("APPDATA")+"/Lecturattack.txt";
-	  }else if(sysName.contains("Mac")){
-		  LAST_LEVEL_FILE_PATH="~/Documents/Saved Games/GAMENAME/Lecturattack.txt";	
-	  }
-	  File levelFile=new File(LAST_LEVEL_FILE_PATH);
+  public static void getSystem() {
+    String sysName = System.getProperty("os.name");
+    if (sysName.contains("Windows")) {
+      LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
+    } else if (sysName.contains("Linux")) {
+      LAST_LEVEL_FILE_PATH = System.getenv("APPDATA") + "/Lecturattack.txt";
+    } else if (sysName.contains("Mac")) {
+      LAST_LEVEL_FILE_PATH = "~/Documents/Saved Games/GAMENAME/Lecturattack.txt";
+    }
+    File levelFile = new File(LAST_LEVEL_FILE_PATH);
   }
 
   public static Image loadImage(String fileName) {
