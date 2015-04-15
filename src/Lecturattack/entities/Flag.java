@@ -28,5 +28,8 @@ public class Flag implements Renderable {
 
     graphics.fill(triangle);
     graphics.draw(triangle);
+    System.out.println(System.getProperty("os.version"));
+
+    
   }
 }

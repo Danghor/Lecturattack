@@ -45,11 +45,6 @@ public class GameState extends BasicGameState implements InputListener {
     GameState.stateID = stateID;
   }
 
-  // todo: save wind for current level and only refresh when new level is loaded
-  private static float getRandomWind() {
-    return (float) ((Math.random() * 10) % 5 - 2.5);
-  }
-
   private Player getCurrentPlayer() {
     return players.get(currentPlayerIndex);
   }
@@ -65,6 +60,7 @@ public class GameState extends BasicGameState implements InputListener {
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
+      randomizeWind();
     }
     projectile = null;
 
@@ -149,7 +145,7 @@ public class GameState extends BasicGameState implements InputListener {
     changeThrowingDegreeWithUserInput(gameContainer);
 
     flag.setWindScale(wind);
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, getRandomWind(), delta, level.getGroundLevel());
+    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
     scoreField.setDynamicText(Integer.toString(score));
 
     getCurrentPlayer().updatePowerSlider(delta);
@@ -169,8 +165,17 @@ public class GameState extends BasicGameState implements InputListener {
     } else {
       projectile = null;
       getCurrentPlayer().reset();
+      randomizeWind();
     }
   }
+
+
+
+
+  private void randomizeWind(){
+    wind+=  (float) ((Math.random() * 5) % 5 - 2.5);
+  }
+
 
   @Override
   public void keyPressed(int key, char c) {
