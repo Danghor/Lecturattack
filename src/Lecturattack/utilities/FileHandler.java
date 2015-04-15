@@ -24,7 +24,7 @@ public class FileHandler {
   private static String LAST_LEVEL_FILE_PATH = "";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; //TODO add LevelFiles
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
-  public static int latestLevel = 1;
+  public static int latestLevel;
 
   /**
    * This method loads the target.xml as a config for the TargetMeta instances
@@ -115,7 +115,9 @@ public class FileHandler {
  * @return
  */
   public static int getLastLevelNumber() {
-    FileReader fr;
+	  File f = new File(LAST_LEVEL_FILE_PATH);
+	  if(f.exists() && !f.isDirectory()) { 
+	  FileReader fr;
     BufferedReader br;
     try {
       fr = new FileReader(LAST_LEVEL_FILE_PATH);
@@ -131,7 +133,9 @@ public class FileHandler {
       System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
       System.out.println(e.toString());
     }
-
+  }else{
+	  latestLevel=1;
+  }
     return latestLevel;
   }
 /**
