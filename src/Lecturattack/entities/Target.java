@@ -22,8 +22,25 @@ public class Target extends RigidBody {
     hitCounter = 0;
   }
 
-  public TargetType getType() {
-    return metaObject.getType();
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+    /**
+     * The image is being rendered if:
+     *  1. The target is not destroyed, OR
+     *  2. The target is an ENEMY that has not been fallen out of the game frame yet.
+     */
+
+    if (!isDestroyed() || (getType() == TargetType.ENEMY && !isUnreachable())) {
+      metaObject.getImage(hitCounter).draw(getSmallestX(), getSmallestY());
+    }
+
+    //TODO remove if not needed anymore
+    // This shows the hitbox of the targets
+    Polygon poly = new Polygon();
+    for (EnhancedVector point : vertices) {
+      poly.addPoint(point.getX(), point.getY());
+    }
+    graphics.draw(poly);
   }
 
   public int hit(Projectile projectile) {
@@ -50,24 +67,8 @@ public class Target extends RigidBody {
     return metaObject.getHitScore();
   }
 
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    /**
-     * The image is being rendered if:
-     *  1. The target is not destroyed, OR
-     *  2. The target is an ENEMY that has not been fallen out of the game frame yet.
-     */
-
-    if (!isDestroyed() || (getType() == TargetType.ENEMY && !isUnreachable())) {
-      metaObject.getImage(hitCounter).draw(getSmallestX(), getSmallestY());
-    }
-
-    //TODO remove if not needed anymore
-    // This shows the hitbox of the targets
-    Polygon poly = new Polygon();
-    for (EnhancedVector point : vertices) {
-      poly.addPoint(point.getX(), point.getY());
-    }
-    graphics.draw(poly);
+  public TargetType getType() {
+    return metaObject.getType();
   }
+
 }

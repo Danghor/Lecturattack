@@ -20,6 +20,8 @@ public abstract class RigidBody implements Renderable {
   protected EnhancedVector linearVelocity;
   protected EnhancedVector force;
 
+  public abstract float getMass();
+
   protected RigidBody(MetaObject meta, float x, float y) {
     this.vertices = new ArrayList<>();
 
@@ -35,86 +37,6 @@ public abstract class RigidBody implements Renderable {
     force = new EnhancedVector(0f, 0f);
   }
 
-  public EnhancedVector getLinearVelocity() {
-    return linearVelocity;
-  }
-
-  public void setLinearVelocity(EnhancedVector linearVelocity) {
-    this.linearVelocity = linearVelocity;
-  }
-
-  /**
-   * Calculates the center point of this object based on it's vertices.
-   *
-   * @return An EnhancedVector object representing the center point.
-   */
-  public EnhancedVector getCenter() {
-    int n = vertices.size(); //number of vertices on the polygon
-    double centerXSum = 0; //the summation part of calculating the x-axis of the center
-    double centerYSum = 0;
-
-    float centerX;
-    float centerY;
-
-    double prefix;
-    double appendix;
-
-    for (int i = 0; i < n - 1; i++) {
-      //use appendix to slightly speed up calculation
-      appendix = (vertices.get(i).x * vertices.get(i + 1).y - vertices.get(i + 1).x * vertices.get(i).y);
-      centerXSum += (vertices.get(i).x + vertices.get(i + 1).x) * appendix;
-      centerYSum += (vertices.get(i).y + vertices.get(i + 1).y) * appendix;
-    }
-
-    //Xn, Yn is to be assumed the same as X0, Y0
-    appendix = (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
-    centerXSum += (vertices.get(n - 1).x + vertices.get(0).x) * appendix;
-    centerYSum += (vertices.get(n - 1).y + vertices.get(0).y) * appendix;
-
-    prefix = (1d / (6 * area));
-
-    centerX = (float) (prefix * centerXSum);
-    centerY = (float) (prefix * centerYSum);
-
-    return new EnhancedVector(centerX, centerY);
-  }
-
-  //todo: fix, sometimes a negative area is calculated
-
-  /**
-   * This method is only executed once in order to calculate and save the area of this object.
-   *
-   * @return The calculated area of this object based on it's vertices.
-   */
-  private double getArea() {
-    double area;
-
-    double areaSum = 0; //the summation part of the area-equation
-    int n = vertices.size(); //number of vertices in the polygon
-
-    for (int i = 0; i < n - 1; i++) {
-      areaSum += (vertices.get(i).x * vertices.get(i + 1).y - vertices.get(i + 1).x * vertices.get(i).y);
-    }
-
-    //Xn, Yn are to be assumed the same as X0, Y0
-    areaSum += (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
-
-    area = 0.5 * areaSum;
-    return area;
-  }
-
-  public abstract float getMass();
-
-  public void applyForce(float x, float y) {
-    force.add(new EnhancedVector(x, y));
-  }
-
-  public void move(EnhancedVector direction) {
-    for (EnhancedVector vertex : vertices) {
-      vertex.add(direction);
-    }
-  }
-
   public void update(float scaledDelta) {
     EnhancedVector acceleration;
 
@@ -123,112 +45,6 @@ public abstract class RigidBody implements Renderable {
     move(new EnhancedVector(linearVelocity.x * scaledDelta, linearVelocity.y * scaledDelta));
 
     force = new EnhancedVector(0, 0);
-  }
-
-  public float getBiggestX() {
-    if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
-    } else {
-      float biggestX = vertices.get(0).x;
-
-      for (EnhancedVector vertex : vertices) {
-        if (vertex.x > biggestX) {
-          biggestX = vertex.x;
-        }
-      }
-
-      return biggestX;
-    }
-  }
-
-  public float getBiggestY() {
-    if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
-    } else {
-      float biggestY = vertices.get(0).y;
-
-      for (EnhancedVector vertex : vertices) {
-        if (vertex.y > biggestY) {
-          biggestY = vertex.y;
-        }
-      }
-
-      return biggestY;
-    }
-  }
-
-  /**
-   * @return The abscissa of the vertex with the smallest x-value.
-   */
-  public float getSmallestX() {
-    if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
-    } else {
-      float smallestX = vertices.get(0).x;
-
-      for (EnhancedVector vertex : vertices) {
-        if (vertex.x < smallestX) {
-          smallestX = vertex.x;
-        }
-      }
-
-      return smallestX;
-    }
-  }
-
-  /**
-   * This method only works correctly if the RigidBody is not fully or partially outside of the visible frame.
-   *
-   * @return The ordinate of the vertex with the smallest y-value.
-   */
-  public float getSmallestY() {
-    if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
-    } else {
-      float smallestY = vertices.get(0).y;
-
-      for (EnhancedVector vertex : vertices) {
-        if (vertex.y < smallestY) {
-          smallestY = vertex.y;
-        }
-      }
-
-      return smallestY;
-    }
-  }
-
-  public void setCenterPosition(float x, float y) {
-    EnhancedVector destination = new EnhancedVector(x, y);
-    EnhancedVector center = getCenter();
-
-    EnhancedVector direction = (EnhancedVector) destination.sub(center);
-
-    move(direction);
-  }
-
-  /**
-   * Determines whether or not this object is outside of the visible frame, except for the top.
-   * The top is ignored, since the Object will eventually fall down again.
-   *
-   * @return A boolean value indicating whether or not the current object flew out of the frame sideways or down.
-   */
-  public boolean isUnreachable() {
-    return getBiggestX() < 0 || getSmallestX() > Lecturattack.WIDTH || getSmallestY() > Lecturattack.HEIGHT;
-  }
-
-  public boolean collidesWith(RigidBody partner) {
-    Polygon polygon1 = new Polygon();
-    Polygon polygon2 = new Polygon();
-
-    for (EnhancedVector vertex : vertices) {
-      polygon1.addPoint(vertex.x, vertex.y);
-    }
-
-    for (EnhancedVector vertex : partner.vertices) {
-      polygon2.addPoint(vertex.x, vertex.y);
-    }
-
-    return polygon1.intersects(polygon2);
   }
 
   /**
@@ -347,5 +163,190 @@ public abstract class RigidBody implements Renderable {
     }
 
   }
+
+  public boolean collidesWith(RigidBody partner) {
+    Polygon polygon1 = new Polygon();
+    Polygon polygon2 = new Polygon();
+
+    for (EnhancedVector vertex : vertices) {
+      polygon1.addPoint(vertex.x, vertex.y);
+    }
+
+    for (EnhancedVector vertex : partner.vertices) {
+      polygon2.addPoint(vertex.x, vertex.y);
+    }
+
+    return polygon1.intersects(polygon2);
+  }
+
+  public void move(EnhancedVector direction) {
+    for (EnhancedVector vertex : vertices) {
+      vertex.add(direction);
+    }
+  }
+
+  public void applyForce(float x, float y) {
+    force.add(new EnhancedVector(x, y));
+  }
+
+  /**
+   * Calculates the center point of this object based on it's vertices.
+   *
+   * @return An EnhancedVector object representing the center point.
+   */
+  public EnhancedVector getCenter() {
+    int n = vertices.size(); //number of vertices on the polygon
+    double centerXSum = 0; //the summation part of calculating the x-axis of the center
+    double centerYSum = 0;
+
+    float centerX;
+    float centerY;
+
+    double prefix;
+    double appendix;
+
+    for (int i = 0; i < n - 1; i++) {
+      //use appendix to slightly speed up calculation
+      appendix = (vertices.get(i).x * vertices.get(i + 1).y - vertices.get(i + 1).x * vertices.get(i).y);
+      centerXSum += (vertices.get(i).x + vertices.get(i + 1).x) * appendix;
+      centerYSum += (vertices.get(i).y + vertices.get(i + 1).y) * appendix;
+    }
+
+    //Xn, Yn is to be assumed the same as X0, Y0
+    appendix = (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
+    centerXSum += (vertices.get(n - 1).x + vertices.get(0).x) * appendix;
+    centerYSum += (vertices.get(n - 1).y + vertices.get(0).y) * appendix;
+
+    prefix = (1d / (6 * area));
+
+    centerX = (float) (prefix * centerXSum);
+    centerY = (float) (prefix * centerYSum);
+
+    return new EnhancedVector(centerX, centerY);
+  }
+
+  //todo: fix, sometimes a negative area is calculated
+
+  /**
+   * This method is only executed once in order to calculate and save the area of this object.
+   *
+   * @return The calculated area of this object based on it's vertices.
+   */
+  private double getArea() {
+    double area;
+
+    double areaSum = 0; //the summation part of the area-equation
+    int n = vertices.size(); //number of vertices in the polygon
+
+    for (int i = 0; i < n - 1; i++) {
+      areaSum += (vertices.get(i).x * vertices.get(i + 1).y - vertices.get(i + 1).x * vertices.get(i).y);
+    }
+
+    //Xn, Yn are to be assumed the same as X0, Y0
+    areaSum += (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
+
+    area = 0.5 * areaSum;
+    return area;
+  }
+
+  public float getBiggestX() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float biggestX = vertices.get(0).x;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.x > biggestX) {
+          biggestX = vertex.x;
+        }
+      }
+
+      return biggestX;
+    }
+  }
+
+  public float getBiggestY() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float biggestY = vertices.get(0).y;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.y > biggestY) {
+          biggestY = vertex.y;
+        }
+      }
+
+      return biggestY;
+    }
+  }
+
+  /**
+   * This method only works correctly if the RigidBody is not fully or partially outside of the visible frame.
+   *
+   * @return The ordinate of the vertex with the smallest y-value.
+   */
+  public float getSmallestY() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float smallestY = vertices.get(0).y;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.y < smallestY) {
+          smallestY = vertex.y;
+        }
+      }
+
+      return smallestY;
+    }
+  }
+
+  /**
+   * @return The abscissa of the vertex with the smallest x-value.
+   */
+  public float getSmallestX() {
+    if (vertices.size() < 1) {
+      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+    } else {
+      float smallestX = vertices.get(0).x;
+
+      for (EnhancedVector vertex : vertices) {
+        if (vertex.x < smallestX) {
+          smallestX = vertex.x;
+        }
+      }
+
+      return smallestX;
+    }
+  }
+
+  public void setCenterPosition(float x, float y) {
+    EnhancedVector destination = new EnhancedVector(x, y);
+    EnhancedVector center = getCenter();
+
+    EnhancedVector direction = (EnhancedVector) destination.sub(center);
+
+    move(direction);
+  }
+
+  /**
+   * Determines whether or not this object is outside of the visible frame, except for the top.
+   * The top is ignored, since the Object will eventually fall down again.
+   *
+   * @return A boolean value indicating whether or not the current object flew out of the frame sideways or down.
+   */
+  public boolean isUnreachable() {
+    return getBiggestX() < 0 || getSmallestX() > Lecturattack.WIDTH || getSmallestY() > Lecturattack.HEIGHT;
+  }
+
+  public EnhancedVector getLinearVelocity() {
+    return linearVelocity;
+  }
+
+  public void setLinearVelocity(EnhancedVector linearVelocity) {
+    this.linearVelocity = linearVelocity;
+  }
+
 
 }

@@ -26,12 +26,13 @@ public class InformationField implements Renderable {
     oTrueTypeFont = new TrueTypeFont(oAwtFont, false);
   }
 
-  public void setDynamicText(String dynamicText) {
-    this.dynamicText = dynamicText;
-  }
-
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     oTrueTypeFont.drawString(x, y, fixedText + dynamicText);
   }
+
+  public void setDynamicText(String dynamicText) {
+    this.dynamicText = dynamicText;
+  }
+
 }
