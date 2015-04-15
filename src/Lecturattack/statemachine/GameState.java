@@ -156,14 +156,11 @@ public class GameState extends BasicGameState implements InputListener {
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
-      randomizeWind();
     }
     projectile = null;
 
 
-    //generate a new random wind every time the level is reloaded TODO -> after every throw
-    wind = (float) ((Math.random() * 10) % 5 - 2.5);
-
+    randomizeWind();
     scoreField = new InformationField(10, 25, "Score: ");
     // set a starting score
     score = 100;
