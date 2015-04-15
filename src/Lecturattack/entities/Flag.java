@@ -20,7 +20,6 @@ public class Flag implements Renderable {
     triangle.addPoint(gameContainer.getWidth() / 2 + windScale, 40);
     graphics.fill(triangle);
     graphics.draw(triangle);
-    System.out.println(System.getProperty("os.version"));
   }
 
   public void setWindScale(float windScale) {
