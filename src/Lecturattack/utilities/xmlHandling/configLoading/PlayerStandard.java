@@ -1,6 +1,7 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
 import Lecturattack.entities.ProjectileMeta;
+import Lecturattack.entities.types.ProjectileType;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -65,13 +66,13 @@ public class PlayerStandard {
     ProjectileMeta projectileMeta = null;//If the wrong projectile is specified in playerStandard ProjectileMeta.getInstance() will also return null
     switch (projectile) {
       case "ROBOT":
-        projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.ROBOT);
+        projectileMeta = ProjectileMeta.getInstance(ProjectileType.ROBOT);
         break;
       case "EXAM":
-        projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.EXAM);
+        projectileMeta = ProjectileMeta.getInstance(ProjectileType.EXAM);
         break;
       case "POINTER":
-        projectileMeta = ProjectileMeta.getInstance(ProjectileMeta.ProjectileType.POINTER);
+        projectileMeta = ProjectileMeta.getInstance(ProjectileType.POINTER);
         break;
     }
     return projectileMeta;

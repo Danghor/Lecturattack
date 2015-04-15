@@ -4,6 +4,7 @@
 
 package Lecturattack.entities;
 
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import org.newdawn.slick.Image;
@@ -119,13 +120,5 @@ public class TargetMeta extends MetaObject {
 
   int getMaxHits() {
     return maxHits;
-  }
-
-  public enum TargetType {
-    LIBRARYV,
-    LIBRARYH,
-    RAMV,
-    RAMH,
-    ENEMY
   }
 }

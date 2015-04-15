@@ -2,8 +2,10 @@ package Lecturattack.statemachine;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.utilities.FileHandler;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -32,10 +34,16 @@ public class Lecturattack extends StateBasedGame {
       appGameContainer.setTargetFrameRate(FPS);
       appGameContainer.setDisplayMode(WIDTH, HEIGHT, TOGGLE_FULLSCREEN);
       appGameContainer.setShowFPS(false);
+      startBackgroundMusic();
       appGameContainer.start();
     } catch (SlickException e) {
       e.printStackTrace();
     }
+  }
+
+  private static void startBackgroundMusic() throws SlickException {
+    Music bgMusic = FileHandler.getBackgroundMusic();
+    bgMusic.loop(1f, 0.5f);
   }
 
   @Override
