@@ -58,7 +58,6 @@ public class ProjectileMeta extends MetaObject {
       ProjectileMeta projectileMeta = new ProjectileMeta(outline, image, destroys);
       projectileMeta.mass = projectileStandard.getMass();
       instances.put(type, projectileMeta);
-
     }
   }
 

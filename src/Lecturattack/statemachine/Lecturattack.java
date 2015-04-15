@@ -41,7 +41,7 @@ public class Lecturattack extends StateBasedGame {
     }
   }
 
-  private static void startBackgroundMusic() throws SlickException {
+  private static void startBackgroundMusic() {
     Music bgMusic = FileHandler.getBackgroundMusic();
     bgMusic.loop(1f, 0.5f);
   }
