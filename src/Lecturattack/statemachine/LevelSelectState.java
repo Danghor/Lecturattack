@@ -44,13 +44,16 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   }
 
   @Override
-  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    currentSelection = 6;
+  public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+
   }
 
   @Override
-  public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    graphics.drawImage(background, 0, 0);
+    for (int i = 0; i < menuButton.length; i++) {
+      menuButton[i].render(graphics, currentSelection == i);
+    }
   }
 
   /*
@@ -95,11 +98,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   }
 
   @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    graphics.drawImage(background, 0, 0);
-    for (int i = 0; i < menuButton.length; i++) {
-      menuButton[i].render(graphics, currentSelection == i);
-    }
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    currentSelection = 6;
   }
-
 }

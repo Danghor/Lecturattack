@@ -13,7 +13,6 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Laura Hillenbrand
  */
 public class MainMenuState extends BasicGameState implements InputListener {
-
   private int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
@@ -48,6 +47,16 @@ public class MainMenuState extends BasicGameState implements InputListener {
 
   }
 
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    graphics.drawImage(background, 0, 0);
+    graphics.drawImage(logo, 250, 70);
+    for (int i = 0; i < menuButton.length; i++) {
+      // check if the button currently has focus
+      menuButton[i].render(graphics, currentSelection == i);
+    }
+  }
+
   /*
    * listen for user input
    */
@@ -75,15 +84,4 @@ public class MainMenuState extends BasicGameState implements InputListener {
       }
     }
   }
-
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    graphics.drawImage(background, 0, 0);
-    graphics.drawImage(logo, 250, 70);
-    for (int i = 0; i < menuButton.length; i++) {
-      // check if the button currently has focus
-      menuButton[i].render(graphics, currentSelection == i);
-    }
-  }
-
 }
