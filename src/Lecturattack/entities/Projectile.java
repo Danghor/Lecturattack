@@ -15,14 +15,16 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public class Projectile extends RigidBody {
-  protected float angularVelocity;
-  protected float torque;
+  private float torque;
+  private float angularVelocity;
+  private float angle;
   private ProjectileMeta metaObject;
 
   public Projectile(ProjectileMeta projectileMeta, float x, float y) {
     super(projectileMeta, x, y);
     metaObject = projectileMeta;
     torque = 0f;
+    angle = 0f;
   }
 
   @Override
@@ -51,37 +53,23 @@ public class Projectile extends RigidBody {
     torque += value;
   }
 
-  public void rotate(float angle, EnhancedVector center) {
+  private void rotate(float angle, EnhancedVector center) {
     for (EnhancedVector vertex : vertices) {
       vertex.rotate(angle, center);
     }
+    this.angle += angle;
   }
 
   public ArrayList<TargetType> getDestroys() {
     return metaObject.getDestroys();
   }
 
-  public float getAngularVelocity() {
-    return angularVelocity;
+  public void invertRotation() {
+    angularVelocity = -angularVelocity;
   }
 
-  public void setAngularVelocity(float angularVelocity) {
-    this.angularVelocity = angularVelocity;
-  }
-
-  //todo: fix this, it goes to 180, 180 is NaN and then it goes down again
   private float getAngle() {
-    EnhancedVector vertexA = getCenter();
-    EnhancedVector vertexB = vertices.get(0);
-    EnhancedVector vertexC = new EnhancedVector(metaObject.outline.get(0)[0], metaObject.outline.get(0)[1]);
-
-    EnhancedVector edgeA = (EnhancedVector) (new EnhancedVector(vertexC.x, vertexC.y)).sub(vertexB);
-    EnhancedVector edgeB = (EnhancedVector) (new EnhancedVector(vertexC.x, vertexC.y)).sub(vertexA);
-    EnhancedVector edgeC = (EnhancedVector) (new EnhancedVector(vertexB.x, vertexB.y)).sub(vertexA);
-    float lengthA = edgeA.length();
-    float lengthB = edgeB.length();
-    float lengthC = edgeC.length();
-    return (float) Math.acos((lengthB * lengthB + lengthC * lengthC - lengthA * lengthA) / (2 * lengthB * lengthC));
+    return angle;
   }
 
   @Override
@@ -92,6 +80,12 @@ public class Projectile extends RigidBody {
   protected float getInertia() {
     double length = (new EnhancedVector(getCenter().x - vertices.get(0).x, getCenter().y - vertices.get(0).y)).length();
     return (getMass() * (float) Math.pow(length, 4)) / 120000;
+  }
+
+  @Override
+  public void reflect(RigidBody partner) {
+    super.reflect(partner);
+    invertRotation();
   }
 
 }

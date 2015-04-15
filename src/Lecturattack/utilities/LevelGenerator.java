@@ -6,7 +6,6 @@ import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
-import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +19,10 @@ public class LevelGenerator {
    * Creates a level for the given LevelElements
    *
    * @param levelElements all elements in the level, these objects are the loaded XMLobjects
+   *
    * @return a Level object, which holds the information about the entire level
-   * @throws SlickException
    */
-  public static Level getGeneratedLevel(List<LevelElement> levelElements) throws SlickException {
+  public static Level getGeneratedLevel(List<LevelElement> levelElements) {
     float playerPositionX = 0f;
     float playerPositionY = 0f;
     ArrayList<Target> targets = new ArrayList<>();

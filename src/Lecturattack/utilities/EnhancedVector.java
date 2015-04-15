@@ -12,6 +12,7 @@ public class EnhancedVector extends Vector2f {
 
   /**
    * @param partner The EnhancedVector with which the cross product is to be calculated.
+   *
    * @return The scalar value of the cross product.
    */
   public float crossProductScalar(EnhancedVector partner) {
@@ -50,6 +51,7 @@ public class EnhancedVector extends Vector2f {
    * Returns the angle between this object and the given EnhancedVector in degrees.
    *
    * @param partner The EnhancedVector this object is intersecting with.
+   *
    * @return The angle between this object and the given partner vector.
    */
   public float getAngle(EnhancedVector partner) {

@@ -68,11 +68,11 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
+   *
    * @return the elements in the level
    * @throws IllegalArgumentException
-   * @throws IOException
    */
-  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException, IOException {
+  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
       file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
@@ -115,14 +115,13 @@ public class FileHandler {
  * @return
  */
   public static int getLastLevelNumber() {
-
     FileReader fr;
     BufferedReader br;
     try {
       fr = new FileReader(LAST_LEVEL_FILE_PATH);
       br = new BufferedReader(fr);
 
-      // Textzeilen der Datei einlesen und auf Konsole ausgeben:
+      // read lines in file
       String text;
       text = br.readLine();
       latestLevel = Integer.parseInt(text);
