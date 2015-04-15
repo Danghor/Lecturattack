@@ -10,14 +10,13 @@ import Lecturattack.entities.Renderable;
 /**
  * @author Andreas Geis
  */
-public class MenuButton extends Button implements Renderable {
-  public MenuButton(int x, int y, Image activeImage, Image inactiveImage) {
-    super(x, y, activeImage, inactiveImage);
+public class LevelButton extends Button implements Renderable {
+  public LevelButton(int x, int y, Image active, Image inactive) {
+    super(x, y, active, inactive);
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     super.render(gameContainer, stateBasedGame, graphics);
-    active = false;
   }
 }

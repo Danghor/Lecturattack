@@ -1,12 +1,14 @@
 package Lecturattack.statemachine;
 
 import Lecturattack.entities.*;
+import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.Level;
 import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -151,10 +153,16 @@ public class GameState extends BasicGameState implements InputListener {
    * is over
    */
   public void initiateNextThrow() {
-    // TODO: call this function
-    // TODO: check if there are no more enemies alive
-    if (false) {
+    // check if there are no more enemies alive
+    boolean enemiesAlive = false;
+    for (Target target : level.getTargets()) {
+      if (target.getType() == TargetType.ENEMY) {
+        enemiesAlive = true;
+      }
+    }
+    if (!enemiesAlive) {
       gameStatus = GameStatus.LEVEL_WON;
+      FileHandler.setLastLevelNumber(currentLevel + 1);
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
