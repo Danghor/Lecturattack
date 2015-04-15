@@ -88,7 +88,6 @@ public class Player implements Renderable {
 
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
-    directionAngle = 0;
     projectile = new Projectile(projectileMeta, 0f, 0f);
     setHandCenterPosition();
     powerSlider.reset();
