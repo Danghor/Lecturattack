@@ -3,7 +3,7 @@ package Lecturattack.statemachine;/*
  */
 
 import Lecturattack.utilities.FileHandler;
-import Lecturattack.utilities.menu.AnimatedButton;
+import Lecturattack.utilities.menu.MenuButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,7 +15,7 @@ public class PauseState extends BasicGameState implements InputListener {
   private static int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
-  private AnimatedButton[] menuButton;
+  private MenuButton[] menuButton;
   private int currentSelection;
 
   public PauseState(int iStateID) {
@@ -31,9 +31,9 @@ public class PauseState extends BasicGameState implements InputListener {
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
-    menuButton = new AnimatedButton[2];
-    menuButton[0] = new AnimatedButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
-    menuButton[1] = new AnimatedButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
+    menuButton = new MenuButton[2];
+    menuButton[0] = new MenuButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
+    menuButton[1] = new MenuButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
   }
 
   @Override
@@ -45,7 +45,11 @@ public class PauseState extends BasicGameState implements InputListener {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
     for (int i = 0; i < menuButton.length; i++) {
-      menuButton[i].render(graphics, currentSelection == i);
+      // check if the button currently has focus
+      if (currentSelection == i) {
+        menuButton[i].setActive();
+      }
+      menuButton[i].render(gameContainer, stateBasedGame, graphics);
     }
   }
 
