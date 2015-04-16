@@ -20,8 +20,6 @@ public abstract class RigidBody implements Renderable {
   protected EnhancedVector linearVelocity;
   protected EnhancedVector force;
 
-  public abstract float getMass();
-
   protected RigidBody(MetaObject meta, float x, float y) {
     this.vertices = new ArrayList<>();
 
@@ -36,6 +34,8 @@ public abstract class RigidBody implements Renderable {
     linearVelocity = new EnhancedVector(0f, 0f);
     force = new EnhancedVector(0f, 0f);
   }
+
+  public abstract float getMass();
 
   public void update(float scaledDelta) {
     EnhancedVector acceleration;

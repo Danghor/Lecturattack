@@ -16,8 +16,12 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class Player implements Renderable {
 
-  //todo  comment on use of amplifier
-  public static final float amplifier = 3f;
+  //amplifies the force returned by the powerSlider so the player actually throws harder
+  private static final float forceAmplifier = 3f;
+
+  //amplifies the force returned by the powerSlider so that the spin of the projectile thrown is much faster
+  private static final float torqueAmplifier = 15f;
+
   //this constant is the translation of the throw angle, so that the angle is tangential
   private static final double THROW_ANGLE_TRANSLATION = Math.PI / 6;
   //this constant is the translation of the angle, which is used in calculating the middle of the player hand
@@ -42,10 +46,6 @@ public class Player implements Renderable {
   private PlayerState playerState;
   private String name;
 
-  public enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, THROWING
-  }
-
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     this.positionX = 0f;
     this.positionY = 0f;
@@ -56,8 +56,6 @@ public class Player implements Renderable {
     this.powerSlider = new PowerSlider();
     reset();
   }
-
-
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
@@ -103,7 +101,10 @@ public class Player implements Renderable {
       playerState = PlayerState.THROWING;
       float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
       float velocityX = -((float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
-      projectile.applyForce(velocityX * amplifier, velocityY * amplifier);
+
+      projectile.applyForce(velocityX * forceAmplifier, velocityY * forceAmplifier);
+      projectile.applyTorque(powerSlider.getSelectedForce() * torqueAmplifier);
+
       projectileReturned = projectile;
     }
     return projectileReturned;
@@ -159,5 +160,9 @@ public class Player implements Renderable {
 
   public PlayerState getPlayerState() {
     return playerState;
+  }
+
+  public enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, THROWING
   }
 }

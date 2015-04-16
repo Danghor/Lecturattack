@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Laura Hillenbrand
  */
 public class MainMenuState extends BasicGameState implements InputListener {
-  private int stateID;
+  private final int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
   private Image logo;
@@ -34,6 +34,8 @@ public class MainMenuState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
     logo = FileHandler.loadImage("logo");
+    //todo: process values
+    FileHandler.getSystem();
     FileHandler.getLastLevelNumber();
     menuButton = new AnimatedButton[3];
     menuButton[0] = new AnimatedButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));

@@ -11,7 +11,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +39,6 @@ public class GameState extends BasicGameState implements InputListener {
   private float wind;
   private GameStatus gameStatus;
   private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
-
-  public enum GameStatus {
-    PLAYING, LEVEL_WON, LEVEL_LOST
-  }
 
   public GameState(int stateID) {
     GameState.stateID = stateID;
@@ -153,13 +148,9 @@ public class GameState extends BasicGameState implements InputListener {
    */
   public void loadLevel(int level) {
     setCurrentLevel(level);
-    try {
-      List<LevelElement> levelElements = FileHandler.getLevelData(level);
-      this.level = LevelGenerator.getGeneratedLevel(levelElements);
-    } catch (SlickException | IOException e) {
-      e.printStackTrace();
-    }
     // every time a level is loaded the player have to be returned to their original state and their position is set for every leveel
+    List<LevelElement> levelElements = FileHandler.getLevelData(level);
+    this.level = LevelGenerator.getGeneratedLevel(levelElements);
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
@@ -169,6 +160,10 @@ public class GameState extends BasicGameState implements InputListener {
     // generate a start wind
     randomizeWind();
 
+    projectile = null;
+    randomizeWind();
+
+    scoreField = new InformationField(10, 25, "Score: ");
     // set a starting score
     scoreField = new InformationField(10, 25, "Score: ");
     score = 100;
@@ -252,5 +247,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   private Player getCurrentPlayer() {
     return players.get(currentPlayerIndex);
+  }
+
+  public enum GameStatus {
+    PLAYING, LEVEL_WON, LEVEL_LOST
   }
 }

@@ -15,20 +15,20 @@ public class InformationField implements Renderable {
   int y;
   private String fixedText;
   private String dynamicText;
-  private java.awt.Font oAwtFont;
-  private TrueTypeFont oTrueTypeFont;
+  private java.awt.Font awtFont;
+  private TrueTypeFont trueTypeFont;
 
   public InformationField(int x, int y, String fixedText) {
     this.x = x;
     this.y = y;
     this.fixedText = fixedText;
-    oAwtFont = new java.awt.Font("Sanserif", java.awt.Font.BOLD, 24);
-    oTrueTypeFont = new TrueTypeFont(oAwtFont, false);
+    awtFont = new java.awt.Font("Sanserif", java.awt.Font.BOLD, 24);
+    trueTypeFont = new TrueTypeFont(awtFont, false);
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    oTrueTypeFont.drawString(x, y, fixedText + dynamicText);
+    trueTypeFont.drawString(x, y, fixedText + dynamicText);
   }
 
   public void setDynamicText(String dynamicText) {
