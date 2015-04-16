@@ -160,6 +160,7 @@ public class FileHandler {
   }
 
   public static void resetLastLevelNumber() {
+    lastLevelNumber = 1;
     try {
       String text = "1";
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
