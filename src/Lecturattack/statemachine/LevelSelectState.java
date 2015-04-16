@@ -48,10 +48,6 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     menuButtons[7] = new MenuButton(888, 600, FileHandler.loadImage("reset_down"), FileHandler.loadImage("reset"));
   }
 
-  public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-
-  }
-
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
