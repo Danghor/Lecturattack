@@ -8,6 +8,7 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -23,7 +24,8 @@ import java.util.List;
 
 public class GameState extends BasicGameState implements InputListener {
   private static final int DEGREE_ARM_MOVE = 1;
-  public static int stateID;
+  private static final int MAX_LEVEL = 6;
+  private final int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
@@ -39,10 +41,13 @@ public class GameState extends BasicGameState implements InputListener {
   private int score;
   private float wind;
   private GameStatus gameStatus;
-  private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
+  // a list of all Targets that have been hit and are not part of the game
+  // anymore, but are still falling out of the frame and therefore have to
+  // be rendered
+  private ArrayList<Target> deadTargets;
 
   public GameState(int stateID) {
-    GameState.stateID = stateID;
+    this.stateID = stateID;
   }
 
   @Override
@@ -123,7 +128,9 @@ public class GameState extends BasicGameState implements InputListener {
     }
     if (!enemiesAlive) {
       gameStatus = GameStatus.LEVEL_WON;
-      FileHandler.setLastLevelNumber(currentLevel + 1);
+      if (currentLevel <= MAX_LEVEL) {
+        FileHandler.setLastLevelNumber(currentLevel + 1);
+      }
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
@@ -136,33 +143,37 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void keyPressed(int key, char c) {
     switch (key) {
-      case Input.KEY_SPACE:
-        if (gameStatus == GameStatus.PLAYING) {
-          Projectile checkProjectile = getCurrentPlayer().throwProjectile();
-          if (checkProjectile != null) {
-            this.projectile = checkProjectile;
-            score -= 10;
-          }
-        } else if (gameStatus == GameStatus.LEVEL_WON) {
-          currentLevel++;
+    case Input.KEY_SPACE:
+      if (gameStatus == GameStatus.PLAYING) {
+        Projectile checkProjectile = getCurrentPlayer().throwProjectile();
+        if (checkProjectile != null) {
+          this.projectile = checkProjectile;
+          score -= 10;
+        }
+      } else if (gameStatus == GameStatus.LEVEL_WON) {
+        currentLevel++;
+        if (currentLevel <= MAX_LEVEL) {
           loadLevel(currentLevel);
-        } else if (gameStatus == GameStatus.LEVEL_LOST) {
-          loadLevel(currentLevel);
+        } else {
+          stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
         }
-        break;
-      case Input.KEY_ESCAPE:
-        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
-        break;
-      case Input.KEY_UP:
-        if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
-          selectNextPlayer();
-        }
-        break;
-      case Input.KEY_DOWN:
-        if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
-          selectPreviousPlayer();
-        }
-        break;
+      } else if (gameStatus == GameStatus.LEVEL_LOST) {
+        loadLevel(currentLevel);
+      }
+      break;
+    case Input.KEY_ESCAPE:
+      stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+      break;
+    case Input.KEY_UP:
+      if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+        selectNextPlayer();
+      }
+      break;
+    case Input.KEY_DOWN:
+      if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+        selectPreviousPlayer();
+      }
+      break;
     }
   }
 
