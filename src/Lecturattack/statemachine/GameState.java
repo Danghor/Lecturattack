@@ -23,7 +23,8 @@ import java.util.List;
 
 public class GameState extends BasicGameState implements InputListener {
   private static final int DEGREE_ARM_MOVE = 1;
-  public static int stateID;
+  private static final int MAX_LEVEL = 6;
+  private final int stateID;
   private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
@@ -39,10 +40,13 @@ public class GameState extends BasicGameState implements InputListener {
   private int score;
   private float wind;
   private GameStatus gameStatus;
-  private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
+  // a list of all Targets that have been hit and are not part of the game
+  // anymore, but are still falling out of the frame and therefore have to
+  // be rendered
+  private ArrayList<Target> deadTargets;
 
   public GameState(int stateID) {
-    GameState.stateID = stateID;
+    this.stateID = stateID;
   }
 
   @Override
@@ -52,6 +56,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("background");
     victory = FileHandler.loadImage("victory");
@@ -122,7 +127,9 @@ public class GameState extends BasicGameState implements InputListener {
     }
     if (!enemiesAlive) {
       gameStatus = GameStatus.LEVEL_WON;
-      FileHandler.setLastLevelNumber(currentLevel + 1);
+      if (currentLevel <= MAX_LEVEL) {
+        FileHandler.setLastLevelNumber(currentLevel + 1);
+      }
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
@@ -144,7 +151,11 @@ public class GameState extends BasicGameState implements InputListener {
           }
         } else if (gameStatus == GameStatus.LEVEL_WON) {
           currentLevel++;
-          loadLevel(currentLevel);
+          if (currentLevel <= MAX_LEVEL) {
+            loadLevel(currentLevel);
+          } else {
+            stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
+          }
         } else if (gameStatus == GameStatus.LEVEL_LOST) {
           loadLevel(currentLevel);
         }
@@ -165,27 +176,42 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
+  /**
+   * load the specified level in the gamestate
+   *
+   * @param level the integer value which indicates the level (1= first level , 2 = second level, ...)
+   */
   public void loadLevel(int level) {
     setCurrentLevel(level);
+    // every time a level is loaded the player have to be returned to their original state and their position is set for every leveel
     List<LevelElement> levelElements = FileHandler.getLevelData(level);
     this.level = LevelGenerator.getGeneratedLevel(levelElements);
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
     }
+    // when a new level is loaded the player holds the projectile, so it has to be null in the gamestate
+    projectile = null;
+    // generate a start wind
+    randomizeWind();
 
     projectile = null;
     randomizeWind();
 
     scoreField = new InformationField(10, 25, "Score: ");
     // set a starting score
+    scoreField = new InformationField(10, 25, "Score: ");
     score = 100;
     playerName = new InformationField(10, 0, "Dozent: ");
     playerName.setDynamicText(getCurrentPlayer().getName());
     gameStatus = GameStatus.PLAYING;
   }
 
+  /**
+   * return the level to its original state
+   */
   private void resetLevel() {
+    //to reset the level it is only necessary to load the current level again
     loadLevel(getCurrentLevel());
   }
 
@@ -212,19 +238,20 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void selectPreviousPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
-
     if (currentPlayerIndex <= 0) {
       currentPlayerIndex = players.size() - 1;
     } else {
       currentPlayerIndex--;
     }
-
     getCurrentPlayer().setAngle(previousAngle);
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
+  /**
+   * generate a random wind
+   */
   private void randomizeWind() {
-    wind += (float) ((Math.random() * 5) % 5 - 2.5);
+    wind = (float) ((Math.random() * 6) % 3 - 1.5);
   }
 
   public int getCurrentLevel() {

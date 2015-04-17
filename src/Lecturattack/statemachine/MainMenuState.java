@@ -18,6 +18,9 @@ public class MainMenuState extends BasicGameState implements InputListener {
   private Image logo;
   private MenuButton[] menuButton;
   private int currentSelection;
+  // this boolean indicates, if the "Spiel starten" button has be set to
+  // "Spiel fortsetzen" already
+  private boolean continueGameButton;
 
   public MainMenuState(int stateID) {
     this.stateID = stateID;
@@ -33,14 +36,31 @@ public class MainMenuState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
     logo = FileHandler.loadImage("logo");
-//todo: process values
     FileHandler.getSystem();
     FileHandler.getLastLevelNumber();
     menuButton = new MenuButton[3];
-    menuButton[0] = new MenuButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));
+    int lastLevelNumber = FileHandler.getLastLevelNumber();
+    if (lastLevelNumber > 1) {
+      menuButton[0] = new MenuButton(245, 500, FileHandler.loadImage("continueGame_down"), FileHandler.loadImage("continueGame"));
+      continueGameButton = true;
+    } else {
+      menuButton[0] = new MenuButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));
+      continueGameButton = false;
+    }
     menuButton[1] = new MenuButton(495, 500, FileHandler.loadImage("levelSelect_down"), FileHandler.loadImage("levelSelect"));
     menuButton[2] = new MenuButton(745, 500, FileHandler.loadImage("endGame_down"), FileHandler.loadImage("endGame"));
     currentSelection = 0;
+  }
+
+  @Override
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    if (!continueGameButton) {
+      int lastLevelNumber = FileHandler.getLastLevelNumber();
+      if (lastLevelNumber > 1) {
+        menuButton[0] = new MenuButton(245, 500, FileHandler.loadImage("continueGame_down"), FileHandler.loadImage("continueGame"));
+        continueGameButton = true;
+      }
+    }
   }
 
   @Override
@@ -63,12 +83,12 @@ public class MainMenuState extends BasicGameState implements InputListener {
       }
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection == 0) {
-        // TODO load current level from file and start that level
-        ((GameState) stateBasedGame.getState(GameState.stateID)).loadLevel(1);
-        stateBasedGame.enterState(2);
+        int lastLevelNumber = FileHandler.getLastLevelNumber();
+        ((GameState) stateBasedGame.getState(Lecturattack.GAMESTATE)).loadLevel(lastLevelNumber);
+        stateBasedGame.enterState(Lecturattack.GAMESTATE);
       }
       if (currentSelection == 1) {
-        stateBasedGame.enterState(1);
+        stateBasedGame.enterState(Lecturattack.LEVELSELECTSTATE);
       }
       if (currentSelection == 2) {
         System.exit(0);

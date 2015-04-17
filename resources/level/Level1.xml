@@ -14,19 +14,19 @@
     </levelElements>
     <levelElements>
         <positionX>1004</positionX>
-        <positionY>529</positionY>
+        <positionY>528</positionY>
         <type>RAM</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>1089</positionX>
+        <positionX>1092</positionX>
         <positionY>572</positionY>
         <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
         <positionX>1024</positionX>
-        <positionY>435</positionY>
+        <positionY>433</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
