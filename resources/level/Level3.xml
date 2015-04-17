@@ -7,37 +7,37 @@
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>1133</positionX>
+        <positionX>1136</positionX>
         <positionY>575</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
         <positionX>1118</positionX>
-        <positionY>529</positionY>
+        <positionY>528</positionY>
         <type>LIBRARY</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>1200</positionX>
+        <positionX>1205</positionX>
         <positionY>572</positionY>
         <type>RAM</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>1133</positionX>
-        <positionY>435</positionY>
+        <positionX>1136</positionX>
+        <positionY>430</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>1089</positionX>
+        <positionX>1091</positionX>
         <positionY>572</positionY>
         <type>RAM</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>977</positionX>
+        <positionX>978</positionX>
         <positionY>572</positionY>
         <type>RAM</type>
         <positioning>VERTICAL</positioning>
@@ -50,7 +50,7 @@
     </levelElements>
     <levelElements>
         <positionX>1004</positionX>
-        <positionY>529</positionY>
+        <positionY>528</positionY>
         <type>LIBRARY</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>
