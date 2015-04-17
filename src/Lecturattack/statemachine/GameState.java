@@ -22,9 +22,8 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private static final int DEGREE_ARM_MOVE = 1;
   public static int stateID;
-  private StateBasedGame stateBasedGame;
+  private StateBasedGame stateBasedGame;//TODO find another way
   private int currentLevel;
   private ArrayList<Player> players;
   private int currentPlayerIndex;
@@ -41,6 +40,10 @@ public class GameState extends BasicGameState implements InputListener {
   private GameStatus gameStatus;
   private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
 
+  public enum GameStatus {
+    PLAYING, LEVEL_WON, LEVEL_LOST
+  }
+
   public GameState(int stateID) {
     GameState.stateID = stateID;
   }
@@ -52,7 +55,6 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("background");
     victory = FileHandler.loadImage("victory");
@@ -64,7 +66,7 @@ public class GameState extends BasicGameState implements InputListener {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
     currentPlayerIndex = 0;
-    setCurrentLevel(1); // default
+    setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
     flag = new Flag();
   }
 
@@ -75,11 +77,18 @@ public class GameState extends BasicGameState implements InputListener {
         initiateNextThrow();
       }
     }
-    changeThrowingAngleWithUserInput(gameContainer);
+
     flag.setWindScale(wind);
     score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
     scoreField.setDynamicText(Integer.toString(score));
-    getCurrentPlayer().updatePowerSlider(delta);
+
+    //the player is updated every step and returns a projectile when it is thrown, otherwise it returns null
+    // to prevent overwriting the already existing projectile it is necessary to save it in a second variable and check whenever it is null
+    Projectile checkProjectile = getCurrentPlayer().update(gameContainer, delta);
+    if (checkProjectile != null) {
+      this.projectile = checkProjectile;
+      score -= 10;
+    }
   }
 
   @Override
@@ -137,13 +146,7 @@ public class GameState extends BasicGameState implements InputListener {
   public void keyPressed(int key, char c) {
     switch (key) {
       case Input.KEY_SPACE:
-        if (gameStatus == GameStatus.PLAYING) {
-          Projectile checkProjectile = getCurrentPlayer().throwProjectile();
-          if (checkProjectile != null) {
-            this.projectile = checkProjectile;
-            score -= 10;
-          }
-        } else if (gameStatus == GameStatus.LEVEL_WON) {
+        if (gameStatus == GameStatus.LEVEL_WON) {
           currentLevel++;
           loadLevel(currentLevel);
         } else if (gameStatus == GameStatus.LEVEL_LOST) {
@@ -163,6 +166,8 @@ public class GameState extends BasicGameState implements InputListener {
           selectPreviousPlayer();
         }
         break;
+      case Input.KEY_R:
+        getCurrentPlayer().reset();
     }
   }
 
@@ -205,13 +210,6 @@ public class GameState extends BasicGameState implements InputListener {
     loadLevel(getCurrentLevel());
   }
 
-  private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
-    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      getCurrentPlayer().moveArm(-DEGREE_ARM_MOVE);
-    }
-  }
 
   private void selectNextPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
@@ -256,7 +254,4 @@ public class GameState extends BasicGameState implements InputListener {
     return players.get(currentPlayerIndex);
   }
 
-  public enum GameStatus {
-    PLAYING, LEVEL_WON, LEVEL_LOST
-  }
 }

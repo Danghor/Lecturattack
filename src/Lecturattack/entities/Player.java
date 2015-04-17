@@ -7,6 +7,7 @@ package Lecturattack.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -46,6 +47,9 @@ public class Player implements Renderable {
   private PlayerState playerState;
   private String name;
 
+  // the decrees the arm is rotated very update
+  private static final int DEGREE_ARM_MOVE = 1;
+
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     this.positionX = 0f;
     this.positionY = 0f;
@@ -55,6 +59,28 @@ public class Player implements Renderable {
     this.name = name;
     this.powerSlider = new PowerSlider();
     reset();
+  }
+
+  public Projectile update(GameContainer gameContainer, int delta) {
+    updatePowerSlider(delta);
+    Projectile projectileReturned = null;
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
+      moveArm(DEGREE_ARM_MOVE);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+      moveArm(-DEGREE_ARM_MOVE);
+    } else if (gameContainer.getInput().isKeyPressed(Input.KEY_SPACE)) {
+      if (playerState == PlayerState.ANGLE_SELECTION) {
+        playerState = PlayerState.POWER_SLIDER;
+      } else if (playerState == PlayerState.POWER_SLIDER) {
+        playerState = PlayerState.THROWING;
+        float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
+        float velocityX = -((float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
+        projectile.applyForce(velocityX * forceAmplifier, velocityY * forceAmplifier);
+        projectile.applyTorque(powerSlider.getSelectedForce() * torqueAmplifier);
+        projectileReturned = projectile;
+      }
+    }
+    return projectileReturned;
   }
 
   @Override
@@ -75,6 +101,7 @@ public class Player implements Renderable {
             armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale + (float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale);
   }
 
+
   public void moveArm(float degreeDifference) {
     if (playerState == PlayerState.ANGLE_SELECTION) {
       // the player can only move his arm in a certain angle,
@@ -92,23 +119,9 @@ public class Player implements Renderable {
    *
    * @return projectile
    */
-  public final Projectile throwProjectile() {
-    Projectile projectileReturned = null;
-
-    if (playerState == PlayerState.ANGLE_SELECTION) {
-      playerState = PlayerState.POWER_SLIDER;
-    } else if (playerState == PlayerState.POWER_SLIDER) {
-      playerState = PlayerState.THROWING;
-      float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
-      float velocityX = -((float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
-
-      projectile.applyForce(velocityX * forceAmplifier, velocityY * forceAmplifier);
-      projectile.applyTorque(powerSlider.getSelectedForce() * torqueAmplifier);
-
-      projectileReturned = projectile;
-    }
-    return projectileReturned;
-  }
+//  public final Projectile throwProjectile() {
+//
+//  }
 
   public void updatePowerSlider(int delta) {
     if (playerState == PlayerState.POWER_SLIDER) {
