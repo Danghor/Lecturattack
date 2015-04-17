@@ -70,7 +70,6 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
-   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
@@ -162,9 +161,8 @@ public class FileHandler {
   public static void resetLastLevelNumber() {
     lastLevelNumber = 1;
     try {
-      String text = "1";
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write(text);
+      out.write(lastLevelNumber);
       out.close();
     } catch (IOException e) {
       System.out.println("Error while writing in text file");
@@ -183,7 +181,6 @@ public class FileHandler {
     } else if (sysName.contains("Mac")) {
       LAST_LEVEL_FILE_PATH = "~/Documents/Saved Games/GAMENAME/Lecturattack.txt";
     }
-    File levelFile = new File(LAST_LEVEL_FILE_PATH);
   }
 
   public static Image loadImage(String fileName) {
@@ -191,21 +188,19 @@ public class FileHandler {
     try {
       image = new Image("resources/images/" + fileName + ".png");
     } catch (SlickException e) {
-      System.out.println("Error while loading image.");
+      System.out.println("Error while loading image:" + fileName);
     }
     return image;
   }
 
   public static Music getBackgroundMusic() {
     Music bgMusic = null;
-
     try {
       bgMusic = new Music(BACKGROUND_MUSIC_PATH);
     } catch (SlickException e) {
       System.out.println("Could not process file " + BACKGROUND_MUSIC_PATH);
       e.printStackTrace();
     }
-
     return bgMusic;
   }
 }
