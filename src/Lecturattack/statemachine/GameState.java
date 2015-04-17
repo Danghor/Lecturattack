@@ -8,7 +8,6 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -143,37 +142,37 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void keyPressed(int key, char c) {
     switch (key) {
-    case Input.KEY_SPACE:
-      if (gameStatus == GameStatus.PLAYING) {
-        Projectile checkProjectile = getCurrentPlayer().throwProjectile();
-        if (checkProjectile != null) {
-          this.projectile = checkProjectile;
-          score -= 10;
-        }
-      } else if (gameStatus == GameStatus.LEVEL_WON) {
-        currentLevel++;
-        if (currentLevel <= MAX_LEVEL) {
+      case Input.KEY_SPACE:
+        if (gameStatus == GameStatus.PLAYING) {
+          Projectile checkProjectile = getCurrentPlayer().throwProjectile();
+          if (checkProjectile != null) {
+            this.projectile = checkProjectile;
+            score -= 10;
+          }
+        } else if (gameStatus == GameStatus.LEVEL_WON) {
+          currentLevel++;
+          if (currentLevel <= MAX_LEVEL) {
+            loadLevel(currentLevel);
+          } else {
+            stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
+          }
+        } else if (gameStatus == GameStatus.LEVEL_LOST) {
           loadLevel(currentLevel);
-        } else {
-          stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
         }
-      } else if (gameStatus == GameStatus.LEVEL_LOST) {
-        loadLevel(currentLevel);
-      }
-      break;
-    case Input.KEY_ESCAPE:
-      stateBasedGame.enterState(Lecturattack.PAUSESTATE);
-      break;
-    case Input.KEY_UP:
-      if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
-        selectNextPlayer();
-      }
-      break;
-    case Input.KEY_DOWN:
-      if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
-        selectPreviousPlayer();
-      }
-      break;
+        break;
+      case Input.KEY_ESCAPE:
+        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+        break;
+      case Input.KEY_UP:
+        if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectNextPlayer();
+        }
+        break;
+      case Input.KEY_DOWN:
+        if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
+          selectPreviousPlayer();
+        }
+        break;
     }
   }
 
