@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Andreas Geis
  * @author Stefanie Raschke
+ * @author Tim Adamek
  */
 public class LevelSelectState extends BasicGameState implements InputListener {
   private final int stateID;
@@ -20,6 +21,8 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   private Image background;
   private Button[] menuButtons;
   private int currentSelection;
+  private float previousWidth;
+  private Color previousColor;
 
   public LevelSelectState(int stateID) {
     this.stateID = stateID;
@@ -46,6 +49,34 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   }
 
   @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    graphics.drawImage(background, 0, 0);
+    // draw a red rectangle around the selected level
+    int rectPosition = 6;
+    for (int i = 0; i < menuButtons.length; i++) {
+      if (currentSelection == i) {
+        // only change the button image, if it is a menu button
+        // level select buttons get changed from player progress
+        if (menuButtons[i] instanceof MenuButton) {
+          menuButtons[i].setActive();
+        }
+        rectPosition = i;
+      }
+      menuButtons[i].render(gameContainer, stateBasedGame, graphics);
+    }
+    // check if a level is selected, or a menu button
+    if (rectPosition <= 5) {
+      graphics.drawRect(menuButtons[rectPosition].getX(), menuButtons[rectPosition].getY(), 302, 169);
+    }
+  }
+
+  //must be implemented because the method is abstract in the parent class;
+  @Override
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
+  }
+
+  @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     int lastLevelNumber = FileHandler.getLastLevelNumber();
     currentSelection = 6;
@@ -53,15 +84,24 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     for (int i = 0; i < lastLevelNumber; i++) {
       menuButtons[i].setActive();
     }
+
+    previousWidth = gameContainer.getGraphics().getLineWidth();
+    previousColor = gameContainer.getGraphics().getColor();
+
+    gameContainer.getGraphics().setLineWidth(7);
+    gameContainer.getGraphics().setColor(Color.red);
+
   }
 
-  public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-
+  @Override
+  public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+    container.getGraphics().setLineWidth(previousWidth);
+    container.getGraphics().setColor(previousColor);
   }
 
   /*
-   * listen for user input
-   */
+     * listen for user input
+     */
   @Override
   public void keyPressed(int key, char c) {
     if (key == Input.KEY_LEFT) {
@@ -104,27 +144,5 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     }
   }
 
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    graphics.drawImage(background, 0, 0);
-    // draw a red rectangle around the selected level
-    int rectPosition = 6;
-    graphics.setLineWidth(7);
-    graphics.setColor(Color.red);
-    for (int i = 0; i < menuButtons.length; i++) {
-      if (currentSelection == i) {
-        // only change the button image, if it is a menu button
-        // level select buttons get changed from player progress
-        if (menuButtons[i] instanceof MenuButton) {
-          menuButtons[i].setActive();
-        }
-        rectPosition = i;
-      }
-      menuButtons[i].render(gameContainer, stateBasedGame, graphics);
-    }
-    // check if a level is selected, or a menu button
-    if (rectPosition <= 5) {
-      graphics.drawRect(menuButtons[rectPosition].getX(), menuButtons[rectPosition].getY(), 302, 169);
-    }
-  }
+
 }
