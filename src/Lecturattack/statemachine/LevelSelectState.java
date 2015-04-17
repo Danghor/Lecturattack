@@ -70,6 +70,12 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     }
   }
 
+  //must be implemented because the method is abstract in the parent class;
+  @Override
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
+  }
+
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     int lastLevelNumber = FileHandler.getLastLevelNumber();
