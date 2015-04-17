@@ -63,18 +63,27 @@ public class Player implements Renderable {
 
   public Projectile update(GameContainer gameContainer, int delta) {
     updatePowerSlider(delta);
+    // a local variable is necessary because the player only returns the projectile when he throws it otherwise he returns null
     Projectile projectileReturned = null;
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
       moveArm(DEGREE_ARM_MOVE);
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
       moveArm(-DEGREE_ARM_MOVE);
     } else if (gameContainer.getInput().isKeyPressed(Input.KEY_SPACE)) {
+
+      // the player enters the POWER_SLIDER state (where he can choose the force) when he presses space in the ANGLE_SELECTION state
+      // the player enters the THROWING state when he presses  space in  the POWER_SLIDER state, than he throws the projectile
+      // the player enters the ANGLE_SELECTION state with the reset() method
       if (playerState == PlayerState.ANGLE_SELECTION) {
         playerState = PlayerState.POWER_SLIDER;
       } else if (playerState == PlayerState.POWER_SLIDER) {
         playerState = PlayerState.THROWING;
-        float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
+
+        // the velocity of the projectile is tangential to the arm movement (the animation when throwing not selecting the angle)
+        // the vector necessary for this has the same direction as an line which is orthogonal to the line from the shoulder of the player to the hand of the player
+        // with this in mind the following first caculates the the directions for x and y and than scales it with the force of the powerSlider
         float velocityX = -((float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
+        float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
         projectile.applyForce(velocityX * forceAmplifier, velocityY * forceAmplifier);
         projectile.applyTorque(powerSlider.getSelectedForce() * torqueAmplifier);
         projectileReturned = projectile;
@@ -112,16 +121,6 @@ public class Player implements Renderable {
       setHandCenterPosition();
     }
   }
-
-  /**
-   * lock the current Selection (setAngle or setPower) and increment the
-   * playerState do nothing if the player already threw the projectile
-   *
-   * @return projectile
-   */
-//  public final Projectile throwProjectile() {
-//
-//  }
 
   public void updatePowerSlider(int delta) {
     if (playerState == PlayerState.POWER_SLIDER) {

@@ -78,10 +78,6 @@ public class GameState extends BasicGameState implements InputListener {
       }
     }
 
-    flag.setWindScale(wind);
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
-    scoreField.setDynamicText(Integer.toString(score));
-
     //the player is updated every step and returns a projectile when it is thrown, otherwise it returns null
     // to prevent overwriting the already existing projectile it is necessary to save it in a second variable and check whenever it is null
     Projectile checkProjectile = getCurrentPlayer().update(gameContainer, delta);
@@ -89,6 +85,10 @@ public class GameState extends BasicGameState implements InputListener {
       this.projectile = checkProjectile;
       score -= 10;
     }
+
+    flag.setWindScale(wind);
+    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+    scoreField.setDynamicText(Integer.toString(score));
   }
 
   @Override
