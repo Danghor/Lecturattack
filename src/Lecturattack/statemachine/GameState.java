@@ -97,8 +97,8 @@ public class GameState extends BasicGameState implements InputListener {
       deadTarget.render(gameContainer, stateBasedGame, graphics);
     }
     /*
-     * Render projectile here, if the player doesn't have it If the player has
-     * the projectile, it's null
+     * Render projectile here, if the player doesn't have it
+     * If the player has the projectile, it's null
      */
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
