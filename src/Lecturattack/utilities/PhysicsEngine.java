@@ -24,7 +24,7 @@ public class PhysicsEngine {
 
     //----------projectile operations----------
     if (projectile != null) {
-      oldPosition = projectile.getCenter();
+      oldPosition = projectile.getCenter();//TODO question: will this ever be used?
 
       //update projectile
       projectile.applyForce(wind, GRAVITATION_ACCELERATION * projectile.getMass());

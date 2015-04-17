@@ -11,17 +11,17 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Andreas Geis
  */
 public class InformationField implements Renderable {
-  int x;
-  int y;
+  private int x;
+  private int y;
   private String fixedText;
   private String dynamicText;
-  private java.awt.Font awtFont;
   private TrueTypeFont trueTypeFont;
 
   public InformationField(int x, int y, String fixedText) {
     this.x = x;
     this.y = y;
     this.fixedText = fixedText;
+    java.awt.Font awtFont;
     awtFont = new java.awt.Font("Sanserif", java.awt.Font.BOLD, 24);
     trueTypeFont = new TrueTypeFont(awtFont, false);
   }

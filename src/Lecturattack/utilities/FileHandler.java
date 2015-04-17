@@ -119,7 +119,7 @@ public class FileHandler {
   }
 
   /**
-   * @param level
+   * @param level the new last level
    */
   public static void setLastLevelNumber(int level) {
     if (level > lastLevelNumber) {
@@ -135,7 +135,7 @@ public class FileHandler {
     }
   }
 
-  public static int getLastLevelFromFile() {
+  private static int getLastLevelFromFile() {
     File f = new File(LAST_LEVEL_FILE_PATH);
     if (f.exists() && !f.isDirectory()) {
       FileReader fr;
