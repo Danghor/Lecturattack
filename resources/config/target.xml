@@ -109,11 +109,11 @@
         <targetMetaType>ENEMY</targetMetaType>
         <vertex>
             <x>0</x>
-            <y>4</y>
+            <y>8</y>
         </vertex>
         <vertex>
             <x>40</x>
-            <y>4</y>
+            <y>8</y>
         </vertex>
         <vertex>
             <x>40</x>
@@ -125,19 +125,19 @@
         </vertex>
         <vertex>
             <x>66</x>
-            <y>30</y>
+            <y>34</y>
         </vertex>
         <vertex>
             <x>42</x>
-            <y>30</y>
+            <y>34</y>
         </vertex>
         <vertex>
             <x>42</x>
-            <y>95</y>
+            <y>99</y>
         </vertex>
         <vertex>
             <x>0</x>
-            <y>95</y>
+            <y>99</y>
         </vertex>
         <mass>60</mass>
     </target>
