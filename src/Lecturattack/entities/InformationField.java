@@ -18,6 +18,13 @@ public class InformationField implements Renderable {
   private java.awt.Font awtFont;
   private TrueTypeFont trueTypeFont;
 
+  /**
+   * Constructor for InformationField
+   * 
+   * @param x the x-position of the information field
+   * @param y the y-position of the information field
+   * @param fixedText one part of the text, which is rendered, this text doesn't change
+   */
   public InformationField(int x, int y, String fixedText) {
     this.x = x;
     this.y = y;
@@ -26,6 +33,11 @@ public class InformationField implements Renderable {
     trueTypeFont = new TrueTypeFont(awtFont, false);
   }
 
+  /**
+   * Dynamically change the second part of the text
+   * 
+   * @param dynamicText the dynamic text, which is rendered
+   */
   public void setDynamicText(String dynamicText) {
     this.dynamicText = dynamicText;
   }

@@ -7,24 +7,30 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
+ * The PowerSlider indicates the strength of a throw.
+ * 
  * @author Andreas Geis
  */
 public class PowerSlider implements Renderable {
   // powerslide.png has 255px and powserslideLine is 5px width
   private static final int MAX_FORCE = 250;
-  private static final float SPEED_SCALE = 0.1f;
+  private static final float SPEED_SCALE = 0.45f;
   private float selectedForce;
   private boolean movingRight;
   private Image powerslide;
   private Image powerslideLine;
 
+  /**
+   * Constructor for PowerSlider
+   */
   public PowerSlider() {
     powerslide = FileHandler.loadImage("powerslide");
     powerslideLine = FileHandler.loadImage("powerslideLine");
   }
 
   /**
-   * updates the PowerSlider, depending on direction it either moves right or left
+   * Updates the PowerSlider
+   * Depending on direction it either moves right or left
    *
    * @param delta The time-difference compared to the previous step.
    */
@@ -51,11 +57,19 @@ public class PowerSlider implements Renderable {
     graphics.drawImage(powerslideLine, 10 + selectedForce, 368);
   }
 
+  /**
+   * Resets the PowerSlider to its initial status.
+   */
   public void reset() {
     selectedForce = 0;
     movingRight = true;
   }
 
+  /**
+   * This method is used to initiate a throw.
+   * 
+   * @return The Force which is currently selected.
+   */
   public float getSelectedForce() {
     return selectedForce;
   }

@@ -45,6 +45,10 @@ public class GameState extends BasicGameState implements InputListener {
   // be rendered
   private ArrayList<Target> deadTargets;
 
+  /**
+   * Set the ID of this state to the given stateID
+   * @param stateID
+   */
   public GameState(int stateID) {
     this.stateID = stateID;
   }
@@ -56,7 +60,6 @@ public class GameState extends BasicGameState implements InputListener {
 
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("background");
     victory = FileHandler.loadImage("victory");
@@ -107,15 +110,15 @@ public class GameState extends BasicGameState implements InputListener {
     playerName.render(gameContainer, stateBasedGame, graphics);
     flag.render(gameContainer, stateBasedGame, graphics);
     if (gameStatus == GameStatus.LEVEL_WON) {
-      graphics.drawImage(victory, 0, 0);
+      graphics.drawImage(victory, 256, 91);
     } else if (gameStatus == GameStatus.LEVEL_LOST) {
-      graphics.drawImage(defeat, 0, 0);
+      graphics.drawImage(defeat, 256, 91);
     }
   }
 
   /**
-   * gets called when the projectile is not moving anymore and the previous turn
-   * is over
+   * This method is called, when the projectile is not moving anymore
+   * and the previous turn is over
    */
   public void initiateNextThrow() {
     // check if there are no more enemies alive
@@ -125,6 +128,7 @@ public class GameState extends BasicGameState implements InputListener {
         enemiesAlive = true;
       }
     }
+    projectile = null;
     if (!enemiesAlive) {
       gameStatus = GameStatus.LEVEL_WON;
       if (currentLevel <= MAX_LEVEL) {
@@ -133,7 +137,6 @@ public class GameState extends BasicGameState implements InputListener {
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
-      projectile = null;
       getCurrentPlayer().reset();
       randomizeWind();
     }
@@ -178,7 +181,6 @@ public class GameState extends BasicGameState implements InputListener {
 
   /**
    * load the specified level in the gamestate
-   *
    * @param level the integer value which indicates the level (1= first level , 2 = second level, ...)
    */
   public void loadLevel(int level) {
@@ -209,9 +211,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   /**
    * return the level to its original state
+   * to reset the level it is only necessary to load the current level again
    */
   private void resetLevel() {
-    //to reset the level it is only necessary to load the current level again
     loadLevel(getCurrentLevel());
   }
 
