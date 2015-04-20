@@ -20,9 +20,9 @@ public class InformationField implements Renderable {
 
   /**
    * Constructor for InformationField
-   * 
-   * @param x the x-position of the information field
-   * @param y the y-position of the information field
+   *
+   * @param x         the x-position of the information field
+   * @param y         the y-position of the information field
    * @param fixedText one part of the text, which is rendered, this text doesn't change
    */
   public InformationField(int x, int y, String fixedText) {
@@ -35,7 +35,7 @@ public class InformationField implements Renderable {
 
   /**
    * Dynamically change the second part of the text
-   * 
+   *
    * @param dynamicText the dynamic text, which is rendered
    */
   public void setDynamicText(String dynamicText) {

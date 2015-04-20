@@ -47,6 +47,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   /**
    * Set the ID of this state to the given stateID
+   *
    * @param stateID
    */
   public GameState(int stateID) {
@@ -181,6 +182,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   /**
    * load the specified level in the gamestate
+   *
    * @param level the integer value which indicates the level (1= first level , 2 = second level, ...)
    */
   public void loadLevel(int level) {
