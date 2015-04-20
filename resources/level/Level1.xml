@@ -19,19 +19,19 @@
         <positioning>HORIZONTAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>1092</positionX>
+        <positionX>1091</positionX>
         <positionY>572</positionY>
         <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
         <positionX>1024</positionX>
-        <positionY>433</positionY>
+        <positionY>430</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
-        <positionX>977</positionX>
+        <positionX>978</positionX>
         <positionY>572</positionY>
         <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>

@@ -111,6 +111,9 @@ public class FileHandler {
     return players.getPlayerStandards();
   }
 
+  /**
+   * @return
+   */
   public static int getLastLevelNumber() {
     if (lastLevelNumber == -1) {
       lastLevelNumber = getLastLevelFromFile();

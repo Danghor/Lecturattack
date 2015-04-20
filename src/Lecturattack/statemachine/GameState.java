@@ -22,8 +22,10 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  public static int stateID;
   private StateBasedGame stateBasedGame;//TODO find another way
+  private static final int DEGREE_ARM_MOVE = 1;
+  private static final int MAX_LEVEL = 6;
+  private final int stateID;
   private int currentLevel;
   private ArrayList<Player> players;
   private int currentPlayerIndex;
@@ -38,14 +40,17 @@ public class GameState extends BasicGameState implements InputListener {
   private int score;
   private float wind;
   private GameStatus gameStatus;
-  private ArrayList<Target> deadTargets; //a list of all Targets that have been hit and are not part of the game anymore, but are still falling out of the frame and therefore have to be rendered
+  // a list of all Targets that have been hit and are not part of the game
+  // anymore, but are still falling out of the frame and therefore have to
+  // be rendered
+  private ArrayList<Target> deadTargets;
 
   public enum GameStatus {
     PLAYING, LEVEL_WON, LEVEL_LOST
   }
 
   public GameState(int stateID) {
-    GameState.stateID = stateID;
+    this.stateID = stateID;
   }
 
   @Override
@@ -132,7 +137,9 @@ public class GameState extends BasicGameState implements InputListener {
     }
     if (!enemiesAlive) {
       gameStatus = GameStatus.LEVEL_WON;
-      FileHandler.setLastLevelNumber(currentLevel + 1);
+      if (currentLevel <= MAX_LEVEL) {
+        FileHandler.setLastLevelNumber(currentLevel + 1);
+      }
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
@@ -148,7 +155,11 @@ public class GameState extends BasicGameState implements InputListener {
       case Input.KEY_SPACE:
         if (gameStatus == GameStatus.LEVEL_WON) {
           currentLevel++;
-          loadLevel(currentLevel);
+          if (currentLevel <= MAX_LEVEL) {
+            loadLevel(currentLevel);
+          } else {
+            stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
+          }
         } else if (gameStatus == GameStatus.LEVEL_LOST) {
           loadLevel(currentLevel);
         }
