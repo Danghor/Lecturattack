@@ -86,7 +86,7 @@ public class TargetMeta extends MetaObject {
     switch (type) {
       case RAMH:
       case RAMV:
-        hitScore = 10;
+        hitScore = 10; //todo: in configs
         break;
       case LIBRARYH:
       case LIBRARYV:

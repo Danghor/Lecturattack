@@ -251,7 +251,7 @@ public class GameState extends BasicGameState implements InputListener {
    * generate a random wind
    */
   private void randomizeWind() {
-    wind = (float) ((Math.random() * 6) % 3 - 1.5);
+    wind = (float) ((Math.random() * 6) % 3 - 1.5); //todo: in config file
   }
 
   public int getCurrentLevel() {
