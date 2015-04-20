@@ -154,13 +154,15 @@ public class GameState extends BasicGameState implements InputListener {
     switch (key) {
       case Input.KEY_SPACE:
         if (gameStatus == GameStatus.LEVEL_WON) {
-          currentLevel++;
-          if (currentLevel <= MAX_LEVEL) {
+          gameStatus=GameStatus.PLAYING;
+          if(currentLevel<MAX_LEVEL){
+            currentLevel++;
             loadLevel(currentLevel);
           } else {
             stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
           }
         } else if (gameStatus == GameStatus.LEVEL_LOST) {
+          gameStatus=GameStatus.PLAYING;
           loadLevel(currentLevel);
         }
         break;
