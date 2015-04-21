@@ -7,16 +7,18 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
+ * AnimatedLevelButton inherits from AnimatedButton.
+ * LevelButtons have to be set to active once, and keep their active status.
+ * 
  * @author Andreas Geis
  */
-public class MenuButton extends Button implements Renderable {
-  public MenuButton(int x, int y, Image activeImage, Image inactiveImage) {
-    super(x, y, activeImage, inactiveImage);
+public class AnimatedLevelButton extends AnimatedButton implements Renderable {
+  public AnimatedLevelButton(int x, int y, Image active, Image inactive) {
+    super(x, y, active, inactive);
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     super.render(gameContainer, stateBasedGame, graphics);
-    active = false;
   }
 }

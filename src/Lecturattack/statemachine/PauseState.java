@@ -3,7 +3,7 @@ package Lecturattack.statemachine;/*
  */
 
 import Lecturattack.utilities.FileHandler;
-import Lecturattack.utilities.menu.MenuButton;
+import Lecturattack.utilities.menu.AnimatedMenuButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,7 +15,7 @@ public class PauseState extends BasicGameState implements InputListener {
   private static int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
-  private MenuButton[] menuButton;
+  private AnimatedMenuButton[] menuButton;
   private int currentSelection;
 
   public PauseState(int iStateID) {
@@ -31,9 +31,9 @@ public class PauseState extends BasicGameState implements InputListener {
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
-    menuButton = new MenuButton[2];
-    menuButton[0] = new MenuButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
-    menuButton[1] = new MenuButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
+    menuButton = new AnimatedMenuButton[2];
+    menuButton[0] = new AnimatedMenuButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
+    menuButton[1] = new AnimatedMenuButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
   }
 
   @Override
