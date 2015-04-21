@@ -11,7 +11,7 @@ import java.util.HashMap;
  * @author Nick Steyer
  */
 public abstract class MetaObject {
-  protected static HashMap instances;
+  protected static HashMap<Enum, MetaObject> instances;
   protected float mass;
   protected ArrayList<float[]> outline;
 

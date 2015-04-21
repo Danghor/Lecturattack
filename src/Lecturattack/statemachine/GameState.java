@@ -146,9 +146,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
+      getCurrentPlayer().moveArmRight();
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      getCurrentPlayer().moveArm(-DEGREE_ARM_MOVE);
+      getCurrentPlayer().moveArmLeft();
     }
   }
 

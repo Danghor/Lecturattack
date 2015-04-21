@@ -30,7 +30,7 @@ public class Player implements Renderable {
   //this constant specifies a scale, it is scaling up the value of the trigonometric calculation, for the projectile in the hand of the player,
   //this is needed, because these calculations are for a circle with a radius of 1, in this case the radius is bigger so it must be scaled
   private static final float projectileOnHandScale = 54;
-  // the decrees the arm is rotated very update
+  // the degrees the arm is rotated every update
   private static final int DEGREE_ARM_MOVE = 1;
 
   private Image bodyImage;
@@ -71,7 +71,15 @@ public class Player implements Renderable {
     }
   }
 
-  public void moveArm(float degreeDifference) {
+  public void moveArmRight() {
+    moveArm(DEGREE_ARM_MOVE);
+  }
+
+  public void moveArmLeft() {
+    moveArm(-DEGREE_ARM_MOVE);
+  }
+
+  private void moveArm(float degreeDifference) {
     if (playerState == PlayerState.ANGLE_SELECTION) {
       // the player can only move his arm in a certain angle,
       // this checks if the player can still move his arm
