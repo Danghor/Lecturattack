@@ -17,6 +17,16 @@ public class TargetStandard {
   private String positioning;
   private List<XmlVertex> vertices;
   private float mass;
+  private float hitScore;
+
+  @XmlElement
+  public float getHitScore(){
+    return hitScore;
+  }
+
+  public void setHitScore(float hitScore){
+    this.hitScore=hitScore;
+  }
 
   @XmlElement
   public float getMass() {

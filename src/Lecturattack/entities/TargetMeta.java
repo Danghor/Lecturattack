@@ -66,46 +66,30 @@ public class TargetMeta extends MetaObject {
           throw new RuntimeException("Invalid TargetType given.");
       }
 
-      TargetMeta targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats());
+      TargetMeta targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(),targetStandard.getHitScore());
       targetMeta.mass = targetStandard.getMass();
       instances.put(type, targetMeta);
     }
   }
 
   private final int maxHits; //when the Target is hit as many times as maxHits, the Target is destroyed
-  private final int hitScore; //the score received when a target of this type gets hit
+  private final float hitScore; //the score received when a target of this type gets hit
   private ArrayList<Image> images;
   private TargetType type;
 
-  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline) {
+  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline, float hitScore) {
     this.type = type;
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
-
-    switch (type) {
-      case RAMH:
-      case RAMV:
-        hitScore = 10;
-        break;
-      case LIBRARYH:
-      case LIBRARYV:
-        hitScore = 10;
-        break;
-      case ENEMY:
-        hitScore = 100;
-        break;
-      default:
-        hitScore = 0;
-        break;
-    }
+    this.hitScore=hitScore;
   }
 
   public static TargetMeta getInstance(TargetType type) {
     return (TargetMeta) instances.get(type);
   }
 
-  int getHitScore() {
+  public float getHitScore() {
     return hitScore;
   }
 

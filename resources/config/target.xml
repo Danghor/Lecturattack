@@ -24,6 +24,7 @@
             <y>99</y>
         </vertex>
         <mass>10</mass>
+        <hitScore>10</hitScore>
     </target>
     <target>
         <imageIntact>resources/images/RamQ.png</imageIntact>
@@ -49,6 +50,7 @@
             <y>0</y>
         </vertex>
         <mass>10</mass>
+        <hitScore>10</hitScore>
     </target>
     <target>
         <imageIntact>resources/images/JavaB.png</imageIntact>
@@ -74,6 +76,7 @@
             <y>99</y>
         </vertex>
         <mass>20</mass>
+        <hitScore>10</hitScore>
     </target>
     <target>
         <imageIntact>resources/images/JavaB2.png</imageIntact>
@@ -99,6 +102,7 @@
             <y>0</y>
         </vertex>
         <mass>20</mass>
+        <hitScore>10</hitScore>
     </target>
     <target>
         <imageIntact>resources/images/studentOk.png</imageIntact>
@@ -140,5 +144,6 @@
             <y>99</y>
         </vertex>
         <mass>60</mass>
+        <hitScore>100</hitScore>
     </target>
 </targets>
