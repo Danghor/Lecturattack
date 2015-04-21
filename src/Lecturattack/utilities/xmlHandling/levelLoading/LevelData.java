@@ -24,7 +24,7 @@ public class LevelData {
   public LevelData() {
   }
 
-  public LevelData(int id, List<LevelElement> levelElements) {
+  public LevelData(List<LevelElement> levelElements) {
     this.levelElements = levelElements;
   }
 
