@@ -22,10 +22,10 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private StateBasedGame stateBasedGame;//TODO find another way
   private static final int DEGREE_ARM_MOVE = 1;
   private static final int MAX_LEVEL = 6;
   private final int stateID;
+  private StateBasedGame stateBasedGame;//TODO find another way
   private int currentLevel;
   private ArrayList<Player> players;
   private int currentPlayerIndex;
@@ -44,10 +44,6 @@ public class GameState extends BasicGameState implements InputListener {
   // anymore, but are still falling out of the frame and therefore have to
   // be rendered
   private ArrayList<Target> deadTargets;
-
-  public enum GameStatus {
-    PLAYING, LEVEL_WON, LEVEL_LOST
-  }
 
   /**
    * Set the ID of this state to the given stateID
@@ -156,7 +152,6 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
-
   @Override
   public void keyPressed(int key, char c) {
     switch (key) {
@@ -236,7 +231,6 @@ public class GameState extends BasicGameState implements InputListener {
     loadLevel(getCurrentLevel());
   }
 
-
   private void selectNextPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
 
@@ -265,7 +259,7 @@ public class GameState extends BasicGameState implements InputListener {
    * generate a random wind
    */
   private void randomizeWind() {
-    wind = (float) ((Math.random() * 6) % 3 - 1.5);
+    wind = (float) ((Math.random() * 6) % 3 - 1.5); //todo: in config file
   }
 
   public int getCurrentLevel() {
@@ -278,6 +272,10 @@ public class GameState extends BasicGameState implements InputListener {
 
   private Player getCurrentPlayer() {
     return players.get(currentPlayerIndex);
+  }
+
+  public enum GameStatus {
+    PLAYING, LEVEL_WON, LEVEL_LOST
   }
 
 }

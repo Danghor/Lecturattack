@@ -7,7 +7,6 @@ package Lecturattack.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -30,6 +29,8 @@ public class Player implements Renderable {
   //this constant specifies a scale, it is scaling up the value of the trigonometric calculation, for the projectile in the hand of the player,
   //this is needed, because these calculations are for a circle with a radius of 1, in this case the radius is bigger so it must be scaled
   private static final float projectileOnHandScale = 54;
+  // the decrees the arm is rotated very update
+  private static final int DEGREE_ARM_MOVE = 1;
   private Image bodyImage;
   private Image armImage;
   private Projectile projectile;
@@ -46,9 +47,6 @@ public class Player implements Renderable {
   private float armShoulderY;
   private PlayerState playerState;
   private String name;
-
-  // the decrees the arm is rotated very update
-  private static final int DEGREE_ARM_MOVE = 1;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     this.positionX = 0f;
