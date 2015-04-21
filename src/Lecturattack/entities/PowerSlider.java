@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * The PowerSlider indicates the strength of a throw.
- * 
+ *
  * @author Andreas Geis
  */
 public class PowerSlider implements Renderable {
@@ -67,7 +67,7 @@ public class PowerSlider implements Renderable {
 
   /**
    * This method is used to initiate a throw.
-   * 
+   *
    * @return The Force which is currently selected.
    */
   public float getSelectedForce() {

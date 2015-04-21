@@ -66,7 +66,7 @@ public class TargetMeta extends MetaObject {
           throw new RuntimeException("Invalid TargetType given.");
       }
 
-      TargetMeta targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(),targetStandard.getHitScore());
+      TargetMeta targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore());
       targetMeta.mass = targetStandard.getMass();
       instances.put(type, targetMeta);
     }
@@ -82,7 +82,7 @@ public class TargetMeta extends MetaObject {
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
-    this.hitScore=hitScore;
+    this.hitScore = hitScore;
   }
 
   public static TargetMeta getInstance(TargetType type) {

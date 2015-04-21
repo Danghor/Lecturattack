@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * Animated Button is the parent class for all MenuButtons.
- * 
+ *
  * @author Andreas Geis
  */
 public class AnimatedButton implements Renderable {
@@ -20,10 +20,10 @@ public class AnimatedButton implements Renderable {
 
   /**
    * Constructor for AnimatedButtons
-   * 
-   * @param x the x-position of the button
-   * @param y the y-position of the button
-   * @param activeImage the image which is displayed, when the button is currently selected
+   *
+   * @param x             the x-position of the button
+   * @param y             the y-position of the button
+   * @param activeImage   the image which is displayed, when the button is currently selected
    * @param inactiveImage the image which is displayed, when the button is not currently selected
    */
   public AnimatedButton(int x, int y, Image activeImage, Image inactiveImage) {
@@ -45,7 +45,7 @@ public class AnimatedButton implements Renderable {
 
   /**
    * returns the x-position of the button
-   * 
+   *
    * @return x
    */
   public float getX() {
@@ -54,7 +54,7 @@ public class AnimatedButton implements Renderable {
 
   /**
    * returns the y-position of the button
-   * 
+   *
    * @return y
    */
   public float getY() {
@@ -79,7 +79,7 @@ public class AnimatedButton implements Renderable {
 
   /**
    * Check if the button is currently active.
-   * 
+   *
    * @return true, if the button is active, otherwise false
    */
   public boolean getActive() {
