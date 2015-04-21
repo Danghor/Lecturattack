@@ -7,7 +7,7 @@ package Lecturattack.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -30,20 +30,16 @@ public class Player implements Renderable {
   //this constant specifies a scale, it is scaling up the value of the trigonometric calculation, for the projectile in the hand of the player,
   //this is needed, because these calculations are for a circle with a radius of 1, in this case the radius is bigger so it must be scaled
   private static final float projectileOnHandScale = 54;
+
   private Image bodyImage;
   private Image armImage;
   private Projectile projectile;
   private PowerSlider powerSlider;
-  private float positionX;
-  private float positionY;
-  private float handCenterPositionX;
-  private float handCenterPositionY;
+  private Point playerPosition;   //the top left position of the player
+  private Point handCenterPosition;   //the center of the hand;
+  private Point armImagePosition;   //the top left of the arm image
   private ProjectileMeta projectileMeta;
   private float directionAngle;
-  private float armImageX;//must be set in relation to player
-  private float armImageY;
-  private float armShoulderX;//must be set in relation to player
-  private float armShoulderY;
   private PlayerState playerState;
   private String name;
 
@@ -51,8 +47,9 @@ public class Player implements Renderable {
   private static final int DEGREE_ARM_MOVE = 1;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
-    this.positionX = 0f;
-    this.positionY = 0f;
+    playerPosition = new Point(0, 0);
+    handCenterPosition = new Point(0, 0);
+    armImagePosition = new Point(0, 0);
     this.bodyImage = bodyImage;
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
@@ -64,21 +61,16 @@ public class Player implements Renderable {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     armImage.setRotation(directionAngle);
-    graphics.drawImage(bodyImage, positionX, positionY);
-    graphics.drawImage(armImage, armImageX, armImageY);
+    graphics.drawImage(bodyImage, playerPosition.getX(), playerPosition.getY());
+    graphics.drawImage(armImage, armImagePosition.getX(), armImagePosition.getCenterY());
     if (playerState != PlayerState.THROWING) {
-      projectile.setCenterPosition(handCenterPositionX, handCenterPositionY);
+      projectile.setCenterPosition(handCenterPosition.getX(), handCenterPosition.getCenterY());
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
     if (playerState == PlayerState.POWER_SLIDER || playerState == PlayerState.THROWING) {
       powerSlider.render(gameContainer, stateBasedGame, graphics);
     }
-    graphics.drawLine(armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
-            armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale,
-            armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale - (float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale,
-            armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale + (float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale);
   }
-
 
   public void moveArm(float degreeDifference) {
     if (playerState == PlayerState.ANGLE_SELECTION) {
@@ -129,21 +121,18 @@ public class Player implements Renderable {
   }
 
   private void setHandCenterPosition() {
-    this.handCenterPositionX = ((float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderX;
-    this.handCenterPositionY = ((float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armShoulderY;
+    handCenterPosition.setX(((float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armImagePosition.getX() + armImage.getWidth() / 2);
+    handCenterPosition.setY(((float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armImagePosition.getY() + armImage.getHeight() / 2);
   }
 
   public void setPosition(float x, float y) {
-    positionX = x;
-    positionY = y;
+    playerPosition.setX(x);
+    playerPosition.setY(y);
 
     //the position of the arm image must be set in relation to the player,
     //the shoulder is NOT the top left corner but the middle of the image
-    armImageX = x - 42;
-    armImageY = y + 9;
-
-    armShoulderX = armImageX + armImage.getWidth() / 2;
-    armShoulderY = armImageY + armImage.getHeight() / 2;
+    armImagePosition.setX(x - 42);
+    armImagePosition.setY(y + 9);
 
     //set the position of the projectile to be on the hand
     // +Math.PI/4 reduces changes the angle, the hand is not at the position where it wouldbe
