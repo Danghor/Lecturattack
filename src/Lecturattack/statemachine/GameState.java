@@ -22,10 +22,10 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
+  private StateBasedGame stateBasedGame;//TODO find another way
   private static final int DEGREE_ARM_MOVE = 1;
   private static final int MAX_LEVEL = 6;
   private final int stateID;
-  private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
   private int currentPlayerIndex;
@@ -45,8 +45,13 @@ public class GameState extends BasicGameState implements InputListener {
   // be rendered
   private ArrayList<Target> deadTargets;
 
+  public enum GameStatus {
+    PLAYING, LEVEL_WON, LEVEL_LOST
+  }
+
   /**
    * Set the ID of this state to the given stateID
+   *
    * @param stateID
    */
   public GameState(int stateID) {
@@ -71,7 +76,7 @@ public class GameState extends BasicGameState implements InputListener {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
     currentPlayerIndex = 0;
-    setCurrentLevel(1); // default
+    setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
     flag = new Flag();
   }
 
@@ -142,6 +147,15 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
+  private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
+      getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+      getCurrentPlayer().moveArm(-DEGREE_ARM_MOVE);
+    }
+  }
+
+
   @Override
   public void keyPressed(int key, char c) {
     switch (key) {
@@ -153,8 +167,8 @@ public class GameState extends BasicGameState implements InputListener {
             score -= 10;
           }
         } else if (gameStatus == GameStatus.LEVEL_WON) {
-          currentLevel++;
-          if (currentLevel <= MAX_LEVEL) {
+          if (currentLevel < MAX_LEVEL) {
+            currentLevel++;
             loadLevel(currentLevel);
           } else {
             stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
@@ -176,11 +190,15 @@ public class GameState extends BasicGameState implements InputListener {
           selectPreviousPlayer();
         }
         break;
+      case Input.KEY_R:
+        getCurrentPlayer().reset();
+        break;
     }
   }
 
   /**
    * load the specified level in the gamestate
+   *
    * @param level the integer value which indicates the level (1= first level , 2 = second level, ...)
    */
   public void loadLevel(int level) {
@@ -217,13 +235,6 @@ public class GameState extends BasicGameState implements InputListener {
     loadLevel(getCurrentLevel());
   }
 
-  private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
-    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      getCurrentPlayer().moveArm(-DEGREE_ARM_MOVE);
-    }
-  }
 
   private void selectNextPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
@@ -268,7 +279,4 @@ public class GameState extends BasicGameState implements InputListener {
     return players.get(currentPlayerIndex);
   }
 
-  public enum GameStatus {
-    PLAYING, LEVEL_WON, LEVEL_LOST
-  }
 }

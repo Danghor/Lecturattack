@@ -7,6 +7,7 @@ package Lecturattack.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -46,6 +47,9 @@ public class Player implements Renderable {
   private PlayerState playerState;
   private String name;
 
+  // the decrees the arm is rotated very update
+  private static final int DEGREE_ARM_MOVE = 1;
+
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     this.positionX = 0f;
     this.positionY = 0f;
@@ -74,6 +78,7 @@ public class Player implements Renderable {
             armShoulderX + (float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale - (float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale,
             armShoulderY + (float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale + (float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * projectileOnHandScale);
   }
+
 
   public void moveArm(float degreeDifference) {
     if (playerState == PlayerState.ANGLE_SELECTION) {
