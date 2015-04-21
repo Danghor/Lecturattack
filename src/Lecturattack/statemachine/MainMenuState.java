@@ -94,11 +94,11 @@ public class MainMenuState extends BasicGameState implements InputListener {
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection == 0) {
         int lastLevelNumber = FileHandler.getLastLevelNumber();
-        ((GameState) stateBasedGame.getState(Lecturattack.GAMESTATE)).loadLevel(lastLevelNumber);
-        stateBasedGame.enterState(Lecturattack.GAMESTATE);
+        ((GameState) stateBasedGame.getState(Lecturattack.GAME_STATE)).loadLevel(lastLevelNumber);
+        stateBasedGame.enterState(Lecturattack.GAME_STATE);
       }
       if (currentSelection == 1) {
-        stateBasedGame.enterState(Lecturattack.LEVELSELECTSTATE);
+        stateBasedGame.enterState(Lecturattack.LEVELSELECT_STATE);
       }
       if (currentSelection == 2) {
         System.exit(0);

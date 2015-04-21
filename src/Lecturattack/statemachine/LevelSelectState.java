@@ -143,10 +143,10 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     } else if (key == Input.KEY_ENTER) {
       // check if the level is unlocked yet
       if (menuButtons[currentSelection] instanceof AnimatedLevelButton && menuButtons[currentSelection].getActive()) {
-        ((GameState) stateBasedGame.getState(Lecturattack.GAMESTATE)).loadLevel(currentSelection + 1);
-        stateBasedGame.enterState(Lecturattack.GAMESTATE);
+        ((GameState) stateBasedGame.getState(Lecturattack.GAME_STATE)).loadLevel(currentSelection + 1);
+        stateBasedGame.enterState(Lecturattack.GAME_STATE);
       } else if (currentSelection == BUTTON_BACK) {
-        stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
+        stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
       } else if (currentSelection == BUTTON_RESETPROGRESS) {
         FileHandler.resetLastLevelNumber();
         for (int i = 1; i <= 5; i++) {

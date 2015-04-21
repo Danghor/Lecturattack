@@ -167,14 +167,14 @@ public class GameState extends BasicGameState implements InputListener {
             currentLevel++;
             loadLevel(currentLevel);
           } else {
-            stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
+            stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
           }
         } else if (gameStatus == GameStatus.LEVEL_LOST) {
           loadLevel(currentLevel);
         }
         break;
       case Input.KEY_ESCAPE:
-        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+        stateBasedGame.enterState(Lecturattack.PAUSE_STATE);
         break;
       case Input.KEY_UP:
         if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
