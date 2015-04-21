@@ -17,6 +17,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class LevelSelectState extends BasicGameState implements InputListener {
   private final int stateID;
+  private final int BUTTON_BACK = 6;
+  private final int BUTTON_RESETPROGRESS = 7;
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButtons;
@@ -44,6 +46,10 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
     menuButtons = new AnimatedButton[8];
+    // initialize the LevelSelectButtons
+    // menuButtons[0] - menuButtons[5] contains buttons, to start the according levels
+    // menuButtons[6] contains the "Zurueck"-Button, which goes back to the main menu
+    // menuButtons[7] contains the button to reset the player progress
     menuButtons[0] = new AnimatedLevelButton(150, 150, FileHandler.loadImage("level1"), FileHandler.loadImage("level1_locked"));
     menuButtons[1] = new AnimatedLevelButton(489, 150, FileHandler.loadImage("level2"), FileHandler.loadImage("level2_locked"));
     menuButtons[2] = new AnimatedLevelButton(828, 150, FileHandler.loadImage("level3"), FileHandler.loadImage("level3_locked"));
@@ -58,11 +64,12 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
     // draw a red rectangle around the selected level
-    int rectPosition = 6;
+    // error check: if no button should be selected, rectPosition stays on the position of BUTTON_BACK
+    int rectPosition = BUTTON_BACK;
     for (int i = 0; i < menuButtons.length; i++) {
       if (currentSelection == i) {
-        // only change the button image, if it is a menu button
-        // level select buttons get changed from player progress
+        // only change the button image, if it is an animatedMenuButton
+        // levelButtons become active depending on player progress and not from selecting them
         if (menuButtons[i] instanceof AnimatedMenuButton) {
           menuButtons[i].setActive();
         }
@@ -71,6 +78,8 @@ public class LevelSelectState extends BasicGameState implements InputListener {
       menuButtons[i].render(gameContainer, stateBasedGame, graphics);
     }
     // check if a level is selected, or a menu button
+    // only draw the rectangle if a levelButton is selected,
+    // since animatedMenuButtons already have a different image, to indicate that they are selected
     if (rectPosition <= 5) {
       graphics.drawRect(menuButtons[rectPosition].getX(), menuButtons[rectPosition].getY(), 302, 169);
     }
@@ -84,8 +93,11 @@ public class LevelSelectState extends BasicGameState implements InputListener {
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     int lastLevelNumber = FileHandler.getLastLevelNumber();
-    currentSelection = 6;
+    // the player starts on the "Zurueck"-Button, when entering the level select
+    currentSelection = BUTTON_BACK;
     // initialize the level select with the current player progress
+    // unlocked levels are set to active
+    // locked levels stay inactive (grey picture and can't be started)
     for (int i = 0; i < lastLevelNumber; i++) {
       menuButtons[i].setActive();
     }
@@ -109,13 +121,13 @@ public class LevelSelectState extends BasicGameState implements InputListener {
         currentSelection--;
       }
     } else if (key == Input.KEY_RIGHT) {
-      if (currentSelection <= 6) {
+      if (currentSelection <= BUTTON_BACK) {
         currentSelection++;
       }
     } else if (key == Input.KEY_UP) {
-      if (currentSelection >= 3 && currentSelection <= 6) {
+      if (currentSelection >= 3 && currentSelection <= BUTTON_BACK) {
         currentSelection -= 3;
-      } else if (currentSelection == 7) {
+      } else if (currentSelection == BUTTON_RESETPROGRESS) {
         currentSelection = 5;
       } else {
         currentSelection = 0;
@@ -124,18 +136,18 @@ public class LevelSelectState extends BasicGameState implements InputListener {
       if (currentSelection <= 3) {
         currentSelection += 3;
       } else if (currentSelection == 4) {
-        currentSelection = 6;
+        currentSelection = BUTTON_BACK;
       } else {
-        currentSelection = 7;
+        currentSelection = BUTTON_RESETPROGRESS;
       }
     } else if (key == Input.KEY_ENTER) {
       // check if the level is unlocked yet
       if (menuButtons[currentSelection] instanceof AnimatedLevelButton && menuButtons[currentSelection].getActive()) {
         ((GameState) stateBasedGame.getState(Lecturattack.GAMESTATE)).loadLevel(currentSelection + 1);
         stateBasedGame.enterState(Lecturattack.GAMESTATE);
-      } else if (currentSelection == 6) {
+      } else if (currentSelection == BUTTON_BACK) {
         stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
-      } else if (currentSelection == 7) {
+      } else if (currentSelection == BUTTON_RESETPROGRESS) {
         FileHandler.resetLastLevelNumber();
         for (int i = 1; i <= 5; i++) {
           menuButtons[i].setInactive();

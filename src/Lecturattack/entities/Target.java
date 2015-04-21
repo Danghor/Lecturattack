@@ -43,8 +43,8 @@ public class Target extends RigidBody {
     graphics.draw(poly);
   }
 
-  public int hit(Projectile projectile) {
-    int scoreReturned = 0;
+  public float hit(Projectile projectile) {
+    float scoreReturned = 0;
 
     if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
       hitCounter++;
@@ -63,7 +63,7 @@ public class Target extends RigidBody {
     return metaObject.getMass();
   }
 
-  public int getHitScore() {
+  public float getHitScore() {
     return metaObject.getHitScore();
   }
 
