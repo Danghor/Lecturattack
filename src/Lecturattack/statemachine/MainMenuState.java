@@ -26,7 +26,7 @@ public class MainMenuState extends BasicGameState implements InputListener {
    * Constructor for MainMenuState
    * Set the ID of this state to the given stateID
    *
-   * @param stateID
+   * @param stateID The stateID to be set.
    */
   public MainMenuState(int stateID) {
     this.stateID = stateID;

@@ -30,7 +30,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
    * Constructor for LevelSelectState
    * Set the ID of this state to the given stateID
    *
-   * @param stateID
+   * @param stateID The stateID to be set.
    */
   public LevelSelectState(int stateID) {
     this.stateID = stateID;

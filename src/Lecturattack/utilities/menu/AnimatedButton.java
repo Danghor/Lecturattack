@@ -12,11 +12,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Andreas Geis
  */
 public class AnimatedButton implements Renderable {
-  protected float x;
-  protected float y;
-  protected Image activeImage;
-  protected Image inactiveImage;
-  protected boolean active;
+  boolean active;
+  private float x;
+  private float y;
+  private Image activeImage;
+  private Image inactiveImage;
 
   /**
    * Constructor for AnimatedButtons
@@ -26,7 +26,7 @@ public class AnimatedButton implements Renderable {
    * @param activeImage   the image which is displayed, when the button is currently selected
    * @param inactiveImage the image which is displayed, when the button is not currently selected
    */
-  public AnimatedButton(int x, int y, Image activeImage, Image inactiveImage) {
+  AnimatedButton(int x, int y, Image activeImage, Image inactiveImage) {
     this.x = x;
     this.y = y;
     this.activeImage = activeImage;
