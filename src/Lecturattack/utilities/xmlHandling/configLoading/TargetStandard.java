@@ -18,14 +18,24 @@ public class TargetStandard {
   private List<XmlVertex> vertices;
   private float mass;
   private float hitScore;
+  private String soundPath;
+
+  @XmlElement(name = "sound")
+  public String getSoundPath() {
+    return soundPath;
+  }
+
+  public void setSoundPath(String soundPath) {
+    this.soundPath = soundPath;
+  }
 
   @XmlElement
-  public float getHitScore(){
+  public float getHitScore() {
     return hitScore;
   }
 
-  public void setHitScore(float hitScore){
-    this.hitScore=hitScore;
+  public void setHitScore(float hitScore) {
+    this.hitScore = hitScore;
   }
 
   @XmlElement

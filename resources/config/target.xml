@@ -25,6 +25,7 @@
         </vertex>
         <mass>10</mass>
         <hitScore>10</hitScore>
+        <sound></sound>
     </target>
     <target>
         <imageIntact>resources/images/RamQ.png</imageIntact>
@@ -51,6 +52,7 @@
         </vertex>
         <mass>10</mass>
         <hitScore>10</hitScore>
+        <sound></sound>
     </target>
     <target>
         <imageIntact>resources/images/JavaB.png</imageIntact>
@@ -77,6 +79,7 @@
         </vertex>
         <mass>20</mass>
         <hitScore>10</hitScore>
+        <sound></sound>
     </target>
     <target>
         <imageIntact>resources/images/JavaB2.png</imageIntact>
@@ -103,6 +106,7 @@
         </vertex>
         <mass>20</mass>
         <hitScore>10</hitScore>
+        <sound></sound>
     </target>
     <target>
         <imageIntact>resources/images/studentOk.png</imageIntact>
@@ -145,5 +149,6 @@
         </vertex>
         <mass>60</mass>
         <hitScore>100</hitScore>
+        <sound></sound>
     </target>
 </targets>
