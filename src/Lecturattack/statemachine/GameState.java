@@ -51,6 +51,7 @@ public class GameState extends BasicGameState implements InputListener {
 
   /**
    * Set the ID of this state to the given stateID
+   *
    * @param stateID
    */
   public GameState(int stateID) {
@@ -86,18 +87,11 @@ public class GameState extends BasicGameState implements InputListener {
         initiateNextThrow();
       }
     }
-
-    //the player is updated every step and returns a projectile when it is thrown, otherwise it returns null
-    // to prevent overwriting the already existing projectile it is necessary to save it in a second variable and check whenever it is null
-    Projectile checkProjectile = getCurrentPlayer().update(gameContainer, delta);
-    if (checkProjectile != null) {
-      this.projectile = checkProjectile;
-      score -= 10;
-    }
-
+    changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
     score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
     scoreField.setDynamicText(Integer.toString(score));
+    getCurrentPlayer().updatePowerSlider(delta);
   }
 
   @Override
@@ -153,20 +147,33 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
+  private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
+    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
+      getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
+    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+      getCurrentPlayer().moveArm(-DEGREE_ARM_MOVE);
+    }
+  }
+
+
   @Override
   public void keyPressed(int key, char c) {
     switch (key) {
       case Input.KEY_SPACE:
-        if (gameStatus == GameStatus.LEVEL_WON) {
-          gameStatus=GameStatus.PLAYING;
-          if(currentLevel<MAX_LEVEL){
+        if (gameStatus == GameStatus.PLAYING) {
+          Projectile checkProjectile = getCurrentPlayer().throwProjectile();
+          if (checkProjectile != null) {
+            this.projectile = checkProjectile;
+            score -= 10;
+          }
+        } else if (gameStatus == GameStatus.LEVEL_WON) {
+          if (currentLevel < MAX_LEVEL) {
             currentLevel++;
             loadLevel(currentLevel);
           } else {
             stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
           }
         } else if (gameStatus == GameStatus.LEVEL_LOST) {
-          gameStatus=GameStatus.PLAYING;
           loadLevel(currentLevel);
         }
         break;
@@ -185,11 +192,13 @@ public class GameState extends BasicGameState implements InputListener {
         break;
       case Input.KEY_R:
         getCurrentPlayer().reset();
+        break;
     }
   }
 
   /**
    * load the specified level in the gamestate
+   *
    * @param level the integer value which indicates the level (1= first level , 2 = second level, ...)
    */
   public void loadLevel(int level) {
