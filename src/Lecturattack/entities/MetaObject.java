@@ -10,10 +10,10 @@ import java.util.HashMap;
 /**
  * @author Nick Steyer
  */
-public abstract class MetaObject {
-  protected static HashMap<Enum, MetaObject> instances;
-  protected float mass;
-  protected ArrayList<float[]> outline;
+abstract class MetaObject {
+  static HashMap<Enum, MetaObject> instances;
+  float mass;
+  ArrayList<float[]> outline;
 
   ArrayList<float[]> getOutline() {
     return outline;

@@ -23,13 +23,13 @@ public class Lecturattack extends StateBasedGame {
   private static final int TARGET_FPS = 80;
   private static final boolean TOGGLE_FULLSCREEN = false;
 
-  public Lecturattack(String name) {
-    super(name);
+  private Lecturattack() {
+    super("Lecturattack");
   }
 
   public static void main(String[] args) {
     try {
-      AppGameContainer appGameContainer = new AppGameContainer(new Lecturattack("Lecturattack"));
+      AppGameContainer appGameContainer = new AppGameContainer(new Lecturattack());
       appGameContainer.setTargetFrameRate(TARGET_FPS);
       appGameContainer.setDisplayMode(WIDTH, HEIGHT, TOGGLE_FULLSCREEN);
       appGameContainer.setShowFPS(false);

@@ -15,13 +15,13 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public class Projectile extends RigidBody {
+  private final ProjectileMeta metaObject;
   private float torque;
   private float angularVelocity;
   private float angle;
-  private ProjectileMeta metaObject;
 
-  public Projectile(ProjectileMeta projectileMeta, float x, float y) {
-    super(projectileMeta, x, y);
+  public Projectile(ProjectileMeta projectileMeta) {
+    super(projectileMeta, 0f, 0f);
     metaObject = projectileMeta;
     torque = 0f;
     angle = 0f;
@@ -75,7 +75,7 @@ public class Projectile extends RigidBody {
     return metaObject.getMass();
   }
 
-  protected float getInertia() {
+  private float getInertia() {
     double length = (new EnhancedVector(getCenter().x - vertices.get(0).x, getCenter().y - vertices.get(0).y)).length();
     return (getMass() * (float) Math.pow(length, 4)) / 120000;
   }

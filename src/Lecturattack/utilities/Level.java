@@ -9,9 +9,9 @@ import java.util.ArrayList;
  */
 public class Level {
   private final float groundLevel;
-  private ArrayList<Target> targets;
-  private float playerPositionX;
-  private float playerPositionY;
+  private final ArrayList<Target> targets;
+  private final float playerPositionX;
+  private final float playerPositionY;
 
   public Level(ArrayList<Target> targets, float playerPositionX, float playerPositionY) {
     this.targets = targets;

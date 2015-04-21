@@ -15,9 +15,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Stefanie Raschke
  * @author Tim Adamek
  */
-public class LevelSelectState extends BasicGameState implements InputListener {
+class LevelSelectState extends BasicGameState implements InputListener {
   private final int stateID;
   private final int BUTTON_BACK = 6;
+
+  @SuppressWarnings("FieldCanBeLocal")
   private final int BUTTON_RESETPROGRESS = 7;
   private StateBasedGame stateBasedGame;
   private Image background;

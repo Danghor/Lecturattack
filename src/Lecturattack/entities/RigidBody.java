@@ -15,12 +15,12 @@ import java.util.ArrayList;
  */
 public abstract class RigidBody implements Renderable {
   private static final float DAMPING = 0.8f;
-  protected final double area; //area is not expected to change
-  protected ArrayList<EnhancedVector> vertices;
-  protected EnhancedVector linearVelocity;
-  protected EnhancedVector force;
+  final ArrayList<EnhancedVector> vertices;
+  private final double area; //area is not expected to change
+  private EnhancedVector linearVelocity;
+  private EnhancedVector force;
 
-  protected RigidBody(MetaObject meta, float x, float y) {
+  RigidBody(MetaObject meta, float x, float y) {
     this.vertices = new ArrayList<>();
 
     for (float[] vertexPosition : meta.getOutline()) {
@@ -35,7 +35,7 @@ public abstract class RigidBody implements Renderable {
     force = new EnhancedVector(0f, 0f);
   }
 
-  public abstract float getMass();
+  protected abstract float getMass();
 
   public void update(float scaledDelta) {
     EnhancedVector acceleration;
@@ -53,7 +53,7 @@ public abstract class RigidBody implements Renderable {
    *
    * @param partner The RigidBody this object is colliding with.
    */
-  public void reflect(RigidBody partner) {
+  void reflect(RigidBody partner) {
     Line intersectingLine = null;
     Polygon thisPolygon = new Polygon();
 
@@ -249,7 +249,7 @@ public abstract class RigidBody implements Renderable {
     return area;
   }
 
-  public float getBiggestX() {
+  private float getBiggestX() {
     if (vertices.size() < 1) {
       throw new IllegalStateException("This RigidBody does not consist of any vertices.");
     } else {
@@ -286,7 +286,7 @@ public abstract class RigidBody implements Renderable {
    *
    * @return The ordinate of the vertex with the smallest y-value.
    */
-  public float getSmallestY() {
+  float getSmallestY() {
     if (vertices.size() < 1) {
       throw new IllegalStateException("This RigidBody does not consist of any vertices.");
     } else {
@@ -305,7 +305,7 @@ public abstract class RigidBody implements Renderable {
   /**
    * @return The abscissa of the vertex with the smallest x-value.
    */
-  public float getSmallestX() {
+  float getSmallestX() {
     if (vertices.size() < 1) {
       throw new IllegalStateException("This RigidBody does not consist of any vertices.");
     } else {

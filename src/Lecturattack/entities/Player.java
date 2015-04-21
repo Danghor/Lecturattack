@@ -33,17 +33,17 @@ public class Player implements Renderable {
   // the degrees the arm is rotated every update
   private static final int DEGREE_ARM_MOVE = 1;
 
-  private Image bodyImage;
-  private Image armImage;
+  private final Image bodyImage;
+  private final Image armImage;
+  private final PowerSlider powerSlider;
+  private final Point playerPosition;   //the top left position of the player
+  private final Point handCenterPosition;   //the center of the hand;
+  private final Point armImagePosition;   //the top left of the arm image
+  private final ProjectileMeta projectileMeta;
+  private final String name;
   private Projectile projectile;
-  private PowerSlider powerSlider;
-  private Point playerPosition;   //the top left position of the player
-  private Point handCenterPosition;   //the center of the hand;
-  private Point armImagePosition;   //the top left of the arm image
-  private ProjectileMeta projectileMeta;
   private float directionAngle;
   private PlayerState playerState;
-  private String name;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     playerPosition = new Point(0, 0);
@@ -122,7 +122,7 @@ public class Player implements Renderable {
 
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
-    projectile = new Projectile(projectileMeta, 0f, 0f);
+    projectile = new Projectile(projectileMeta);
     setHandCenterPosition();
     powerSlider.reset();
   }

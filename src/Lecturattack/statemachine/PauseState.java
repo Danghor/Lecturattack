@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Andreas Geis
  */
-public class PauseState extends BasicGameState implements InputListener {
+class PauseState extends BasicGameState implements InputListener {
   private static int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;

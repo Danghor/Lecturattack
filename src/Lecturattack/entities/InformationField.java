@@ -11,11 +11,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Andreas Geis
  */
 public class InformationField implements Renderable {
-  private int x;
-  private int y;
-  private String fixedText;
+  private final int x;
+  private final int y;
+  private final String fixedText;
+  private final TrueTypeFont trueTypeFont;
   private String dynamicText;
-  private TrueTypeFont trueTypeFont;
 
   /**
    * Constructor for InformationField

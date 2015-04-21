@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Nick Steyer
  */
 public class Target extends RigidBody {
-  private TargetMeta metaObject;
+  private final TargetMeta metaObject;
   private int hitCounter;
 
   public Target(TargetMeta targetMeta, float x, float y) {
@@ -63,7 +63,7 @@ public class Target extends RigidBody {
     return metaObject.getMass();
   }
 
-  public float getHitScore() {
+  private float getHitScore() {
     return metaObject.getHitScore();
   }
 

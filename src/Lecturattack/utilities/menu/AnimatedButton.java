@@ -12,11 +12,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Andreas Geis
  */
 public class AnimatedButton implements Renderable {
+  private final float x;
+  private final float y;
+  private final Image activeImage;
+  private final Image inactiveImage;
   boolean active;
-  private float x;
-  private float y;
-  private Image activeImage;
-  private Image inactiveImage;
 
   /**
    * Constructor for AnimatedButtons

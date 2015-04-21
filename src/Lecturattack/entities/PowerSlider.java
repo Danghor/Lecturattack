@@ -15,10 +15,10 @@ public class PowerSlider implements Renderable {
   // powerslide.png has 255px and powserslideLine is 5px width
   private static final int MAX_FORCE = 250;
   private static final float SPEED_SCALE = 0.45f;
+  private final Image powerslide;
+  private final Image powerslideLine;
   private float selectedForce;
   private boolean movingRight;
-  private Image powerslide;
-  private Image powerslideLine;
 
   /**
    * Constructor for PowerSlider
