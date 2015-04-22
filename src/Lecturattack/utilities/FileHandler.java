@@ -11,6 +11,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.List;
 
 /**
@@ -22,9 +24,43 @@ import java.util.List;
 public class FileHandler {
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
-  private static final String GAME_LOCATION = "CoffeeProductions\\Lecturattack";
+  private static final String GAME_FOLDER = "CoffeeProductions";
+  private static final String GAME_NAME = "\\Lecturattack.txt";
+  public static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
+  public static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static String LAST_LEVEL_FILE_PATH = "";
   private static int lastLevelNumber = -1;
+
+
+  static {
+    // This sets the file path according to the used system
+    String sysName = System.getProperty("os.name");
+    String saveDirectory = new String();
+    if (sysName.contains("Windows")) {
+      saveDirectory = System.getProperty("user.home") + "\\AppData\\Roaming\\" + GAME_FOLDER;
+    } else if (sysName.contains("Linux")) {
+      saveDirectory = System.getenv("APPDATA") + GAME_FOLDER;
+    } else if (sysName.contains("Mac")) {
+      saveDirectory = "~/Documents/Saved Games/" + GAME_FOLDER;
+    }
+    LAST_LEVEL_FILE_PATH = saveDirectory + GAME_NAME;
+    boolean success = false;
+    if (!Files.exists(FileSystems.getDefault().getPath(saveDirectory))) {
+      // create the directory if it doesn't exist
+      success = new File(saveDirectory).mkdir();
+    }
+    //create the savegame if it doesn't exist
+    if (success) {
+      File saveGame = new File(LAST_LEVEL_FILE_PATH);
+      if(!saveGame.exists()){
+        try {
+          saveGame.createNewFile();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
   /**
    * This method loads the target.xml as a config for the TargetMeta instances
@@ -126,12 +162,12 @@ public class FileHandler {
     if (level > lastLevelNumber) {
       lastLevelNumber = level;
       try {
-        String text = Integer.toString(lastLevelNumber);
+        String lastLevel = Integer.toString(lastLevelNumber);
         BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-        out.write(text);
+        out.write(lastLevel);
         out.close();
       } catch (IOException e) {
-        System.out.println("Error while writing in text file");
+        System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE);
       }
     }
   }
@@ -150,7 +186,7 @@ public class FileHandler {
         lastLevelNumber = Integer.parseInt(text);
         fr.close();
       } catch (IOException e) {
-        System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
+        System.out.println(ERROR_WHEN_TRYING_TO_READ_FILE + LAST_LEVEL_FILE_PATH);
         System.out.println(e.toString());
       }
     } else {
@@ -163,24 +199,11 @@ public class FileHandler {
     lastLevelNumber = 1;
     try {
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write(lastLevelNumber);
+      out.write("1");
       out.close();
     } catch (IOException e) {
-      System.out.println("Error while writing in text file");
-    }
-  }
-
-  /**
-   * This method sets the file path according to the used system
-   */
-  public static void getSystem() {
-    String sysName = System.getProperty("os.name");
-    if (sysName.contains("Windows")) {
-      LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\" + GAME_LOCATION;
-    } else if (sysName.contains("Linux")) {
-      LAST_LEVEL_FILE_PATH = System.getenv("APPDATA") + GAME_LOCATION;
-    } else if (sysName.contains("Mac")) {
-      LAST_LEVEL_FILE_PATH = "~/Documents/Saved Games/" + GAME_LOCATION;
+      System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE + ": " + LAST_LEVEL_FILE_PATH);
+      System.out.print(e);
     }
   }
 
