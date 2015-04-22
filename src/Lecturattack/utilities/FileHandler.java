@@ -162,7 +162,7 @@ public class FileHandler {
   public static void resetLastLevelNumber() {
     try {
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write(1);
+      out.write(Integer.toString(1));
       out.close();
     } catch (IOException e) {
       System.out.println("Error while writing in text file");
