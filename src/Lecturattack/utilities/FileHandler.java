@@ -157,9 +157,9 @@ public class FileHandler {
         fileReader = new FileReader(LAST_LEVEL_FILE_PATH);
         bufferedReader = new BufferedReader(fileReader);
         // read lines in file
-        String text;
-        text = bufferedReader.readLine();
-        returnedLevelNumber = Integer.parseInt(text);
+        String lastLevelNumber;
+        lastLevelNumber = bufferedReader.readLine();
+        returnedLevelNumber = Integer.parseInt(lastLevelNumber);
         fileReader.close();
       } catch (IOException e) {
         System.out.println(ERROR_WHEN_TRYING_TO_READ_FILE + LAST_LEVEL_FILE_PATH);
@@ -179,9 +179,9 @@ public class FileHandler {
    */
   public static void setLastUnlockedLevel(int level) {
     try {
-      String text = Integer.toString(level);
+      String lastLevelNumber = Integer.toString(level);
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write(text);
+      out.write(lastLevelNumber);
       out.close();
     } catch (IOException e) {
       System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE + ": " + LAST_LEVEL_FILE_PATH);
