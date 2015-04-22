@@ -133,7 +133,7 @@ public class GameState extends BasicGameState implements InputListener {
     projectile = null;
     if (!enemiesAlive) {
       gameStatus = GameStatus.LEVEL_WON;
-      if (currentLevel <= MAX_LEVEL) {
+      if (currentLevel < MAX_LEVEL) {
         FileHandler.setLastLevelNumber(currentLevel + 1);
       }
     } else if (score <= 0) {
