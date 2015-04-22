@@ -133,14 +133,23 @@ public class GameState extends BasicGameState implements InputListener {
     projectile = null;
     if (!enemiesAlive) {
       gameStatus = GameStatus.LEVEL_WON;
-      if (currentLevel < MAX_LEVEL) {
-        FileHandler.setLastLevelNumber(currentLevel + 1);
-      }
+      saveGameProgress();
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
       getCurrentPlayer().reset();
       randomizeWind();
+    }
+  }
+
+  /**
+   * This method will first check if the level just won unlocks the next level. If so, the game progress is updated.
+   * If not, nothing happens; i.e. if the next level was already unlocked, the game progress is not overwritten.
+   */
+  private void saveGameProgress() {
+    int savedProgress = FileHandler.getLastLevelNumber();
+    if (currentLevel < MAX_LEVEL && savedProgress <= currentLevel) { //<=, because the file saves the last unlocked level
+      FileHandler.setLastUnlockedLevel(currentLevel + 1);
     }
   }
 

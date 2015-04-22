@@ -146,27 +146,23 @@ public class FileHandler {
   /**
    * @param level the new last level
    */
-  public static void setLastLevelNumber(int level) {
-    if (level > getLastLevelNumber()) {
-      try {
-        String text = Integer.toString(level);
-        BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-        out.write(text);
-        out.close();
-      } catch (IOException e) {
-        System.out.println("Error while writing in text file");
-      }
-    }
-  }
-
-  public static void resetLastLevelNumber() {
+  public static void setLastUnlockedLevel(int level) {
     try {
+      String text = Integer.toString(level);
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write(1);
+      out.write(text);
       out.close();
     } catch (IOException e) {
       System.out.println("Error while writing in text file");
     }
+  }
+
+  /**
+   * This method resets the current game progress by setting the last unlocked level to 1.
+   * This is used if the user wishes to start all over again.
+   */
+  public static void resetGameProgress() {
+    setLastUnlockedLevel(1);
   }
 
   /**
