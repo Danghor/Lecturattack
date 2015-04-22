@@ -74,8 +74,8 @@ public class TargetMeta extends MetaObject {
 
   private final int maxHits; //when the Target is hit as many times as maxHits, the Target is destroyed
   private final float hitScore; //the score received when a target of this type gets hit
-  private ArrayList<Image> images;
-  private TargetType type;
+  private final ArrayList<Image> images;
+  private final TargetType type;
 
   private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline, float hitScore) {
     this.type = type;

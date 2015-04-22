@@ -30,20 +30,20 @@ public class Player implements Renderable {
   //this constant specifies a scale, it is scaling up the value of the trigonometric calculation, for the projectile in the hand of the player,
   //this is needed, because these calculations are for a circle with a radius of 1, in this case the radius is bigger so it must be scaled
   private static final float projectileOnHandScale = 54;
-  // the decrees the arm is rotated very update
+  // the degrees the arm is rotated every update
   private static final int DEGREE_ARM_MOVE = 1;
 
-  private Image bodyImage;
-  private Image armImage;
+  private final Image bodyImage;
+  private final Image armImage;
+  private final PowerSlider powerSlider;
+  private final Point playerPosition;   //the top left position of the player
+  private final Point handCenterPosition;   //the center of the hand;
+  private final Point armImagePosition;   //the top left of the arm image
+  private final ProjectileMeta projectileMeta;
+  private final String name;
   private Projectile projectile;
-  private PowerSlider powerSlider;
-  private Point playerPosition;   //the top left position of the player
-  private Point handCenterPosition;   //the center of the hand;
-  private Point armImagePosition;   //the top left of the arm image
-  private ProjectileMeta projectileMeta;
   private float directionAngle;
   private PlayerState playerState;
-  private String name;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     playerPosition = new Point(0, 0);
@@ -71,7 +71,15 @@ public class Player implements Renderable {
     }
   }
 
-  public void moveArm(float degreeDifference) {
+  public void moveArmRight() {
+    moveArm(DEGREE_ARM_MOVE);
+  }
+
+  public void moveArmLeft() {
+    moveArm(-DEGREE_ARM_MOVE);
+  }
+
+  private void moveArm(float degreeDifference) {
     if (playerState == PlayerState.ANGLE_SELECTION) {
       // the player can only move his arm in a certain angle,
       // this checks if the player can still move his arm
@@ -114,7 +122,7 @@ public class Player implements Renderable {
 
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
-    projectile = new Projectile(projectileMeta, 0f, 0f);
+    projectile = new Projectile(projectileMeta);
     setHandCenterPosition();
     powerSlider.reset();
   }

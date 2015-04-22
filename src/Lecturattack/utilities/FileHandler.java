@@ -29,7 +29,6 @@ public class FileHandler {
   public static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
   public static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static String LAST_LEVEL_FILE_PATH = "";
-  private static int lastLevelNumber = -1;
 
 
   static {
@@ -52,7 +51,7 @@ public class FileHandler {
     //create the savegame if it doesn't exist
     if (success) {
       File saveGame = new File(LAST_LEVEL_FILE_PATH);
-      if(!saveGame.exists()){
+      if (!saveGame.exists()) {
         try {
           saveGame.createNewFile();
         } catch (IOException e) {
@@ -146,66 +145,57 @@ public class FileHandler {
   }
 
   /**
-   * @return
+   * @return The number of the latest unlocked level retrieved from the save-file.
    */
   public static int getLastLevelNumber() {
-    if (lastLevelNumber == -1) {
-      lastLevelNumber = getLastLevelFromFile();
+    int returnedLevelNumber;
+    File file = new File(LAST_LEVEL_FILE_PATH);
+    if (file.exists() && !file.isDirectory()) {
+      FileReader fileReader;
+      BufferedReader bufferedReader;
+      try {
+        fileReader = new FileReader(LAST_LEVEL_FILE_PATH);
+        bufferedReader = new BufferedReader(fileReader);
+        // read lines in file
+        String text;
+        text = bufferedReader.readLine();
+        returnedLevelNumber = Integer.parseInt(text);
+        fileReader.close();
+      } catch (IOException e) {
+        System.out.println(ERROR_WHEN_TRYING_TO_READ_FILE + LAST_LEVEL_FILE_PATH);
+        System.out.println(e.toString());
+        returnedLevelNumber = 1;
+      }
+
+    } else {
+      returnedLevelNumber = 1;
     }
-    return lastLevelNumber;
+
+    return returnedLevelNumber;
   }
 
   /**
    * @param level the new last level
    */
-  public static void setLastLevelNumber(int level) {
-    if (level > lastLevelNumber) {
-      lastLevelNumber = level;
-      try {
-        String lastLevel = Integer.toString(lastLevelNumber);
-        BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-        out.write(lastLevel);
-        out.close();
-      } catch (IOException e) {
-        System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE);
-      }
-    }
-  }
-
-  private static int getLastLevelFromFile() {
-    File f = new File(LAST_LEVEL_FILE_PATH);
-    if (f.exists() && !f.isDirectory()) {
-      FileReader fr;
-      BufferedReader br;
-      try {
-        fr = new FileReader(LAST_LEVEL_FILE_PATH);
-        br = new BufferedReader(fr);
-        // read lines in file
-        String text;
-        text = br.readLine();
-        lastLevelNumber = Integer.parseInt(text);
-        fr.close();
-      } catch (IOException e) {
-        System.out.println(ERROR_WHEN_TRYING_TO_READ_FILE + LAST_LEVEL_FILE_PATH);
-        System.out.println(e.toString());
-      }
-    } else {
-      lastLevelNumber = 1;
-    }
-    return lastLevelNumber;
-  }
-
-  public static void resetLastLevelNumber() {
-    lastLevelNumber = 1;
+  public static void setLastUnlockedLevel(int level) {
     try {
+      String text = Integer.toString(level);
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write("1");
+      out.write(text);
       out.close();
     } catch (IOException e) {
       System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE + ": " + LAST_LEVEL_FILE_PATH);
-      System.out.print(e);
     }
   }
+
+  /**
+   * This method resets the current game progress by setting the last unlocked level to 1.
+   * This is used if the user wishes to start all over again.
+   */
+  public static void resetGameProgress() {
+    setLastUnlockedLevel(1);
+  }
+
 
   public static Image loadImage(String fileName) {
     Image image = null;

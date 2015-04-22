@@ -15,9 +15,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Stefanie Raschke
  * @author Tim Adamek
  */
-public class LevelSelectState extends BasicGameState implements InputListener {
+class LevelSelectState extends BasicGameState implements InputListener {
   private final int stateID;
   private final int BUTTON_BACK = 6;
+
+  @SuppressWarnings("FieldCanBeLocal")
   private final int BUTTON_RESETPROGRESS = 7;
   private StateBasedGame stateBasedGame;
   private Image background;
@@ -30,7 +32,7 @@ public class LevelSelectState extends BasicGameState implements InputListener {
    * Constructor for LevelSelectState
    * Set the ID of this state to the given stateID
    *
-   * @param stateID
+   * @param stateID The stateID to be set.
    */
   public LevelSelectState(int stateID) {
     this.stateID = stateID;
@@ -143,12 +145,12 @@ public class LevelSelectState extends BasicGameState implements InputListener {
     } else if (key == Input.KEY_ENTER) {
       // check if the level is unlocked yet
       if (menuButtons[currentSelection] instanceof AnimatedLevelButton && menuButtons[currentSelection].getActive()) {
-        ((GameState) stateBasedGame.getState(Lecturattack.GAMESTATE)).loadLevel(currentSelection + 1);
-        stateBasedGame.enterState(Lecturattack.GAMESTATE);
+        ((GameState) stateBasedGame.getState(Lecturattack.GAME_STATE)).loadLevel(currentSelection + 1);
+        stateBasedGame.enterState(Lecturattack.GAME_STATE);
       } else if (currentSelection == BUTTON_BACK) {
-        stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
+        stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
       } else if (currentSelection == BUTTON_RESETPROGRESS) {
-        FileHandler.resetLastLevelNumber();
+        FileHandler.resetGameProgress();
         for (int i = 1; i <= 5; i++) {
           menuButtons[i].setInactive();
         }
