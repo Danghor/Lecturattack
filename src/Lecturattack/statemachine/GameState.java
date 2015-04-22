@@ -48,7 +48,7 @@ public class GameState extends BasicGameState implements InputListener {
   /**
    * Set the ID of this state to the given stateID
    *
-   * @param stateID
+   * @param stateID The stateID to be set.
    */
   public GameState(int stateID) {
     this.stateID = stateID;
@@ -122,7 +122,7 @@ public class GameState extends BasicGameState implements InputListener {
    * This method is called, when the projectile is not moving anymore
    * and the previous turn is over
    */
-  public void initiateNextThrow() {
+  private void initiateNextThrow() {
     // check if there are no more enemies alive
     boolean enemiesAlive = false;
     for (Target target : level.getTargets()) {
@@ -146,9 +146,9 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
     if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      getCurrentPlayer().moveArm(DEGREE_ARM_MOVE);
+      getCurrentPlayer().moveArmRight();
     } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      getCurrentPlayer().moveArm(-DEGREE_ARM_MOVE);
+      getCurrentPlayer().moveArmLeft();
     }
   }
 
@@ -167,14 +167,14 @@ public class GameState extends BasicGameState implements InputListener {
             currentLevel++;
             loadLevel(currentLevel);
           } else {
-            stateBasedGame.enterState(Lecturattack.MAINMENUSTATE);
+            stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
           }
         } else if (gameStatus == GameStatus.LEVEL_LOST) {
           loadLevel(currentLevel);
         }
         break;
       case Input.KEY_ESCAPE:
-        stateBasedGame.enterState(Lecturattack.PAUSESTATE);
+        stateBasedGame.enterState(Lecturattack.PAUSE_STATE);
         break;
       case Input.KEY_UP:
         if (getCurrentPlayer().getPlayerState() == Player.PlayerState.ANGLE_SELECTION) {
@@ -262,11 +262,11 @@ public class GameState extends BasicGameState implements InputListener {
     wind = (float) ((Math.random() * 6) % 3 - 1.5); //todo: in config file
   }
 
-  public int getCurrentLevel() {
+  private int getCurrentLevel() {
     return currentLevel;
   }
 
-  public void setCurrentLevel(int currentLevel) {
+  private void setCurrentLevel(int currentLevel) {
     this.currentLevel = currentLevel;
   }
 

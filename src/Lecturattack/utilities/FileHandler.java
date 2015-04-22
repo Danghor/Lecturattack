@@ -26,7 +26,6 @@ public class FileHandler {
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   // todo: create folder "Coffee Productions" in appdata/roaming
   private static String LAST_LEVEL_FILE_PATH = "";
-  private static int lastLevelNumber = -1;
 
   /**
    * This method loads the target.xml as a config for the TargetMeta instances
@@ -113,23 +112,44 @@ public class FileHandler {
   }
 
   /**
-   * @return
+   * @return The number of the latest unlocked level retrieved from the save-file.
    */
   public static int getLastLevelNumber() {
-    if (lastLevelNumber == -1) {
-      lastLevelNumber = getLastLevelFromFile();
+    int returnedLevelNumber;
+
+    File file = new File(LAST_LEVEL_FILE_PATH);
+    if (file.exists() && !file.isDirectory()) {
+      FileReader fileReader;
+      BufferedReader bufferedReader;
+
+      try {
+        fileReader = new FileReader(LAST_LEVEL_FILE_PATH);
+        bufferedReader = new BufferedReader(fileReader);
+        // read lines in file
+        String text;
+        text = bufferedReader.readLine();
+        returnedLevelNumber = Integer.parseInt(text);
+        fileReader.close();
+      } catch (IOException e) {
+        System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
+        System.out.println(e.toString());
+        returnedLevelNumber = 1;
+      }
+
+    } else {
+      returnedLevelNumber = 1;
     }
-    return lastLevelNumber;
+
+    return returnedLevelNumber;
   }
 
   /**
    * @param level the new last level
    */
   public static void setLastLevelNumber(int level) {
-    if (level > lastLevelNumber) {
-      lastLevelNumber = level;
+    if (level > getLastLevelNumber()) {
       try {
-        String text = Integer.toString(lastLevelNumber);
+        String text = Integer.toString(level);
         BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
         out.write(text);
         out.close();
@@ -139,34 +159,10 @@ public class FileHandler {
     }
   }
 
-  private static int getLastLevelFromFile() {
-    File f = new File(LAST_LEVEL_FILE_PATH);
-    if (f.exists() && !f.isDirectory()) {
-      FileReader fr;
-      BufferedReader br;
-      try {
-        fr = new FileReader(LAST_LEVEL_FILE_PATH);
-        br = new BufferedReader(fr);
-        // read lines in file
-        String text;
-        text = br.readLine();
-        lastLevelNumber = Integer.parseInt(text);
-        fr.close();
-      } catch (IOException e) {
-        System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
-        System.out.println(e.toString());
-      }
-    } else {
-      lastLevelNumber = 1;
-    }
-    return lastLevelNumber;
-  }
-
   public static void resetLastLevelNumber() {
-    lastLevelNumber = 1;
     try {
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write(lastLevelNumber);
+      out.write(1);
       out.close();
     } catch (IOException e) {
       System.out.println("Error while writing in text file");
