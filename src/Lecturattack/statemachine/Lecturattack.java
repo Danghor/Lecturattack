@@ -18,10 +18,11 @@ public class Lecturattack extends StateBasedGame {
   public static final int LEVELSELECT_STATE = 1;
   public static final int GAME_STATE = 2;
   public static final int PAUSE_STATE = 3;
+
   public static final int WIDTH = 1280;
   public static final int HEIGHT = 720;
-  private static final int TARGET_FPS = 80;
   private static final boolean TOGGLE_FULLSCREEN = false;
+  private static final int TARGET_FPS = 80;
 
   private Lecturattack() {
     super("Lecturattack");
