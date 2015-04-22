@@ -20,11 +20,9 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
-  private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; // TODO
-  // add
-  // LevelFiles
+  private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
-  // todo: create folder "Coffee Productions" in appdata/roaming
+  private static final String GAME_LOCATION = "CoffeeProductions\\Lecturattack";
   private static String LAST_LEVEL_FILE_PATH = "";
   private static int lastLevelNumber = -1;
 
@@ -70,7 +68,6 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
-   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
@@ -179,11 +176,11 @@ public class FileHandler {
   public static void getSystem() {
     String sysName = System.getProperty("os.name");
     if (sysName.contains("Windows")) {
-      LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
+      LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\" + GAME_LOCATION;
     } else if (sysName.contains("Linux")) {
-      LAST_LEVEL_FILE_PATH = System.getenv("APPDATA") + "/Lecturattack.txt";
+      LAST_LEVEL_FILE_PATH = System.getenv("APPDATA") + GAME_LOCATION;
     } else if (sysName.contains("Mac")) {
-      LAST_LEVEL_FILE_PATH = "~/Documents/Saved Games/GAMENAME/Lecturattack.txt";
+      LAST_LEVEL_FILE_PATH = "~/Documents/Saved Games/" + GAME_LOCATION;
     }
   }
 
