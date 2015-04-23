@@ -22,12 +22,12 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
+  public static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
+  public static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   private static final String GAME_FOLDER = "CoffeeProductions";
   private static final String GAME_NAME = "\\Lecturattack.txt";
-  public static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
-  public static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static String LAST_LEVEL_FILE_PATH = "";
 
 
@@ -103,6 +103,7 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
+   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
@@ -148,7 +149,8 @@ public class FileHandler {
    * @return The number of the latest unlocked level retrieved from the save-file.
    */
   public static int getLastLevelNumber() {
-    int returnedLevelNumber;
+    int returnedLevelNumber = 1;
+
     File file = new File(LAST_LEVEL_FILE_PATH);
     if (file.exists() && !file.isDirectory()) {
       FileReader fileReader;
@@ -165,10 +167,9 @@ public class FileHandler {
         System.out.println(ERROR_WHEN_TRYING_TO_READ_FILE + LAST_LEVEL_FILE_PATH);
         System.out.println(e.toString());
         returnedLevelNumber = 1;
+      } catch (NumberFormatException e) {
+        returnedLevelNumber = 1;
       }
-
-    } else {
-      returnedLevelNumber = 1;
     }
 
     return returnedLevelNumber;
