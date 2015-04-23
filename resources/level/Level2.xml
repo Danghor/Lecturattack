@@ -26,7 +26,7 @@
     </levelElements>
     <levelElements>
         <positionX>1142</positionX>
-        <positionY>430</positionY>
+        <positionY>425</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
@@ -38,7 +38,7 @@
     </levelElements>
     <levelElements>
         <positionX>1096</positionX>
-        <positionY>428</positionY>
+        <positionY>425</positionY>
         <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>
     </levelElements>

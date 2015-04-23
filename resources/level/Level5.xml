@@ -50,13 +50,13 @@
     </levelElements>
     <levelElements>
         <positionX>1096</positionX>
-        <positionY>428</positionY>
+        <positionY>420</positionY>
         <type>LIBRARY</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
     <levelElements>
         <positionX>1004</positionX>
-        <positionY>384</positionY>
+        <positionY>377</positionY>
         <type>RAM</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>

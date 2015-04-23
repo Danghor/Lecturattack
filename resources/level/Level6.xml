@@ -20,7 +20,7 @@
     </levelElements>
     <levelElements>
         <positionX>1142</positionX>
-        <positionY>288</positionY>
+        <positionY>280</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
@@ -38,7 +38,7 @@
     </levelElements>
     <levelElements>
         <positionX>1027</positionX>
-        <positionY>430</positionY>
+        <positionY>425</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
@@ -80,13 +80,13 @@
     </levelElements>
     <levelElements>
         <positionX>1118</positionX>
-        <positionY>384</positionY>
+        <positionY>380</positionY>
         <type>RAM</type>
         <positioning>HORIZONTAL</positioning>
     </levelElements>
     <levelElements>
         <positionX>1142</positionX>
-        <positionY>430</positionY>
+        <positionY>425</positionY>
         <type>STUDENT</type>
         <positioning>VERTICAL</positioning>
     </levelElements>
