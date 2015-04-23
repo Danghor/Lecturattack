@@ -83,6 +83,12 @@ public class GameState extends BasicGameState implements InputListener {
         initiateNextThrow();
       }
     }
+    getCurrentPlayer().update();
+    Projectile checkProjectile = getCurrentPlayer().getProjectile();//TODO comment
+    if (checkProjectile != null) {
+      this.projectile = checkProjectile;
+      score -= 10;
+    }
     changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
     score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
@@ -166,11 +172,7 @@ public class GameState extends BasicGameState implements InputListener {
     switch (key) {
       case Input.KEY_SPACE:
         if (gameStatus == GameStatus.PLAYING) {
-          Projectile checkProjectile = getCurrentPlayer().throwProjectile();
-          if (checkProjectile != null) {
-            this.projectile = checkProjectile;
-            score -= 10;
-          }
+          getCurrentPlayer().throwProjectile();
         } else if (gameStatus == GameStatus.LEVEL_WON) {
           if (currentLevel < MAX_LEVEL) {
             currentLevel++;

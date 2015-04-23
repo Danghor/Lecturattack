@@ -45,6 +45,16 @@ public class Player implements Renderable {
   private float directionAngle;
   private PlayerState playerState;
 
+
+  public enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, ANIMATION, THROWING
+  }
+
+  private boolean returnProjectile = false;  //defines if player can return projectile or not
+  private boolean moveArmBack = false;  //the flag if the player hast tomov his arm back to throw
+  private float animationAngle;  //the angle that the player has to move his arm for the animation (in degree)
+  private boolean armBackReached;// flag if arm for animation is at most "bback" position todo better comment
+
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     playerPosition = new Point(0, 0);
     handCenterPosition = new Point(0, 0);
@@ -57,16 +67,38 @@ public class Player implements Renderable {
     reset();
   }
 
+  public void update(){
+    if (moveArmBack) {
+      if (directionAngle-animationAngle>-200) {
+        animationAngle+=3;
+      }else if(directionAngle-animationAngle<=-200){
+        moveArmBack=false;
+        armBackReached=true;
+      }
+    }
+    if (armBackReached){
+      if(animationAngle>0){
+        animationAngle-=4;
+      }else if (animationAngle<=0){
+        moveArmBack=false;
+        armBackReached=false;
+        returnProjectile=true;
+        playerState = PlayerState.THROWING;
+      }
+    }
+    setHandCenterPosition();
+  }
+
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    armImage.setRotation(directionAngle);
+    armImage.setRotation(directionAngle-animationAngle);
     graphics.drawImage(bodyImage, playerPosition.getX(), playerPosition.getY());
     graphics.drawImage(armImage, armImagePosition.getX(), armImagePosition.getCenterY());
     if (playerState != PlayerState.THROWING) {
       projectile.setCenterPosition(handCenterPosition.getX(), handCenterPosition.getCenterY());
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
-    if (playerState == PlayerState.POWER_SLIDER || playerState == PlayerState.THROWING) {
+    if (playerState != PlayerState.ANGLE_SELECTION) {
       powerSlider.render(gameContainer, stateBasedGame, graphics);
     }
   }
@@ -86,7 +118,6 @@ public class Player implements Renderable {
       if ((degreeDifference > 0 && directionAngle < 20) || (degreeDifference < 0 && directionAngle > -180)) {
         this.directionAngle += degreeDifference;
       }
-      setHandCenterPosition();
     }
   }
 
@@ -96,22 +127,13 @@ public class Player implements Renderable {
    *
    * @return projectile
    */
-  public final Projectile throwProjectile() {
-    Projectile projectileReturned = null;
-
+  public final void throwProjectile() {
     if (playerState == PlayerState.ANGLE_SELECTION) {
       playerState = PlayerState.POWER_SLIDER;
     } else if (playerState == PlayerState.POWER_SLIDER) {
-      playerState = PlayerState.THROWING;
-      float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
-      float velocityX = -((float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
-
-      projectile.applyForce(velocityX * forceAmplifier, velocityY * forceAmplifier);
-      projectile.applyTorque(powerSlider.getSelectedForce() * torqueAmplifier);
-
-      projectileReturned = projectile;
+      moveArmBack = true;
+      playerState=PlayerState.ANIMATION;
     }
-    return projectileReturned;
   }
 
   public void updatePowerSlider(int delta) {
@@ -127,9 +149,22 @@ public class Player implements Renderable {
     powerSlider.reset();
   }
 
+  public Projectile getProjectile() {
+    if (returnProjectile){
+      returnProjectile=false;
+      float velocityY = ((float) Math.cos(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
+      float velocityX = -((float) Math.sin(Math.toRadians(directionAngle) + THROW_ANGLE_TRANSLATION) * powerSlider.getSelectedForce());
+
+      projectile.applyForce(velocityX * forceAmplifier, velocityY * forceAmplifier);
+      projectile.applyTorque(powerSlider.getSelectedForce() * torqueAmplifier);
+      return projectile;
+    }
+    return null;
+  }
+
   private void setHandCenterPosition() {
-    handCenterPosition.setX(((float) Math.cos(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armImagePosition.getX() + armImage.getWidth() / 2);
-    handCenterPosition.setY(((float) Math.sin(Math.toRadians(directionAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armImagePosition.getY() + armImage.getHeight() / 2);
+    handCenterPosition.setX(((float) Math.cos(Math.toRadians(directionAngle-animationAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armImagePosition.getX() + armImage.getWidth() / 2);
+    handCenterPosition.setY(((float) Math.sin(Math.toRadians(directionAngle-animationAngle) + PROJECTILE_ANGLE_TRANSLATION) * projectileOnHandScale) + armImagePosition.getY() + armImage.getHeight() / 2);
   }
 
   public void setPosition(float x, float y) {
@@ -163,7 +198,4 @@ public class Player implements Renderable {
     return playerState;
   }
 
-  public enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, THROWING
-  }
 }
