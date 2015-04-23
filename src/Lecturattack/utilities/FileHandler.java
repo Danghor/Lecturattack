@@ -149,7 +149,8 @@ public class FileHandler {
    * @return The number of the latest unlocked level retrieved from the save-file.
    */
   public static int getLastLevelNumber() {
-    int returnedLevelNumber;
+    int returnedLevelNumber = 1;
+
     File file = new File(LAST_LEVEL_FILE_PATH);
     if (file.exists() && !file.isDirectory()) {
       FileReader fileReader;
@@ -166,10 +167,9 @@ public class FileHandler {
         System.out.println(ERROR_WHEN_TRYING_TO_READ_FILE + LAST_LEVEL_FILE_PATH);
         System.out.println(e.toString());
         returnedLevelNumber = 1;
+      } catch (NumberFormatException e) {
+        returnedLevelNumber = 1;
       }
-
-    } else {
-      returnedLevelNumber = 1;
     }
 
     return returnedLevelNumber;
