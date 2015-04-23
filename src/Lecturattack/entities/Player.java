@@ -44,14 +44,7 @@ public class Player implements Renderable {
   private Projectile projectile;
   private float directionAngle;
   private PlayerState playerState;
-
-
-  public enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, ANIMATION, THROWING
-  }
-
   private float animationAngle;  //the angle that the player has to move his arm for the animation (in degree)
-
   //TODO enum
   private boolean returnProjectile = false;  //defines if player can return projectile or not
   private boolean moveArmBack = false;  //the flag if the player hast tomov his arm back to throw
@@ -74,7 +67,7 @@ public class Player implements Renderable {
    * it can be called every calcuation step because it is handled intern when the animation is viable
    */
   public void updateArmAnimation() {
-     if (moveArmBack) {
+    if (moveArmBack) {
       // the arm is moved back to -200 decree
       if (directionAngle - animationAngle > -200) {
         // the speed of the arm back animation is based on the selected force + a fixed value
@@ -85,7 +78,7 @@ public class Player implements Renderable {
         moveArmBack = false;
         moveArmForward = true;
       }
-    }else if (moveArmForward) {
+    } else if (moveArmForward) {
       if (animationAngle > 0) {
         // the speed of the arm forward animation is based on the selected force + a fixed value
         // when the selected force is really low
@@ -206,6 +199,10 @@ public class Player implements Renderable {
 
   public PlayerState getPlayerState() {
     return playerState;
+  }
+
+  public enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, ANIMATION, THROWING
   }
 
 }

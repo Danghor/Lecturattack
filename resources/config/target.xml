@@ -39,16 +39,16 @@
             <y>0</y>
         </vertex>
         <vertex>
-            <x>0</x>
-            <y>43</y>
-        </vertex>
-        <vertex>
-            <x>99</x>
-            <y>43</y>
-        </vertex>
-        <vertex>
             <x>99</x>
             <y>0</y>
+        </vertex>
+        <vertex>
+            <x>99</x>
+            <y>43</y>
+        </vertex>
+        <vertex>
+            <x>0</x>
+            <y>43</y>
         </vertex>
         <mass>10</mass>
         <hitScore>10</hitScore>
@@ -93,16 +93,16 @@
             <y>0</y>
         </vertex>
         <vertex>
-            <x>0</x>
-            <y>43</y>
-        </vertex>
-        <vertex>
-            <x>99</x>
-            <y>43</y>
-        </vertex>
-        <vertex>
             <x>99</x>
             <y>0</y>
+        </vertex>
+        <vertex>
+            <x>99</x>
+            <y>43</y>
+        </vertex>
+        <vertex>
+            <x>0</x>
+            <y>43</y>
         </vertex>
         <mass>20</mass>
         <hitScore>10</hitScore>
