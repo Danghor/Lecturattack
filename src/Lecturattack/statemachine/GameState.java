@@ -83,7 +83,7 @@ public class GameState extends BasicGameState implements InputListener {
         initiateNextThrow();
       }
     }
-    getCurrentPlayer().update();
+    getCurrentPlayer().updateArmAnimation();
     Projectile checkProjectile = getCurrentPlayer().getProjectile();//TODO comment
     if (checkProjectile != null) {
       this.projectile = checkProjectile;
