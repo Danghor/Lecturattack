@@ -13,10 +13,13 @@ public class Level {
   private final float playerPositionX;
   private final float playerPositionY;
 
-  public Level(ArrayList<Target> targets, float playerPositionX, float playerPositionY) {
+  private int score;
+
+  public Level(ArrayList<Target> targets, float playerPositionX, float playerPositionY, int score) {
     this.targets = targets;
     this.playerPositionX = playerPositionX;
     this.playerPositionY = playerPositionY;
+    this.score = score;
 
     float lowestPoint = 0;
     for (Target target : targets) {
@@ -27,6 +30,22 @@ public class Level {
     }
 
     groundLevel = lowestPoint;
+  }
+
+  public void reduceScore(int scoreReduction) {
+    score -= scoreReduction;
+  }
+
+  public void addScore(int scoreAddition) {
+    score += scoreAddition;
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
   }
 
   public float getGroundLevel() {
@@ -44,4 +63,5 @@ public class Level {
   public float getPlayerPositionX() {
     return playerPositionX;
   }
+
 }
