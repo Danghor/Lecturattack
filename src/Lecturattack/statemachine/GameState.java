@@ -100,8 +100,16 @@ public class GameState extends BasicGameState implements InputListener {
     changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
 
+    int currentAmountOfDeadTargets = deadTargets.size();
+
     try {
       score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+
+      //reset player if an enemy has been hit
+      if (deadTargets.size() > currentAmountOfDeadTargets) {
+        resetPlayer();
+      }
+
     } catch (IllegalArgumentException e) {
       System.out.print(e.getMessage());
       System.out.println(" Delta: " + delta);
@@ -140,6 +148,11 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
+  private void resetPlayer() {
+    projectile = null;
+    getCurrentPlayer().reset();
+  }
+
   /**
    * This method is called, when the projectile is not moving anymore
    * and the previous turn is over
@@ -159,7 +172,7 @@ public class GameState extends BasicGameState implements InputListener {
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
-      getCurrentPlayer().reset();
+      resetPlayer();
       randomizeWind();
     }
   }
@@ -218,7 +231,7 @@ public class GameState extends BasicGameState implements InputListener {
         }
         break;
       case Input.KEY_R:
-        getCurrentPlayer().reset();
+        resetPlayer();
         break;
     }
   }
