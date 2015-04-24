@@ -118,14 +118,14 @@ public class PhysicsEngine {
   private static void moveAboveGround(RigidBody body, float groundLevel) {
     if (body.getBiggestY() >= groundLevel) {
       body.move(new EnhancedVector(0f, groundLevel - body.getBiggestY()));
-      body.setLinearVelocity(new EnhancedVector(body.getLinearVelocity().x, 0f));
+      body.setLinearVelocity(new EnhancedVector(body.getLinearVelocity().getX(), 0f));
     }
   }
 
   private static void reflectOnGround(Projectile projectile, float groundLevel) {
     if (projectile.getBiggestY() >= groundLevel) {
       projectile.move(new EnhancedVector(0f, groundLevel - projectile.getBiggestY()));
-      projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().x, -projectile.getLinearVelocity().y));
+      projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().getX(), -projectile.getLinearVelocity().getY()));
       projectile.invertRotation();
     }
   }

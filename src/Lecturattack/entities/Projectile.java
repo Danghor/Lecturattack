@@ -76,7 +76,7 @@ public class Projectile extends RigidBody {
   }
 
   private float getInertia() {
-    double length = (new EnhancedVector(getCenter().x - vertices.get(0).x, getCenter().y - vertices.get(0).y)).length();
+    float length = (new EnhancedVector(getCenter().getX() - vertices.get(0).getX(), getCenter().getY() - vertices.get(0).getY())).length();
     return (getMass() * (float) Math.pow(length, 4)) / 120000;
   }
 

@@ -47,7 +47,7 @@ public class Target extends RigidBody {
     }
     graphics.draw(poly);
 
-    graphics.drawRect(getCenter().x, getCenter().y, 5, 5);
+    graphics.drawRect(getCenter().getX(), getCenter().getY(), 5, 5);
   }
 
   public float hit(Projectile projectile) {
