@@ -39,9 +39,12 @@ public class GameState extends BasicGameState implements InputListener {
   private int score;
   private float wind;
   private GameStatus gameStatus;
-  // a list of all Targets that have been hit and are not part of the game
-  // anymore, but are still falling out of the frame and therefore have to
-  // be rendered
+
+  /**
+   * a list of all Targets that have been hit and are not part of the game
+   * anymore, but are still falling out of the frame and therefore have to
+   * be rendered
+   */
   private ArrayList<Target> deadTargets;
 
   /**
@@ -61,17 +64,21 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
+
     background = FileHandler.loadImage("background");
     victory = FileHandler.loadImage("victory");
     defeat = FileHandler.loadImage("defeat");
+
     deadTargets = new ArrayList<>();
     players = new ArrayList<>();
+
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
     currentPlayerIndex = 0;
     setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
+
     flag = new Flag();
   }
 
@@ -83,11 +90,13 @@ public class GameState extends BasicGameState implements InputListener {
       }
     }
     getCurrentPlayer().updateArmAnimation();
+
     Projectile checkProjectile = getCurrentPlayer().getProjectile();//TODO comment
     if (checkProjectile != null) {
       this.projectile = checkProjectile;
       score -= 10;
     }
+
     changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
 
@@ -114,14 +123,15 @@ public class GameState extends BasicGameState implements InputListener {
     }
     /**
      * Render projectile here, if the player doesn't have it
-     * If the player has the projectile, it's null
      */
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
+
     scoreField.render(gameContainer, stateBasedGame, graphics);
     playerName.render(gameContainer, stateBasedGame, graphics);
     flag.render(gameContainer, stateBasedGame, graphics);
+
     if (gameStatus == GameStatus.LEVEL_WON) {
       // draw the images centered
       graphics.drawImage(victory, (Lecturattack.WIDTH - victory.getWidth()) / 2, 91);

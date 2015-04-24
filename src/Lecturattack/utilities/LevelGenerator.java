@@ -41,7 +41,7 @@ public class LevelGenerator {
         float posY = levelElement.getPositionY();
         TargetType targetType;
 
-        //the targets levelElements are distinguished by their XmlObjectType, which specifys what target they are (or if they are a player).
+        //the targets levelElements are distinguished by their XmlObjectType, which specifies what target they are (or if they are a player).
         //after that for RAM and LIBRARY the position must be checked, because there are different targetMetas for them
         if (levelElement.getType() == XmlObjectType.RAM) {
           if (levelElement.getPositioning() == Positioning.HORIZONTAL) {

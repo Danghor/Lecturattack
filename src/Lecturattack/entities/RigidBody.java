@@ -321,6 +321,21 @@ public abstract class RigidBody implements Renderable {
     }
   }
 
+  /**
+   * @return A new EnhancedVector object representing the top right corner of this body.
+   */
+  public EnhancedVector getPosition() {
+    EnhancedVector returnedVector;
+
+    try {
+      returnedVector = new EnhancedVector(vertices.get(0).getX(), vertices.get(0).getY());
+    } catch (NullPointerException ex) {
+      throw new IllegalStateException("This body does not contain any vertices.");
+    }
+
+    return returnedVector;
+  }
+
   public void setCenterPosition(float x, float y) {
     EnhancedVector destination = new EnhancedVector(x, y);
     EnhancedVector center = getCenter();
