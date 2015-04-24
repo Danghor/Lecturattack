@@ -34,7 +34,7 @@ public class Lecturattack extends StateBasedGame {
       appGameContainer.setTargetFrameRate(TARGET_FPS);
       appGameContainer.setDisplayMode(WIDTH, HEIGHT, TOGGLE_FULLSCREEN);
       appGameContainer.setShowFPS(false);
-      startBackgroundMusic();
+      //startBackgroundMusic();
       appGameContainer.start();
     } catch (SlickException e) {
       e.printStackTrace();

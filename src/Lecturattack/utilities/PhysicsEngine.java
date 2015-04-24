@@ -12,16 +12,17 @@ import java.util.ArrayList;
  */
 public class PhysicsEngine {
   private static final float GRAVITATION_ACCELERATION = 9.81f;
+  private static final int MAXIMUM_STEP_SIZE_IN_MILLISECONDS = 100;
+  private static final float GROUND_BOUNCINESS = 0.65f;
 
   public static int calculateStep(Projectile projectile, ArrayList<Target> targets, ArrayList<Target> deadTargets, float wind, int deltaInMilliseconds, float groundLevel) {
     // this is the additional score returned in the end; it gets bigger for every target hit
     int scoreIncrement = 0;
 
-
     /**
      * The engine will not work properly is the given delta is too high. To avoid errors, huge steps are skipped.
      */
-    if (!(deltaInMilliseconds > 100)) {
+    if (!(deltaInMilliseconds > MAXIMUM_STEP_SIZE_IN_MILLISECONDS)) {
       float scaledDelta = (float) deltaInMilliseconds / 100; //todo: adjust values
       EnhancedVector oldTargetPosition;
       boolean intersectionBetweenTargetsDetected;
@@ -79,7 +80,7 @@ public class PhysicsEngine {
       for (Target target : targets) {
 
         target.applyForce(0f, GRAVITATION_ACCELERATION * target.getMass());
-        oldTargetPosition = target.getCenter();
+        oldTargetPosition = target.getPosition();
 
         target.update(scaledDelta);
 
@@ -94,7 +95,7 @@ public class PhysicsEngine {
         }
 
         if (intersectionBetweenTargetsDetected) {
-          EnhancedVector newPosition = target.getCenter();
+          EnhancedVector newPosition = target.getPosition();
           target.move((EnhancedVector) oldTargetPosition.sub(newPosition));
           target.setLinearVelocity(new EnhancedVector(0f, 0f));
         }
@@ -125,7 +126,7 @@ public class PhysicsEngine {
   private static void reflectOnGround(Projectile projectile, float groundLevel) {
     if (projectile.getBiggestY() >= groundLevel) {
       projectile.move(new EnhancedVector(0f, groundLevel - projectile.getBiggestY()));
-      projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().getX(), -projectile.getLinearVelocity().getY()));
+      projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().getX() * GROUND_BOUNCINESS, -projectile.getLinearVelocity().getY() * GROUND_BOUNCINESS));
       projectile.invertRotation();
     }
   }
