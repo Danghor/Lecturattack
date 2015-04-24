@@ -16,7 +16,7 @@ public class EnhancedVector extends Vector2f {
    * @return The scalar value of the cross product.
    */
   public float crossProductScalar(EnhancedVector partner) {
-    return (this.x * partner.y - this.y * partner.x);
+    return (this.getX() * partner.getY() - this.getY() * partner.getX());
   }
 
   /**
@@ -31,16 +31,16 @@ public class EnhancedVector extends Vector2f {
     double angleInRadians = Math.toRadians(angleInDegrees);
 
     //move center to origin of coordinate system
-    double tmpX = this.x - center.x;
-    double tmpY = this.y - center.y;
+    double tmpX = this.getX() - center.getX();
+    double tmpY = this.getY() - center.getY();
 
     //rotate x and y using the origin as the center
     double rotatedTmpX = Math.cos(angleInRadians) * tmpX - Math.sin(angleInRadians) * tmpY;
     double rotatedTmpY = Math.sin(angleInRadians) * tmpX + Math.cos(angleInRadians) * tmpY;
 
     //move center to its original position
-    double newX = rotatedTmpX + center.x;
-    double newY = rotatedTmpY + center.y;
+    double newX = rotatedTmpX + center.getX();
+    double newY = rotatedTmpY + center.getY();
 
     //apply the calculated values, i.e. rotate the vector
     this.x = (float) newX;
@@ -55,7 +55,7 @@ public class EnhancedVector extends Vector2f {
    * @return The angle between this object and the given partner vector.
    */
   public float getAngle(EnhancedVector partner) {
-    return (float) Math.toDegrees(Math.atan2(partner.y - this.y, partner.x - this.x));
+    return (float) Math.toDegrees(Math.atan2(partner.getY() - this.getY(), partner.getX() - this.getX()));
   }
 
   public EnhancedVector getScaled(float factor) {
@@ -64,6 +64,6 @@ public class EnhancedVector extends Vector2f {
 
   public EnhancedVector getPerpendicular() {
     //noinspection SuspiciousNameCombination
-    return new EnhancedVector(-this.y, this.x);
+    return new EnhancedVector(-this.getY(), this.getX());
   }
 }

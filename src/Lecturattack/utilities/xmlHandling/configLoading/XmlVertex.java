@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Tim Adamek
  */
 class XmlVertex {
-  //this class is for loading the vertices of the MetaObjects, it holds one vertice
+  //this class is for loading the vertices of the MetaObjects, it holds one vertex
   private float x;
   private float y;
 

@@ -22,7 +22,6 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private static final int DEGREE_ARM_MOVE = 1;
   private static final int MAX_LEVEL = 6;
   private final int stateID;
   private StateBasedGame stateBasedGame;//TODO find another way
@@ -91,7 +90,14 @@ public class GameState extends BasicGameState implements InputListener {
     }
     changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+
+    try {
+      score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+    } catch (IllegalArgumentException e) {
+      System.out.print(e.getMessage());
+      System.out.println(" Delta: " + delta);
+    }
+
     scoreField.setDynamicText(Integer.toString(score));
     getCurrentPlayer().updatePowerSlider(delta);
   }
@@ -171,17 +177,21 @@ public class GameState extends BasicGameState implements InputListener {
   public void keyPressed(int key, char c) {
     switch (key) {
       case Input.KEY_SPACE:
-        if (gameStatus == GameStatus.PLAYING) {
-          getCurrentPlayer().throwProjectile();
-        } else if (gameStatus == GameStatus.LEVEL_WON) {
-          if (currentLevel < MAX_LEVEL) {
-            currentLevel++;
-            loadLevel(currentLevel);
-          } else {
-            stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
-          }
-        } else if (gameStatus == GameStatus.LEVEL_LOST) {
-          loadLevel(currentLevel);
+        switch (gameStatus) {
+          case PLAYING:
+            getCurrentPlayer().throwProjectile();
+            break;
+          case LEVEL_WON:
+            if (currentLevel < MAX_LEVEL) {
+              currentLevel++;
+              resetLevel();
+            } else {
+              stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
+            }
+            break;
+          case LEVEL_LOST:
+            resetLevel();
+            break;
         }
         break;
       case Input.KEY_ESCAPE:
@@ -239,7 +249,7 @@ public class GameState extends BasicGameState implements InputListener {
    * to reset the level it is only necessary to load the current level again
    */
   private void resetLevel() {
-    loadLevel(getCurrentLevel());
+    loadLevel(currentLevel);
   }
 
   private void selectNextPlayer() {
@@ -271,10 +281,6 @@ public class GameState extends BasicGameState implements InputListener {
    */
   private void randomizeWind() {
     wind = (float) ((Math.random() * 6) % 3 - 1.5); //todo: in config file
-  }
-
-  private int getCurrentLevel() {
-    return currentLevel;
   }
 
   private void setCurrentLevel(int currentLevel) {
