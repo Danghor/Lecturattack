@@ -44,7 +44,7 @@ public abstract class RigidBody implements Renderable {
     linearVelocity.add(acceleration.scale(scaledDelta));
     move(new EnhancedVector(linearVelocity.x * scaledDelta, linearVelocity.y * scaledDelta));
 
-    force = new EnhancedVector(0, 0);
+    force = new EnhancedVector(0f, 0f);
   }
 
   /**
@@ -245,7 +245,7 @@ public abstract class RigidBody implements Renderable {
     //Xn, Yn are to be assumed the same as X0, Y0
     areaSum += (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
 
-    area = 0.5 * areaSum;
+    area = 0.5 * Math.abs(areaSum);
     return area;
   }
 
@@ -347,6 +347,4 @@ public abstract class RigidBody implements Renderable {
   public void setLinearVelocity(EnhancedVector linearVelocity) {
     this.linearVelocity = linearVelocity;
   }
-
-
 }

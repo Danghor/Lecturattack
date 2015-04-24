@@ -41,6 +41,8 @@ public class Target extends RigidBody {
       poly.addPoint(point.getX(), point.getY());
     }
     graphics.draw(poly);
+
+    graphics.drawRect(getCenter().x, getCenter().y, 5, 5);
   }
 
   public float hit(Projectile projectile) {
@@ -55,7 +57,7 @@ public class Target extends RigidBody {
   }
 
   public boolean isDestroyed() {
-    return hitCounter >= metaObject.getMaxHits(); //>= instead of == just to be sure
+    return hitCounter >= metaObject.getMaxHits();
   }
 
   @Override

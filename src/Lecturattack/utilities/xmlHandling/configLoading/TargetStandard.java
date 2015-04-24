@@ -111,12 +111,12 @@ public class TargetStandard {
   }
 
   public ArrayList<float[]> getVerticesAsFloats() {
-    ArrayList<float[]> vertexes = new ArrayList<>();
-    for (XmlVertex vertice : vertices) {
+    ArrayList<float[]> vertices = new ArrayList<>();
+    for (XmlVertex vertex : this.vertices) {
       //the array constructor is not allowed when adding to a list
-      float[] points = {vertice.getX(), vertice.getY()};
-      vertexes.add(points);
+      float[] points = {vertex.getX(), vertex.getY()};
+      vertices.add(points);
     }
-    return vertexes;
+    return vertices;
   }
 }
