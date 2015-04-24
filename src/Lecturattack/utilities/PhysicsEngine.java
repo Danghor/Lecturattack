@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class PhysicsEngine {
   private static final float GRAVITATION_ACCELERATION = 9.81f;
   private static final int MAXIMUM_STEP_SIZE_IN_MILLISECONDS = 100;
-  private static final float GROUND_BOUNCINESS = 0.65f;
+  private static final float GROUND_BOUNCINESS = 0.7f;
 
   public static int calculateStep(Projectile projectile, ArrayList<Target> targets, ArrayList<Target> deadTargets, float wind, int deltaInMilliseconds, float groundLevel) {
     // this is the additional score returned in the end; it gets bigger for every target hit
