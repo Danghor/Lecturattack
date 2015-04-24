@@ -23,6 +23,11 @@ public class Target extends RigidBody {
   }
 
   @Override
+  public String toString() {
+    return metaObject.getType().toString();
+  }
+
+  @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     /**
      * The image is being rendered if:

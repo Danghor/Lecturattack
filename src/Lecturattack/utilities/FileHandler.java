@@ -204,6 +204,7 @@ public class FileHandler {
       image = new Image("resources/images/" + fileName + ".png");
     } catch (SlickException e) {
       System.out.println("Error while loading image:" + fileName);
+      e.printStackTrace();
     }
     return image;
   }

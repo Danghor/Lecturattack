@@ -14,89 +14,97 @@ public class PhysicsEngine {
   private static final float GRAVITATION_ACCELERATION = 9.81f;
 
   public static int calculateStep(Projectile projectile, ArrayList<Target> targets, ArrayList<Target> deadTargets, float wind, int deltaInMilliseconds, float groundLevel) {
-    float scaledDelta = (float) deltaInMilliseconds / 100; //todo: adjust values
-    EnhancedVector oldTargetPosition;
-    boolean intersectionBetweenTargetsDetected;
-    Target targetCollidedWith;
-    ArrayList<Integer> targetsToBeRemovedIndices = new ArrayList<>();
-
     // this is the additional score returned in the end; it gets bigger for every target hit
     int scoreIncrement = 0;
 
-    //----------projectile operations----------
-    if (projectile != null) {
 
-      //update projectile
-      projectile.applyForce(wind, GRAVITATION_ACCELERATION * projectile.getMass());
-      projectile.update(scaledDelta);
-      reflectOnGround(projectile, groundLevel);
+    /**
+     * The engine will not work properly is the given delta is too high. To avoid errors, huge steps are skipped.
+     */
+    if (!(deltaInMilliseconds > 100)) {
+      float scaledDelta = (float) deltaInMilliseconds / 100; //todo: adjust values
+      EnhancedVector oldTargetPosition;
+      boolean intersectionBetweenTargetsDetected;
+      Target targetCollidedWith;
+      ArrayList<Integer> targetsToBeRemovedIndices = new ArrayList<>();
 
-      //detect if projectile collided with target
-      targetCollidedWith = null;
+      //----------projectile operations----------
+      if (projectile != null) {
+
+        //update projectile
+        projectile.applyForce(wind, GRAVITATION_ACCELERATION * projectile.getMass());
+        projectile.update(scaledDelta);
+        reflectOnGround(projectile, groundLevel);
+
+        //detect if projectile collided with target
+        targetCollidedWith = null;
+        for (Target target : targets) {
+          if (projectile.collidesWith(target)) {
+            targetCollidedWith = target;
+            break; //todo: avoid break
+          }
+        }
+
+        //if projectile collided with target, perform collision response
+        if (targetCollidedWith != null) {
+          scoreIncrement += targetCollidedWith.hit(projectile);
+          projectile.reflect(targetCollidedWith);
+        }
+      }
+
+      //----------target operations----------
+
+      //remove destroyed targets from list
+      for (int i = 0; i < targets.size(); i++) {
+        if (targets.get(i).isDestroyed()) {
+          targetsToBeRemovedIndices.add(i);
+        }
+      }
+
+      /**
+       * Add dead ENEMYs to the deadTarget list, to make them fall out of frame.
+       * Remove the target from the targets list.
+       */
+      for (int index : targetsToBeRemovedIndices) {
+        Target targetToBeRemoved = targets.get(index);
+        if (targetToBeRemoved.getType() == TargetType.ENEMY) {
+          deadTargets.add(targetToBeRemoved);
+        }
+        targets.remove(index);
+      }
+
+      /**
+       * Make remaining targets fall, but prevent them from falling into each other.
+       */
       for (Target target : targets) {
-        if (projectile.collidesWith(target)) {
-          targetCollidedWith = target;
-          break; //todo: avoid break
+
+        target.applyForce(0f, GRAVITATION_ACCELERATION * target.getMass());
+        oldTargetPosition = target.getCenter();
+
+        target.update(scaledDelta);
+
+        moveAboveGround(target, groundLevel);
+
+        // If the movement of the current target makes it collide with another target, undo the previous movement.
+        intersectionBetweenTargetsDetected = false;
+        for (Target otherTarget : targets) {
+          if (!target.equals(otherTarget) && target.collidesWith(otherTarget)) {
+            intersectionBetweenTargetsDetected = true;
+          }
+        }
+
+        if (intersectionBetweenTargetsDetected) {
+          EnhancedVector newPosition = target.getCenter();
+          target.move((EnhancedVector) oldTargetPosition.sub(newPosition));
+          target.setLinearVelocity(new EnhancedVector(0f, 0f));
         }
       }
 
-      //if projectile collided with target, perform collision response
-      if (targetCollidedWith != null) {
-        scoreIncrement += targetCollidedWith.hit(projectile);
-        projectile.reflect(targetCollidedWith);
-      }
+      // Make "dead" targets fall out of frame (they do not interact with any other object)
+      updateDeadTargets(deadTargets, scaledDelta);
+    } else {
+      throw new IllegalArgumentException("Given delta too high. Skipping this step.");
     }
-
-    //----------target operations----------
-
-    //remove destroyed targets from list
-    for (int i = 0; i < targets.size(); i++) {
-      if (targets.get(i).isDestroyed()) {
-        targetsToBeRemovedIndices.add(i);
-      }
-    }
-
-    /**
-     * Add dead ENEMYs to the deadTarget list, to make them fall out of frame.
-     * Remove the target from the targets list.
-     */
-    for (int index : targetsToBeRemovedIndices) {
-      Target targetToBeRemoved = targets.get(index);
-      if (targetToBeRemoved.getType() == TargetType.ENEMY) {
-        deadTargets.add(targetToBeRemoved);
-      }
-      targets.remove(index);
-    }
-
-    /**
-     * Make remaining targets fall, but prevent them from falling into each other.
-     */
-    for (Target target : targets) {
-
-      target.applyForce(0f, GRAVITATION_ACCELERATION * target.getMass());
-      oldTargetPosition = target.getCenter();
-
-      target.update(scaledDelta);
-
-      moveAboveGround(target, groundLevel);
-
-      // If the movement of the current target makes it collide with another target, undo the previous movement.
-      intersectionBetweenTargetsDetected = false;
-      for (Target otherTarget : targets) {
-        if (!target.equals(otherTarget) && target.collidesWith(otherTarget)) {
-          intersectionBetweenTargetsDetected = true;
-        }
-      }
-
-      if (intersectionBetweenTargetsDetected) {
-        EnhancedVector newPosition = target.getCenter();
-        target.move((EnhancedVector) oldTargetPosition.sub(newPosition));
-        target.setLinearVelocity(new EnhancedVector(0f, 0f));
-      }
-    }
-
-    // Make "dead" targets fall out of frame (they do not interact with any other object)
-    updateDeadTargets(deadTargets, scaledDelta);
 
     return scoreIncrement;
   }

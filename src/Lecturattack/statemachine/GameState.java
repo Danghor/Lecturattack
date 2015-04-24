@@ -91,7 +91,14 @@ public class GameState extends BasicGameState implements InputListener {
     }
     changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+
+    try {
+      score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+    } catch (IllegalArgumentException e) {
+      System.out.print(e.getMessage());
+      System.out.println(" Delta: " + delta);
+    }
+
     scoreField.setDynamicText(Integer.toString(score));
     getCurrentPlayer().updatePowerSlider(delta);
   }
