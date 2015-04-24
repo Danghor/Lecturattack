@@ -50,7 +50,7 @@ class LevelSelectState extends BasicGameState implements InputListener {
     menuButtons = new AnimatedButton[8];
     // initialize the LevelSelectButtons
     // menuButtons[0] - menuButtons[5] contains buttons, to start the according levels
-    // menuButtons[6] contains the "Zurueck"-Button, which goes back to the main menu
+    // menuButtons[6] contains the "Zurück"-Button, which goes back to the main menu
     // menuButtons[7] contains the button to reset the player progress
     menuButtons[0] = new AnimatedLevelButton(150, 150, FileHandler.loadImage("level1"), FileHandler.loadImage("level1_locked"));
     menuButtons[1] = new AnimatedLevelButton(489, 150, FileHandler.loadImage("level2"), FileHandler.loadImage("level2_locked"));
