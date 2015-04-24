@@ -35,6 +35,7 @@ public class FileHandler {
     // This sets the file path according to the used system
     String sysName = System.getProperty("os.name");
     String saveDirectory = "";
+
     if (sysName.contains("Windows")) {
       saveDirectory = System.getProperty("user.home") + "\\AppData\\Roaming\\" + GAME_FOLDER;
     } else if (sysName.contains("Linux")) {

@@ -28,23 +28,23 @@ public class EnhancedVector extends Vector2f {
    */
   public void rotate(float angleInDegrees, EnhancedVector center) {
 
-    double angleInRadians = Math.toRadians(angleInDegrees);
+    float angleInRadians = (float) Math.toRadians(angleInDegrees);
 
     //move center to origin of coordinate system
-    double tmpX = this.getX() - center.getX();
-    double tmpY = this.getY() - center.getY();
+    float tmpX = this.getX() - center.getX();
+    float tmpY = this.getY() - center.getY();
 
     //rotate x and y using the origin as the center
-    double rotatedTmpX = Math.cos(angleInRadians) * tmpX - Math.sin(angleInRadians) * tmpY;
-    double rotatedTmpY = Math.sin(angleInRadians) * tmpX + Math.cos(angleInRadians) * tmpY;
+    float rotatedTmpX = (float) (Math.cos(angleInRadians) * tmpX - Math.sin(angleInRadians) * tmpY);
+    float rotatedTmpY = (float) (Math.sin(angleInRadians) * tmpX + Math.cos(angleInRadians) * tmpY);
 
     //move center to its original position
-    double newX = rotatedTmpX + center.getX();
-    double newY = rotatedTmpY + center.getY();
+    float newX = rotatedTmpX + center.getX();
+    float newY = rotatedTmpY + center.getY();
 
     //apply the calculated values, i.e. rotate the vector
-    this.x = (float) newX;
-    this.y = (float) newY;
+    this.x = newX;
+    this.y = newY;
   }
 
   /**
