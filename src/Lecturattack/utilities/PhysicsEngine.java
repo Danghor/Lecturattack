@@ -72,6 +72,7 @@ public class PhysicsEngine {
      * Make remaining targets fall, but prevent them from falling into each other.
      */
     for (Target target : targets) {
+
       target.applyForce(0f, GRAVITATION_ACCELERATION * target.getMass());
       oldTargetPosition = target.getCenter();
 
@@ -124,7 +125,7 @@ public class PhysicsEngine {
   /**
    * Processes the deadTargets List:
    * 1. Makes reachable targets fall down.
-   * 2. Removes unreachable targets (that fell out of the visible frame) fro mthe list.
+   * 2. Removes unreachable targets (that fell out of the visible frame) from the list.
    *
    * @param deadTargets Targets that are dead and are not part of the simulation anymore.
    *                    They are still visible and therefore have to be rendered until they fell out of the visible frame.

@@ -61,8 +61,8 @@ public class ProjectileMeta extends MetaObject {
     }
   }
 
-  private Image image;
-  private ArrayList<TargetType> destroys;
+  private final Image image;
+  private final ArrayList<TargetType> destroys;
 
   private ProjectileMeta(ArrayList<float[]> outline, Image image, ArrayList<TargetType> destroys) {
     this.outline = outline;

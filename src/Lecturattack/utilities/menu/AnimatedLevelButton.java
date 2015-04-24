@@ -1,10 +1,7 @@
 package Lecturattack.utilities.menu;
 
 import Lecturattack.entities.Renderable;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * AnimatedLevelButton inherits from AnimatedButton.
@@ -13,12 +10,15 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Andreas Geis
  */
 public class AnimatedLevelButton extends AnimatedButton implements Renderable {
-  public AnimatedLevelButton(int x, int y, Image active, Image inactive) {
-    super(x, y, active, inactive);
-  }
-
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    super.render(gameContainer, stateBasedGame, graphics);
+  /**
+   * Constructor for AnimatedButtons
+   *
+   * @param x             the x-position of the button
+   * @param y             the y-position of the button
+   * @param activeImage   the image which is displayed, when the button is currently selected
+   * @param inactiveImage the image which is displayed, when the button is not currently selected
+   */
+  public AnimatedLevelButton(int x, int y, Image activeImage, Image inactiveImage) {
+    super(x, y, activeImage, inactiveImage);
   }
 }

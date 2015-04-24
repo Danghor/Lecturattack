@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * @author Andreas Geis
  */
-public class MainMenuState extends BasicGameState implements InputListener {
+class MainMenuState extends BasicGameState implements InputListener {
   private final int stateID;
   private StateBasedGame stateBasedGame;
   private Image background;
@@ -26,7 +26,7 @@ public class MainMenuState extends BasicGameState implements InputListener {
    * Constructor for MainMenuState
    * Set the ID of this state to the given stateID
    *
-   * @param stateID
+   * @param stateID The stateID to be set.
    */
   public MainMenuState(int stateID) {
     this.stateID = stateID;
@@ -42,7 +42,6 @@ public class MainMenuState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = FileHandler.loadImage("backgroundMenu");
     logo = FileHandler.loadImage("logo");
-    FileHandler.getSystem();
     FileHandler.getLastLevelNumber();
     menuButton = new AnimatedMenuButton[3];
     int lastLevelNumber = FileHandler.getLastLevelNumber();
@@ -94,11 +93,11 @@ public class MainMenuState extends BasicGameState implements InputListener {
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection == 0) {
         int lastLevelNumber = FileHandler.getLastLevelNumber();
-        ((GameState) stateBasedGame.getState(Lecturattack.GAMESTATE)).loadLevel(lastLevelNumber);
-        stateBasedGame.enterState(Lecturattack.GAMESTATE);
+        ((GameState) stateBasedGame.getState(Lecturattack.GAME_STATE)).loadLevel(lastLevelNumber);
+        stateBasedGame.enterState(Lecturattack.GAME_STATE);
       }
       if (currentSelection == 1) {
-        stateBasedGame.enterState(Lecturattack.LEVELSELECTSTATE);
+        stateBasedGame.enterState(Lecturattack.LEVELSELECT_STATE);
       }
       if (currentSelection == 2) {
         System.exit(0);

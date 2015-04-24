@@ -11,6 +11,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.List;
 
 /**
@@ -20,13 +22,44 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
-  private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",}; // TODO
-  // add
-  // LevelFiles
+  public static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
+  public static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
+  private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
-  // todo: create folder "Coffee Productions" in appdata/roaming
+  private static final String GAME_FOLDER = "CoffeeProductions";
+  private static final String GAME_NAME = "\\Lecturattack.txt";
   private static String LAST_LEVEL_FILE_PATH = "";
-  private static int lastLevelNumber = -1;
+
+
+  static {
+    // This sets the file path according to the used system
+    String sysName = System.getProperty("os.name");
+    String saveDirectory = new String();
+    if (sysName.contains("Windows")) {
+      saveDirectory = System.getProperty("user.home") + "\\AppData\\Roaming\\" + GAME_FOLDER;
+    } else if (sysName.contains("Linux")) {
+      saveDirectory = System.getenv("APPDATA") + GAME_FOLDER;
+    } else if (sysName.contains("Mac")) {
+      saveDirectory = "~/Documents/Saved Games/" + GAME_FOLDER;
+    }
+    LAST_LEVEL_FILE_PATH = saveDirectory + GAME_NAME;
+    boolean success = false;
+    if (!Files.exists(FileSystems.getDefault().getPath(saveDirectory))) {
+      // create the directory if it doesn't exist
+      success = new File(saveDirectory).mkdir();
+    }
+    //create the savegame if it doesn't exist
+    if (success) {
+      File saveGame = new File(LAST_LEVEL_FILE_PATH);
+      if (!saveGame.exists()) {
+        try {
+          saveGame.createNewFile();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
   /**
    * This method loads the target.xml as a config for the TargetMeta instances
@@ -113,79 +146,57 @@ public class FileHandler {
   }
 
   /**
-   * @return
+   * @return The number of the latest unlocked level retrieved from the save-file.
    */
   public static int getLastLevelNumber() {
-    if (lastLevelNumber == -1) {
-      lastLevelNumber = getLastLevelFromFile();
+    int returnedLevelNumber = 1;
+
+    File file = new File(LAST_LEVEL_FILE_PATH);
+    if (file.exists() && !file.isDirectory()) {
+      FileReader fileReader;
+      BufferedReader bufferedReader;
+      try {
+        fileReader = new FileReader(LAST_LEVEL_FILE_PATH);
+        bufferedReader = new BufferedReader(fileReader);
+        // read lines in file
+        String lastLevelNumber;
+        lastLevelNumber = bufferedReader.readLine();
+        returnedLevelNumber = Integer.parseInt(lastLevelNumber);
+        fileReader.close();
+      } catch (IOException e) {
+        System.out.println(ERROR_WHEN_TRYING_TO_READ_FILE + LAST_LEVEL_FILE_PATH);
+        System.out.println(e.toString());
+        returnedLevelNumber = 1;
+      } catch (NumberFormatException e) {
+        returnedLevelNumber = 1;
+      }
     }
-    return lastLevelNumber;
+
+    return returnedLevelNumber;
   }
 
   /**
    * @param level the new last level
    */
-  public static void setLastLevelNumber(int level) {
-    if (level > lastLevelNumber) {
-      lastLevelNumber = level;
-      try {
-        String text = Integer.toString(lastLevelNumber);
-        BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-        out.write(text);
-        out.close();
-      } catch (IOException e) {
-        System.out.println("Error while writing in text file");
-      }
-    }
-  }
-
-  private static int getLastLevelFromFile() {
-    File f = new File(LAST_LEVEL_FILE_PATH);
-    if (f.exists() && !f.isDirectory()) {
-      FileReader fr;
-      BufferedReader br;
-      try {
-        fr = new FileReader(LAST_LEVEL_FILE_PATH);
-        br = new BufferedReader(fr);
-        // read lines in file
-        String text;
-        text = br.readLine();
-        lastLevelNumber = Integer.parseInt(text);
-        fr.close();
-      } catch (IOException e) {
-        System.out.println("Error when trying to read file " + LAST_LEVEL_FILE_PATH);
-        System.out.println(e.toString());
-      }
-    } else {
-      lastLevelNumber = 1;
-    }
-    return lastLevelNumber;
-  }
-
-  public static void resetLastLevelNumber() {
-    lastLevelNumber = 1;
+  public static void setLastUnlockedLevel(int level) {
     try {
+      String lastLevelNumber = Integer.toString(level);
       BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
       out.write(lastLevelNumber);
       out.close();
     } catch (IOException e) {
-      System.out.println("Error while writing in text file");
+      System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE + ": " + LAST_LEVEL_FILE_PATH);
     }
   }
 
   /**
-   * This method sets the file path according to the used system
+   * This method resets the current game progress by setting the last unlocked level to 1.
+   * This is used if the user wishes to start all over again.
    */
-  public static void getSystem() {
-    String sysName = System.getProperty("os.name");
-    if (sysName.contains("Windows")) {
-      LAST_LEVEL_FILE_PATH = System.getProperty("user.home") + "\\AppData\\Roaming\\Lecturattack.txt";
-    } else if (sysName.contains("Linux")) {
-      LAST_LEVEL_FILE_PATH = System.getenv("APPDATA") + "/Lecturattack.txt";
-    } else if (sysName.contains("Mac")) {
-      LAST_LEVEL_FILE_PATH = "~/Documents/Saved Games/GAMENAME/Lecturattack.txt";
-    }
+  public static void resetGameProgress() {
+    setLastUnlockedLevel(1);
   }
+
 
   public static Image loadImage(String fileName) {
     Image image = null;
