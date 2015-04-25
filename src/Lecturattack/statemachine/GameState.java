@@ -107,7 +107,7 @@ public class GameState extends BasicGameState implements InputListener {
 
       //reset player if an enemy has been hit
       if (deadTargets.size() > currentAmountOfDeadTargets) {
-        resetPlayer();
+        initiateNextThrow();
       }
 
     } catch (IllegalArgumentException e) {
@@ -159,21 +159,23 @@ public class GameState extends BasicGameState implements InputListener {
    */
   private void initiateNextThrow() {
     // check if there are no more enemies alive
-    boolean enemiesAlive = false;
+    boolean enemiesOnScreen = false;
+
     for (Target target : level.getTargets()) {
       if (target.getType() == TargetType.ENEMY) {
-        enemiesAlive = true;
+        enemiesOnScreen = true;
       }
     }
+
     projectile = null;
-    if (!enemiesAlive) {
+
+    if (!enemiesOnScreen) {
       gameStatus = GameStatus.LEVEL_WON;
       saveGameProgress();
     } else if (score <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
       resetPlayer();
-      randomizeWind();
     }
   }
 
@@ -256,9 +258,7 @@ public class GameState extends BasicGameState implements InputListener {
     randomizeWind();
 
     projectile = null;
-    randomizeWind();
 
-    scoreField = new InformationField(10, 25, "Score: ");
     // set a starting score
     scoreField = new InformationField(10, 25, "Score: ");
     score = 100;
