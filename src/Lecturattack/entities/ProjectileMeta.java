@@ -78,10 +78,6 @@ public class ProjectileMeta extends MetaObject {
     return destroys;
   }
 
-  ArrayList<TargetType> getDestroyableTargetTypes() {
-    return destroys;
-  }
-
   Image getImage() {
     //copying is necessary for rotating, otherwise instances could not be rotated individually
     return image.copy();
