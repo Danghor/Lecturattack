@@ -10,7 +10,7 @@
         <positionX>1027</positionX>
         <positionY>575</positionY>
         <type>STUDENT</type>
-        <positioning>VERTICAL</positioning>
+        <positioning/>
     </levelElements>
     <levelElements>
         <positionX>1004</positionX>
@@ -28,7 +28,7 @@
         <positionX>1027</positionX>
         <positionY>426</positionY>
         <type>STUDENT</type>
-        <positioning>VERTICAL</positioning>
+        <positioning/>
     </levelElements>
     <levelElements>
         <positionX>980</positionX>
