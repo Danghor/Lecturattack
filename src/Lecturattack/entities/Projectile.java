@@ -62,8 +62,8 @@ public class Projectile extends RigidBody {
     return metaObject.getDestroys();
   }
 
-  public void invertRotation() {
-    angularVelocity = -angularVelocity;
+  public void invertRotation(float scaling) {
+    angularVelocity = -(angularVelocity * scaling);
   }
 
   private float getAngle() {
@@ -83,7 +83,7 @@ public class Projectile extends RigidBody {
   @Override
   public void reflect(RigidBody partner) {
     super.reflect(partner);
-    invertRotation();
+    invertRotation(RigidBody.BOUNCINESS);
   }
 
 }

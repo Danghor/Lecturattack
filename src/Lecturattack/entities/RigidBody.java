@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public abstract class RigidBody implements Renderable {
-  private static final float DAMPING = 0.8f;
+  static final float BOUNCINESS = 0.8f;
   private static final String CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT = "This RigidBody does not consist of any vertices.";
 
   final ArrayList<EnhancedVector> vertices;
@@ -153,7 +153,7 @@ public abstract class RigidBody implements Renderable {
       float ny = perpendicularToTarget.getY();
 
       linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
-      linearVelocity.scale(DAMPING);
+      linearVelocity.scale(BOUNCINESS);
 
       while (this.collidesWith(partner)) {
         EnhancedVector direction = (EnhancedVector) this.getCenter().sub(partner.getCenter());

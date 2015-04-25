@@ -3,10 +3,8 @@ package Lecturattack.entities;/*
  */
 
 import Lecturattack.entities.types.TargetType;
-import Lecturattack.utilities.EnhancedVector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -41,13 +39,13 @@ public class Target extends RigidBody {
 
     //TODO remove if not needed anymore
     // This shows the hitbox of the targets
-    Polygon poly = new Polygon();
+    /*Polygon poly = new Polygon();
     for (EnhancedVector point : vertices) {
       poly.addPoint(point.getX(), point.getY());
     }
     graphics.draw(poly);
 
-    graphics.drawRect(getCenter().getX(), getCenter().getY(), 5, 5);
+    graphics.drawRect(getCenter().getX(), getCenter().getY(), 5, 5);*/
   }
 
   public float hit(Projectile projectile) {
