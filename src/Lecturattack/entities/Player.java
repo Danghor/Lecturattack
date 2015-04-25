@@ -48,9 +48,9 @@ public class Player implements Renderable {
   private float animationAngle;  //the angle that the player has to move his arm for the animation (in degree)
   //TODO enum
   private boolean returnProjectile = false;  //defines if player can return projectile or not
-  private boolean moveArmBack = false;  //the flag if the player hast tomov his arm back to throw
-  private boolean moveArmForward;// flag if arm for animation is at most "bback" position
-  private static long throwStart;
+  private boolean moveArmBack = false;  //the flag if the player has to move his arm back to throw
+  private boolean moveArmForward;// flag if arm for animation cannot be moved any further back
+  private long throwStart;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     playerPosition = new Point(0, 0);
@@ -66,11 +66,11 @@ public class Player implements Renderable {
 
   /**
    * this method is called to update the arm animation
-   * it can be called every calcuation step because it is handled intern when the animation is viable
+   * it can be called every calculation step because it is handled intern when the animation is viable
    */
   public void updateArmAnimation() {
     if (moveArmBack) {
-      // the arm is moved back to -200 decree
+      // the arm is moved back to -200 degrees
       if (directionAngle - animationAngle > -200) {
         // the speed of the arm back animation is based on the selected force + a fixed value
         // when the selected force is really low
@@ -130,8 +130,6 @@ public class Player implements Renderable {
   /**
    * lock the current Selection (setAngle or setPower) and increment the
    * playerState do nothing if the player already threw the projectile
-   *
-   * @return projectile
    */
   public final void throwProjectile() {
     if (playerState == PlayerState.ANGLE_SELECTION) {
@@ -204,15 +202,15 @@ public class Player implements Renderable {
     return playerState;
   }
 
-public static long getThrowStart() {
-	return throwStart;
-}
+  public long getThrowStart() {
+    return throwStart;
+  }
 
-public void setThrowStart(long throwStart2) {
-	Player.throwStart = throwStart2;
-}
+  public void setThrowStart(long throwStart) {
+    this.throwStart = throwStart;
+  }
 
-public enum PlayerState {
+  public enum PlayerState {
     ANGLE_SELECTION, POWER_SLIDER, ANIMATION, THROWING
   }
 

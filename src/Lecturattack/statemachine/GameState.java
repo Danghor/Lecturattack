@@ -24,6 +24,8 @@ import java.util.List;
 
 public class GameState extends BasicGameState implements InputListener {
   private static final int MAX_LEVEL = 6;
+  private static final int MAX_THROW_DURATION_IN_SECONDS = 7;
+
   private final int stateID;
   private StateBasedGame stateBasedGame;//TODO find another way
   private int currentLevel;
@@ -87,11 +89,9 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     if (projectile != null) {
-      if (projectile.isUnreachable() || ((System.currentTimeMillis()-Player.getThrowStart())>=10000)) {
+      if (projectile.isUnreachable() || ((System.currentTimeMillis() - getCurrentPlayer().getThrowStart()) >= MAX_THROW_DURATION_IN_SECONDS * 1000)) {
         initiateNextThrow();
-        
       }
-      
     }
     getCurrentPlayer().updateArmAnimation();
 
