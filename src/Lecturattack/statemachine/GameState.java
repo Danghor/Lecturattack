@@ -83,7 +83,7 @@ public class GameState extends BasicGameState implements InputListener {
     currentPlayerIndex = 0;
     setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
 
-    flag = new Flag();
+    flag = new Flag(gameContainer.getWidth()/2,10);
   }
 
   @Override
