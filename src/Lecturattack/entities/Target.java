@@ -23,6 +23,11 @@ public class Target extends RigidBody {
   }
 
   @Override
+  public String toString() {
+    return metaObject.getType().toString();
+  }
+
+  @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     /**
      * The image is being rendered if:
@@ -42,7 +47,7 @@ public class Target extends RigidBody {
     }
     graphics.draw(poly);
 
-    graphics.drawRect(getCenter().x, getCenter().y, 5, 5);
+    graphics.drawRect(getCenter().getX(), getCenter().getY(), 5, 5);
   }
 
   public float hit(Projectile projectile) {

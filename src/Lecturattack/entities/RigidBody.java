@@ -40,9 +40,9 @@ public abstract class RigidBody implements Renderable {
   public void update(float scaledDelta) {
     EnhancedVector acceleration;
 
-    acceleration = new EnhancedVector(force.x / getMass(), force.y / getMass());
+    acceleration = new EnhancedVector(force.getX() / getMass(), force.getY() / getMass());
     linearVelocity.add(acceleration.scale(scaledDelta));
-    move(new EnhancedVector(linearVelocity.x * scaledDelta, linearVelocity.y * scaledDelta));
+    move(new EnhancedVector(linearVelocity.getX() * scaledDelta, linearVelocity.getY() * scaledDelta));
 
     force = new EnhancedVector(0f, 0f);
   }
@@ -61,7 +61,7 @@ public abstract class RigidBody implements Renderable {
       EnhancedVector toCenter = getCenter();
       toCenter.sub(vertex);
       toCenter.normalise();
-      thisPolygon.addPoint(vertex.x - toCenter.x, vertex.y - toCenter.y);
+      thisPolygon.addPoint(vertex.getX() - toCenter.getX(), vertex.getY() - toCenter.getY());
     }
 
     ArrayList<Line> partnerLines = new ArrayList<>();
@@ -71,10 +71,10 @@ public abstract class RigidBody implements Renderable {
     int partnerSize = pv.size();
 
     for (int i = 0; i < partnerSize - 1; i++) {
-      partnerLines.add(new Line(pv.get(i).x, pv.get(i).y, pv.get(i + 1).x, pv.get(i + 1).y));
+      partnerLines.add(new Line(pv.get(i).getX(), pv.get(i).getY(), pv.get(i + 1).getX(), pv.get(i + 1).getY()));
     }
 
-    partnerLines.add(new Line(pv.get(partnerSize - 1).x, pv.get(partnerSize - 1).y, pv.get(0).x, pv.get(0).y));
+    partnerLines.add(new Line(pv.get(partnerSize - 1).getX(), pv.get(partnerSize - 1).getY(), pv.get(0).getX(), pv.get(0).getY()));
 
     ArrayList<Line> potentialCollisionLines = new ArrayList<>(); //lines to be in question for collision response
 
@@ -110,8 +110,8 @@ public abstract class RigidBody implements Renderable {
           while (thisPolygon.contains(currentPoint)) {
             int previousSize = penetrationSizes.get(currentSizeArrayIndex);
             penetrationSizes.set(currentSizeArrayIndex, previousSize + 1);
-            currentPoint.setX(currentPoint.getX() + direction.x);
-            currentPoint.setY(currentPoint.getY() + direction.y);
+            currentPoint.setX(currentPoint.getX() + direction.getX());
+            currentPoint.setY(currentPoint.getY() + direction.getY());
           }
         }
       }
@@ -134,21 +134,21 @@ public abstract class RigidBody implements Renderable {
       perpendicularToTarget.normalise();
 
       EnhancedVector intersectionTestVector = (EnhancedVector) startPoint.sub(perpendicularToTarget);
-      Point intersectionTestPoint = new Point(intersectionTestVector.x, intersectionTestVector.y);
+      Point intersectionTestPoint = new Point(intersectionTestVector.getX(), intersectionTestVector.getY());
       Polygon partnerPolygon = new Polygon();
 
       for (EnhancedVector vertex : partner.vertices) {
-        partnerPolygon.addPoint(vertex.x, vertex.y);
+        partnerPolygon.addPoint(vertex.getX(), vertex.getY());
       }
 
       if (partnerPolygon.contains(intersectionTestPoint)) {
         perpendicularToTarget.negateLocal();
       }
 
-      float dx = linearVelocity.x;
-      float dy = linearVelocity.y;
-      float nx = perpendicularToTarget.x;
-      float ny = perpendicularToTarget.y;
+      float dx = linearVelocity.getX();
+      float dy = linearVelocity.getY();
+      float nx = perpendicularToTarget.getX();
+      float ny = perpendicularToTarget.getY();
 
       linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
       linearVelocity.scale(DAMPING);
@@ -169,11 +169,11 @@ public abstract class RigidBody implements Renderable {
     Polygon polygon2 = new Polygon();
 
     for (EnhancedVector vertex : vertices) {
-      polygon1.addPoint(vertex.x, vertex.y);
+      polygon1.addPoint(vertex.getX(), vertex.getY());
     }
 
     for (EnhancedVector vertex : partner.vertices) {
-      polygon2.addPoint(vertex.x, vertex.y);
+      polygon2.addPoint(vertex.getX(), vertex.getY());
     }
 
     return polygon1.intersects(polygon2);
@@ -207,15 +207,15 @@ public abstract class RigidBody implements Renderable {
 
     for (int i = 0; i < n - 1; i++) {
       //use appendix to slightly speed up calculation
-      appendix = (vertices.get(i).x * vertices.get(i + 1).y - vertices.get(i + 1).x * vertices.get(i).y);
-      centerXSum += (vertices.get(i).x + vertices.get(i + 1).x) * appendix;
-      centerYSum += (vertices.get(i).y + vertices.get(i + 1).y) * appendix;
+      appendix = (vertices.get(i).getX() * vertices.get(i + 1).getY() - vertices.get(i + 1).getX() * vertices.get(i).getY());
+      centerXSum += (vertices.get(i).getX() + vertices.get(i + 1).getX()) * appendix;
+      centerYSum += (vertices.get(i).getY() + vertices.get(i + 1).getY()) * appendix;
     }
 
     //Xn, Yn is to be assumed the same as X0, Y0
-    appendix = (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
-    centerXSum += (vertices.get(n - 1).x + vertices.get(0).x) * appendix;
-    centerYSum += (vertices.get(n - 1).y + vertices.get(0).y) * appendix;
+    appendix = (vertices.get(n - 1).getX() * vertices.get(0).getY() - vertices.get(0).getX() * vertices.get(n - 1).getY());
+    centerXSum += (vertices.get(n - 1).getX() + vertices.get(0).getX()) * appendix;
+    centerYSum += (vertices.get(n - 1).getY() + vertices.get(0).getY()) * appendix;
 
     prefix = (1d / (6 * area));
 
@@ -239,11 +239,11 @@ public abstract class RigidBody implements Renderable {
     int n = vertices.size(); //number of vertices in the polygon
 
     for (int i = 0; i < n - 1; i++) {
-      areaSum += (vertices.get(i).x * vertices.get(i + 1).y - vertices.get(i + 1).x * vertices.get(i).y);
+      areaSum += (vertices.get(i).getX() * vertices.get(i + 1).getY() - vertices.get(i + 1).getX() * vertices.get(i).getY());
     }
 
     //Xn, Yn are to be assumed the same as X0, Y0
-    areaSum += (vertices.get(n - 1).x * vertices.get(0).y - vertices.get(0).x * vertices.get(n - 1).y);
+    areaSum += (vertices.get(n - 1).getX() * vertices.get(0).getY() - vertices.get(0).getX() * vertices.get(n - 1).getY());
 
     area = 0.5 * Math.abs(areaSum);
     return area;
@@ -253,11 +253,11 @@ public abstract class RigidBody implements Renderable {
     if (vertices.size() < 1) {
       throw new IllegalStateException("This RigidBody does not consist of any vertices.");
     } else {
-      float biggestX = vertices.get(0).x;
+      float biggestX = vertices.get(0).getX();
 
       for (EnhancedVector vertex : vertices) {
-        if (vertex.x > biggestX) {
-          biggestX = vertex.x;
+        if (vertex.getX() > biggestX) {
+          biggestX = vertex.getX();
         }
       }
 
@@ -269,11 +269,11 @@ public abstract class RigidBody implements Renderable {
     if (vertices.size() < 1) {
       throw new IllegalStateException("This RigidBody does not consist of any vertices.");
     } else {
-      float biggestY = vertices.get(0).y;
+      float biggestY = vertices.get(0).getY();
 
       for (EnhancedVector vertex : vertices) {
-        if (vertex.y > biggestY) {
-          biggestY = vertex.y;
+        if (vertex.getY() > biggestY) {
+          biggestY = vertex.getY();
         }
       }
 
@@ -290,11 +290,11 @@ public abstract class RigidBody implements Renderable {
     if (vertices.size() < 1) {
       throw new IllegalStateException("This RigidBody does not consist of any vertices.");
     } else {
-      float smallestY = vertices.get(0).y;
+      float smallestY = vertices.get(0).getY();
 
       for (EnhancedVector vertex : vertices) {
-        if (vertex.y < smallestY) {
-          smallestY = vertex.y;
+        if (vertex.getY() < smallestY) {
+          smallestY = vertex.getY();
         }
       }
 
@@ -309,16 +309,31 @@ public abstract class RigidBody implements Renderable {
     if (vertices.size() < 1) {
       throw new IllegalStateException("This RigidBody does not consist of any vertices.");
     } else {
-      float smallestX = vertices.get(0).x;
+      float smallestX = vertices.get(0).getX();
 
       for (EnhancedVector vertex : vertices) {
-        if (vertex.x < smallestX) {
-          smallestX = vertex.x;
+        if (vertex.getX() < smallestX) {
+          smallestX = vertex.getX();
         }
       }
 
       return smallestX;
     }
+  }
+
+  /**
+   * @return A new EnhancedVector object representing the top right corner of this body.
+   */
+  public EnhancedVector getPosition() {
+    EnhancedVector returnedVector;
+
+    try {
+      returnedVector = new EnhancedVector(vertices.get(0).getX(), vertices.get(0).getY());
+    } catch (NullPointerException ex) {
+      throw new IllegalStateException("This body does not contain any vertices.");
+    }
+
+    return returnedVector;
   }
 
   public void setCenterPosition(float x, float y) {

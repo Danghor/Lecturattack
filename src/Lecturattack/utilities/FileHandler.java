@@ -22,8 +22,8 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
-  public static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
-  public static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
+  private static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
+  private static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   private static final String GAME_FOLDER = "CoffeeProductions";
@@ -34,7 +34,8 @@ public class FileHandler {
   static {
     // This sets the file path according to the used system
     String sysName = System.getProperty("os.name");
-    String saveDirectory = new String();
+    String saveDirectory = "";
+
     if (sysName.contains("Windows")) {
       saveDirectory = System.getProperty("user.home") + "\\AppData\\Roaming\\" + GAME_FOLDER;
     } else if (sysName.contains("Linux")) {
@@ -43,16 +44,19 @@ public class FileHandler {
       saveDirectory = "~/Documents/Saved Games/" + GAME_FOLDER;
     }
     LAST_LEVEL_FILE_PATH = saveDirectory + GAME_NAME;
+
     boolean success = false;
     if (!Files.exists(FileSystems.getDefault().getPath(saveDirectory))) {
       // create the directory if it doesn't exist
       success = new File(saveDirectory).mkdir();
     }
+
     //create the savegame if it doesn't exist
     if (success) {
       File saveGame = new File(LAST_LEVEL_FILE_PATH);
       if (!saveGame.exists()) {
         try {
+          //noinspection ResultOfMethodCallIgnored
           saveGame.createNewFile();
         } catch (IOException e) {
           e.printStackTrace();
@@ -204,6 +208,7 @@ public class FileHandler {
       image = new Image("resources/images/" + fileName + ".png");
     } catch (SlickException e) {
       System.out.println("Error while loading image:" + fileName);
+      e.printStackTrace();
     }
     return image;
   }

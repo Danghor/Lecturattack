@@ -22,7 +22,6 @@ import java.util.List;
  */
 
 public class GameState extends BasicGameState implements InputListener {
-  private static final int DEGREE_ARM_MOVE = 1;
   private static final int MAX_LEVEL = 6;
   private final int stateID;
   private StateBasedGame stateBasedGame;//TODO find another way
@@ -40,9 +39,12 @@ public class GameState extends BasicGameState implements InputListener {
   private int score;
   private float wind;
   private GameStatus gameStatus;
-  // a list of all Targets that have been hit and are not part of the game
-  // anymore, but are still falling out of the frame and therefore have to
-  // be rendered
+
+  /**
+   * a list of all Targets that have been hit and are not part of the game
+   * anymore, but are still falling out of the frame and therefore have to
+   * be rendered
+   */
   private ArrayList<Target> deadTargets;
 
   /**
@@ -62,17 +64,21 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
+
     background = FileHandler.loadImage("background");
     victory = FileHandler.loadImage("victory");
     defeat = FileHandler.loadImage("defeat");
+
     deadTargets = new ArrayList<>();
     players = new ArrayList<>();
+
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
     currentPlayerIndex = 0;
     setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
+
     flag = new Flag();
   }
 
@@ -84,14 +90,23 @@ public class GameState extends BasicGameState implements InputListener {
       }
     }
     getCurrentPlayer().updateArmAnimation();
+
     Projectile checkProjectile = getCurrentPlayer().getProjectile();//TODO comment
     if (checkProjectile != null) {
       this.projectile = checkProjectile;
       score -= 10;
     }
+
     changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
-    score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+
+    try {
+      score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+    } catch (IllegalArgumentException e) {
+      System.out.print(e.getMessage());
+      System.out.println(" Delta: " + delta);
+    }
+
     scoreField.setDynamicText(Integer.toString(score));
     getCurrentPlayer().updatePowerSlider(delta);
   }
@@ -108,14 +123,15 @@ public class GameState extends BasicGameState implements InputListener {
     }
     /**
      * Render projectile here, if the player doesn't have it
-     * If the player has the projectile, it's null
      */
     if (projectile != null) {
       projectile.render(gameContainer, stateBasedGame, graphics);
     }
+
     scoreField.render(gameContainer, stateBasedGame, graphics);
     playerName.render(gameContainer, stateBasedGame, graphics);
     flag.render(gameContainer, stateBasedGame, graphics);
+
     if (gameStatus == GameStatus.LEVEL_WON) {
       // draw the images centered
       graphics.drawImage(victory, (Lecturattack.WIDTH - victory.getWidth()) / 2, 91);
@@ -171,17 +187,21 @@ public class GameState extends BasicGameState implements InputListener {
   public void keyPressed(int key, char c) {
     switch (key) {
       case Input.KEY_SPACE:
-        if (gameStatus == GameStatus.PLAYING) {
-          getCurrentPlayer().throwProjectile();
-        } else if (gameStatus == GameStatus.LEVEL_WON) {
-          if (currentLevel < MAX_LEVEL) {
-            currentLevel++;
-            loadLevel(currentLevel);
-          } else {
-            stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
-          }
-        } else if (gameStatus == GameStatus.LEVEL_LOST) {
-          loadLevel(currentLevel);
+        switch (gameStatus) {
+          case PLAYING:
+            getCurrentPlayer().throwProjectile();
+            break;
+          case LEVEL_WON:
+            if (currentLevel < MAX_LEVEL) {
+              currentLevel++;
+              resetLevel();
+            } else {
+              stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
+            }
+            break;
+          case LEVEL_LOST:
+            resetLevel();
+            break;
         }
         break;
       case Input.KEY_ESCAPE:
@@ -239,7 +259,7 @@ public class GameState extends BasicGameState implements InputListener {
    * to reset the level it is only necessary to load the current level again
    */
   private void resetLevel() {
-    loadLevel(getCurrentLevel());
+    loadLevel(currentLevel);
   }
 
   private void selectNextPlayer() {
@@ -271,10 +291,6 @@ public class GameState extends BasicGameState implements InputListener {
    */
   private void randomizeWind() {
     wind = (float) ((Math.random() * 6) % 3 - 1.5); //todo: in config file
-  }
-
-  private int getCurrentLevel() {
-    return currentLevel;
   }
 
   private void setCurrentLevel(int currentLevel) {
