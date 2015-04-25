@@ -156,6 +156,7 @@ public class GameState extends BasicGameState implements InputListener {
   private void resetPlayer() {
     projectile = null;
     getCurrentPlayer().reset();
+    randomizeWind();
   }
 
   @Override
