@@ -107,11 +107,10 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
-   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
-  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException {
+  public static LevelData getLevelData(int levelNumber) throws IllegalArgumentException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
       file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
@@ -127,7 +126,7 @@ public class FileHandler {
     } catch (JAXBException e) {
       e.printStackTrace();
     }
-    return level.getLevelElements();
+    return level;
   }
 
   /**

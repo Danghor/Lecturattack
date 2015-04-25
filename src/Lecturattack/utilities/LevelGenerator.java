@@ -3,6 +3,7 @@ package Lecturattack.utilities;
 import Lecturattack.entities.Target;
 import Lecturattack.entities.TargetMeta;
 import Lecturattack.entities.types.TargetType;
+import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
@@ -18,16 +19,15 @@ public class LevelGenerator {
   /**
    * Creates a level for the given LevelElements
    *
-   * @param levelElements all elements in the level, these objects are the loaded XMLobjects
-   *
+   * @param levelData all elements in the level, these objects are the loaded XMLobjects, the score
    * @return a Level object, which holds the information about the entire level
    */
-  public static Level getGeneratedLevel(List<LevelElement> levelElements) {
+  public static Level getGeneratedLevel(LevelData levelData) {
     float playerPositionX = 0f;
     float playerPositionY = 0f;
     ArrayList<Target> targets = new ArrayList<>();
 
-    for (LevelElement levelElement : levelElements) {
+    for (LevelElement levelElement : levelData.getLevelElements()) {
 
       if (levelElement.getType() == XmlObjectType.PLAYER) { //Player
 
@@ -63,6 +63,6 @@ public class LevelGenerator {
       }
 
     }
-    return new Level(targets, playerPositionX, playerPositionY);
+    return new Level(targets, playerPositionX, playerPositionY, levelData.getScore());
   }
 }
