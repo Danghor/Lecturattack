@@ -42,6 +42,9 @@ public class GameState extends BasicGameState implements InputListener {
   private float wind;
   private GameStatus gameStatus;
 
+
+  FileHandler fileHandler = new FileHandler();
+
   /**
    * a list of all Targets that have been hit and are not part of the game
    * anymore, but are still falling out of the frame and therefore have to
@@ -69,14 +72,14 @@ public class GameState extends BasicGameState implements InputListener {
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
 
-    background = FileHandler.loadImage("background");
-    victory = FileHandler.loadImage("victory");
-    defeat = FileHandler.loadImage("defeat");
+    background = fileHandler.loadImage("background");
+    victory = fileHandler.loadImage("victory");
+    defeat = fileHandler.loadImage("defeat");
 
     deadTargets = new ArrayList<>();
     players = new ArrayList<>();
 
-    List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
+    List<PlayerStandard> playerStandards = fileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
     }
@@ -201,7 +204,7 @@ public class GameState extends BasicGameState implements InputListener {
    * If not, nothing happens; i.e. if the next level was already unlocked, the game progress is not overwritten.
    */
   private void saveGameProgress() {
-    int savedProgress = FileHandler.getLastLevelNumber();
+    int savedProgress = fileHandler.getLastLevelNumber();
     if (currentLevel < MAX_LEVEL && savedProgress <= currentLevel) { //<=, because the file saves the last unlocked level
       FileHandler.setLastUnlockedLevel(currentLevel + 1);
     }
@@ -263,7 +266,7 @@ public class GameState extends BasicGameState implements InputListener {
   public void loadLevel(int level) {
     setCurrentLevel(level);
     // every time a level is loaded the player have to be returned to their original state and their position is set for every level
-    LevelData levelData = FileHandler.getLevelData(level);
+    LevelData levelData = fileHandler.getLevelData(level);
     this.level = LevelGenerator.getGeneratedLevel(levelData);
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());

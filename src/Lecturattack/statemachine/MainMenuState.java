@@ -21,6 +21,7 @@ class MainMenuState extends BasicGameState implements InputListener {
   // this boolean indicates, if the "Spiel starten" button has be set to
   // "Spiel fortsetzen" already
   private boolean continueGameButton;
+  private FileHandler fileHandler = new FileHandler();
 
   /**
    * Constructor for MainMenuState
@@ -40,36 +41,36 @@ class MainMenuState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    background = FileHandler.loadImage("backgroundMenu");
-    logo = FileHandler.loadImage("logo");
-    FileHandler.getLastLevelNumber();
+    background = fileHandler.loadImage("backgroundMenu");
+    logo = fileHandler.loadImage("logo");
+    fileHandler.getLastLevelNumber();//TODO return value not used
     menuButton = new AnimatedMenuButton[3];
-    int lastLevelNumber = FileHandler.getLastLevelNumber();
+    int lastLevelNumber = fileHandler.getLastLevelNumber();
     if (lastLevelNumber > 1) {
-      menuButton[0] = new AnimatedMenuButton(245, 500, FileHandler.loadImage("continueGame_down"), FileHandler.loadImage("continueGame"));
+      menuButton[0] = new AnimatedMenuButton(245, 500, fileHandler.loadImage("continueGame_down"), fileHandler.loadImage("continueGame"));
       continueGameButton = true;
     } else {
-      menuButton[0] = new AnimatedMenuButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));
+      menuButton[0] = new AnimatedMenuButton(245, 500, fileHandler.loadImage("startGame_down"), fileHandler.loadImage("startGame"));
       continueGameButton = false;
     }
-    menuButton[1] = new AnimatedMenuButton(495, 500, FileHandler.loadImage("levelSelect_down"), FileHandler.loadImage("levelSelect"));
-    menuButton[2] = new AnimatedMenuButton(745, 500, FileHandler.loadImage("endGame_down"), FileHandler.loadImage("endGame"));
+    menuButton[1] = new AnimatedMenuButton(495, 500, fileHandler.loadImage("levelSelect_down"), fileHandler.loadImage("levelSelect"));
+    menuButton[2] = new AnimatedMenuButton(745, 500, fileHandler.loadImage("endGame_down"), fileHandler.loadImage("endGame"));
     currentSelection = 0;
   }
 
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    int lastLevelNumber = FileHandler.getLastLevelNumber();
+    int lastLevelNumber = fileHandler.getLastLevelNumber();
     if (continueGameButton) {
       // make sure to change the button back to "Spiel Starten", if the progress
       // is reset
       if (lastLevelNumber == 1) {
-        menuButton[0] = new AnimatedMenuButton(245, 500, FileHandler.loadImage("startGame_down"), FileHandler.loadImage("startGame"));
+        menuButton[0] = new AnimatedMenuButton(245, 500, fileHandler.loadImage("startGame_down"), fileHandler.loadImage("startGame"));
         continueGameButton = false;
       }
     } else {
       if (lastLevelNumber > 1) {
-        menuButton[0] = new AnimatedMenuButton(245, 500, FileHandler.loadImage("continueGame_down"), FileHandler.loadImage("continueGame"));
+        menuButton[0] = new AnimatedMenuButton(245, 500, fileHandler.loadImage("continueGame_down"), fileHandler.loadImage("continueGame"));
         continueGameButton = true;
       }
     }
@@ -92,7 +93,7 @@ class MainMenuState extends BasicGameState implements InputListener {
       }
     } else if (key == Input.KEY_ENTER) {
       if (currentSelection == 0) {
-        int lastLevelNumber = FileHandler.getLastLevelNumber();
+        int lastLevelNumber = fileHandler.getLastLevelNumber();
         ((GameState) stateBasedGame.getState(Lecturattack.GAME_STATE)).loadLevel(lastLevelNumber);
         stateBasedGame.enterState(Lecturattack.GAME_STATE);
       }

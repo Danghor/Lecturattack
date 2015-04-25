@@ -5,11 +5,14 @@ import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.ResourceLoader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.List;
@@ -24,7 +27,7 @@ public class FileHandler {
   private static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
   private static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
-  private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
+  private static final String BACKGROUND_MUSIC_PATH = "resources/sounds/bgMusic.wav";
   private static final String GAME_FOLDER = "CoffeeProductions";
   private static final String GAME_NAME = "\\Lecturattack.txt";
   private static final String LAST_LEVEL_FILE_PATH;
@@ -88,8 +91,9 @@ public class FileHandler {
    *
    * @return the loaded configs for the Projectiles
    */
-  public static List<ProjectileStandard> loadProjectileStandards() {
-    File file = new File("resources/config/projectile.xml");//TODO save in final var --> method for opening/vrating --> code dup
+  public List<ProjectileStandard> loadProjectileStandards() {
+    System.out.println(getClass().getResource("resources/config/projectile.xml").getPath());
+    File file = new File(getClass().getResource("resources/config/projectile.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     ProjectileConfig projectiles = null;
     try {
@@ -106,14 +110,13 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
-   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
-  public static LevelData getLevelData(int levelNumber) throws IllegalArgumentException {
+  public LevelData getLevelData(int levelNumber) throws IllegalArgumentException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
-      file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
+      file = new File(getClass().getResource(PATH_TO_LEVELS[levelNumber - 1]).getPath());//TODO mapping levelNumber to file
     } else {
       throw new IllegalArgumentException("The Level must be between 1 and 6");
     }
@@ -134,8 +137,8 @@ public class FileHandler {
    *
    * @return the loaded players objects which resemble the xml
    */
-  public static List<PlayerStandard> getPlayerData() {
-    File file = new File("resources/config/player.xml");//TODO save in final var --> method for opening/vrating --> code dup
+  public List<PlayerStandard> getPlayerData() {
+    File file = new File(getClass().getResource("resources/config/player.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     PlayerConfig players = null;
     try {
@@ -151,9 +154,8 @@ public class FileHandler {
   /**
    * @return The number of the latest unlocked level retrieved from the save-file.
    */
-  public static int getLastLevelNumber() {
+  public int getLastLevelNumber() {
     int returnedLevelNumber = 1;
-
     File file = new File(LAST_LEVEL_FILE_PATH);
     if (file.exists() && !file.isDirectory()) {
       FileReader fileReader;
@@ -201,9 +203,10 @@ public class FileHandler {
   }
 
 
-  public static Image loadImage(String fileName) {
+  public Image loadImage(String fileName) {
     Image image = null;
     try {
+      System.out.println(getClass().getResource("resources/images/" + fileName + ".png").getPath());
       image = new Image("resources/images/" + fileName + ".png");
     } catch (SlickException e) {
       System.out.println("Error while loading image:" + fileName);
@@ -212,14 +215,14 @@ public class FileHandler {
     return image;
   }
 
-  public static Music getBackgroundMusic() {
-    Music bgMusic = null;
-    try {
-      bgMusic = new Music(BACKGROUND_MUSIC_PATH);
-    } catch (SlickException e) {
-      System.out.println("Could not process file " + BACKGROUND_MUSIC_PATH);
-      e.printStackTrace();
-    }
-    return bgMusic;
-  }
+//  public Music getBackgroundMusic() {
+//    Music bgMusic = null;
+//    try {
+//      //bgMusic = new Music(getClass().getResourceAsStream(BACKGROUND_MUSIC_PATH),"background"); TODO
+//    } catch (SlickException e) {
+//      System.out.println("Could not process file " + BACKGROUND_MUSIC_PATH);
+//      e.printStackTrace();
+//    }
+//    return bgMusic;
+//  }
 }

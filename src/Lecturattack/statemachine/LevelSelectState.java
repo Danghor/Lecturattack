@@ -27,6 +27,7 @@ class LevelSelectState extends BasicGameState implements InputListener {
   private int currentSelection;
   private float previousWidth;
   private Color previousColor;
+  private FileHandler fileHandler = new FileHandler();
 
   /**
    * Constructor for LevelSelectState
@@ -46,20 +47,20 @@ class LevelSelectState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    background = FileHandler.loadImage("backgroundMenu");
+    background = fileHandler.loadImage("backgroundMenu");
     menuButtons = new AnimatedButton[8];
     // initialize the LevelSelectButtons
     // menuButtons[0] - menuButtons[5] contains buttons, to start the according levels
     // menuButtons[6] contains the "Zurück"-Button, which goes back to the main menu
     // menuButtons[7] contains the button to reset the player progress
-    menuButtons[0] = new AnimatedLevelButton(150, 150, FileHandler.loadImage("level1"), FileHandler.loadImage("level1_locked"));
-    menuButtons[1] = new AnimatedLevelButton(489, 150, FileHandler.loadImage("level2"), FileHandler.loadImage("level2_locked"));
-    menuButtons[2] = new AnimatedLevelButton(828, 150, FileHandler.loadImage("level3"), FileHandler.loadImage("level3_locked"));
-    menuButtons[3] = new AnimatedLevelButton(150, 350, FileHandler.loadImage("level4"), FileHandler.loadImage("level4_locked"));
-    menuButtons[4] = new AnimatedLevelButton(489, 350, FileHandler.loadImage("level5"), FileHandler.loadImage("level5_locked"));
-    menuButtons[5] = new AnimatedLevelButton(828, 350, FileHandler.loadImage("level6"), FileHandler.loadImage("level6_locked"));
-    menuButtons[6] = new AnimatedMenuButton(150, 600, FileHandler.loadImage("back_down"), FileHandler.loadImage("back"));
-    menuButtons[7] = new AnimatedMenuButton(888, 600, FileHandler.loadImage("reset_down"), FileHandler.loadImage("reset"));
+    menuButtons[0] = new AnimatedLevelButton(150, 150, fileHandler.loadImage("level1"), fileHandler.loadImage("level1_locked"));
+    menuButtons[1] = new AnimatedLevelButton(489, 150, fileHandler.loadImage("level2"), fileHandler.loadImage("level2_locked"));
+    menuButtons[2] = new AnimatedLevelButton(828, 150, fileHandler.loadImage("level3"), fileHandler.loadImage("level3_locked"));
+    menuButtons[3] = new AnimatedLevelButton(150, 350, fileHandler.loadImage("level4"), fileHandler.loadImage("level4_locked"));
+    menuButtons[4] = new AnimatedLevelButton(489, 350, fileHandler.loadImage("level5"), fileHandler.loadImage("level5_locked"));
+    menuButtons[5] = new AnimatedLevelButton(828, 350, fileHandler.loadImage("level6"), fileHandler.loadImage("level6_locked"));
+    menuButtons[6] = new AnimatedMenuButton(150, 600, fileHandler.loadImage("back_down"), fileHandler.loadImage("back"));
+    menuButtons[7] = new AnimatedMenuButton(888, 600, fileHandler.loadImage("reset_down"), fileHandler.loadImage("reset"));
   }
 
   @Override
@@ -94,7 +95,7 @@ class LevelSelectState extends BasicGameState implements InputListener {
 
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-    int lastLevelNumber = FileHandler.getLastLevelNumber();
+    int lastLevelNumber = fileHandler.getLastLevelNumber();
     // the player starts on the "Zurueck"-Button, when entering the level select
     currentSelection = BUTTON_BACK;
     // initialize the level select with the current player progress
@@ -150,7 +151,7 @@ class LevelSelectState extends BasicGameState implements InputListener {
       } else if (currentSelection == BUTTON_BACK) {
         stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
       } else if (currentSelection == BUTTON_RESETPROGRESS) {
-        FileHandler.resetGameProgress();
+        fileHandler.resetGameProgress();
         for (int i = 1; i <= 5; i++) {
           menuButtons[i].setInactive();
         }

@@ -24,8 +24,9 @@ public class PowerSlider implements Renderable {
    * Constructor for PowerSlider
    */
   public PowerSlider() {
-    powerslide = FileHandler.loadImage("powerslide");
-    powerslideLine = FileHandler.loadImage("powerslideLine");
+    FileHandler fileHandler = new FileHandler();
+    powerslide = fileHandler.loadImage("powerslide");
+    powerslideLine = fileHandler.loadImage("powerslideLine");
   }
 
   /**
