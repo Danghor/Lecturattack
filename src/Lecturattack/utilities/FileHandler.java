@@ -2,7 +2,6 @@ package Lecturattack.utilities;
 
 import Lecturattack.utilities.xmlHandling.configLoading.*;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
-import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -107,6 +106,7 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
+   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */

@@ -54,7 +54,7 @@ public class PowerSlider implements Renderable {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     graphics.drawImage(powerslide, 10, 380);//TODO.andreas constants for the position
-    graphics.drawImage(powerslideLine, 10 + selectedForce, 368);
+    graphics.drawImage(powerslideLine, 10 + powerslide.getWidth() * selectedForce / MAX_FORCE, 368);
   }
 
   /**

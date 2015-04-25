@@ -8,7 +8,6 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
-import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -102,10 +101,18 @@ public class GameState extends BasicGameState implements InputListener {
     changeThrowingAngleWithUserInput(gameContainer);
     flag.setWindScale(wind);
 
+    int currentAmountOfDeadTargets = deadTargets.size();
+
 
     try {
       //the physics engine returns the additional score for every update
       level.addScore(PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel()));
+
+      //reset player if an enemy has been hit
+      if (deadTargets.size() > currentAmountOfDeadTargets) {
+        initiateNextThrow();
+      }
+
     } catch (IllegalArgumentException e) {
       System.out.print(e.getMessage());
       System.out.println(" Delta: " + delta);
@@ -144,6 +151,11 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
+  private void resetPlayer() {
+    projectile = null;
+    getCurrentPlayer().reset();
+  }
+
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     previousColor = gameContainer.getGraphics().getColor();
@@ -162,21 +174,23 @@ public class GameState extends BasicGameState implements InputListener {
    */
   private void initiateNextThrow() {
     // check if there are no more enemies alive
-    boolean enemiesAlive = false;
+    boolean enemiesOnScreen = false;
+
     for (Target target : level.getTargets()) {
       if (target.getType() == TargetType.ENEMY) {
-        enemiesAlive = true;
+        enemiesOnScreen = true;
       }
     }
+
     projectile = null;
-    if (!enemiesAlive) {
+
+    if (!enemiesOnScreen) {
       gameStatus = GameStatus.LEVEL_WON;
       saveGameProgress();
     } else if (level.getScore() <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
-      getCurrentPlayer().reset();
-      randomizeWind();
+      resetPlayer();
     }
   }
 
@@ -234,7 +248,7 @@ public class GameState extends BasicGameState implements InputListener {
         }
         break;
       case Input.KEY_R:
-        getCurrentPlayer().reset();
+        resetPlayer();
         break;
     }
   }
@@ -259,9 +273,7 @@ public class GameState extends BasicGameState implements InputListener {
     randomizeWind();
 
     projectile = null;
-    randomizeWind();
 
-    scoreField = new InformationField(10, 25, "Score: ");
     // set a starting score
     scoreField = new InformationField(10, 25, "Score: ");
     playerName = new InformationField(10, 0, "Dozent: ");
@@ -304,7 +316,7 @@ public class GameState extends BasicGameState implements InputListener {
    * generate a random wind
    */
   private void randomizeWind() {
-    wind = (float) ((Math.random() * 6) % 3 - 1.5); //todo: in config file
+    wind = (float) ((Math.random() * 6) % 2 - 1); //todo: in config file
   }
 
   private void setCurrentLevel(int currentLevel) {

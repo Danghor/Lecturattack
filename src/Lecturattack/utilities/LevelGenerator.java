@@ -9,7 +9,6 @@ import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -20,6 +19,7 @@ public class LevelGenerator {
    * Creates a level for the given LevelElements
    *
    * @param levelData all elements in the level, these objects are the loaded XMLobjects, the score
+   *
    * @return a Level object, which holds the information about the entire level
    */
   public static Level getGeneratedLevel(LevelData levelData) {
