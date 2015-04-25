@@ -2,7 +2,6 @@ package Lecturattack.utilities;
 
 import Lecturattack.utilities.xmlHandling.configLoading.*;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
-import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -111,7 +110,7 @@ public class FileHandler {
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
-  public static List<LevelElement> getLevelData(int levelNumber) throws IllegalArgumentException {
+  public static LevelData getLevelData(int levelNumber) throws IllegalArgumentException {
     File file;
     if (levelNumber >= 1 && levelNumber <= 6) {
       file = new File(PATH_TO_LEVELS[levelNumber - 1]);//TODO mapping levelNumber to file
@@ -127,7 +126,7 @@ public class FileHandler {
     } catch (JAXBException e) {
       e.printStackTrace();
     }
-    return level.getLevelElements();
+    return level;
   }
 
   /**

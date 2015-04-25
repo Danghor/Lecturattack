@@ -7,7 +7,7 @@ import Lecturattack.utilities.Level;
 import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
-import Lecturattack.utilities.xmlHandling.levelLoading.LevelElement;
+import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -36,7 +36,6 @@ public class GameState extends BasicGameState implements InputListener {
   private Image background;
   private Image victory;
   private Image defeat;
-  private int score;
   private float wind;
   private GameStatus gameStatus;
 
@@ -46,6 +45,8 @@ public class GameState extends BasicGameState implements InputListener {
    * be rendered
    */
   private ArrayList<Target> deadTargets;
+
+  private Color previousColor;//this saves the previous global line color to returned back to default on state leave
 
   /**
    * Set the ID of this state to the given stateID
@@ -94,7 +95,7 @@ public class GameState extends BasicGameState implements InputListener {
     Projectile checkProjectile = getCurrentPlayer().getProjectile();//TODO comment
     if (checkProjectile != null) {
       this.projectile = checkProjectile;
-      score -= 10;
+      level.reduceScore(10);
     }
 
     changeThrowingAngleWithUserInput(gameContainer);
@@ -102,8 +103,10 @@ public class GameState extends BasicGameState implements InputListener {
 
     int currentAmountOfDeadTargets = deadTargets.size();
 
+
     try {
-      score += PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel());
+      //the physics engine returns the additional score for every update
+      level.addScore(PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel()));
 
       //reset player if an enemy has been hit
       if (deadTargets.size() > currentAmountOfDeadTargets) {
@@ -115,7 +118,7 @@ public class GameState extends BasicGameState implements InputListener {
       System.out.println(" Delta: " + delta);
     }
 
-    scoreField.setDynamicText(Integer.toString(score));
+    scoreField.setDynamicText(Integer.toString(level.getScore()));
     getCurrentPlayer().updatePowerSlider(delta);
   }
 
@@ -153,6 +156,18 @@ public class GameState extends BasicGameState implements InputListener {
     getCurrentPlayer().reset();
   }
 
+  @Override
+  public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    previousColor = gameContainer.getGraphics().getColor();
+    gameContainer.getGraphics().setColor(Color.black);
+
+  }
+
+  @Override
+  public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+    container.getGraphics().setColor(previousColor);
+  }
+
   /**
    * This method is called, when the projectile is not moving anymore
    * and the previous turn is over
@@ -172,7 +187,7 @@ public class GameState extends BasicGameState implements InputListener {
     if (!enemiesOnScreen) {
       gameStatus = GameStatus.LEVEL_WON;
       saveGameProgress();
-    } else if (score <= 0) {
+    } else if (level.getScore() <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
     } else {
       resetPlayer();
@@ -246,8 +261,8 @@ public class GameState extends BasicGameState implements InputListener {
   public void loadLevel(int level) {
     setCurrentLevel(level);
     // every time a level is loaded the player have to be returned to their original state and their position is set for every level
-    List<LevelElement> levelElements = FileHandler.getLevelData(level);
-    this.level = LevelGenerator.getGeneratedLevel(levelElements);
+    LevelData levelData = FileHandler.getLevelData(level);
+    this.level = LevelGenerator.getGeneratedLevel(levelData);
     for (Player player : players) {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
@@ -261,7 +276,6 @@ public class GameState extends BasicGameState implements InputListener {
 
     // set a starting score
     scoreField = new InformationField(10, 25, "Score: ");
-    score = 100;
     playerName = new InformationField(10, 0, "Dozent: ");
     playerName.setDynamicText(getCurrentPlayer().getName());
     gameStatus = GameStatus.PLAYING;
@@ -283,7 +297,6 @@ public class GameState extends BasicGameState implements InputListener {
     } else {
       currentPlayerIndex++;
     }
-
     getCurrentPlayer().setAngle(previousAngle);
     playerName.setDynamicText(getCurrentPlayer().getName());
   }

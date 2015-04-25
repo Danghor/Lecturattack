@@ -17,7 +17,8 @@ import java.util.List;
 public class LevelData {
   //this class is a wrapping class, which holds multiple LevelObjects,
   //this is needed because JAXP can only return a single object when unmarshalling, not a list of objects
-  private int id;
+  private int score;
+
   private List<LevelElement> levelElements = new ArrayList<LevelElement>() {
   };
 
@@ -29,12 +30,12 @@ public class LevelData {
   }
 
   @XmlAttribute
-  public int getId() {
-    return id;
+  public int getScore() {
+    return score;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setScore(int score) {
+    this.score = score;
   }
 
   @XmlElement
