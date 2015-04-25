@@ -19,6 +19,7 @@ import java.util.List;
  * @author Tim Adamek
  * @author Andreas Geis
  * @author Nick Steyer
+ * @author Laura Hillenbrand
  */
 
 public class GameState extends BasicGameState implements InputListener {

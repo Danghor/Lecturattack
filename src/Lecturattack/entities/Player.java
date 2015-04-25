@@ -14,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Tim Adamek
  * @author Nick Steyer
  * @author Andreas Geis
+ * @author Stefanie Raschke
  */
 public class Player implements Renderable {
 
