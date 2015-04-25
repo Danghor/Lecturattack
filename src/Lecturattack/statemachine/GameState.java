@@ -269,12 +269,12 @@ public class GameState extends BasicGameState implements InputListener {
       player.setPosition(this.level.getPlayerPositionX(), this.level.getPlayerPositionY());
       player.reset();
     }
+
     // when a new level is loaded the player holds the projectile, so it has to be null in the gamestate
     projectile = null;
+
     // generate a start wind
     randomizeWind();
-
-    projectile = null;
 
     // set a starting score
     scoreField = new InformationField(10, 25, "Score: ");
