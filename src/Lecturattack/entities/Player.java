@@ -49,6 +49,7 @@ public class Player implements Renderable {
   private boolean returnProjectile = false;  //defines if player can return projectile or not
   private boolean moveArmBack = false;  //the flag if the player hast tomov his arm back to throw
   private boolean moveArmForward;// flag if arm for animation is at most "bback" position
+  private static long throwStart;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
     playerPosition = new Point(0, 0);
@@ -85,7 +86,8 @@ public class Player implements Renderable {
         animationAngle -= powerSlider.getSelectedForce() / 50 + 2;
       } else if (animationAngle <= 0) {
         moveArmForward = false; // animation finished
-        returnProjectile = true; //projectile can now be returned because animation finished
+        returnProjectile = true;//projectile can now be returned because animation finished
+        setThrowStart(System.currentTimeMillis());
         playerState = PlayerState.THROWING;
       }
     }
@@ -201,7 +203,15 @@ public class Player implements Renderable {
     return playerState;
   }
 
-  public enum PlayerState {
+public static long getThrowStart() {
+	return throwStart;
+}
+
+public void setThrowStart(long throwStart2) {
+	Player.throwStart = throwStart2;
+}
+
+public enum PlayerState {
     ANGLE_SELECTION, POWER_SLIDER, ANIMATION, THROWING
   }
 

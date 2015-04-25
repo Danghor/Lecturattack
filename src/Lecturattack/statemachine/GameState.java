@@ -85,9 +85,11 @@ public class GameState extends BasicGameState implements InputListener {
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     if (projectile != null) {
-      if (projectile.isUnreachable()) {
+      if (projectile.isUnreachable() || ((System.currentTimeMillis()-Player.getThrowStart())>=10000)) {
         initiateNextThrow();
+        
       }
+      
     }
     getCurrentPlayer().updateArmAnimation();
 
