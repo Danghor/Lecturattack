@@ -206,7 +206,7 @@ public class Player implements Renderable {
     return throwStart;
   }
 
-  public void setThrowStart(long throwStart) {
+  private void setThrowStart(long throwStart) {
     this.throwStart = throwStart;
   }
 

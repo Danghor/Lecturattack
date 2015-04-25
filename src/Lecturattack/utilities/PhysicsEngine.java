@@ -127,7 +127,7 @@ public class PhysicsEngine {
     if (projectile.getBiggestY() >= groundLevel) {
       projectile.move(new EnhancedVector(0f, groundLevel - projectile.getBiggestY()));
       projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().getX() * GROUND_BOUNCINESS, -projectile.getLinearVelocity().getY() * GROUND_BOUNCINESS));
-      projectile.invertRotation();
+      projectile.invertRotation(GROUND_BOUNCINESS);
     }
   }
 

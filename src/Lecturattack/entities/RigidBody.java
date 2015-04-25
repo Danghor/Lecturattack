@@ -14,7 +14,9 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public abstract class RigidBody implements Renderable {
-  private static final float DAMPING = 0.8f;
+  static final float BOUNCINESS = 0.8f;
+  private static final String CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT = "This RigidBody does not consist of any vertices.";
+
   final ArrayList<EnhancedVector> vertices;
   private final double area; //area is not expected to change
   private EnhancedVector linearVelocity;
@@ -51,7 +53,7 @@ public abstract class RigidBody implements Renderable {
    * This method will reflect the linearVelocity of this object on the given partner body, i.e. it will "rebounce" this object on the side of the partner.
    * This method only works if the two bodies do indeed collide.
    *
-   * @param partner The RigidBody this object is colliding with.
+   * @param partner The RigidBody this object is colliding with each other.
    */
   void reflect(RigidBody partner) {
     Line intersectingLine = null;
@@ -151,7 +153,7 @@ public abstract class RigidBody implements Renderable {
       float ny = perpendicularToTarget.getY();
 
       linearVelocity = new EnhancedVector(dx - 2 * nx * (dx * nx + dy * ny), dy - 2 * ny * (dx * nx + dy * ny));
-      linearVelocity.scale(DAMPING);
+      linearVelocity.scale(BOUNCINESS);
 
       while (this.collidesWith(partner)) {
         EnhancedVector direction = (EnhancedVector) this.getCenter().sub(partner.getCenter());
@@ -194,7 +196,7 @@ public abstract class RigidBody implements Renderable {
    *
    * @return An EnhancedVector object representing the center point.
    */
-  public EnhancedVector getCenter() {
+  EnhancedVector getCenter() {
     int n = vertices.size(); //number of vertices on the polygon
     double centerXSum = 0; //the summation part of calculating the x-axis of the center
     double centerYSum = 0;
@@ -225,8 +227,6 @@ public abstract class RigidBody implements Renderable {
     return new EnhancedVector(centerX, centerY);
   }
 
-  //todo: fix, sometimes a negative area is calculated
-
   /**
    * This method is only executed once in order to calculate and save the area of this object.
    *
@@ -251,7 +251,7 @@ public abstract class RigidBody implements Renderable {
 
   private float getBiggestX() {
     if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+      throw new IllegalStateException(CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT);
     } else {
       float biggestX = vertices.get(0).getX();
 
@@ -267,7 +267,7 @@ public abstract class RigidBody implements Renderable {
 
   public float getBiggestY() {
     if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+      throw new IllegalStateException(CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT);
     } else {
       float biggestY = vertices.get(0).getY();
 
@@ -288,7 +288,7 @@ public abstract class RigidBody implements Renderable {
    */
   float getSmallestY() {
     if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+      throw new IllegalStateException(CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT);
     } else {
       float smallestY = vertices.get(0).getY();
 
@@ -307,7 +307,7 @@ public abstract class RigidBody implements Renderable {
    */
   float getSmallestX() {
     if (vertices.size() < 1) {
-      throw new IllegalStateException("This RigidBody does not consist of any vertices.");
+      throw new IllegalStateException(CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT);
     } else {
       float smallestX = vertices.get(0).getX();
 
@@ -330,7 +330,7 @@ public abstract class RigidBody implements Renderable {
     try {
       returnedVector = new EnhancedVector(vertices.get(0).getX(), vertices.get(0).getY());
     } catch (NullPointerException ex) {
-      throw new IllegalStateException("This body does not contain any vertices.");
+      throw new IllegalStateException(CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT);
     }
 
     return returnedVector;
@@ -346,7 +346,7 @@ public abstract class RigidBody implements Renderable {
   }
 
   /**
-   * Determines whether or not this object is outside of the visible frame, except for the top.
+   * Determines whether or not this object is outside of the visible frame and therefore cannot be reached anymore, except for the top.
    * The top is ignored, since the Object will eventually fall down again.
    *
    * @return A boolean value indicating whether or not the current object flew out of the frame sideways or down.
