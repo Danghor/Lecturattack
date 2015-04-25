@@ -110,15 +110,14 @@ public class GameState extends BasicGameState implements InputListener {
     try {
       //the physics engine returns the additional score for every update
       level.addScore(PhysicsEngine.calculateStep(projectile, level.getTargets(), deadTargets, wind, delta, level.getGroundLevel()));
-
-      //reset player if an enemy has been hit
-      if (deadTargets.size() > currentAmountOfDeadTargets) {
-        initiateNextThrow();
-      }
-
     } catch (IllegalArgumentException e) {
       System.out.print(e.getMessage());
       System.out.println(" Delta: " + delta);
+    }
+
+    //reset player if an enemy has been hit
+    if (deadTargets.size() > currentAmountOfDeadTargets) {
+      initiateNextThrow();
     }
 
     scoreField.setDynamicText(Integer.toString(level.getScore()));

@@ -194,7 +194,7 @@ public abstract class RigidBody implements Renderable {
    *
    * @return An EnhancedVector object representing the center point.
    */
-  public EnhancedVector getCenter() {
+  EnhancedVector getCenter() {
     int n = vertices.size(); //number of vertices on the polygon
     double centerXSum = 0; //the summation part of calculating the x-axis of the center
     double centerYSum = 0;

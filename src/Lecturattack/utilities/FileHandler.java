@@ -27,7 +27,7 @@ public class FileHandler {
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
   private static final String GAME_FOLDER = "CoffeeProductions";
   private static final String GAME_NAME = "\\Lecturattack.txt";
-  private static String LAST_LEVEL_FILE_PATH = "";
+  private static final String LAST_LEVEL_FILE_PATH;
 
 
   static {
