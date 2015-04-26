@@ -1,6 +1,24 @@
 package Lecturattack.statemachine;
 
-import Lecturattack.entities.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
+import Lecturattack.entities.Flag;
+import Lecturattack.entities.InformationField;
+import Lecturattack.entities.Player;
+import Lecturattack.entities.Projectile;
+import Lecturattack.entities.Target;
 import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.Level;
@@ -8,12 +26,6 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Tim Adamek
@@ -39,8 +51,12 @@ public class GameState extends BasicGameState implements InputListener {
   private Image background;
   private Image victory;
   private Image defeat;
+  private Sound victorySound;
+  private Sound defeatSound;
   private float wind;
   private GameStatus gameStatus;
+  // this indicates, if a player sound already played in this turn
+  private boolean playerSoundPlayed;
 
   /**
    * a list of all Targets that have been hit and are not part of the game
@@ -72,13 +88,15 @@ public class GameState extends BasicGameState implements InputListener {
     background = FileHandler.loadImage("background");
     victory = FileHandler.loadImage("victory");
     defeat = FileHandler.loadImage("defeat");
+    victorySound = FileHandler.loadSound("victory");
+    defeatSound = FileHandler.loadSound("defeat");
 
     deadTargets = new ArrayList<>();
     players = new ArrayList<>();
 
     List<PlayerStandard> playerStandards = FileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
-      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
+      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName(), meta.getSoundAsSound()));
     }
     currentPlayerIndex = 0;
     setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
@@ -162,7 +180,7 @@ public class GameState extends BasicGameState implements InputListener {
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     previousColor = gameContainer.getGraphics().getColor();
     gameContainer.getGraphics().setColor(Color.black);
-
+    playerSoundPlayed = false;
   }
 
   @Override
@@ -188,9 +206,11 @@ public class GameState extends BasicGameState implements InputListener {
 
     if (!enemiesOnScreen) {
       gameStatus = GameStatus.LEVEL_WON;
+      victorySound.play();
       saveGameProgress();
     } else if (level.getScore() <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
+      defeatSound.play();
     } else {
       resetPlayer();
     }
@@ -235,6 +255,7 @@ public class GameState extends BasicGameState implements InputListener {
             resetLevel();
             break;
         }
+        playerSoundPlayed = false;
         break;
       case Input.KEY_ESCAPE:
         stateBasedGame.enterState(Lecturattack.PAUSE_STATE);
@@ -300,6 +321,7 @@ public class GameState extends BasicGameState implements InputListener {
       currentPlayerIndex++;
     }
     getCurrentPlayer().setAngle(previousAngle);
+    playPlayerSound();
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
@@ -311,7 +333,15 @@ public class GameState extends BasicGameState implements InputListener {
       currentPlayerIndex--;
     }
     getCurrentPlayer().setAngle(previousAngle);
+    playPlayerSound();
     playerName.setDynamicText(getCurrentPlayer().getName());
+  }
+  
+  private void playPlayerSound() {
+    if (!playerSoundPlayed){
+      getCurrentPlayer().playSound();
+      playerSoundPlayed = true;
+    }
   }
 
   /**

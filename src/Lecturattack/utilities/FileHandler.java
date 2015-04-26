@@ -1,18 +1,31 @@
 package Lecturattack.utilities;
 
-import Lecturattack.utilities.xmlHandling.configLoading.*;
-import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.util.List;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
+import Lecturattack.utilities.xmlHandling.configLoading.PlayerConfig;
+import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
+import Lecturattack.utilities.xmlHandling.configLoading.ProjectileConfig;
+import Lecturattack.utilities.xmlHandling.configLoading.ProjectileStandard;
+import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
+import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
+import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 
 /**
  * @author Tim Adamek
@@ -25,6 +38,7 @@ public class FileHandler {
   private static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
   private static final String BACKGROUND_MUSIC_PATH = "resources\\sounds\\bgMusic.wav";
+  private static final String PATH_TO_SOUNDS = "resources/sounds/";
   private static final String GAME_FOLDER = "CoffeeProductions";
   private static final String GAME_NAME = "\\Lecturattack.txt";
   private static final String LAST_LEVEL_FILE_PATH;
@@ -221,5 +235,16 @@ public class FileHandler {
       e.printStackTrace();
     }
     return bgMusic;
+  }
+  
+  public static Sound loadSound(String fileName){
+    Sound sound = null;
+    try {
+      sound = new Sound(PATH_TO_SOUNDS + fileName + ".wav");
+    } catch (SlickException e) {
+      System.out.println("Error while loading sound:" + fileName);
+      e.printStackTrace();
+    }
+    return sound;
   }
 }

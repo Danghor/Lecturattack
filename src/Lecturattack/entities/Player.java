@@ -7,6 +7,7 @@ package Lecturattack.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -43,6 +44,7 @@ public class Player implements Renderable {
   private final ProjectileMeta projectileMeta;
   private final String name;
   private Projectile projectile;
+  private Sound sound;
   private float directionAngle;
   private PlayerState playerState;
   private float animationAngle;  //the angle that the player has to move his arm for the animation (in degree)
@@ -52,7 +54,7 @@ public class Player implements Renderable {
   private boolean moveArmForward;// flag if arm for animation cannot be moved any further back
   private long throwStart;
 
-  public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name) {
+  public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name, Sound sound) {
     playerPosition = new Point(0, 0);
     handCenterPosition = new Point(0, 0);
     armImagePosition = new Point(0, 0);
@@ -60,6 +62,7 @@ public class Player implements Renderable {
     this.armImage = armImage;
     this.projectileMeta = projectileMeta;
     this.name = name;
+    this.sound = sound;
     this.powerSlider = new PowerSlider();
     reset();
   }
@@ -208,6 +211,10 @@ public class Player implements Renderable {
 
   private void setThrowStart(long throwStart) {
     this.throwStart = throwStart;
+  }
+  
+  public void playSound() {
+    sound.play();
   }
 
   public enum PlayerState {

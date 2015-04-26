@@ -1,11 +1,16 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
 import javax.xml.bind.annotation.XmlElement;
+
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Tim Adamek
+ * @author Andreas Geis
  */
 public class TargetStandard {
   //the objects of this class hold the information about the TargetMetaObjects, which is read from the configs
@@ -19,6 +24,7 @@ public class TargetStandard {
   private float mass;
   private float hitScore;
   private String soundPath;
+  private String sound;
 
   @XmlElement(name = "sound")
   public String getSoundPath() {
@@ -100,6 +106,15 @@ public class TargetStandard {
   public void setPositioning(String positioning) {
     this.positioning = positioning;
   }
+  
+  @XmlElement
+  public String getSound() {
+    return sound;
+  }
+
+  public void setSound(String sound) {
+    this.sound = sound;
+  }
 
   @XmlElement(name = "vertex")
   public List<XmlVertex> getVertices() {
@@ -108,6 +123,10 @@ public class TargetStandard {
 
   public void setVertices(List<XmlVertex> vertices) {
     this.vertices = vertices;
+  }
+  
+  public Sound getSoundAsSound() throws SlickException {
+    return new Sound(sound);
   }
 
   public ArrayList<float[]> getVerticesAsFloats() {
