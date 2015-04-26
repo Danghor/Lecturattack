@@ -8,6 +8,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.ResourceLoader;
 import org.newdawn.slick.Sound;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -25,6 +28,9 @@ import java.util.List;
  * @author Stefanie Raschke
  */
 public class FileHandler {
+  private static final String RESOURCES_CONFIG_PLAYER_XML = "/resources/config/player.xml";
+  private static final String RESOURCES_CONFIG_PROJECTILE_XML = "/resources/config/projectile.xml";
+  private static final String RESOURCES_CONFIG_TARGET_XML = "/resources/config/target.xml";
   private static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
   private static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static final String[] PATH_TO_LEVELS = new String[]{"/resources/level/Level1.xml", "/resources/level/Level2.xml", "/resources/level/Level3.xml", "/resources/level/Level4.xml", "/resources/level/Level5.xml", "/resources/level/Level6.xml",};
@@ -39,7 +45,6 @@ public class FileHandler {
     // This sets the file path according to the used system
     String sysName = System.getProperty("os.name");
     String saveDirectory = "";
-
     if (sysName.contains("Windows")) {
       saveDirectory = System.getProperty("user.home") + "\\AppData\\Roaming\\" + GAME_FOLDER;
     } else if (sysName.contains("Linux")) {
@@ -74,14 +79,14 @@ public class FileHandler {
    *
    * @return the loaded configs for the Targets
    */
-  public static List<TargetStandard> loadTargetConfig() {
-    File file = new File("resources/config/target.xml");//TODO save in final var --> method for opening/vrating --> code dup
+  public List<TargetStandard> loadTargetConfig() {
+    InputStream inputStream = getClass().getResourceAsStream(RESOURCES_CONFIG_TARGET_XML);
     JAXBContext jaxbContext;
     TargetConfig targets = null;
     try {
       jaxbContext = JAXBContext.newInstance(TargetConfig.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-      targets = (TargetConfig) jaxbUnmarshaller.unmarshal(file);
+      targets = (TargetConfig) jaxbUnmarshaller.unmarshal(inputStream);
     } catch (JAXBException e) {
       e.printStackTrace();
     }
@@ -94,14 +99,13 @@ public class FileHandler {
    * @return the loaded configs for the Projectiles
    */
   public List<ProjectileStandard> loadProjectileStandards() {
-    System.out.println(getClass().getResource("/resources/config/projectile.xml").getPath());
-    File file = new File(getClass().getResource("/resources/config/projectile.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
+    InputStream inputStream = getClass().getResourceAsStream(RESOURCES_CONFIG_PROJECTILE_XML);
     JAXBContext jaxbContext;
     ProjectileConfig projectiles = null;
     try {
       jaxbContext = JAXBContext.newInstance(ProjectileConfig.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-      projectiles = (ProjectileConfig) jaxbUnmarshaller.unmarshal(file);
+      projectiles = (ProjectileConfig) jaxbUnmarshaller.unmarshal(inputStream);
     } catch (JAXBException e) {
       e.printStackTrace();
     }
@@ -116,9 +120,9 @@ public class FileHandler {
    * @throws IllegalArgumentException
    */
   public LevelData getLevelData(int levelNumber) throws IllegalArgumentException {
-    File file;
+    InputStream inputStream;
     if (levelNumber >= 1 && levelNumber <= 6) {
-      file = new File(getClass().getResource(PATH_TO_LEVELS[levelNumber - 1]).getPath());//TODO mapping levelNumber to file
+      inputStream = getClass().getResourceAsStream(PATH_TO_LEVELS[levelNumber - 1]);
     } else {
       throw new IllegalArgumentException("The Level must be between 1 and 6");
     }
@@ -127,7 +131,7 @@ public class FileHandler {
     try {
       jaxbContext = JAXBContext.newInstance(LevelData.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-      level = (LevelData) jaxbUnmarshaller.unmarshal(file);
+      level = (LevelData) jaxbUnmarshaller.unmarshal(inputStream);
     } catch (JAXBException e) {
       e.printStackTrace();
     }
@@ -140,13 +144,13 @@ public class FileHandler {
    * @return the loaded players objects which resemble the xml
    */
   public List<PlayerStandard> getPlayerData() {
-    File file = new File(getClass().getResource("/resources/config/player.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
+    InputStream inputStream = getClass().getResourceAsStream(RESOURCES_CONFIG_PLAYER_XML);
     JAXBContext jaxbContext;
     PlayerConfig players = null;
     try {
       jaxbContext = JAXBContext.newInstance(PlayerConfig.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-      players = (PlayerConfig) jaxbUnmarshaller.unmarshal(file);
+      players = (PlayerConfig) jaxbUnmarshaller.unmarshal(inputStream);
     } catch (JAXBException e) {
       e.printStackTrace();
     }
@@ -208,9 +212,13 @@ public class FileHandler {
   public Image loadImage(String fileName) {
     Image image = null;
     try {
-      image = new Image("/resources/images/" + fileName + ".png");
+      InputStream inputStream = getClass().getResourceAsStream("/resources/images/" + fileName + ".png");
+      image = new Image(inputStream, fileName, false);
+      inputStream.close();
     } catch (SlickException e) {
       System.out.println("Error while loading image:" + fileName);
+      e.printStackTrace();
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return image;
@@ -228,13 +236,22 @@ public class FileHandler {
 //    return bgMusic;
 //  }
 //
-  public static Sound loadSound(String fileName) {
+  public Sound loadSound(String fileName) {
     Sound sound = null;
-    try {
-      sound = new Sound(PATH_TO_SOUNDS + fileName + ".wav");
-    } catch (SlickException e) {
-      System.out.println("Error while loading sound:" + fileName);
-      e.printStackTrace();
+    if (fileName != null) {
+      try {
+        InputStream inputStream = getClass().getResourceAsStream("/resources/sounds/" + fileName + ".wav");
+        //add buffer for mark/reset support
+        InputStream bufferedIn = new BufferedInputStream(inputStream);
+
+        sound = new Sound(bufferedIn, fileName + ".wav");
+        inputStream.close();
+      } catch (SlickException e) {
+        System.out.println("Error while loading sound:" + fileName);
+        e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     return sound;
   }

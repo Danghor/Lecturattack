@@ -2,6 +2,7 @@ package Lecturattack.utilities.xmlHandling.configLoading;
 
 import Lecturattack.entities.ProjectileMeta;
 import Lecturattack.entities.types.ProjectileType;
+import Lecturattack.utilities.FileHandler;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -74,7 +75,7 @@ public class PlayerStandard {
   }
 
   public Sound getSoundAsSound() throws SlickException {
-    return new Sound(sound);
+    return new FileHandler().loadSound(sound);
   }
 
   public ProjectileMeta getProjectileMeta() {

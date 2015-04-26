@@ -79,8 +79,8 @@ public class GameState extends BasicGameState implements InputListener {
     background = fileHandler.loadImage("background");
     victory = fileHandler.loadImage("victory");
     defeat = fileHandler.loadImage("defeat");
-    victorySound = FileHandler.loadSound("victory");
-    defeatSound = FileHandler.loadSound("defeat");
+    victorySound = fileHandler.loadSound("victory");
+    defeatSound = fileHandler.loadSound("defeat");
 
     deadTargets = new ArrayList<>();
     players = new ArrayList<>();

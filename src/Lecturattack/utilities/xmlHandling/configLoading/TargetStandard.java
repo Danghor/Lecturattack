@@ -1,5 +1,6 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
+import Lecturattack.utilities.FileHandler;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -133,17 +134,17 @@ public class TargetStandard {
     this.vertices = vertices;
   }
 
-
+  FileHandler fileHandler = new FileHandler();
   public Sound getSound1AsSound() throws SlickException {
-    return new Sound(soundPath1);
+    return fileHandler.loadSound(soundPath1);
   }
 
   public Sound getSound2AsSound() throws SlickException {
-    return new Sound(soundPath2);
+    return fileHandler.loadSound(soundPath2);
   }
 
   public Sound getSound3AsSound() throws SlickException {
-    return new Sound(soundPath3);
+    return fileHandler.loadSound(soundPath3);
   }
 
   public ArrayList<float[]> getVerticesAsFloats() {

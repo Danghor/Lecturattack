@@ -9,6 +9,7 @@ import Lecturattack.utilities.xmlHandling.levelLoading.Positioning;
 import Lecturattack.utilities.xmlHandling.levelLoading.XmlObjectType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**

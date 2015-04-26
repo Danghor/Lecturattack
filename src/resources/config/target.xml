@@ -25,9 +25,9 @@
         </vertex>
         <mass>10</mass>
         <hitScore>10</hitScore>
-        <sound1>resources/sounds/ram1.wav</sound1>
-        <sound2>resources/sounds/ram2.wav</sound2>
-        <sound3>resources/sounds/ram3.wav</sound3>
+        <sound1>ram1</sound1>
+        <sound2>ram2</sound2>
+        <sound3>ram3</sound3>
     </target>
     <target>
         <imageIntact>resources/images/RamQ.png</imageIntact>
@@ -54,9 +54,9 @@
         </vertex>
         <mass>10</mass>
         <hitScore>10</hitScore>
-        <sound1>resources/sounds/ram1.wav</sound1>
-        <sound2>resources/sounds/ram2.wav</sound2>
-        <sound3>resources/sounds/ram3.wav</sound3>
+        <sound1>ram1</sound1>
+        <sound2>ram2</sound2>
+        <sound3>ram3</sound3>
     </target>
     <target>
         <imageIntact>resources/images/JavaB.png</imageIntact>
@@ -83,9 +83,9 @@
         </vertex>
         <mass>20</mass>
         <hitScore>10</hitScore>
-        <sound1>resources/sounds/library1.wav</sound1>
-        <sound2>resources/sounds/library2.wav</sound2>
-        <sound3>resources/sounds/library3.wav</sound3>
+        <sound1>library1</sound1>
+        <sound2>library2</sound2>
+        <sound3>library3</sound3>
     </target>
     <target>
         <imageIntact>resources/images/JavaB2.png</imageIntact>
@@ -112,9 +112,9 @@
         </vertex>
         <mass>20</mass>
         <hitScore>10</hitScore>
-        <sound1>resources/sounds/library1.wav</sound1>
-        <sound2>resources/sounds/library2.wav</sound2>
-        <sound3>resources/sounds/library3.wav</sound3>
+        <sound1>library1</sound1>
+        <sound2>library2</sound2>
+        <sound3>library3</sound3>
     </target>
     <target>
         <imageIntact>resources/images/studentOk.png</imageIntact>
@@ -157,6 +157,6 @@
         </vertex>
         <mass>60</mass>
         <hitScore>100</hitScore>
-        <sound1>resources/sounds/exmatrikuliert.wav</sound1>
+        <sound1>exmatrikuliert</sound1>
     </target>
 </targets>
