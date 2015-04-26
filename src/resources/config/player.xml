@@ -5,20 +5,20 @@
         <imageBody>resources/images/Muse.png</imageBody>
         <imageArm>resources/images/MuseArm.png</imageArm>
         <projectile>POINTER</projectile>
-        <sound>resources/sounds/muse.wav</sound>
+        <sound>muse</sound>
     </player>
     <player>
         <name>Speedy</name>
         <imageBody>resources/images/Speedy.png</imageBody>
         <imageArm>resources/images/SpeedyArm.png</imageArm>
         <projectile>ROBOT</projectile>
-        <sound>resources/sounds/speedy.wav</sound>
+        <sound>speedy</sound>
     </player>
     <player>
         <name>Ströhtie</name>
         <imageBody>resources/images/Stroehtie.png</imageBody>
         <imageArm>resources/images/StroehtieArm.png</imageArm>
         <projectile>EXAM</projectile>
-        <sound>resources/sounds/stroehtie.wav</sound>
+        <sound>stroehtie</sound>
     </player>
 </players>

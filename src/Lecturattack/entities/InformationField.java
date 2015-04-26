@@ -44,6 +44,12 @@ public class InformationField implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    trueTypeFont.drawString(x, y, fixedText + dynamicText);
+    String stringToDraw;
+    if (dynamicText != null) {
+      stringToDraw = fixedText + dynamicText;
+    } else {
+      stringToDraw = fixedText;
+    }
+    trueTypeFont.drawString(x, y, stringToDraw);
   }
 }

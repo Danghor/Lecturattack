@@ -21,15 +21,15 @@ import java.util.List;
  * @author Andreas Geis
  */
 public class TargetMeta extends MetaObject {
-
+  private static HashMap<TargetType,TargetMeta> instances = new HashMap<>();
   /**
    * This method will initialize all TargetMeta objects so that they can be used later.
    * They are accessed using the public getInstance method together with the desired TargetType.
    */
   static {
     instances = new HashMap<>();
-
-    List<TargetStandard> targetStandards = FileHandler.loadTargetConfig();
+    FileHandler fileHandler = new FileHandler();
+    List<TargetStandard> targetStandards = fileHandler.loadTargetConfig();
 
     for (TargetStandard targetStandard : targetStandards) {
       ArrayList<Image> images = new ArrayList<>();
@@ -76,7 +76,7 @@ public class TargetMeta extends MetaObject {
         targetMeta.mass = targetStandard.getMass();
         instances.put(type, targetMeta);
       } catch (SlickException e) {
-
+        System.out.print(e);
       }
     }
   }

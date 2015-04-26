@@ -17,6 +17,7 @@ class PauseState extends BasicGameState implements InputListener {
   private Image background;
   private AnimatedMenuButton[] menuButton;
   private int currentSelection;
+  private FileHandler fileHandler = new FileHandler();
 
   public PauseState(int iStateID) {
     stateID = iStateID;
@@ -30,10 +31,10 @@ class PauseState extends BasicGameState implements InputListener {
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
-    background = FileHandler.loadImage("backgroundMenu");
+    background = fileHandler.loadImage("backgroundMenu");
     menuButton = new AnimatedMenuButton[2];
-    menuButton[0] = new AnimatedMenuButton(245, 500, FileHandler.loadImage("continue_down"), FileHandler.loadImage("continue"));
-    menuButton[1] = new AnimatedMenuButton(745, 500, FileHandler.loadImage("backToMenu_down"), FileHandler.loadImage("backToMenu"));
+    menuButton[0] = new AnimatedMenuButton(245, 500, fileHandler.loadImage("continue_down"), fileHandler.loadImage("continue"));
+    menuButton[1] = new AnimatedMenuButton(745, 500, fileHandler.loadImage("backToMenu_down"), fileHandler.loadImage("backToMenu"));
   }
 
   @Override
