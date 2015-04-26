@@ -27,7 +27,8 @@ public class GameState extends BasicGameState implements InputListener {
   private static final int MAX_THROW_DURATION_IN_SECONDS = 5;
 
   private final int stateID;
-  private StateBasedGame stateBasedGame;//TODO find another way
+  private final FileHandler fileHandler;
+  private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
   private int currentPlayerIndex;
@@ -45,10 +46,6 @@ public class GameState extends BasicGameState implements InputListener {
   private GameStatus gameStatus;
   // this indicates, if a player sound already played in this turn
   private boolean playerSoundPlayed;
-
-
-  FileHandler fileHandler = new FileHandler();
-
   /**
    * a list of all Targets that have been hit and are not part of the game
    * anymore, but are still falling out of the frame and therefore have to
@@ -65,6 +62,7 @@ public class GameState extends BasicGameState implements InputListener {
    */
   public GameState(int stateID) {
     this.stateID = stateID;
+    fileHandler = new FileHandler();
   }
 
   @Override
@@ -92,7 +90,7 @@ public class GameState extends BasicGameState implements InputListener {
     currentPlayerIndex = 0;
     setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
 
-    flag = new Flag(gameContainer.getWidth()/2,10);
+    flag = new Flag(gameContainer.getWidth() / 2, 10);
   }
 
   @Override

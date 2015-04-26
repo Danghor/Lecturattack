@@ -1,7 +1,6 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
 import Lecturattack.utilities.FileHandler;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -135,17 +134,17 @@ public class TargetStandard {
   }
 
 
-  public Sound getSound1AsSound() throws SlickException {
+  public Sound getSound1AsSound() {
     FileHandler fileHandler = new FileHandler();
     return fileHandler.loadSound(soundPath1);
   }
 
-  public Sound getSound2AsSound() throws SlickException {
+  public Sound getSound2AsSound() {
     FileHandler fileHandler = new FileHandler();
     return fileHandler.loadSound(soundPath2);
   }
 
-  public Sound getSound3AsSound() throws SlickException {
+  public Sound getSound3AsSound() {
     FileHandler fileHandler = new FileHandler();
     return fileHandler.loadSound(soundPath3);
   }

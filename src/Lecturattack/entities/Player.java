@@ -43,8 +43,8 @@ public class Player implements Renderable {
   private final Point armImagePosition;   //the top left of the arm image
   private final ProjectileMeta projectileMeta;
   private final String name;
+  private final Sound sound;
   private Projectile projectile;
-  private Sound sound;
   private float directionAngle;
   private PlayerState playerState;
   private float animationAngle;  //the angle that the player has to move his arm for the animation (in degree)

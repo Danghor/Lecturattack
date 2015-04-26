@@ -13,14 +13,15 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 class PauseState extends BasicGameState implements InputListener {
   private static int stateID;
+  private final FileHandler fileHandler;
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedMenuButton[] menuButton;
   private int currentSelection;
-  private FileHandler fileHandler = new FileHandler();
 
   public PauseState(int iStateID) {
     stateID = iStateID;
+    fileHandler = new FileHandler();
   }
 
   @Override

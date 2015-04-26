@@ -69,6 +69,28 @@ public class FileHandler {
   }
 
   /**
+   * @param level the new last level
+   */
+  public static void setLastUnlockedLevel(int level) {
+    try {
+      String lastLevelNumber = Integer.toString(level);
+      BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
+      out.write(lastLevelNumber);
+      out.close();
+    } catch (IOException e) {
+      System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE + ": " + LAST_LEVEL_FILE_PATH);
+    }
+  }
+
+  /**
+   * This method resets the current game progress by setting the last unlocked level to 1.
+   * This is used if the user wishes to start all over again.
+   */
+  public static void resetGameProgress() {
+    setLastUnlockedLevel(1);
+  }
+
+  /**
    * This method loads the target.xml as a config for the TargetMeta instances
    *
    * @return the loaded configs for the Targets
@@ -82,9 +104,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       targets = (TargetConfig) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return targets.getTargetStandards();
@@ -104,9 +124,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       projectiles = (ProjectileConfig) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return projectiles.getProjectileStandards();
@@ -116,6 +134,7 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
+   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
@@ -134,9 +153,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       level = (LevelData) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return level;
@@ -156,9 +173,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       players = (PlayerConfig) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return players.getPlayerStandards();
@@ -192,29 +207,6 @@ public class FileHandler {
 
     return returnedLevelNumber;
   }
-
-  /**
-   * @param level the new last level
-   */
-  public static void setLastUnlockedLevel(int level) {
-    try {
-      String lastLevelNumber = Integer.toString(level);
-      BufferedWriter out = new BufferedWriter(new FileWriter(LAST_LEVEL_FILE_PATH));
-      out.write(lastLevelNumber);
-      out.close();
-    } catch (IOException e) {
-      System.out.println(ERROR_WHILE_WRITING_IN_TEXT_FILE + ": " + LAST_LEVEL_FILE_PATH);
-    }
-  }
-
-  /**
-   * This method resets the current game progress by setting the last unlocked level to 1.
-   * This is used if the user wishes to start all over again.
-   */
-  public static void resetGameProgress() {
-    setLastUnlockedLevel(1);
-  }
-
 
   public Image loadImage(String fileName) {
     Image image = null;

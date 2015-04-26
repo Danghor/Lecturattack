@@ -42,7 +42,7 @@ public class Lecturattack extends StateBasedGame {
   }
 
   private static void startBackgroundMusic() {
-    FileHandler fh= new FileHandler();
+    FileHandler fh = new FileHandler();
     Music bgMusic = fh.getBackgroundMusic();
     bgMusic.loop(1f, 0.5f);
   }

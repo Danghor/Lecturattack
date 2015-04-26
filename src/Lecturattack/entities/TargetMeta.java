@@ -21,7 +21,8 @@ import java.util.List;
  * @author Andreas Geis
  */
 public class TargetMeta extends MetaObject {
-  private static HashMap<TargetType,TargetMeta> instances = new HashMap<>();
+  private static final HashMap<TargetType, TargetMeta> instances;
+
   /**
    * This method will initialize all TargetMeta objects so that they can be used later.
    * They are accessed using the public getInstance method together with the desired TargetType.
@@ -71,13 +72,9 @@ public class TargetMeta extends MetaObject {
 
       TargetMeta targetMeta;
       // TODO: better solution
-      try {
-        targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore(), targetStandard.getSound1AsSound());
-        targetMeta.mass = targetStandard.getMass();
-        instances.put(type, targetMeta);
-      } catch (SlickException e) {
-        System.out.print(e);
-      }
+      targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore(), targetStandard.getSound1AsSound());
+      targetMeta.mass = targetStandard.getMass();
+      instances.put(type, targetMeta);
     }
   }
 
@@ -85,7 +82,7 @@ public class TargetMeta extends MetaObject {
   private final float hitScore; //the score received when a target of this type gets hit
   private final ArrayList<Image> images;
   private final TargetType type;
-  private Sound sound;
+  private final Sound sound;
 
   private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline, float hitScore, Sound sound) {
     this.type = type;
@@ -97,7 +94,7 @@ public class TargetMeta extends MetaObject {
   }
 
   public static TargetMeta getInstance(TargetType type) {
-    return (TargetMeta) instances.get(type);
+    return instances.get(type);
   }
 
   public float getHitScore() {

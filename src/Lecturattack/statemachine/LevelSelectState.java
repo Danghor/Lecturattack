@@ -21,13 +21,13 @@ class LevelSelectState extends BasicGameState implements InputListener {
 
   @SuppressWarnings("FieldCanBeLocal")
   private final int BUTTON_RESETPROGRESS = 7;
+  private final FileHandler fileHandler;
   private StateBasedGame stateBasedGame;
   private Image background;
   private AnimatedButton[] menuButtons;
   private int currentSelection;
   private float previousWidth;
   private Color previousColor;
-  private FileHandler fileHandler = new FileHandler();
 
   /**
    * Constructor for LevelSelectState
@@ -37,6 +37,7 @@ class LevelSelectState extends BasicGameState implements InputListener {
    */
   public LevelSelectState(int stateID) {
     this.stateID = stateID;
+    fileHandler = new FileHandler();
   }
 
   @Override
@@ -151,7 +152,7 @@ class LevelSelectState extends BasicGameState implements InputListener {
       } else if (currentSelection == BUTTON_BACK) {
         stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
       } else if (currentSelection == BUTTON_RESETPROGRESS) {
-        fileHandler.resetGameProgress();
+        FileHandler.resetGameProgress();
         for (int i = 1; i <= 5; i++) {
           menuButtons[i].setInactive();
         }

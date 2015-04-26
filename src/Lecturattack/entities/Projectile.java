@@ -82,7 +82,12 @@ public class Projectile extends RigidBody {
 
   @Override
   public void reflect(RigidBody partner) {
-    super.reflect(partner);
+    try {
+      super.reflect(partner);
+    } catch (IllegalArgumentException ex) {
+      System.out.println(ex.getMessage());
+      ex.printStackTrace();
+    }
     invertRotation(RigidBody.BOUNCINESS);
   }
 
