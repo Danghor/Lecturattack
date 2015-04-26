@@ -1,13 +1,12 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
-import javax.xml.bind.annotation.XmlElement;
-
+import Lecturattack.entities.ProjectileMeta;
+import Lecturattack.entities.types.ProjectileType;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import Lecturattack.entities.ProjectileMeta;
-import Lecturattack.entities.types.ProjectileType;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @author Tim Adamek
@@ -56,7 +55,7 @@ public class PlayerStandard {
   public void setProjectile(String projectile) {
     this.projectile = projectile;
   }
-  
+
   @XmlElement
   public String getSound() {
     return sound;
@@ -73,7 +72,7 @@ public class PlayerStandard {
   public Image getBodyImageAsImage() throws SlickException {
     return new Image(imageBody);
   }
-  
+
   public Sound getSoundAsSound() throws SlickException {
     return new Sound(sound);
   }
@@ -93,5 +92,5 @@ public class PlayerStandard {
     }
     return projectileMeta;
   }
-  
+
 }

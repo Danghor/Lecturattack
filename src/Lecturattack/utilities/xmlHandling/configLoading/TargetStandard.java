@@ -1,10 +1,9 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
-import javax.xml.bind.annotation.XmlElement;
-
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
 

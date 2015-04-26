@@ -1,24 +1,6 @@
 package Lecturattack.statemachine;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.InputListener;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
-import Lecturattack.entities.Flag;
-import Lecturattack.entities.InformationField;
-import Lecturattack.entities.Player;
-import Lecturattack.entities.Projectile;
-import Lecturattack.entities.Target;
+import Lecturattack.entities.*;
 import Lecturattack.entities.types.TargetType;
 import Lecturattack.utilities.FileHandler;
 import Lecturattack.utilities.Level;
@@ -26,6 +8,12 @@ import Lecturattack.utilities.LevelGenerator;
 import Lecturattack.utilities.PhysicsEngine;
 import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
 import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Tim Adamek
@@ -336,9 +324,9 @@ public class GameState extends BasicGameState implements InputListener {
     playPlayerSound();
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
-  
+
   private void playPlayerSound() {
-    if (!playerSoundPlayed){
+    if (!playerSoundPlayed) {
       getCurrentPlayer().playSound();
       playerSoundPlayed = true;
     }

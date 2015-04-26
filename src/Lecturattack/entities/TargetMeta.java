@@ -4,17 +4,16 @@
 
 package Lecturattack.entities;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import Lecturattack.entities.types.TargetType;
+import Lecturattack.utilities.FileHandler;
+import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import Lecturattack.entities.types.TargetType;
-import Lecturattack.utilities.FileHandler;
-import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Nick Steyer
