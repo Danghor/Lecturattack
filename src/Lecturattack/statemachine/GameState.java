@@ -193,6 +193,11 @@ public class GameState extends BasicGameState implements InputListener {
 
     if (!enemiesOnScreen) {
       gameStatus = GameStatus.LEVEL_WON;
+
+      for (Target deadTarget : deadTargets) {
+        deadTarget.stopSound();
+      }
+
       victorySound.play();
       saveGameProgress();
     } else if (level.getScore() <= 0) {

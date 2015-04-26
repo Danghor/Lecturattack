@@ -129,12 +129,22 @@ public class TargetMeta extends MetaObject {
     return maxHits;
   }
 
-  Sound getSound(int index) {
+  public void playSound(int index, float pitch, float volume) {
     try {
-      return sounds.get(index);
+      sounds.get(index).play(pitch, volume);
     } catch (IndexOutOfBoundsException ex) {
       System.out.println("Could not retrieve sound with index " + index + " for " + this.toString() + ".");
-      return sounds.get(0);
+    } catch (NullPointerException ex) {
+      System.out.println("Could play sound with index " + index + " for " + this.toString() + ". Sound is null.");
     }
   }
+
+  public void stopSound() {
+    for (Sound sound : sounds) {
+      if (sound != null) {
+        sound.stop();
+      }
+    }
+  }
+
 }
