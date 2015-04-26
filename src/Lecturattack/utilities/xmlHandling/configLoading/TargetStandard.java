@@ -134,16 +134,19 @@ public class TargetStandard {
     this.vertices = vertices;
   }
 
-  FileHandler fileHandler = new FileHandler();
+
   public Sound getSound1AsSound() throws SlickException {
+    FileHandler fileHandler = new FileHandler();
     return fileHandler.loadSound(soundPath1);
   }
 
   public Sound getSound2AsSound() throws SlickException {
+    FileHandler fileHandler = new FileHandler();
     return fileHandler.loadSound(soundPath2);
   }
 
   public Sound getSound3AsSound() throws SlickException {
+    FileHandler fileHandler = new FileHandler();
     return fileHandler.loadSound(soundPath3);
   }
 

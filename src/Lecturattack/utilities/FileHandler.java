@@ -5,18 +5,12 @@ import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.util.ResourceLoader;
 import org.newdawn.slick.Sound;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.List;
@@ -87,7 +81,10 @@ public class FileHandler {
       jaxbContext = JAXBContext.newInstance(TargetConfig.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       targets = (TargetConfig) jaxbUnmarshaller.unmarshal(inputStream);
+      inputStream.close();
     } catch (JAXBException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return targets.getTargetStandards();
@@ -106,7 +103,10 @@ public class FileHandler {
       jaxbContext = JAXBContext.newInstance(ProjectileConfig.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       projectiles = (ProjectileConfig) jaxbUnmarshaller.unmarshal(inputStream);
+      inputStream.close();
     } catch (JAXBException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return projectiles.getProjectileStandards();
@@ -126,13 +126,17 @@ public class FileHandler {
     } else {
       throw new IllegalArgumentException("The Level must be between 1 and 6");
     }
+
     JAXBContext jaxbContext;
     LevelData level = null;
     try {
       jaxbContext = JAXBContext.newInstance(LevelData.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       level = (LevelData) jaxbUnmarshaller.unmarshal(inputStream);
+      inputStream.close();
     } catch (JAXBException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return level;
@@ -151,7 +155,10 @@ public class FileHandler {
       jaxbContext = JAXBContext.newInstance(PlayerConfig.class);
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       players = (PlayerConfig) jaxbUnmarshaller.unmarshal(inputStream);
+      inputStream.close();
     } catch (JAXBException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return players.getPlayerStandards();
@@ -224,28 +231,29 @@ public class FileHandler {
     return image;
   }
 
+  public Music getBackgroundMusic() {
+    Music bgMusic = null;
+    try {
+      BufferedInputStream bufferedInputStream = new BufferedInputStream(getClass().getResourceAsStream(BACKGROUND_MUSIC_PATH));
+      bgMusic = new Music(bufferedInputStream, "bgMusic.wav");
+      bufferedInputStream.close();
+    } catch (SlickException e) {
+      System.out.println("Could not process file " + BACKGROUND_MUSIC_PATH);
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return bgMusic;
+  }
 
-  //  public static Music getBackgroundMusic() { TODO
-//    Music bgMusic = null;
-//    try {
-//      bgMusic = new Music(BACKGROUND_MUSIC_PATH);
-//    } catch (SlickException e) {
-//      System.out.println("Could not process file " + BACKGROUND_MUSIC_PATH);
-//      e.printStackTrace();
-//    }
-//    return bgMusic;
-//  }
-//
   public Sound loadSound(String fileName) {
     Sound sound = null;
     if (fileName != null) {
       try {
-        InputStream inputStream = getClass().getResourceAsStream("/resources/sounds/" + fileName + ".wav");
-        //add buffer for mark/reset support
-        InputStream bufferedIn = new BufferedInputStream(inputStream);
-
+        //BufferedInputStream for mark/reset support
+        BufferedInputStream bufferedIn = new BufferedInputStream(getClass().getResourceAsStream("/resources/sounds/" + fileName + ".wav"));
         sound = new Sound(bufferedIn, fileName + ".wav");
-        inputStream.close();
+        bufferedIn.close();
       } catch (SlickException e) {
         System.out.println("Error while loading sound:" + fileName);
         e.printStackTrace();
