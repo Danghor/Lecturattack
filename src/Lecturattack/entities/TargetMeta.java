@@ -4,19 +4,22 @@
 
 package Lecturattack.entities;
 
-import Lecturattack.entities.types.TargetType;
-import Lecturattack.utilities.FileHandler;
-import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
+import Lecturattack.entities.types.TargetType;
+import Lecturattack.utilities.FileHandler;
+import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
+
 /**
  * @author Nick Steyer
  * @author Tim Adamek
+ * @author Andreas Geis
  */
 public class TargetMeta extends MetaObject {
   static {
@@ -66,9 +69,15 @@ public class TargetMeta extends MetaObject {
           throw new RuntimeException("Invalid TargetType given.");
       }
 
-      TargetMeta targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore());
-      targetMeta.mass = targetStandard.getMass();
-      instances.put(type, targetMeta);
+      TargetMeta targetMeta;
+      // TODO: better solution
+      try {
+        targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore(), targetStandard.getSoundAsSound());
+        targetMeta.mass = targetStandard.getMass();
+        instances.put(type, targetMeta);
+      } catch (SlickException e) {
+        
+      }
     }
   }
 
@@ -76,13 +85,15 @@ public class TargetMeta extends MetaObject {
   private final float hitScore; //the score received when a target of this type gets hit
   private final ArrayList<Image> images;
   private final TargetType type;
+  private Sound sound;
 
-  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline, float hitScore) {
+  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline, float hitScore, Sound sound) {
     this.type = type;
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
     this.hitScore = hitScore;
+    this.sound = sound;
   }
 
   public static TargetMeta getInstance(TargetType type) {
@@ -104,5 +115,9 @@ public class TargetMeta extends MetaObject {
 
   int getMaxHits() {
     return maxHits;
+  }
+  
+  Sound getSound() {
+    return sound;
   }
 }

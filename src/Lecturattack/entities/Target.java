@@ -2,13 +2,15 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
-import Lecturattack.entities.types.TargetType;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Lecturattack.entities.types.TargetType;
+
 /**
  * @author Nick Steyer
+ * @author Andreas Geis
  */
 public class Target extends RigidBody {
   private final TargetMeta metaObject;
@@ -54,6 +56,7 @@ public class Target extends RigidBody {
     if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
       hitCounter++;
       scoreReturned = getHitScore();
+      playSound();
     }
 
     return scoreReturned;
@@ -74,6 +77,10 @@ public class Target extends RigidBody {
 
   public TargetType getType() {
     return metaObject.getType();
+  }
+  
+  public void playSound() {
+    metaObject.getSound().play();
   }
 
 }
