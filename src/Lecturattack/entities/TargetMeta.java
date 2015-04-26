@@ -34,7 +34,9 @@ public class TargetMeta extends MetaObject {
 
     for (TargetStandard targetStandard : targetStandards) {
       ArrayList<Image> images = new ArrayList<>();
+      ArrayList<Sound> sounds = new ArrayList<>();
       try {
+        //add images
         if (!targetStandard.getImageIntact().equals("")) {
           images.add(new Image(targetStandard.getImageIntact()));
         }
@@ -44,6 +46,11 @@ public class TargetMeta extends MetaObject {
         if (!targetStandard.getImageAlmostBroken().equals("")) {
           images.add(new Image(targetStandard.getImageAlmostBroken()));
         }
+
+        //add sounds
+        sounds.add(targetStandard.getSound1AsSound());
+        sounds.add(targetStandard.getSound2AsSound());
+        sounds.add(targetStandard.getSound3AsSound());
       } catch (SlickException e) {
         e.printStackTrace();
       }
@@ -71,8 +78,7 @@ public class TargetMeta extends MetaObject {
       }
 
       TargetMeta targetMeta;
-      // TODO: better solution
-      targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore(), targetStandard.getSound1AsSound());
+      targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore(), sounds);
       targetMeta.mass = targetStandard.getMass();
       instances.put(type, targetMeta);
     }
@@ -82,15 +88,15 @@ public class TargetMeta extends MetaObject {
   private final float hitScore; //the score received when a target of this type gets hit
   private final ArrayList<Image> images;
   private final TargetType type;
-  private final Sound sound;
+  private final ArrayList<Sound> sounds;
 
-  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline, float hitScore, Sound sound) {
+  private TargetMeta(TargetType type, ArrayList<Image> images, int maxHits, ArrayList<float[]> outline, float hitScore, ArrayList<Sound> sounds) {
     this.type = type;
     this.images = images;
     this.maxHits = maxHits;
     this.outline = outline;
     this.hitScore = hitScore;
-    this.sound = sound;
+    this.sounds = sounds;
   }
 
   public static TargetMeta getInstance(TargetType type) {
@@ -106,15 +112,29 @@ public class TargetMeta extends MetaObject {
   }
 
   Image getImage(int index) {
-    //the IndexOutOfBoundsException should never occur in production
-    return images.get(index);
+    try {
+      return images.get(index);
+    } catch (IndexOutOfBoundsException ex) {
+      System.out.println("Could not retrieve image with index " + index + " for " + this.toString() + ".");
+      return images.get(0); //image 0 should always be set, might fix the problem and prevent crashing the application
+    }
+  }
+
+  @Override
+  public String toString() {
+    return getType().toString();
   }
 
   int getMaxHits() {
     return maxHits;
   }
 
-  Sound getSound() {
-    return sound;
+  Sound getSound(int index) {
+    try {
+      return sounds.get(index);
+    } catch (IndexOutOfBoundsException ex) {
+      System.out.println("Could not retrieve sound with index " + index + " for " + this.toString() + ".");
+      return sounds.get(0);
+    }
   }
 }
