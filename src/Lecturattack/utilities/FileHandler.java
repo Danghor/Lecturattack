@@ -1,31 +1,19 @@
 package Lecturattack.utilities;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
+import Lecturattack.utilities.xmlHandling.configLoading.*;
+import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import Lecturattack.utilities.xmlHandling.configLoading.PlayerConfig;
-import Lecturattack.utilities.xmlHandling.configLoading.PlayerStandard;
-import Lecturattack.utilities.xmlHandling.configLoading.ProjectileConfig;
-import Lecturattack.utilities.xmlHandling.configLoading.ProjectileStandard;
-import Lecturattack.utilities.xmlHandling.configLoading.TargetConfig;
-import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
-import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.util.List;
 
 /**
  * @author Tim Adamek
@@ -236,8 +224,8 @@ public class FileHandler {
     }
     return bgMusic;
   }
-  
-  public static Sound loadSound(String fileName){
+
+  public static Sound loadSound(String fileName) {
     Sound sound = null;
     try {
       sound = new Sound(PATH_TO_SOUNDS + fileName + ".wav");

@@ -212,7 +212,7 @@ public class Player implements Renderable {
   private void setThrowStart(long throwStart) {
     this.throwStart = throwStart;
   }
-  
+
   public void playSound() {
     sound.play();
   }

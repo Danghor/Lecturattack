@@ -2,11 +2,10 @@ package Lecturattack.entities;/*
  * Copyright (c) 2015.
  */
 
+import Lecturattack.entities.types.TargetType;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
-
-import Lecturattack.entities.types.TargetType;
 
 /**
  * @author Nick Steyer
@@ -80,7 +79,7 @@ public class Target extends RigidBody {
   public TargetType getType() {
     return metaObject.getType();
   }
-  
+
   public void playSound() {
     metaObject.getSound().play();
   }
