@@ -74,7 +74,7 @@ public class PlayerStandard {
     return new Image(imageBody);
   }
 
-  public Sound getSoundAsSound() throws SlickException {
+  public Sound getSoundAsSound() {
     return new FileHandler().loadSound(sound);
   }
 

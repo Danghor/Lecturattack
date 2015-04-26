@@ -27,8 +27,8 @@ public class GameState extends BasicGameState implements InputListener {
   private static final int MAX_THROW_DURATION_IN_SECONDS = 5;
 
   private final int stateID;
-  FileHandler fileHandler = new FileHandler();
-  private StateBasedGame stateBasedGame;//TODO find another way
+  private final FileHandler fileHandler;
+  private StateBasedGame stateBasedGame;
   private int currentLevel;
   private ArrayList<Player> players;
   private int currentPlayerIndex;
@@ -62,6 +62,7 @@ public class GameState extends BasicGameState implements InputListener {
    */
   public GameState(int stateID) {
     this.stateID = stateID;
+    fileHandler = new FileHandler();
   }
 
   @Override

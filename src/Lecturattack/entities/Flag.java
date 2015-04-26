@@ -13,10 +13,10 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Tim Adamek
  */
 public class Flag implements Renderable {
+  private final InformationField windTitle;
+  private final int positionX;
+  private final int positionY;
   private float windScale;
-  private InformationField windTitle;
-  private int positionX;
-  private int positionY;
 
   public Flag(int positionX, int positionY) {
     this.positionX = positionX;

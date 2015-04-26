@@ -104,9 +104,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       targets = (TargetConfig) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return targets.getTargetStandards();
@@ -126,9 +124,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       projectiles = (ProjectileConfig) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return projectiles.getProjectileStandards();
@@ -157,9 +153,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       level = (LevelData) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return level;
@@ -179,9 +173,7 @@ public class FileHandler {
       Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
       players = (PlayerConfig) jaxbUnmarshaller.unmarshal(inputStream);
       inputStream.close();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
+    } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
     return players.getPlayerStandards();

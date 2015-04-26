@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 class MainMenuState extends BasicGameState implements InputListener {
   private final int stateID;
+  private final FileHandler fileHandler;
   private StateBasedGame stateBasedGame;
   private Image background;
   private Image logo;
@@ -21,7 +22,6 @@ class MainMenuState extends BasicGameState implements InputListener {
   // this boolean indicates, if the "Spiel starten" button has be set to
   // "Spiel fortsetzen" already
   private boolean continueGameButton;
-  private FileHandler fileHandler = new FileHandler();
 
   /**
    * Constructor for MainMenuState
@@ -31,6 +31,7 @@ class MainMenuState extends BasicGameState implements InputListener {
    */
   public MainMenuState(int stateID) {
     this.stateID = stateID;
+    fileHandler = new FileHandler();
   }
 
   @Override

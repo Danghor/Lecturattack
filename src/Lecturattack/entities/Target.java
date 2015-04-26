@@ -80,7 +80,7 @@ public class Target extends RigidBody {
     return metaObject.getType();
   }
 
-  public void playSound() {
+  private void playSound() {
     metaObject.getSound().play();
   }
 
