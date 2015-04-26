@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    @author Laura Hillenbrand
+    @author Stefanie Raschke
+-->
 <LevelData score="80">
     <levelElements>
         <positionX>58</positionX>
