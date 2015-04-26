@@ -18,15 +18,35 @@ public class TargetStandard {
   private List<XmlVertex> vertices;
   private float mass;
   private float hitScore;
-  private String soundPath;
+  private String soundPath1;
+  private String soundPath2;
+  private String soundPath3;
 
-  @XmlElement(name = "sound")
-  public String getSoundPath() {
-    return soundPath;
+  @XmlElement(name = "sound1")
+  public String getSoundPath1() {
+    return soundPath1;
   }
 
-  public void setSoundPath(String soundPath) {
-    this.soundPath = soundPath;
+  public void setSoundPath1(String soundPath1) {
+    this.soundPath1 = soundPath1;
+  }
+
+  @XmlElement(name = "sound2")
+  public String getSoundPath2() {
+    return soundPath2;
+  }
+
+  public void setSoundPath2(String soundPath2) {
+    this.soundPath2 = soundPath2;
+  }
+
+  @XmlElement(name = "sound3")
+  public String getSoundPath3() {
+    return soundPath3;
+  }
+
+  public void setSoundPath3(String soundPath3) {
+    this.soundPath3 = soundPath3;
   }
 
   @XmlElement
