@@ -73,11 +73,11 @@ public class TargetMeta extends MetaObject {
       TargetMeta targetMeta;
       // TODO: better solution
       try {
-        targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore(), targetStandard.getSoundAsSound());
+        targetMeta = new TargetMeta(type, images, targetStandard.getMaxHits(), targetStandard.getVerticesAsFloats(), targetStandard.getHitScore(), targetStandard.getSound1AsSound());
         targetMeta.mass = targetStandard.getMass();
         instances.put(type, targetMeta);
       } catch (SlickException e) {
-        
+
       }
     }
   }
@@ -117,7 +117,7 @@ public class TargetMeta extends MetaObject {
   int getMaxHits() {
     return maxHits;
   }
-  
+
   Sound getSound() {
     return sound;
   }
