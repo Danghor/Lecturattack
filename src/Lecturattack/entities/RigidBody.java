@@ -55,7 +55,7 @@ public abstract class RigidBody implements Renderable {
    *
    * @param partner The RigidBody this object is colliding with each other.
    */
-  void reflect(RigidBody partner) {
+  void reflect(RigidBody partner) throws IllegalArgumentException {
     Line intersectingLine = null;
     Polygon thisPolygon = new Polygon();
 

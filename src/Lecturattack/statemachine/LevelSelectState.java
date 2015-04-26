@@ -151,7 +151,7 @@ class LevelSelectState extends BasicGameState implements InputListener {
       } else if (currentSelection == BUTTON_BACK) {
         stateBasedGame.enterState(Lecturattack.MAINMENU_STATE);
       } else if (currentSelection == BUTTON_RESETPROGRESS) {
-        fileHandler.resetGameProgress();
+        FileHandler.resetGameProgress();
         for (int i = 1; i <= 5; i++) {
           menuButtons[i].setInactive();
         }

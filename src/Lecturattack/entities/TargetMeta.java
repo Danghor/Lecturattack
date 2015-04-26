@@ -21,7 +21,8 @@ import java.util.List;
  * @author Andreas Geis
  */
 public class TargetMeta extends MetaObject {
-  private static HashMap<TargetType,TargetMeta> instances = new HashMap<>();
+  private static HashMap<TargetType, TargetMeta> instances = new HashMap<>();
+
   /**
    * This method will initialize all TargetMeta objects so that they can be used later.
    * They are accessed using the public getInstance method together with the desired TargetType.
@@ -97,7 +98,7 @@ public class TargetMeta extends MetaObject {
   }
 
   public static TargetMeta getInstance(TargetType type) {
-    return (TargetMeta) instances.get(type);
+    return instances.get(type);
   }
 
   public float getHitScore() {
