@@ -28,22 +28,17 @@ public class ProjectileMeta extends MetaObject {
 
       switch (projectileStandard.getDestroys()) {
         case "ENEMY":
-          TargetType ENEMY = TargetType.ENEMY;
-          destroys.add(ENEMY);
+          destroys.add(TargetType.ENEMY);
           type = ProjectileType.EXAM; //todo: read type from XML files
           break;
         case "RAM":
-          TargetType RAMH = TargetType.RAMH;
-          TargetType RAMV = TargetType.RAMV;
-          destroys.add(RAMH);
-          destroys.add(RAMV);
+          destroys.add(TargetType.RAMH);
+          destroys.add(TargetType.RAMV);
           type = ProjectileType.POINTER;
           break;
         case "LIBRARY":
-          TargetType LIBRARYH = TargetType.LIBRARYH;
-          TargetType LIBRARYV = TargetType.LIBRARYV;
-          destroys.add(LIBRARYH);
-          destroys.add(LIBRARYV);
+          destroys.add(TargetType.LIBRARYH);
+          destroys.add(TargetType.LIBRARYV);
           type = ProjectileType.ROBOT;
           break;
       }
