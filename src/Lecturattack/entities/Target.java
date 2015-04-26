@@ -41,22 +41,31 @@ public class Target extends RigidBody {
 
   public float hit(Projectile projectile) {
     float scoreReturned = 0;
-    float velocity = projectile.getLinearVelocity().length();
+    float velocity;
     int timesHit;
 
-    if (velocity >= 80) {
-      timesHit = 3;
-    } else if (velocity >= 60) {
-      timesHit = 2;
-    } else {
-      timesHit = 1;
-    }
+    if (projectile.getDestroys().contains(getType())) {
+      velocity = projectile.getLinearVelocity().length();
 
-    for (int i = 0; i < timesHit; i++) {
-      if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
-        hitCounter++;
-        scoreReturned += getHitScore();
-        playSound();
+      if (velocity >= 80) {
+        timesHit = 3;
+      } else if (velocity >= 60) {
+        timesHit = 2;
+      } else {
+        timesHit = 1;
+      }
+
+      for (int i = 0; i < timesHit; i++) {
+        if (!isDestroyed()) {
+          hitCounter++;
+          scoreReturned += getHitScore();
+        }
+      }
+
+      playSound(hitCounter - 1, 1f);
+    } else {
+      if (!(getType() == TargetType.ENEMY)) {
+        playSound(hitCounter, 0.5f);
       }
     }
 
@@ -80,8 +89,12 @@ public class Target extends RigidBody {
     return metaObject.getType();
   }
 
-  private void playSound() {
-    metaObject.getSound().play();
+  private void playSound(int index, float pitch) {
+    try {
+      metaObject.getSound(index).play(pitch, 1f);
+    } catch (NullPointerException | IndexOutOfBoundsException ex) {
+      System.out.println("Could not play sound with index " + index + " for " + this.toString() + ".");
+    }
   }
 
 }

@@ -44,8 +44,7 @@ public class GameState extends BasicGameState implements InputListener {
   private Sound defeatSound;
   private float wind;
   private GameStatus gameStatus;
-  // this indicates, if a player sound already played in this turn
-  private boolean playerSoundPlayed;
+
   /**
    * a list of all Targets that have been hit and are not part of the game
    * anymore, but are still falling out of the frame and therefore have to
@@ -169,7 +168,6 @@ public class GameState extends BasicGameState implements InputListener {
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     previousColor = gameContainer.getGraphics().getColor();
     gameContainer.getGraphics().setColor(Color.black);
-    playerSoundPlayed = false;
   }
 
   @Override
@@ -244,7 +242,6 @@ public class GameState extends BasicGameState implements InputListener {
             resetLevel();
             break;
         }
-        playerSoundPlayed = false;
         break;
       case Input.KEY_ESCAPE:
         stateBasedGame.enterState(Lecturattack.PAUSE_STATE);
@@ -303,12 +300,14 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void selectNextPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
+    stopPlayerSound();
 
     if (currentPlayerIndex >= players.size() - 1) {
       currentPlayerIndex = 0;
     } else {
       currentPlayerIndex++;
     }
+
     getCurrentPlayer().setAngle(previousAngle);
     playPlayerSound();
     playerName.setDynamicText(getCurrentPlayer().getName());
@@ -316,21 +315,25 @@ public class GameState extends BasicGameState implements InputListener {
 
   private void selectPreviousPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
+    stopPlayerSound();
+
     if (currentPlayerIndex <= 0) {
       currentPlayerIndex = players.size() - 1;
     } else {
       currentPlayerIndex--;
     }
+
     getCurrentPlayer().setAngle(previousAngle);
     playPlayerSound();
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
   private void playPlayerSound() {
-    if (!playerSoundPlayed) {
-      getCurrentPlayer().playSound();
-      playerSoundPlayed = true;
-    }
+    getCurrentPlayer().playSound();
+  }
+
+  private void stopPlayerSound() {
+    getCurrentPlayer().stopSound();
   }
 
   /**

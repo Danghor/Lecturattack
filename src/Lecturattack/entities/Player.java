@@ -69,7 +69,7 @@ public class Player implements Renderable {
 
   /**
    * this method is called to update the arm animation
-   * it can be called every calculation step because it is handled intern when the animation is viable
+   * it can be called every calculation step because it is handled internally when the animation is visible
    */
   public void updateArmAnimation() {
     if (moveArmBack) {
@@ -79,7 +79,7 @@ public class Player implements Renderable {
         // when the selected force is really low
         animationAngle += powerSlider.getSelectedForce() / 100 + 1;
       } else if (directionAngle - animationAngle <= -200) {
-        //the arm has reached the end --> no longer needed to mov back
+        //the arm has reached the end --> no longer needed to move back
         moveArmBack = false;
         moveArmForward = true;
       }
@@ -215,6 +215,10 @@ public class Player implements Renderable {
 
   public void playSound() {
     sound.play();
+  }
+
+  public void stopSound() {
+    sound.stop();
   }
 
   public enum PlayerState {
