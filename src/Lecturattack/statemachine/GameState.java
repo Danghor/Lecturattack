@@ -39,8 +39,12 @@ public class GameState extends BasicGameState implements InputListener {
   private Image background;
   private Image victory;
   private Image defeat;
+  private Sound victorySound;
+  private Sound defeatSound;
   private float wind;
   private GameStatus gameStatus;
+  // this indicates, if a player sound already played in this turn
+  private boolean playerSoundPlayed;
 
 
   FileHandler fileHandler = new FileHandler();
@@ -75,13 +79,15 @@ public class GameState extends BasicGameState implements InputListener {
     background = fileHandler.loadImage("background");
     victory = fileHandler.loadImage("victory");
     defeat = fileHandler.loadImage("defeat");
+    victorySound = FileHandler.loadSound("victory");
+    defeatSound = FileHandler.loadSound("defeat");
 
     deadTargets = new ArrayList<>();
     players = new ArrayList<>();
 
     List<PlayerStandard> playerStandards = fileHandler.getPlayerData();
     for (PlayerStandard meta : playerStandards) {
-      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName()));
+      players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName(), meta.getSoundAsSound()));
     }
     currentPlayerIndex = 0;
     setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
@@ -165,7 +171,7 @@ public class GameState extends BasicGameState implements InputListener {
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     previousColor = gameContainer.getGraphics().getColor();
     gameContainer.getGraphics().setColor(Color.black);
-
+    playerSoundPlayed = false;
   }
 
   @Override
@@ -191,9 +197,11 @@ public class GameState extends BasicGameState implements InputListener {
 
     if (!enemiesOnScreen) {
       gameStatus = GameStatus.LEVEL_WON;
+      victorySound.play();
       saveGameProgress();
     } else if (level.getScore() <= 0) {
       gameStatus = GameStatus.LEVEL_LOST;
+      defeatSound.play();
     } else {
       resetPlayer();
     }
@@ -238,6 +246,7 @@ public class GameState extends BasicGameState implements InputListener {
             resetLevel();
             break;
         }
+        playerSoundPlayed = false;
         break;
       case Input.KEY_ESCAPE:
         stateBasedGame.enterState(Lecturattack.PAUSE_STATE);
@@ -303,6 +312,7 @@ public class GameState extends BasicGameState implements InputListener {
       currentPlayerIndex++;
     }
     getCurrentPlayer().setAngle(previousAngle);
+    playPlayerSound();
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
@@ -314,7 +324,15 @@ public class GameState extends BasicGameState implements InputListener {
       currentPlayerIndex--;
     }
     getCurrentPlayer().setAngle(previousAngle);
+    playPlayerSound();
     playerName.setDynamicText(getCurrentPlayer().getName());
+  }
+
+  private void playPlayerSound() {
+    if (!playerSoundPlayed) {
+      getCurrentPlayer().playSound();
+      playerSoundPlayed = true;
+    }
   }
 
   /**

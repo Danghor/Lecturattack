@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.Sound;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -26,8 +27,9 @@ import java.util.List;
 public class FileHandler {
   private static final String ERROR_WHILE_WRITING_IN_TEXT_FILE = "Error while writing in text file";
   private static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
-  private static final String[] PATH_TO_LEVELS = new String[]{"resources/level/Level1.xml", "resources/level/Level2.xml", "resources/level/Level3.xml", "resources/level/Level4.xml", "resources/level/Level5.xml", "resources/level/Level6.xml",};
-  private static final String BACKGROUND_MUSIC_PATH = "resources/sounds/bgMusic.wav";
+  private static final String[] PATH_TO_LEVELS = new String[]{"/resources/level/Level1.xml", "/resources/level/Level2.xml", "/resources/level/Level3.xml", "/resources/level/Level4.xml", "/resources/level/Level5.xml", "/resources/level/Level6.xml",};
+  private static final String BACKGROUND_MUSIC_PATH = "/resources/sounds/bgMusic.wav";
+  private static final String PATH_TO_SOUNDS = "/resources/sounds/";
   private static final String GAME_FOLDER = "CoffeeProductions";
   private static final String GAME_NAME = "\\Lecturattack.txt";
   private static final String LAST_LEVEL_FILE_PATH;
@@ -92,8 +94,8 @@ public class FileHandler {
    * @return the loaded configs for the Projectiles
    */
   public List<ProjectileStandard> loadProjectileStandards() {
-    System.out.println(getClass().getResource("resources/config/projectile.xml").getPath());
-    File file = new File(getClass().getResource("resources/config/projectile.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
+    System.out.println(getClass().getResource("/resources/config/projectile.xml").getPath());
+    File file = new File(getClass().getResource("/resources/config/projectile.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     ProjectileConfig projectiles = null;
     try {
@@ -138,7 +140,7 @@ public class FileHandler {
    * @return the loaded players objects which resemble the xml
    */
   public List<PlayerStandard> getPlayerData() {
-    File file = new File(getClass().getResource("resources/config/player.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
+    File file = new File(getClass().getResource("/resources/config/player.xml").getPath());//TODO save in final var --> method for opening/vrating --> code dup
     JAXBContext jaxbContext;
     PlayerConfig players = null;
     try {
@@ -206,8 +208,7 @@ public class FileHandler {
   public Image loadImage(String fileName) {
     Image image = null;
     try {
-      System.out.println(getClass().getResource("resources/images/" + fileName + ".png").getPath());
-      image = new Image("resources/images/" + fileName + ".png");
+      image = new Image("/resources/images/" + fileName + ".png");
     } catch (SlickException e) {
       System.out.println("Error while loading image:" + fileName);
       e.printStackTrace();
@@ -215,14 +216,26 @@ public class FileHandler {
     return image;
   }
 
-//  public Music getBackgroundMusic() {
+
+  //  public static Music getBackgroundMusic() { TODO
 //    Music bgMusic = null;
 //    try {
-//      //bgMusic = new Music(getClass().getResourceAsStream(BACKGROUND_MUSIC_PATH),"background"); TODO
+//      bgMusic = new Music(BACKGROUND_MUSIC_PATH);
 //    } catch (SlickException e) {
 //      System.out.println("Could not process file " + BACKGROUND_MUSIC_PATH);
 //      e.printStackTrace();
 //    }
 //    return bgMusic;
 //  }
+//
+  public static Sound loadSound(String fileName) {
+    Sound sound = null;
+    try {
+      sound = new Sound(PATH_TO_SOUNDS + fileName + ".wav");
+    } catch (SlickException e) {
+      System.out.println("Error while loading sound:" + fileName);
+      e.printStackTrace();
+    }
+    return sound;
+  }
 }

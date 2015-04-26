@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author Nick Steyer
+ * @author Andreas Geis
  */
 public class Target extends RigidBody {
   private final TargetMeta metaObject;
@@ -40,7 +41,6 @@ public class Target extends RigidBody {
 
   public float hit(Projectile projectile) {
     float scoreReturned = 0;
-
     float velocity = projectile.getLinearVelocity().length();
     int timesHit;
 
@@ -56,6 +56,7 @@ public class Target extends RigidBody {
       if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
         hitCounter++;
         scoreReturned += getHitScore();
+        playSound();
       }
     }
 
@@ -77,6 +78,10 @@ public class Target extends RigidBody {
 
   public TargetType getType() {
     return metaObject.getType();
+  }
+
+  public void playSound() {
+    metaObject.getSound().play();
   }
 
 }

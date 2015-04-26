@@ -19,6 +19,6 @@
         <imageBody>resources/images/Stroehtie.png</imageBody>
         <imageArm>resources/images/StroehtieArm.png</imageArm>
         <projectile>EXAM</projectile>
-        <sound>resources/sounds/stroethie.wav</sound>
+        <sound>resources/sounds/stroehtie.wav</sound>
     </player>
 </players>

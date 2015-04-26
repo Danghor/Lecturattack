@@ -1,5 +1,8 @@
 package Lecturattack.utilities.xmlHandling.configLoading;
 
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +21,35 @@ public class TargetStandard {
   private List<XmlVertex> vertices;
   private float mass;
   private float hitScore;
-  private String soundPath;
+  private String soundPath1;
+  private String soundPath2;
+  private String soundPath3;
 
-  @XmlElement(name = "sound")
-  public String getSoundPath() {
-    return soundPath;
+  @XmlElement(name = "sound1")
+  public String getSoundPath1() {
+    return soundPath1;
   }
 
-  public void setSoundPath(String soundPath) {
-    this.soundPath = soundPath;
+  public void setSoundPath1(String soundPath1) {
+    this.soundPath1 = soundPath1;
+  }
+
+  @XmlElement(name = "sound2")
+  public String getSoundPath2() {
+    return soundPath2;
+  }
+
+  public void setSoundPath2(String soundPath2) {
+    this.soundPath2 = soundPath2;
+  }
+
+  @XmlElement(name = "sound3")
+  public String getSoundPath3() {
+    return soundPath3;
+  }
+
+  public void setSoundPath3(String soundPath3) {
+    this.soundPath3 = soundPath3;
   }
 
   @XmlElement
@@ -108,6 +131,19 @@ public class TargetStandard {
 
   public void setVertices(List<XmlVertex> vertices) {
     this.vertices = vertices;
+  }
+
+
+  public Sound getSound1AsSound() throws SlickException {
+    return new Sound(soundPath1);
+  }
+
+  public Sound getSound2AsSound() throws SlickException {
+    return new Sound(soundPath2);
+  }
+
+  public Sound getSound3AsSound() throws SlickException {
+    return new Sound(soundPath3);
   }
 
   public ArrayList<float[]> getVerticesAsFloats() {
