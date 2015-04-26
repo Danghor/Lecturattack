@@ -29,7 +29,6 @@ public class FileHandler {
   private static final String ERROR_WHEN_TRYING_TO_READ_FILE = "Error when trying to read file ";
   private static final String[] PATH_TO_LEVELS = new String[]{"/resources/level/Level1.xml", "/resources/level/Level2.xml", "/resources/level/Level3.xml", "/resources/level/Level4.xml", "/resources/level/Level5.xml", "/resources/level/Level6.xml",};
   private static final String BACKGROUND_MUSIC_PATH = "/resources/sounds/bgMusic.wav";
-  private static final String PATH_TO_SOUNDS = "/resources/sounds/";
   private static final String GAME_FOLDER = "CoffeeProductions";
   private static final String GAME_NAME = "\\Lecturattack.txt";
   private static final String LAST_LEVEL_FILE_PATH;
