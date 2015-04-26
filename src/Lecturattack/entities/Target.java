@@ -91,10 +91,14 @@ public class Target extends RigidBody {
 
   private void playSound(int index, float pitch) {
     try {
-      metaObject.getSound(index).play(pitch, 1f);
+      metaObject.playSound(index, pitch, 1f);
     } catch (NullPointerException | IndexOutOfBoundsException ex) {
       System.out.println("Could not play sound with index " + index + " for " + this.toString() + ".");
     }
+  }
+
+  public void stopSound() {
+    metaObject.stopSound();
   }
 
 }

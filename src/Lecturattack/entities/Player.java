@@ -101,14 +101,18 @@ public class Player implements Renderable {
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     armImage.setRotation(directionAngle - animationAngle);
-    graphics.drawImage(bodyImage, playerPosition.getX(), playerPosition.getY());
-    graphics.drawImage(armImage, armImagePosition.getX(), armImagePosition.getCenterY());
+
+    graphics.drawImage(bodyImage, playerPosition.getX(), playerPosition.getY()); //draw body
+
+    graphics.drawImage(armImage, armImagePosition.getX(), armImagePosition.getCenterY()); // draw arm
+
     if (playerState != PlayerState.THROWING) {
+      projectile.setRotation(directionAngle - animationAngle);
       projectile.setCenterPosition(handCenterPosition.getX(), handCenterPosition.getCenterY());
-      projectile.render(gameContainer, stateBasedGame, graphics);
+      projectile.render(gameContainer, stateBasedGame, graphics); //draw projectile
     }
     if (playerState != PlayerState.ANGLE_SELECTION) {
-      powerSlider.render(gameContainer, stateBasedGame, graphics);
+      powerSlider.render(gameContainer, stateBasedGame, graphics); //draw PowerSlider
     }
   }
 
@@ -122,8 +126,11 @@ public class Player implements Renderable {
 
   private void moveArm(float degreeDifference) {
     if (playerState == PlayerState.ANGLE_SELECTION) {
-      // the player can only move his arm in a certain angle,
-      // this checks if the player can still move his arm
+
+      /**
+       * the player can only move his arm in a certain angle,
+       * this checks if the player can still move his arm
+       */
       if ((degreeDifference > 0 && directionAngle < 20) || (degreeDifference < 0 && directionAngle > -180)) {
         this.directionAngle += degreeDifference;
       }

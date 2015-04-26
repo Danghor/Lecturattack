@@ -41,7 +41,7 @@ public class Projectile extends RigidBody {
     Image image = metaObject.getImage();
     image.rotate(getAngle());
     try {
-      graphics.drawImage(image, getSmallestX(), getSmallestY());
+      graphics.drawImage(image, getCenter().getX() - (image.getWidth() / 2), getCenter().getY() - (image.getHeight() / 2));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -56,6 +56,10 @@ public class Projectile extends RigidBody {
       vertex.rotate(angle, center);
     }
     this.angle += angle;
+  }
+
+  public void setRotation(float angle) {
+    rotate(angle - this.angle, getCenter());
   }
 
   public ArrayList<TargetType> getDestroys() {
