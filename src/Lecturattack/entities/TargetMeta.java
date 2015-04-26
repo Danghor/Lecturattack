@@ -22,6 +22,11 @@ import Lecturattack.utilities.xmlHandling.configLoading.TargetStandard;
  * @author Andreas Geis
  */
 public class TargetMeta extends MetaObject {
+
+  /**
+   * This method will initialize all TargetMeta objects so that they can be used later.
+   * They are accessed using the public getInstance method together with the desired TargetType.
+   */
   static {
     instances = new HashMap<>();
 
@@ -30,10 +35,6 @@ public class TargetMeta extends MetaObject {
     for (TargetStandard targetStandard : targetStandards) {
       ArrayList<Image> images = new ArrayList<>();
       try {
-        //the images are not saved in a list because they are read from a config file
-        //and having them in a list in a config file would be less readable (because the tag names would be the same)
-        //TODO maybe other way of doing this
-
         if (!targetStandard.getImageIntact().equals("")) {
           images.add(new Image(targetStandard.getImageIntact()));
         }

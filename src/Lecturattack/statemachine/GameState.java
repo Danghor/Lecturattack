@@ -36,7 +36,7 @@ import Lecturattack.utilities.xmlHandling.levelLoading.LevelData;
 
 public class GameState extends BasicGameState implements InputListener {
   private static final int MAX_LEVEL = 6;
-  private static final int MAX_THROW_DURATION_IN_SECONDS = 7;
+  private static final int MAX_THROW_DURATION_IN_SECONDS = 5;
 
   private final int stateID;
   private StateBasedGame stateBasedGame;//TODO find another way

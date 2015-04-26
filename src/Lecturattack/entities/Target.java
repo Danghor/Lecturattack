@@ -38,25 +38,27 @@ public class Target extends RigidBody {
     if (!isDestroyed() || (getType() == TargetType.ENEMY && !isUnreachable())) {
       metaObject.getImage(hitCounter).draw(getSmallestX(), getSmallestY());
     }
-
-    //TODO remove if not needed anymore
-    // This shows the hitbox of the targets
-    /*Polygon poly = new Polygon();
-    for (EnhancedVector point : vertices) {
-      poly.addPoint(point.getX(), point.getY());
-    }
-    graphics.draw(poly);
-
-    graphics.drawRect(getCenter().getX(), getCenter().getY(), 5, 5);*/
   }
 
   public float hit(Projectile projectile) {
     float scoreReturned = 0;
+    float velocity = projectile.getLinearVelocity().length();
+    int timesHit;
 
-    if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
-      hitCounter++;
-      scoreReturned = getHitScore();
-      playSound();
+    if (velocity >= 80) {
+      timesHit = 3;
+    } else if (velocity >= 60) {
+      timesHit = 2;
+    } else {
+      timesHit = 1;
+    }
+
+    for (int i = 0; i < timesHit; i++) {
+      if (projectile.getDestroys().contains(getType()) && !isDestroyed()) {
+        hitCounter++;
+        scoreReturned += getHitScore();
+        playSound();
+      }
     }
 
     return scoreReturned;
