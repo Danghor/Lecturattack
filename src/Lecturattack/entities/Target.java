@@ -65,7 +65,7 @@ public class Target extends RigidBody {
       playSound(hitCounter - 1, 1f);
     } else {
       if (!(getType() == TargetType.ENEMY)) {
-        playSound(hitCounter - 1, 0.5f);
+        playSound(hitCounter, 0.5f);
       }
     }
 
