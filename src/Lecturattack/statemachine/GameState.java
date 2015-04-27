@@ -261,9 +261,6 @@ public class GameState extends BasicGameState implements InputListener {
           selectPreviousPlayer();
         }
         break;
-      case Input.KEY_R:
-        resetPlayer();
-        break;
     }
   }
 
