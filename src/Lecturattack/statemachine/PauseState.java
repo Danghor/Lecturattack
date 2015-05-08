@@ -19,8 +19,14 @@ class PauseState extends BasicGameState implements InputListener {
   private AnimatedMenuButton[] menuButton;
   private int currentSelection;
 
-  public PauseState(int iStateID) {
-    stateID = iStateID;
+  /**
+   * Constructor for PauseState
+   * Set the ID of this state to the given stateID
+   *
+   * @param stateID The stateID to be set.
+   */
+  public PauseState(int stateID) {
+    this.stateID = stateID;
     fileHandler = new FileHandler();
   }
 

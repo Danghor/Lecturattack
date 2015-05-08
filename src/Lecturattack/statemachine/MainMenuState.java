@@ -46,6 +46,7 @@ class MainMenuState extends BasicGameState implements InputListener {
     logo = fileHandler.loadImage("logo");
     fileHandler.getLastLevelNumber();//TODO return value not used
     menuButton = new AnimatedMenuButton[3];
+    // check if the first button has to say "Spiel starten" or "Spiel fortsetzen" depending on player progress
     int lastLevelNumber = fileHandler.getLastLevelNumber();
     if (lastLevelNumber > 1) {
       menuButton[0] = new AnimatedMenuButton(245, 500, fileHandler.loadImage("continueGame_down"), fileHandler.loadImage("continueGame"));
@@ -70,6 +71,7 @@ class MainMenuState extends BasicGameState implements InputListener {
         continueGameButton = false;
       }
     } else {
+      // if the player unlocked a new level and the first button was set to "Spiel Starten", then change the button to "Spiel Fortsetzen"
       if (lastLevelNumber > 1) {
         menuButton[0] = new AnimatedMenuButton(245, 500, fileHandler.loadImage("continueGame_down"), fileHandler.loadImage("continueGame"));
         continueGameButton = true;

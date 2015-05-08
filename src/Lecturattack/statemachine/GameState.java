@@ -55,6 +55,7 @@ public class GameState extends BasicGameState implements InputListener {
   private Color previousColor;//this saves the previous global line color to returned back to default on state leave
 
   /**
+   * Constructor for GameState
    * Set the ID of this state to the given stateID
    *
    * @param stateID The stateID to be set.
