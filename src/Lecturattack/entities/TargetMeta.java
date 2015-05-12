@@ -30,6 +30,7 @@ public class TargetMeta extends MetaObject {
   static {
     instances = new HashMap<>();
     FileHandler fileHandler = new FileHandler();
+    //the xml configs are loaded
     List<TargetStandard> targetStandards = fileHandler.loadTargetConfig();
 
     for (TargetStandard targetStandard : targetStandards) {

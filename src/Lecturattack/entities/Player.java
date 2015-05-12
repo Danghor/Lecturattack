@@ -116,10 +116,16 @@ public class Player implements Renderable {
     }
   }
 
+  /**
+   * counter clock-wise rotation of the arm
+   */
   public void moveArmRight() {
     moveArm(DEGREE_ARM_MOVE);
   }
 
+  /**
+   * clock-wise rotation of the arm
+   */
   public void moveArmLeft() {
     moveArm(-DEGREE_ARM_MOVE);
   }

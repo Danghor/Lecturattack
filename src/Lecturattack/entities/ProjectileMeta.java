@@ -19,6 +19,7 @@ public class ProjectileMeta extends MetaObject {
   static {
     instances = new HashMap<>();
     FileHandler fileHandler = new FileHandler();
+    // the xml config files are loaded
     List<ProjectileStandard> projectileStandards = fileHandler.loadProjectileStandards();
 
     for (ProjectileStandard projectileStandard : projectileStandards) {
@@ -27,6 +28,9 @@ public class ProjectileMeta extends MetaObject {
       Image image = null;
       ArrayList<TargetType> destroys = new ArrayList<>();
 
+      //for every type that can be destroyed (except enemies) there is one
+      //target metaobject for the horizontal and one for the vertical, so
+      //the projectiles can destroy 2 projectiles
       switch (projectileStandard.getDestroys()) {
         case "ENEMY":
           destroys.add(TargetType.ENEMY);
@@ -53,6 +57,7 @@ public class ProjectileMeta extends MetaObject {
       outline = projectileStandard.getVerticesAsFloats();
       ProjectileMeta projectileMeta = new ProjectileMeta(outline, image, destroys);
       projectileMeta.mass = projectileStandard.getMass();
+      //the possible metaObjects are mapped to the projectile type
       instances.put(type, projectileMeta);
     }
   }

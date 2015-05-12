@@ -108,7 +108,7 @@ public class GameState extends BasicGameState implements InputListener {
       level.reduceScore(10);
     }
 
-    changeThrowingAngleWithUserInput(gameContainer);
+    changeThrowingAngleWithUserInput(gameContainer.getInput());
     flag.setWindScale(wind);
 
     int currentAmountOfDeadTargets = deadTargets.size();
@@ -160,19 +160,28 @@ public class GameState extends BasicGameState implements InputListener {
     }
   }
 
+  /**
+   * Resets the player to the default state
+   */
   private void resetPlayer() {
+    //The reset in the gameState has to include setting the projectile to null,
+    //because the player holds the new projectile and there is only one projectile at a given time
+    //additionally the player itself is also reset
     projectile = null;
     getCurrentPlayer().reset();
   }
 
   @Override
   public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    //the line color is changed to black on enter, furthermore the previous
+    //color is saved so that it the color can be reset on leave
     previousColor = gameContainer.getGraphics().getColor();
     gameContainer.getGraphics().setColor(Color.black);
   }
 
   @Override
   public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+    //The color is reset
     container.getGraphics().setColor(previousColor);
   }
 
@@ -189,16 +198,13 @@ public class GameState extends BasicGameState implements InputListener {
         enemiesOnScreen = true;
       }
     }
-
     projectile = null;
-
+    //If there are no more enemies the level is won
     if (!enemiesOnScreen) {
       gameStatus = GameStatus.LEVEL_WON;
-
       for (Target deadTarget : deadTargets) {
         deadTarget.stopSound();
       }
-
       victorySound.play();
       saveGameProgress();
     } else if (level.getScore() <= 0) {
@@ -206,25 +212,6 @@ public class GameState extends BasicGameState implements InputListener {
       defeatSound.play();
     } else {
       resetPlayer();
-    }
-  }
-
-  /**
-   * This method will first check if the level just won unlocks the next level. If so, the game progress is updated.
-   * If not, nothing happens; i.e. if the next level was already unlocked, the game progress is not overwritten.
-   */
-  private void saveGameProgress() {
-    int savedProgress = fileHandler.getLastLevelNumber();
-    if (currentLevel < MAX_LEVEL && savedProgress <= currentLevel) { //<=, because the file saves the last unlocked level
-      FileHandler.setLastUnlockedLevel(currentLevel + 1);
-    }
-  }
-
-  private void changeThrowingAngleWithUserInput(GameContainer gameContainer) {
-    if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
-      getCurrentPlayer().moveArmRight();
-    } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
-      getCurrentPlayer().moveArmLeft();
     }
   }
 
@@ -237,7 +224,7 @@ public class GameState extends BasicGameState implements InputListener {
             getCurrentPlayer().throwProjectile();
             break;
           case LEVEL_WON:
-            if (currentLevel < MAX_LEVEL) {
+            if (currentLevel < MAX_LEVEL) {//TODO commment
               currentLevel++;
               resetLevel();
             } else {
@@ -264,6 +251,31 @@ public class GameState extends BasicGameState implements InputListener {
         break;
     }
   }
+
+  /**
+   * This method will first check if the level just won unlocks the next level. If so, the game progress is updated.
+   * If not, nothing happens; i.e. if the next level was already unlocked, the game progress is not overwritten.
+   */
+  private void saveGameProgress() {
+    int savedProgress = fileHandler.getLastLevelNumber();
+    if (currentLevel < MAX_LEVEL && savedProgress <= currentLevel) { //<=, because the file saves the last unlocked level
+      FileHandler.setLastUnlockedLevel(currentLevel + 1);
+    }
+  }
+
+  /**
+   * The arm moves in the direction of the arrow key the player presses
+   *
+   * @param input the input necessary to decide if the arm moves
+   */
+  private void changeThrowingAngleWithUserInput(Input input) {
+    if (input.isKeyDown(Input.KEY_RIGHT)) {
+      getCurrentPlayer().moveArmRight();
+    } else if (input.isKeyDown(Input.KEY_LEFT)) {
+      getCurrentPlayer().moveArmLeft();
+    }
+  }
+
 
   /**
    * load the specified level in the gamestate
@@ -301,6 +313,7 @@ public class GameState extends BasicGameState implements InputListener {
     loadLevel(currentLevel);
   }
 
+  //TODO comment for this and previous player
   private void selectNextPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
     stopPlayerSound();
