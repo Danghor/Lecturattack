@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author Nick Steyer
  */
 public abstract class RigidBody implements Renderable {
-  static final float BOUNCINESS = 0.8f;
+  static final float BOUNCINESS = 0.8f; //
   private static final String CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT = "This RigidBody does not consist of any vertices.";
 
   final ArrayList<EnhancedVector> vertices;
@@ -22,6 +22,14 @@ public abstract class RigidBody implements Renderable {
   private EnhancedVector linearVelocity;
   private EnhancedVector force;
 
+  /**
+   * Used as the super constructor for classes that inherit from this one.
+   * Saves the outline for this object and moves it to the initial position given.
+   *
+   * @param meta The object containing necessary meta information about this body.
+   * @param x    The x-value of the initial position.
+   * @param y    The y-value of the initial position.
+   */
   RigidBody(MetaObject meta, float x, float y) {
     this.vertices = new ArrayList<>();
 
@@ -39,6 +47,12 @@ public abstract class RigidBody implements Renderable {
 
   protected abstract float getMass();
 
+  /**
+   * Updates this object, i.e. calculates its next physical position based on the forces applied to it and the
+   * given delta regardless of any possible collision.
+   *
+   * @param scaledDelta The delta given by the physics engine in order to calculate this step.
+   */
   public void update(float scaledDelta) {
     EnhancedVector acceleration;
 
@@ -166,6 +180,13 @@ public abstract class RigidBody implements Renderable {
 
   }
 
+  /**
+   * Checks whether or not this body physically collides with the given partner body, i.e. if the two bodies touch or even intersect each other.
+   *
+   * @param partner The partner body with which a collision should be detected.
+   *
+   * @return True, if the two bodies collide with each other, false otherwise.
+   */
   public boolean collidesWith(RigidBody partner) {
     Polygon polygon1 = new Polygon();
     Polygon polygon2 = new Polygon();
@@ -181,18 +202,30 @@ public abstract class RigidBody implements Renderable {
     return polygon1.intersects(polygon2);
   }
 
+  /**
+   * Moves this body in the direction of the given vector.
+   *
+   * @param direction The vector indicating the direction of movement.
+   */
   public void move(EnhancedVector direction) {
     for (EnhancedVector vertex : vertices) {
       vertex.add(direction);
     }
   }
 
+  /**
+   * Applies a new force to the body that has the direction and strength of the given parameters.
+   * The total force will be updated based on the forces already applied and this force.
+   *
+   * @param x The strength of the force to applied in the x-direction.
+   * @param y The strength of the force to be applied in the y-direction.
+   */
   public void applyForce(float x, float y) {
     force.add(new EnhancedVector(x, y));
   }
 
   /**
-   * Calculates the center point of this object based on it's vertices.
+   * Calculates the center point of this object based on its vertices.
    *
    * @return An EnhancedVector object representing the center point.
    */
@@ -207,6 +240,7 @@ public abstract class RigidBody implements Renderable {
     double prefix;
     double appendix;
 
+    //this calculation assumes a non-concave and non intersecting polygon and calculates the center point of it
     for (int i = 0; i < n - 1; i++) {
       //use appendix to slightly speed up calculation
       appendix = (vertices.get(i).getX() * vertices.get(i + 1).getY() - vertices.get(i + 1).getX() * vertices.get(i).getY());
@@ -230,7 +264,7 @@ public abstract class RigidBody implements Renderable {
   /**
    * This method is only executed once in order to calculate and save the area of this object.
    *
-   * @return The calculated area of this object based on it's vertices.
+   * @return The calculated area of this object based on its vertices.
    */
   private double getArea() {
     double area;
@@ -249,6 +283,11 @@ public abstract class RigidBody implements Renderable {
     return area;
   }
 
+  /**
+   * Returns the x-value of the vertex with the biggest x-value in this object.
+   *
+   * @return The x-value of the vertex with the biggest x-value.
+   */
   private float getBiggestX() {
     if (vertices.size() < 1) {
       throw new IllegalStateException(CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT);
@@ -265,6 +304,11 @@ public abstract class RigidBody implements Renderable {
     }
   }
 
+  /**
+   * Returns the y-value of the vertex with the biggest y-value in this object.
+   *
+   * @return The y-value of the vertex with the biggest y-value.
+   */
   public float getBiggestY() {
     if (vertices.size() < 1) {
       throw new IllegalStateException(CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT);
@@ -303,6 +347,8 @@ public abstract class RigidBody implements Renderable {
   }
 
   /**
+   * This method only works correctly if the RigidBody is not fully or partially outside of the visible frame.
+   *
    * @return The abscissa of the vertex with the smallest x-value.
    */
   float getSmallestX() {
@@ -322,6 +368,8 @@ public abstract class RigidBody implements Renderable {
   }
 
   /**
+   * Returns the position of this body.
+   *
    * @return A new EnhancedVector object representing the top right corner of this body.
    */
   public EnhancedVector getPosition() {
@@ -336,6 +384,12 @@ public abstract class RigidBody implements Renderable {
     return returnedVector;
   }
 
+  /**
+   * Moves this body, so that afterwards the center point has the given coordinates.
+   *
+   * @param x The desired x-value of the center point.
+   * @param y The desired y-value of the center point.
+   */
   public void setCenterPosition(float x, float y) {
     EnhancedVector destination = new EnhancedVector(x, y);
     EnhancedVector center = getCenter();

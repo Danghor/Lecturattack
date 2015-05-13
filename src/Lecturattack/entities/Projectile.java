@@ -20,6 +20,11 @@ public class Projectile extends RigidBody {
   private float angularVelocity;
   private float angle;
 
+  /**
+   * Saves the given metaObject, sets the starting position to 0, 0 and initializes the torque and angle with 0.
+   *
+   * @param projectileMeta The meta object containing necessary information about this projectile such as the outline.
+   */
   public Projectile(ProjectileMeta projectileMeta) {
     super(projectileMeta, 0f, 0f);
     metaObject = projectileMeta;
@@ -47,10 +52,21 @@ public class Projectile extends RigidBody {
     }
   }
 
+  /**
+   * Updates the torque based on the torque already applied and this one.
+   *
+   * @param value The torque to be applied to this projectile.
+   */
   public void applyTorque(float value) {
     torque += value;
   }
 
+  /**
+   * Rotates this projectile by the given angle around the given center point.
+   *
+   * @param angle  The angle by which this projectile should be rotated.
+   * @param center The center around which the projectile should be rotated.
+   */
   private void rotate(float angle, EnhancedVector center) {
     for (EnhancedVector vertex : vertices) {
       vertex.rotate(angle, center);
@@ -79,11 +95,22 @@ public class Projectile extends RigidBody {
     return metaObject.getMass();
   }
 
+  /**
+   * Calculates the inertia of this projectile. Used for rotating it based on the applied torque.
+   *
+   * @return The calculated inertia.
+   */
   private float getInertia() {
     float length = (new EnhancedVector(getCenter().getX() - vertices.get(0).getX(), getCenter().getY() - vertices.get(0).getY())).length();
     return (getMass() * (float) Math.pow(length, 4)) / 120000;
   }
 
+  /**
+   * Makes this projectile "bounce" of the given partner body.
+   * Also, inverts its current rotation.
+   *
+   * @param partner The RigidBody this object is colliding with each other.
+   */
   @Override
   public void reflect(RigidBody partner) {
     try {
