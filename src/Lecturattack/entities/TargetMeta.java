@@ -39,6 +39,8 @@ public class TargetMeta extends MetaObject {
       targetStandards = fileHandler.loadTargetConfig();
     } catch (Exception e) {
       e.printStackTrace();
+      System.out.println(e.getMessage());
+      System.exit(-1);
     }
 
     for (TargetStandard targetStandard : targetStandards) {
