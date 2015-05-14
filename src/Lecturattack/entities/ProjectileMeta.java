@@ -26,7 +26,12 @@ public class ProjectileMeta extends MetaObject {
     instances = new HashMap<>();
     FileHandler fileHandler = new FileHandler();
     // the xml config files are loaded
-    List<ProjectileStandard> projectileStandards = fileHandler.loadProjectileStandards();
+    List<ProjectileStandard> projectileStandards = null;
+    try {
+      projectileStandards = fileHandler.loadProjectileStandards();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     for (ProjectileStandard projectileStandard : projectileStandards) {
       ProjectileType type = null;
