@@ -34,7 +34,12 @@ public class TargetMeta extends MetaObject {
     instances = new HashMap<>();
     FileHandler fileHandler = new FileHandler();
     //the xml configs are loaded
-    List<TargetStandard> targetStandards = fileHandler.loadTargetConfig();
+    List<TargetStandard> targetStandards = null;
+    try {
+      targetStandards = fileHandler.loadTargetConfig();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     for (TargetStandard targetStandard : targetStandards) {
       ArrayList<Image> images = new ArrayList<>();
