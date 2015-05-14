@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * The meta object assigned to targets. It contains necessary information about the target such as the outline and the
+ * image used for rendering.
+ *
  * @author Nick Steyer
  * @author Tim Adamek
  * @author Andreas Geis
@@ -100,6 +103,13 @@ public class TargetMeta extends MetaObject {
     this.sounds = sounds;
   }
 
+  /**
+   * Returns the corresponding meta object for the given TargetType.
+   *
+   * @param type The TargetType for which the corresponding meta object should be retrieved.
+   *
+   * @return The instance of the retrieved meta object.
+   */
   public static TargetMeta getInstance(TargetType type) {
     return instances.get(type);
   }
@@ -112,6 +122,13 @@ public class TargetMeta extends MetaObject {
     return type;
   }
 
+  /**
+   * Returns the image with the given index used for rendering.
+   *
+   * @param index The index indicating which image should be returned.
+   *
+   * @return The instance of the requested image object.
+   */
   Image getImage(int index) {
     try {
       return images.get(index);
@@ -130,6 +147,13 @@ public class TargetMeta extends MetaObject {
     return maxHits;
   }
 
+  /**
+   * Plays the sound with the given index.
+   *
+   * @param index  The index indicating which sound should be played.
+   * @param pitch  The pitch with which the sound should be played.
+   * @param volume The volume with which the sound should be played.
+   */
   public void playSound(int index, float pitch, float volume) {
     try {
       sounds.get(index).play(pitch, volume);
@@ -140,6 +164,9 @@ public class TargetMeta extends MetaObject {
     }
   }
 
+  /**
+   * Stops the currently playing sound.
+   */
   public void stopSound() {
     for (Sound sound : sounds) {
       if (sound != null) {

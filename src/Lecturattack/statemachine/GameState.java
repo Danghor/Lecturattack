@@ -278,9 +278,9 @@ public class GameState extends BasicGameState implements InputListener {
 
 
   /**
-   * load the specified level in the gamestate
+   * Load the specified level.
    *
-   * @param level the integer value which indicates the level (1= first level , 2 = second level, ...)
+   * @param level The integer value which indicates the level (1= first level , 2 = second level, ...)
    */
   public void loadLevel(int level) {
     setCurrentLevel(level);

@@ -16,6 +16,12 @@ import java.util.List;
  * @author Nick Steyer
  */
 public class ProjectileMeta extends MetaObject {
+
+  /**
+   * This method initializes the instances of this class, which can then be accessed using a public hash map.
+   * The hash map returns the corresponding instance for a given ProjectileType (Enum).
+   * All instances are created here and must not be created afterwards or anywhere else.
+   */
   static {
     instances = new HashMap<>();
     FileHandler fileHandler = new FileHandler();
@@ -63,7 +69,7 @@ public class ProjectileMeta extends MetaObject {
   }
 
   private final Image image;
-  private final ArrayList<TargetType> destroys;
+  private final ArrayList<TargetType> destroys; //a list containing the types of targets that this projectile can destroy
 
   /**
    * The private constructor used in the static constructor to initialize the instances of this class.

@@ -11,11 +11,21 @@ import org.newdawn.slick.geom.Polygon;
 import java.util.ArrayList;
 
 /**
+ * Both the targets and projectiles are rigid bodies, whose properties and methods are defined here.
+ * A rigid body obeys the laws of gravity, forces can be applied to it and it interacts with other rigid bodies.
+ *
  * @author Nick Steyer
  */
 public abstract class RigidBody implements Renderable {
-  static final float BOUNCINESS = 0.8f; //
+  /**
+   * Indicates how "bouncy" the objects are. Used for damping, when two objects collide.
+   * 1 means, no damping occurs. 0.5 means, the linear velocity (and angular velocity for projectiles) is divided in half
+   * when a collision with another object occurs.
+   */
+  static final float BOUNCINESS = 0.8f;
+
   private static final String CONSISTS_OF_NO_VERTICES_EXCEPTION_TEXT = "This RigidBody does not consist of any vertices.";
+  private static final String PARTNER_BODY_DOES_NOT_INTERSECT_EXCEPTION_TEXT = "The given partner body does not intersect with this object.";
 
   final ArrayList<EnhancedVector> vertices;
   private final double area; //area is not expected to change
@@ -175,7 +185,7 @@ public abstract class RigidBody implements Renderable {
         this.move(direction);
       }
     } else {
-      throw new IllegalArgumentException("The given partner body does not intersect with this object.");
+      throw new IllegalArgumentException(PARTNER_BODY_DOES_NOT_INTERSECT_EXCEPTION_TEXT);
     }
 
   }

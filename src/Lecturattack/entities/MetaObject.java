@@ -9,8 +9,16 @@ import java.util.HashMap;
 
 /**
  * @author Nick Steyer
+ *         <p/>
+ *         A class that all meta objects inherit from.
+ *         Basically exists to avoid code redundancy.
  */
 abstract class MetaObject {
+  /**
+   * The meta object instances are initialized in a static constructor.
+   * They can then be accessed by using a hash map that maps the TargetType or the ProjectileType to the corresponding
+   * meta object instance.
+   */
   static HashMap<Enum, MetaObject> instances;
   float mass;
 

@@ -27,17 +27,20 @@ public class Player implements Renderable {
 
   //this constant is the translation of the throw angle, so that the angle is tangential
   private static final double THROW_ANGLE_TRANSLATION = Math.PI / 6;
+
   //this constant is the translation of the angle, which is used in calculating the middle of the player hand
   private static final double PROJECTILE_ANGLE_TRANSLATION = Math.PI / 4;
+
   //this constant specifies a scale, it is scaling up the value of the trigonometric calculation, for the projectile in the hand of the player,
   //this is needed, because these calculations are for a circle with a radius of 1, in this case the radius is bigger so it must be scaled
   private static final float projectileOnHandScale = 54;
+
   // the degrees the arm is rotated every update
   private static final int DEGREE_ARM_MOVE = 1;
 
-  private final Point playerPosition;   //the top left position of the player
-  private final Point handCenterPosition;   //the center of the hand;
-  private final Point armImagePosition;   //the top left of the arm image
+  private final Point playerPosition; //the top left position of the player
+  private final Point handCenterPosition; //the center of the hand;
+  private final Point armImagePosition; //the top left of the arm image
 
   private final Image bodyImage;
   private final Image armImage;
@@ -48,10 +51,10 @@ public class Player implements Renderable {
   private Projectile projectile;
   private float directionAngle;
   private PlayerState playerState;
-  private float animationAngle;  //the angle that the player has to move his arm for the animation (in degree)
-  private boolean returnProjectile = false;  //defines if player can return projectile or not
-  private boolean moveArmBack = false;  //the flag if the player has to move his arm back to throw
-  private boolean moveArmForward;// flag if arm for animation cannot be moved any further back
+  private float animationAngle; //the angle that the player has to move his arm for the animation (in degree)
+  private boolean returnProjectile = false; //defines if player can return projectile or not
+  private boolean moveArmBack = false; //the flag if the player has to move his arm back to throw
+  private boolean moveArmForward; // flag if arm for animation cannot be moved any further back
   private long throwStart;
 
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name, Sound sound) {
@@ -68,8 +71,9 @@ public class Player implements Renderable {
   }
 
   /**
-   * this method is called to update the arm animation
-   * it can be called every calculation step because it is handled internally when the animation is visible
+   * This method updates the animation of the arm so that it looks like the player is actually throwing.
+   * The method can safely be called in every update step. It is then internally verified, if the player is throwing
+   * and the animation should actually be visible, or not.
    */
   public void updateArmAnimation() {
     if (moveArmBack) {
@@ -90,7 +94,7 @@ public class Player implements Renderable {
         animationAngle -= powerSlider.getSelectedForce() / 50 + 2;
       } else if (animationAngle <= 0) {
         moveArmForward = false; // animation finished
-        returnProjectile = true;//projectile can now be returned because animation finished
+        returnProjectile = true; //projectile can now be returned because animation finished
         setThrowStart(System.currentTimeMillis());
         playerState = PlayerState.THROWING;
       }
@@ -104,34 +108,42 @@ public class Player implements Renderable {
     graphics.drawImage(bodyImage, playerPosition.getX(), playerPosition.getY()); //draw body
     graphics.drawImage(armImage, armImagePosition.getX(), armImagePosition.getCenterY()); // draw arm
 
+    /**
+     * If the player is not throwing, he still has the projectile in his hand.
+     * Therefore, the projectile has to be rendered by the player.
+     */
     if (playerState != PlayerState.THROWING) {
       projectile.setRotation(directionAngle - animationAngle);
       projectile.setCenterPosition(handCenterPosition.getX(), handCenterPosition.getCenterY());
       projectile.render(gameContainer, stateBasedGame, graphics); //draw projectile
     }
+
+    /**
+     * If the player is currently in the angle-selection state, the power slider is shown.
+     */
     if (playerState != PlayerState.ANGLE_SELECTION) {
       powerSlider.render(gameContainer, stateBasedGame, graphics); //draw PowerSlider
     }
   }
 
   /**
-   * counter clock-wise rotation of the arm
+   * Turns the arm clockwise.
    */
   public void moveArmRight() {
     moveArm(DEGREE_ARM_MOVE);
   }
 
   /**
-   * clock-wise rotation of the arm
+   * Turns the arm counterclockwise
    */
   public void moveArmLeft() {
     moveArm(-DEGREE_ARM_MOVE);
   }
 
   /**
-   * Rotates the arm
+   * Rotates the arm by the given degree.
    *
-   * @param degreeDifference The angle the arm is rotated, in decree
+   * @param degreeDifference The angle by which the arm should be rotated.
    */
   private void moveArm(float degreeDifference) {
     if (playerState == PlayerState.ANGLE_SELECTION) {
@@ -144,8 +156,8 @@ public class Player implements Renderable {
   }
 
   /**
-   * lock the current Selection (setAngle or setPower) and increment the
-   * playerState do nothing if the player already threw the projectile
+   * Locks the current Selection (setAngle or setPower) and increments the state the player is currently in.
+   * Does nothing, if the player already threw the projectile.
    */
   public final void startArmAnimation() {
     if (playerState == PlayerState.ANGLE_SELECTION) {
@@ -156,6 +168,11 @@ public class Player implements Renderable {
     }
   }
 
+  /**
+   * Calls the update method for the power slider, if the player is in the corresponding state.
+   *
+   * @param delta The time passed since the last update step.
+   */
   public void updatePowerSlider(int delta) {
     if (playerState == PlayerState.POWER_SLIDER) {
       powerSlider.update(delta);
@@ -163,7 +180,7 @@ public class Player implements Renderable {
   }
 
   /**
-   * Brings the player back into the default state, where he can throw a new projectile
+   * Brings the player back into the default state, where he can throw a new projectile.
    */
   public void reset() {
     playerState = PlayerState.ANGLE_SELECTION;
@@ -173,9 +190,9 @@ public class Player implements Renderable {
   }
 
   /**
-   * Throw the projectile
+   * Throws the projectile
    *
-   * @return return the thrown projectile
+   * @return The projectile thrown
    */
   public Projectile throwProjectile() {
     if (returnProjectile) {
