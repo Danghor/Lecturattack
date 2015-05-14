@@ -19,7 +19,6 @@ public class LevelGenerator {
    * Creates a level for the given LevelElements
    *
    * @param levelData all elements in the level, these objects are the loaded XMLobjects, the score
-   *
    * @return a Level object, which holds the information about the entire level
    */
   public static Level getGeneratedLevel(LevelData levelData) {
@@ -30,15 +29,13 @@ public class LevelGenerator {
     for (LevelElement levelElement : levelData.getLevelElements()) {
 
       if (levelElement.getType() == XmlObjectType.PLAYER) { //Player
-
         playerPositionX = levelElement.getPositionX();
         playerPositionY = levelElement.getPositionY();
 
-      } else { //Target
-        //the Targets need a target Meta in their initializer, to specify their type
-        TargetMeta targetMeta;
+      } else { //Targets
         float posX = levelElement.getPositionX();
         float posY = levelElement.getPositionY();
+        TargetMeta targetMeta;
         TargetType targetType;
 
         //the targets levelElements are distinguished by their XmlObjectType, which specifies what target they are (or if they are a player).

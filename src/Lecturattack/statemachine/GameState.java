@@ -102,7 +102,7 @@ public class GameState extends BasicGameState implements InputListener {
     }
     getCurrentPlayer().updateArmAnimation();
 
-    Projectile checkProjectile = getCurrentPlayer().getProjectile();//TODO comment
+    Projectile checkProjectile = getCurrentPlayer().throwProjectile();//TODO comment
     if (checkProjectile != null) {
       this.projectile = checkProjectile;
       level.reduceScore(10);
@@ -221,7 +221,7 @@ public class GameState extends BasicGameState implements InputListener {
       case Input.KEY_SPACE:
         switch (gameStatus) {
           case PLAYING:
-            getCurrentPlayer().throwProjectile();
+            getCurrentPlayer().startArmAnimation();
             break;
           case LEVEL_WON:
             if (currentLevel < MAX_LEVEL) {//TODO commment

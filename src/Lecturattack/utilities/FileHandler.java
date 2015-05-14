@@ -35,7 +35,7 @@ public class FileHandler {
 
 
   static {
-    // This sets the file path according to the used system
+    // This sets the path to the save file according to the used OS (there is no AppData on Unix)
     String sysName = System.getProperty("os.name");
     String saveDirectory = "";
     if (sysName.contains("Windows")) {
@@ -133,7 +133,6 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
-   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
@@ -207,6 +206,11 @@ public class FileHandler {
     return returnedLevelNumber;
   }
 
+  /**
+   * Returns an image for the specified fileName
+   * @param fileName the name of the image, without path and ".png"
+   * @return the Image object
+   */
   public Image loadImage(String fileName) {
     Image image = null;
     try {
