@@ -88,7 +88,7 @@ public class GameState extends BasicGameState implements InputListener {
       playerStandards = fileHandler.getPlayerData();
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.print(e.getMessage());
+      System.out.println(e.getMessage());
       System.exit(-1);
     }
     for (PlayerStandard meta : playerStandards) {

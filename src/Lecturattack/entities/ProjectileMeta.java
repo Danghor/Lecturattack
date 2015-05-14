@@ -31,7 +31,7 @@ public class ProjectileMeta extends MetaObject {
       projectileStandards = fileHandler.loadProjectileStandards();
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.print(e.getMessage());
+      System.out.println(e.getMessage());
       System.exit(-1);
     }
 
