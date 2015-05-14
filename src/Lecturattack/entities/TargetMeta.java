@@ -39,6 +39,8 @@ public class TargetMeta extends MetaObject {
       targetStandards = fileHandler.loadTargetConfig();
     } catch (Exception e) {
       e.printStackTrace();
+      System.out.print(e.getMessage());
+      System.exit(-1);
     }
 
     for (TargetStandard targetStandard : targetStandards) {
@@ -112,7 +114,6 @@ public class TargetMeta extends MetaObject {
    * Returns the corresponding meta object for the given TargetType.
    *
    * @param type The TargetType for which the corresponding meta object should be retrieved.
-   *
    * @return The instance of the retrieved meta object.
    */
   public static TargetMeta getInstance(TargetType type) {
@@ -131,7 +132,6 @@ public class TargetMeta extends MetaObject {
    * Returns the image with the given index used for rendering.
    *
    * @param index The index indicating which image should be returned.
-   *
    * @return The instance of the requested image object.
    */
   Image getImage(int index) {
