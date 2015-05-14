@@ -83,7 +83,12 @@ public class GameState extends BasicGameState implements InputListener {
     deadTargets = new ArrayList<>();
     players = new ArrayList<>();
 
-    List<PlayerStandard> playerStandards = fileHandler.getPlayerData();
+    List<PlayerStandard> playerStandards = null;
+    try {
+      playerStandards = fileHandler.getPlayerData();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     for (PlayerStandard meta : playerStandards) {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName(), meta.getSoundAsSound()));
     }
