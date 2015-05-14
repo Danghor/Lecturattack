@@ -133,6 +133,7 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
+   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
@@ -208,7 +209,9 @@ public class FileHandler {
 
   /**
    * Returns an image for the specified fileName
+   *
    * @param fileName the name of the image, without path and ".png"
+   *
    * @return the Image object
    */
   public Image loadImage(String fileName) {

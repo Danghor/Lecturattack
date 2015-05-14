@@ -54,10 +54,6 @@ public class Player implements Renderable {
   private boolean moveArmForward;// flag if arm for animation cannot be moved any further back
   private long throwStart;
 
-  public enum PlayerState {
-    ANGLE_SELECTION, POWER_SLIDER, ANIMATION, THROWING
-  }
-
   public Player(Image bodyImage, Image armImage, ProjectileMeta projectileMeta, String name, Sound sound) {
     playerPosition = new Point(0, 0);
     handCenterPosition = new Point(0, 0);
@@ -251,6 +247,10 @@ public class Player implements Renderable {
 
   public void stopSound() {
     sound.stop();
+  }
+
+  public enum PlayerState {
+    ANGLE_SELECTION, POWER_SLIDER, ANIMATION, THROWING
   }
 
 }
