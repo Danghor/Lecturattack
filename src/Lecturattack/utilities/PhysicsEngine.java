@@ -15,6 +15,20 @@ public class PhysicsEngine {
   private static final int MAXIMUM_STEP_SIZE_IN_MILLISECONDS = 100;
   private static final float GROUND_BOUNCINESS = 0.7f;
 
+  /**
+   * This method takes the game objects as input and calculates what happens to them in the next step based on the given delta, wind and the forces that are already applied to the objects.
+   * The objects themselves are updated, but not rendered here. This method will also handle collision detection and response.
+   *
+   * @param projectile          The projectile thrown by the player. If null, it will be ignored.
+   * @param targets             The Array containing all targets that should physically interact with each other and the projectile.
+   * @param deadTargets         The targets that should not physically interact with any game object, but are currently falling out of the game frame and therefore have to be updated.
+   * @param wind                The wind strength that should be applied to the projectile. Value can be positive or negative. //todo: describe, which direction is negative and which positive
+   * @param deltaInMilliseconds The time passed since the last step. May not be higher than 100 (milliseconds). Otherwise, the step is skipped.
+   * @param groundLevel         The y-value indicating the current ground level. (Alive) targets and projectiles may never have an< vertices with a y-value bigger than this one.
+   *                            A higher value indicates a lower ground.
+   *
+   * @return The score achieved in this step.
+   */
   public static int calculateStep(Projectile projectile, ArrayList<Target> targets, ArrayList<Target> deadTargets, float wind, int deltaInMilliseconds, float groundLevel) {
     // this is the additional score returned in the end; it gets bigger for every target hit
     int scoreIncrement = 0;
@@ -123,8 +137,14 @@ public class PhysicsEngine {
     }
   }
 
+  /**
+   * Checks whether the projectile touches the ground or is slightly beneath it and makes it "bounce" of the ground in an angle.
+   *
+   * @param projectile  The projectile thrown by the player
+   * @param groundLevel The y-value indicating the ground level. A higher value indicates a lower ground.
+   */
   private static void reflectOnGround(Projectile projectile, float groundLevel) {
-    if (projectile.getBiggestY() >= groundLevel) {
+    if (projectile.getBiggestY() >= groundLevel) { //todo: check for projectile == null
       projectile.move(new EnhancedVector(0f, groundLevel - projectile.getBiggestY()));
       projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().getX() * GROUND_BOUNCINESS, -projectile.getLinearVelocity().getY() * GROUND_BOUNCINESS));
       projectile.invertRotation(GROUND_BOUNCINESS);

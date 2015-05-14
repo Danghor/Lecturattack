@@ -26,7 +26,7 @@ class PauseState extends BasicGameState implements InputListener {
    * @param stateID The stateID to be set.
    */
   public PauseState(int stateID) {
-    this.stateID = stateID;
+    PauseState.stateID = stateID;
     fileHandler = new FileHandler();
   }
 
