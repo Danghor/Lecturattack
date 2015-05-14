@@ -38,6 +38,11 @@ public class EnhancedVector extends Vector2f {
     this.y = newY;
   }
 
+  /**
+   * Gets a vector perpendicular to this one.
+   *
+   * @return A vector perpendicular to this one.
+   */
   public EnhancedVector getPerpendicular() {
     //noinspection SuspiciousNameCombination
     return new EnhancedVector(-this.getY(), this.getX());

@@ -144,10 +144,12 @@ public class PhysicsEngine {
    * @param groundLevel The y-value indicating the ground level. A higher value indicates a lower ground.
    */
   private static void reflectOnGround(Projectile projectile, float groundLevel) {
-    if (projectile.getBiggestY() >= groundLevel) { //todo: check for projectile == null
-      projectile.move(new EnhancedVector(0f, groundLevel - projectile.getBiggestY()));
-      projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().getX() * GROUND_BOUNCINESS, -projectile.getLinearVelocity().getY() * GROUND_BOUNCINESS));
-      projectile.invertRotation(GROUND_BOUNCINESS);
+    if (projectile != null) {
+      if (projectile.getBiggestY() >= groundLevel) {
+        projectile.move(new EnhancedVector(0f, groundLevel - projectile.getBiggestY()));
+        projectile.setLinearVelocity(new EnhancedVector(projectile.getLinearVelocity().getX() * GROUND_BOUNCINESS, -projectile.getLinearVelocity().getY() * GROUND_BOUNCINESS));
+        projectile.invertRotation(GROUND_BOUNCINESS);
+      }
     }
   }
 

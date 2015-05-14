@@ -12,6 +12,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 
 /**
+ * The projectiles are thrown by the player at the targets. They are physical object that obey the laws of gravity and
+ * they can destroy some of the targets.
+ *
  * @author Nick Steyer
  */
 public class Projectile extends RigidBody {

@@ -1,6 +1,8 @@
-package Lecturattack.entities;/*
+/*
  * Copyright (c) 2015.
  */
+
+package Lecturattack.entities;
 
 import Lecturattack.entities.types.TargetType;
 import org.newdawn.slick.GameContainer;
@@ -8,6 +10,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
+ * Both the enemies and the protective structures (library, RAM) are Target objects.
+ * A target can be hit by projectiles, it can get damaged by some projectiles and it will play a sound when hit.
+ * It also obeys simplified laws of gravity and falls down, if there is nothing beneath it.
+ *
  * @author Nick Steyer
  * @author Andreas Geis
  */
