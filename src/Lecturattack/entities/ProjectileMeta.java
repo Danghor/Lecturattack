@@ -47,7 +47,7 @@ public class ProjectileMeta extends MetaObject {
       switch (projectileStandard.getDestroys()) {
         case "ENEMY":
           destroys.add(TargetType.ENEMY);
-          type = ProjectileType.EXAM; //todo: read type from XML files
+          type = ProjectileType.EXAM;
           break;
         case "RAM":
           destroys.add(TargetType.RAMH);

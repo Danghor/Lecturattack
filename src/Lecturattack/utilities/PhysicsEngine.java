@@ -22,7 +22,7 @@ public class PhysicsEngine {
    * @param projectile          The projectile thrown by the player. If null, it will be ignored.
    * @param targets             The Array containing all targets that should physically interact with each other and the projectile.
    * @param deadTargets         The targets that should not physically interact with any game object, but are currently falling out of the game frame and therefore have to be updated.
-   * @param wind                The wind strength that should be applied to the projectile. Value can be positive or negative. //todo: describe, which direction is negative and which positive
+   * @param wind                The wind strength that should be applied to the projectile. A positive value indicates wind from left to right, a negative value indicates wind from right to left.
    * @param deltaInMilliseconds The time passed since the last step. May not be higher than 100 (milliseconds). Otherwise, the step is skipped.
    * @param groundLevel         The y-value indicating the current ground level. (Alive) targets and projectiles may never have an< vertices with a y-value bigger than this one.
    *                            A higher value indicates a lower ground.
@@ -37,7 +37,7 @@ public class PhysicsEngine {
      * The engine will not work properly is the given delta is too high. To avoid errors, huge steps are skipped.
      */
     if (!(deltaInMilliseconds > MAXIMUM_STEP_SIZE_IN_MILLISECONDS)) {
-      float scaledDelta = (float) deltaInMilliseconds / 100; //todo: adjust values
+      float scaledDelta = (float) deltaInMilliseconds / 100;
       EnhancedVector oldTargetPosition;
       boolean intersectionBetweenTargetsDetected;
       Target targetCollidedWith;
@@ -56,7 +56,7 @@ public class PhysicsEngine {
         for (Target target : targets) {
           if (projectile.collidesWith(target)) {
             targetCollidedWith = target;
-            break; //todo: avoid break
+            break;
           }
         }
 
