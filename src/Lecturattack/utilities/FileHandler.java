@@ -94,7 +94,7 @@ public class FileHandler {
    *
    * @return the loaded configs for the Targets
    */
-  public List<TargetStandard> loadTargetConfig() {
+  public List<TargetStandard> loadTargetConfig() throws Exception {
     InputStream inputStream = getClass().getResourceAsStream(RESOURCES_CONFIG_TARGET_XML);
     JAXBContext jaxbContext;
     TargetConfig targets = null;
@@ -106,6 +106,9 @@ public class FileHandler {
     } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
+    if (targets == null) {
+      throw new Exception("Config coudld not be loaded");
+    }
     return targets.getTargetStandards();
   }
 
@@ -114,7 +117,7 @@ public class FileHandler {
    *
    * @return the loaded configs for the Projectiles
    */
-  public List<ProjectileStandard> loadProjectileStandards() {
+  public List<ProjectileStandard> loadProjectileStandards() throws Exception {
     InputStream inputStream = getClass().getResourceAsStream(RESOURCES_CONFIG_PROJECTILE_XML);
     JAXBContext jaxbContext;
     ProjectileConfig projectiles = null;
@@ -126,6 +129,9 @@ public class FileHandler {
     } catch (JAXBException | IOException e) {
       e.printStackTrace();
     }
+    if (projectiles == null) {
+      throw new Exception("Config coudld not be loaded");
+    }
     return projectiles.getProjectileStandards();
   }
 
@@ -133,7 +139,6 @@ public class FileHandler {
    * This method loads a Level and returns a list of elements in the level, this includes all targets and the position of the player
    *
    * @param levelNumber the level which should be loaded
-   *
    * @return the elements in the level
    * @throws IllegalArgumentException
    */
@@ -163,7 +168,7 @@ public class FileHandler {
    *
    * @return the loaded players objects which resemble the xml
    */
-  public List<PlayerStandard> getPlayerData() {
+  public List<PlayerStandard> getPlayerData() throws Exception {
     InputStream inputStream = getClass().getResourceAsStream(RESOURCES_CONFIG_PLAYER_XML);
     JAXBContext jaxbContext;
     PlayerConfig players = null;
@@ -174,6 +179,9 @@ public class FileHandler {
       inputStream.close();
     } catch (JAXBException | IOException e) {
       e.printStackTrace();
+    }
+    if (players == null) {
+      throw new Exception("Config coudld not be loaded");
     }
     return players.getPlayerStandards();
   }
@@ -211,7 +219,6 @@ public class FileHandler {
    * Returns an image for the specified fileName
    *
    * @param fileName the name of the image, without path and ".png"
-   *
    * @return the Image object
    */
   public Image loadImage(String fileName) {
