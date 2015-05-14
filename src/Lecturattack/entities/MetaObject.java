@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * A class that all meta objects inherit from.
+ * Basically exists to avoid code redundancy.
+ *
  * @author Nick Steyer
- *         <p/>
- *         A class that all meta objects inherit from.
- *         Basically exists to avoid code redundancy.
  */
 abstract class MetaObject {
   /**
