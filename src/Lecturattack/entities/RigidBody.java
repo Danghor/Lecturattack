@@ -123,7 +123,7 @@ public abstract class RigidBody implements Renderable {
         Point currentPoint;
         if (thisPolygon.contains(start) && thisPolygon.contains(end)) { //this object contains both edges of the partnerLine
           intersectingLine = partnerLine;
-          break; //todo: avoid break;
+          break;
         } else {
           EnhancedVector direction;
           if (thisPolygon.contains(start)) { //this object contains the start point of the partnerLine

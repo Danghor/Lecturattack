@@ -192,14 +192,18 @@ public class FileHandler {
    */
   public int getLastLevelNumber() {
     int returnedLevelNumber = 1;
+
     File file = new File(LAST_LEVEL_FILE_PATH);
+
     if (file.exists() && !file.isDirectory()) {
       FileReader fileReader;
       BufferedReader bufferedReader;
+
       try {
         fileReader = new FileReader(LAST_LEVEL_FILE_PATH);
         bufferedReader = new BufferedReader(fileReader);
         // read lines in file
+
         String lastLevelNumber;
         lastLevelNumber = bufferedReader.readLine();
         returnedLevelNumber = Integer.parseInt(lastLevelNumber);

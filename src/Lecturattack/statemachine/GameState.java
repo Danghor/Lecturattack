@@ -95,7 +95,7 @@ public class GameState extends BasicGameState implements InputListener {
       players.add(new Player(meta.getBodyImageAsImage(), meta.getArmImageAsImage(), meta.getProjectileMeta(), meta.getName(), meta.getSoundAsSound()));
     }
     currentPlayerIndex = 0;
-    setCurrentLevel(1); // default TODO don't use a default but instead use the actual level which should be loaded
+    setCurrentLevel(1); // default
 
     flag = new Flag(gameContainer.getWidth() / 2, 10);
   }
@@ -109,7 +109,7 @@ public class GameState extends BasicGameState implements InputListener {
     }
     getCurrentPlayer().updateArmAnimation();
 
-    Projectile checkProjectile = getCurrentPlayer().throwProjectile();//TODO comment
+    Projectile checkProjectile = getCurrentPlayer().throwProjectile();
     if (checkProjectile != null) {
       this.projectile = checkProjectile;
       level.reduceScore(10);
@@ -231,7 +231,7 @@ public class GameState extends BasicGameState implements InputListener {
             getCurrentPlayer().startArmAnimation();
             break;
           case LEVEL_WON:
-            if (currentLevel < MAX_LEVEL) {//TODO commment
+            if (currentLevel < MAX_LEVEL) {
               currentLevel++;
               resetLevel();
             } else {
@@ -313,14 +313,15 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   /**
-   * return the level to its original state
-   * to reset the level it is only necessary to load the current level again
+   * Resets the current level to its initial state.
    */
   private void resetLevel() {
     loadLevel(currentLevel);
   }
 
-  //TODO comment for this and previous player
+  /**
+   * Stops the currently playing player sound (if any), selects the next player and plays its sound.
+   */
   private void selectNextPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
     stopPlayerSound();
@@ -336,6 +337,9 @@ public class GameState extends BasicGameState implements InputListener {
     playerName.setDynamicText(getCurrentPlayer().getName());
   }
 
+  /**
+   * Stops the currently playing player sound (if any), selects the previous player and plays its sound.
+   */
   private void selectPreviousPlayer() {
     float previousAngle = getCurrentPlayer().getAngle();
     stopPlayerSound();
@@ -360,10 +364,10 @@ public class GameState extends BasicGameState implements InputListener {
   }
 
   /**
-   * generate a random wind
+   * Sets the wind to a random value between -1.5 and 1.5.
    */
   private void randomizeWind() {
-    wind = (float) ((Math.random() * 6) % 3 - 1.5); //todo: in config file
+    wind = (float) ((Math.random() * 6) % 3 - 1.5);
   }
 
   private void setCurrentLevel(int currentLevel) {

@@ -15,6 +15,8 @@ public class PowerSlider implements Renderable {
   // powerslide.png has 255px and powserslideLine is 5px width
   private static final int MAX_FORCE = 250;
   private static final float SPEED_SCALE = 0.45f;
+  private static final float POSITION_X = 10f;
+  private static final float POSITION_Y = 380f;
   private final Image powerslide;
   private final Image powerslideLine;
   private float selectedForce;
@@ -54,7 +56,7 @@ public class PowerSlider implements Renderable {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-    graphics.drawImage(powerslide, 10, 380);//TODO.andreas constants for the position
+    graphics.drawImage(powerslide, POSITION_X, POSITION_Y);
     graphics.drawImage(powerslideLine, 10 + powerslide.getWidth() * selectedForce / MAX_FORCE, 368);
   }
 

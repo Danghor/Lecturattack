@@ -40,6 +40,7 @@ public class Lecturattack extends StateBasedGame {
   public static void main(String[] args) {
 
     //disable the printStream in the release version so no console output is produced in production
+    //noinspection PointlessBooleanExpression
     if (!DEBUG) {
       PrintStream nullStream = new PrintStream(new OutputStream() {
         @Override
