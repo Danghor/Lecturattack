@@ -16,6 +16,7 @@ import java.io.PrintStream;
 /**
  * @author Andreas Geis
  * @author Tim Adamek
+ * @author Nick Steyer
  */
 public class Lecturattack extends StateBasedGame {
   public static final int MAINMENU_STATE = 0;
