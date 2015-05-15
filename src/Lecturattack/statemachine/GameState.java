@@ -70,6 +70,13 @@ public class GameState extends BasicGameState implements InputListener {
     return stateID;
   }
 
+  /**
+   * Sets up the gamestate, loading of background, loading of the level (when first starting the game, at later time the level is loaded in a different method)
+   *
+   * @param gameContainer
+   * @param stateBasedGame
+   * @throws SlickException
+   */
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     this.stateBasedGame = stateBasedGame;
@@ -100,6 +107,16 @@ public class GameState extends BasicGameState implements InputListener {
     flag = new Flag(gameContainer.getWidth() / 2, 10);
   }
 
+  /**
+   * The updating step in the game-loop when playing the levels
+   * updates the position of the targets and projectiles
+   * processes the user input
+   *
+   * @param gameContainer
+   * @param stateBasedGame
+   * @param delta
+   * @throws SlickException
+   */
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     if (projectile != null) {
@@ -138,6 +155,14 @@ public class GameState extends BasicGameState implements InputListener {
     getCurrentPlayer().updatePowerSlider(delta);
   }
 
+  /**
+   * Draws the elements in the level (targets, projectiles, player, background)
+   *
+   * @param gameContainer
+   * @param stateBasedGame
+   * @param graphics
+   * @throws SlickException
+   */
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawImage(background, 0, 0);
