@@ -44,7 +44,7 @@ class MainMenuState extends BasicGameState implements InputListener {
     this.stateBasedGame = stateBasedGame;
     background = fileHandler.loadImage("backgroundMenu");
     logo = fileHandler.loadImage("logo");
-    fileHandler.getLastLevelNumber();//TODO return value not used
+    fileHandler.getLastLevelNumber();
     menuButton = new AnimatedMenuButton[3];
     // check if the first button has to say "Spiel starten" or "Spiel fortsetzen" depending on player progress
     int lastLevelNumber = fileHandler.getLastLevelNumber();
