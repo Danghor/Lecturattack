@@ -1,11 +1,13 @@
-#Lecturattack
+![#Lecturattack](src/resources/images/logo.png)
 
-![Logo Lecturattack](src/resources/images/logo.png)
+**_by ☕Coffee Productions_**
 
-by ☕Coffee Productions
+##Credits
+Tim Adamek, Andreas Geis, Laura Hillenbrand, Stefanie Raschke, Nick Steyer
 
-##Entwickler
-- lorem ipsum
+**TINF13AIBC/MF**
 
 ---
-The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License.
+<p align="right">
+_The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License._
+</p>
