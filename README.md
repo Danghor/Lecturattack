@@ -1,9 +1,9 @@
 ![#Lecturattack](src/resources/images/logo.png)
 
-**_by ☕Coffee Productions_**
+**_by **☕**Coffee Productions_**
 
 ##Credits
-Tim Adamek, Andreas Geis, Laura Hillenbrand, Stefanie Raschke, Nick Steyer
+Tim Adamek, Andreas Geis, Laura Hillenbrand, Stefanie Raschke, Tobias Raschke, Nick Steyer
 
 **TINF13AIBC/MF**
 
