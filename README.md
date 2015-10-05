@@ -1,5 +1,11 @@
-# Lecturattack
-Always obey the boys' scout rule ;)
-http://www.clean-code-developer.de/Roter-Grad.ashx#Die_Pfadfinderregel_beachten_4
--> Code Cleanup
--> Reformat Code
+#Lecturattack
+
+![Logo Lecturattack](src/resources/images/logo.png)
+
+by ☕Coffee Productions
+
+##Entwickler
+- lorem ipsum
+
+---
+The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License.
