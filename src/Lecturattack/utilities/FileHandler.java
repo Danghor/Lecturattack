@@ -107,7 +107,7 @@ public class FileHandler {
       e.printStackTrace();
     }
     if (targets == null) {
-      throw new Exception("Config coudld not be loaded");
+      throw new Exception("Config could not be loaded");
     }
     return targets.getTargetStandards();
   }
