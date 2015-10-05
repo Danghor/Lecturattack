@@ -1,6 +1,6 @@
 ![#Lecturattack](src/resources/images/logo.png)
 
-<b><i>by</i> ☕<i>Coffee Productions</i></b>
+**_by_** ☕**_Coffee Productions_**
 ##Credits
 Tim Adamek, Andreas Geis, Laura Hillenbrand, Stefanie Raschke, Tobias Raschke, Nick Steyer
 
