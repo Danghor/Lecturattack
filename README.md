@@ -15,6 +15,41 @@
 
 ![Gameplay Screenshot](gameplay.png)
 
+You play a professor throwing things at students to get them "exmatrikuliert" (expelled). Each
+level hides a number of students behind barricades of RAM stacks and library book piles. Clear a
+level by hitting every student before you run out of score.
+
+Before each throw, use `↑`/`↓` to pick which professor throws next. Each professor has one
+signature projectile, and each projectile can only destroy one kind of target:
+
+| Professor | Throws | Destroys |
+|---|---|---|
+| Ströhtie | Exam papers | Students (1 hit kills, worth 100 pts) |
+| Speedy | A little Android robot | Library book stacks (3 hits to clear, 10 pts/hit) |
+| Muse | A pointer | RAM stacks (3 hits to clear, 10 pts/hit) |
+
+Hitting the wrong target type does nothing. So the puzzle is: smash a path through the
+barricades with Speedy/Muse, then switch to Ströhtie to finish off the exposed students.
+
+Each level starts with a fixed score budget. Every throw costs 10 points, whether it hits
+anything or not; destroying a barrier segment earns 10 points per effective hit (throwing
+harder can land 2-3 hits at once, based on impact velocity); killing a student earns 100
+points. If your score drops to 0 or below, you lose the level — clear all students before that
+happens to win and unlock the next one. Random wind (shown by the flag at the top) pushes your
+throw sideways, so factor it into your aim.
+
+### Controls
+
+Everything is keyboard-driven — there is no mouse support.
+
+- **Menus:** `←`/`→` to move between options, `Enter` to select.
+- **Aiming:** `←`/`→` set the throw angle, `↑`/`↓` switch the active professor.
+- **Power:** press `Space` to lock the angle; a power bar bounces back and forth automatically —
+  press `Space` again to lock in the throw's force.
+- **Throw:** the arm swings and releases the projectile automatically; gravity and wind take
+  over from there.
+- `Esc` pauses the game; `Space` advances to the next level (or retries) after winning/losing.
+
 ## Building and Running
 
 The game is plain Java built on [Slick2D](http://slick.ninjacave.com/)/LWJGL2. There is no
